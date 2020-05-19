@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html>
+
+	<!-- Mirrored from www.zi-han.net/theme/hplus/table_jqgrid.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:20:02 GMT -->
+
+	<head>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>运费模板</title>
+
+		<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+		<link href="css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+		<link href="css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+
+		<link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+		<link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+		<link href="css/animate.min.css" rel="stylesheet">
+		<link href="css/style.min862f.css?v=4.1.0" rel="stylesheet">
+		<link href="css/newStyle.css" rel="stylesheet">
+
+		<style>
+			/* 重写bookstrap样式表 勿删 */
+			.form_inputs{width: 160px;background-color: #ebebeb;border: 1px solid #06a3f9;border-radius: 20px;-webkit-border-radius: 20px;-moz-border-radius: 20px;-o-border-radius: 20px;-ms-border-radius: 20px;}
+			.ibox-title{padding:20px;}
+			.ui-jqdialog{height: auto!important;}
+			.ui-common-table tbody{background-color: #eaf5fc!important;}
+			.modal-dialog{margin: 80px auto!important;}
+			.form-group{margin-left:0px!important;margin-right:0px!important;}
+			.modal-sm{width: 600px;}
+			.col-sm-3{width: 30%;}
+			.col-sm-8{width: 70%;}
+			.form-horizontal .control-label{text-align: left;padding-top: 5px;font-size: 18px;}
+			@media only screen and (min-width: 100px) and (max-width: 600px) {
+				.modal-sm{width: 400px;}
+				.col-sm-3{width: 40%;}
+				.col-sm-8{width: 60%;}
+				.scroll_div{width: 85%;}
+				.form-horizontal .control-label{text-align: left;padding-top: 5px;font-size: 14px;}
+				.dialog_btn{font-size: 14px!important;}
+			}
+			@media only screen and (min-width: 650px){
+				.modal-sm{width: 600px;}
+			}
+
+
+			/*以下是等待状态的通用样式*/
+			.wating_big_div{position: fixed;top:0px ;width: 100%;height: 100%;display: table;z-index: 9999;}
+			.zhezhao{opacity: 0.3;position: absolute;top: 0px;width: 100%;height: 100%;z-index: 9999;}
+			.wating_content_div{text-align: center;background:none;display: table-cell;vertical-align: middle;}	
+			/*以上是等待状态的通用样式*/
+			
+
+		</style>
+	</head>
+
+	<body class="gray-bg">
+		<div class="wrapper wrapper-content  animated fadeInRight">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="ibox ">
+						<div class="ibox-title pull-left w100p" style="padding: 10px 20px;">
+							<div class="pull-left">
+								<div class="ibox-tools cache5">
+									运费模板
+								</div>
+							</div>
+
+							<div class="pull-right">
+								<button class="refresh_btn">
+									<a class="refresh_a" style="">
+										<i class="fa fa-refresh"></i> 刷新
+									</a>
+								</button>
+							</div>
+						</div>
+
+
+
+						<div class="ibox-content pull-left w100p" style="margin-top: 20px;">
+
+
+							<div class="ibox-title pull-left w100p table-head" style="background-color: rgb(243, 243, 243);padding: 10px 20px;border-top:0px;">
+								<div class="pull-left">
+									<div class="ibox-tools" style="">
+										<span class="titleFontIcon"></span>
+										<span class="pull-left" style="position: relative;top: 3px;left: 5px;">数据列表</span>
+									</div>
+								</div>
+								<div class="pull-right">
+									<button class="opera_btn" data-toggle="modal" data-target="#add_dialog">增加</button>
+								</div>
+							</div>
+
+							<div class="pull-left w100p">
+								<table class="table table-bordered mb0 ">
+									<thead>
+										<tr>
+											<th>编号</th>
+											<th>模板名称</th>
+											<th>计价方式</th>
+											<th>数量/重量</th>
+											<th>起步价</th>
+											<th>增加数量/重量</th>
+											<th>加价</th>
+											<th>添加时间</th>
+											<th>是否启用</th>
+											<th>操作</th>
+										</tr>
+									</thead>
+									<tbody id="list_tbody">
+									</tbody>
+								</table>
+							</div>
+							<div class="pull-left tac c0 f14 w100p pre mt10 none" id="footer_page_div">
+								<div class="">
+
+									<span class="under_line cursor_pointer last_span">上一页</span>
+									<span class="pl20 page_span">1</span>
+									<span class="pl20 under_line cursor_pointer next_span">下一页</span>
+									<span class="pl20">共 <span class="count_page_span">1</span> 页</span>
+									<div class="disib ml20">
+										每页显示：
+										<select class="p0 disib page_select">
+											<option value="">10</option>
+											<option value="" selected="selected">20</option>
+											<option value="">30</option>
+										</select>
+										条
+									</div>
+								</div>
+								<div class="record_right_div">
+									<!--record_right_div pull-right mt10-->
+									数据库总数量： <span class="counts_span">0</span> 条
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--新增的弹框-->
+		<div class="modal inmodal fade" id="add_dialog" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog modal-sm" style="width: 1200px;">
+				<div class="modal-content br8">
+					<div class="modal-header p10 bdno">
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+						<span class="modal-title f18">添加模板</span>
+					</div>
+					<div class="modal-body bg_f p0">
+						<div class="ibox-content p30">
+							<form class="form-horizontal m-t" id="add_form" method="post">
+								<input type="hidden" name="type" class="add_type" value="1" />
+								<div class="form-group ">
+									<label class="col-sm-2 control-label pull-left"><span style="color: red;">*</span>模板名称：</label>
+									<div class="col-sm-10 pull-left">
+										<input type="text" class="form-control" id="frName" name="cateName" value="" required="" aria-required="true">
+									</div>
+								</div>
+
+								<div class="form-group ">
+									<label class="col-sm-2 control-label pull-left"><span style="color: red;">*</span>费用计算方式：</label>
+									<div class="col-sm-10 pull-left">
+										<div style="display:flex;align-items:center;height: 40px;line-height: 40px;"><input class="inputcherckStyle"
+											 name="danwei" type="radio" style="margin-top: 0;margin-right: 10px; " id="wfuck" checked value="1" />按重量计算</div>
+										<div style="display:flex;align-items:center;height: 40px;line-height: 40px;"><input class="inputcherckStyle"
+											 name="danwei" type="radio" style="margin-top: 0;margin-right: 10px; " id="nima" value="2" />按商品数计算</div>
+									</div>
+								</div>
+
+								<div class="form-group ">
+									<label class="col-sm-2 control-label pull-left"><span style="color: red;">*</span>配送方式：</label>
+									<div class="col-sm-10 pull-left">
+										<div>出了特定地区外，其余地区的运费采用默认运费</div>
+										<div class="pull-left mt10">
+											<span class="f14 pull-left  h30 lh30 mb10">默认运费</span>
+											<input type="text" class="form-control h30 pull-left ml10" style="width: 80px;" id="defaultPieceNumber"
+											 placeholder="" aria-required="true"><span class="pull-left h30 lh30 ml10"><span class="unit">kg</span>内</span><input
+											 type="text" class="form-control h30 pull-left ml10" style="width: 80px;" id="defaultPrice" placeholder=""
+											 aria-required="true"><span class="pull-left h30 lh30 ml10">元，</span>
+										</div>
+										<div class="pull-left mt10" style="width: 370px;"><span class="pull-left h30 lh30">每增加</span><input type="text"
+											 class="form-control h30 pull-left ml10" style="width: 80px;" id="addWeightNumber" placeholder=""
+											 aria-required="true"><span class="pull-left h30 lh30 ml10"><span class="unit">kg</span>，增加运费</span><input
+											 type="text" class="form-control h30 pull-left ml10" style="width: 80px;" id="addPrice" placeholder=""
+											 aria-required="true"><span class="pull-left h30 lh30 ml10">元</span>
+										</div>
+
+										<div class="pull-left h30 lh30 mt10 w100p">运送到 <span id="addBut" class="under_line cursor_pointer pl20 c_1ABC9C" style="cursor: pointer;margin-left: 30px;">新增</span></div>
+										<div class="pull-left mt10" id="add_item">
+											<!-- <div class="">
+												<select name="" id="province" class="pull-left h30 br_e5e6e7 f14 getShengSelect add_shengId" style="width: 80px;height:34px;margin-left: 15px;">
+												</select>
+												<span class="pull-left h30 lh30 ml10">省</span>
+												<select name="" id="city" class="pull-left h30 br_e5e6e7 f14 getShiSelect add_shiId" style="width: 80px;height:34px;margin-left: 15px;">
+												</select>
+												<span class="pull-left h30 lh30 ml10">市</span>
+												<select name="" id="" class="pull-left h30 br_e5e6e7 f14 getQuSelect add_quId none" style="width: 80px;height:34px;margin-left: 15px;">
+												</select>
+												<span class="pull-left h30 lh30 ml10 none">区</span>
+										
+										
+												<input type="text" class="form-control h30 pull-left ml10" style="width: 80px;" id="firstNumber"
+												 placeholder="" aria-required="true"><span class="pull-left h30 lh30 ml10"><span class="unit">kg</span>内</span><input
+												 type="text" class="form-control h30 pull-left ml10" style="width: 80px;" id="firstPrice" placeholder=""
+												 aria-required="true"><span class="pull-left h30 lh30 ml10">元，</span>
+										
+										
+										
+												<span class="pull-left h30 lh30">每增加</span><input type="text" class="form-control h30 pull-left ml10" style="width: 80px;"
+												 id="continueNumber" placeholder="" aria-required="true"><span class="pull-left h30 lh30 ml10"><span class="unit">kg</span>，增加运费</span><input
+												 type="text" class="form-control h30 pull-left ml10" style="width: 80px;" id="continuePrice" placeholder=""
+												 aria-required="true"><span class="pull-left h30 lh30 ml10">元</span>
+											</div> -->
+										
+										</div>
+
+
+
+
+
+									</div>
+								</div>
+
+								<div class="form-group ">
+									<label class="col-sm-2 control-label pull-left"></label>
+									<div class="col-sm-10 pull-left">
+
+									</div>
+								</div>
+
+
+							</form>
+						</div>
+					</div>
+					<div class="modal-footer bdno tac pt0040">
+						<button type="button" class=" btn-white clear_btn_style dialog_btn" data-dismiss="modal">关闭</button>
+						<button type="button" class=" btn-primary clear_btn_style bdno dialog_btn ml30" id="add_btn">保存</button>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<!--编辑的弹框-->
+		<div class="modal inmodal fade" id="edit_dialog" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog modal-sm" style="width: 1200px;">
+				<div class="modal-content br8">
+					<div class="modal-header p10 bdno">
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+						<span class="modal-title f18">添加模板</span>
+					</div>
+					<div class="modal-body bg_f p0">
+						<div class="ibox-content p30">
+							<form class="form-horizontal m-t" id="edit_form" method="post">
+								<input type="hidden" name="type" id="edit_id" class="edit_type" value="1" />
+								<div class="form-group ">
+									<label class="col-sm-2 control-label pull-left"><span style="color: red;">*</span>模板名称：</label>
+									<div class="col-sm-10 pull-left">
+										<input type="text" class="form-control" id="frName" name="cateName" value="" required="" aria-required="true">
+									</div>
+								</div>
+
+								<div class="form-group ">
+									<label class="col-sm-2 control-label pull-left"><span style="color: red;">*</span>费用计算方式：</label>
+									<div class="col-sm-10 pull-left">
+										<div style="display:flex;align-items:center;height: 40px;line-height: 40px;"><input class="inputcherckStyle"
+											 name="wocao" type="radio" style="margin-top: 0;margin-right: 10px; " id="zhongliang" value="1" />按重量计算</div>
+										<div style="display:flex;align-items:center;height: 40px;line-height: 40px;"><input class="inputcherckStyle"
+											 name="wocao" type="radio" style="margin-top: 0;margin-right: 10px; " id="jianshu" value="2" />按商品数计算</div>
+									</div>
+								</div>
+
+								<div class="form-group ">
+									<label class="col-sm-2 control-label pull-left"><span style="color: red;">*</span>配送方式：</label>
+									<div class="col-sm-10 pull-left">
+										<div>出了特定地区外，其余地区的运费采用默认运费</div>
+										<div class="pull-left mt10">
+											<span class="f14 pull-left  h30 lh30 mb10">默认运费</span>
+											<input type="text" class="form-control h30 pull-left ml10" style="width: 80px;" id="defaultPieceNumber"
+											 placeholder="" aria-required="true"><span class="pull-left h30 lh30 ml10"><span class="unit">kg</span>内</span><input
+											 type="text" class="form-control h30 pull-left ml10" style="width: 80px;" id="defaultPrice" placeholder=""
+											 aria-required="true"><span class="pull-left h30 lh30 ml10">元，</span>
+										</div>
+										<div class="pull-left mt10" style="width: 370px;"><span class="pull-left h30 lh30">每增加</span><input type="text"
+											 class="form-control h30 pull-left ml10" style="width: 80px;" id="addWeightNumber" placeholder=""
+											 aria-required="true"><span class="pull-left h30 lh30 ml10"><span class="unit">kg</span>，增加运费</span><input
+											 type="text" class="form-control h30 pull-left ml10" style="width: 80px;" id="addPrice" placeholder=""
+											 aria-required="true"><span class="pull-left h30 lh30 ml10">元</span>
+										</div>
+
+										<div class="pull-left h30 lh30 mt10 w100p">运送到 <span id="editBut" class="under_line cursor_pointer pl20 c_1ABC9C" style="cursor: pointer;margin-left: 30px;">新增</span></div>
+										<div class="pull-left mt10" id="edit_item">
+											<!-- <div class="">
+												<select name="" id="province" class="pull-left h30 br_e5e6e7 f14 getShengSelect add_shengId" style="width: 80px;height:34px;margin-left: 15px;">
+												</select>
+												<span class="pull-left h30 lh30 ml10">省</span>
+												<select name="" id="city" class="pull-left h30 br_e5e6e7 f14 getShiSelect add_shiId" style="width: 80px;height:34px;margin-left: 15px;">
+												</select>
+												<span class="pull-left h30 lh30 ml10">市</span>
+												<select name="" id="" class="pull-left h30 br_e5e6e7 f14 getQuSelect add_quId none" style="width: 80px;height:34px;margin-left: 15px;">
+												</select>
+												<span class="pull-left h30 lh30 ml10 none">区</span>
+										
+										
+												<input type="text" class="form-control h30 pull-left ml10" style="width: 80px;" id="firstNumber"
+												 placeholder="" aria-required="true"><span class="pull-left h30 lh30 ml10"><span class="unit">kg</span>内</span><input
+												 type="text" class="form-control h30 pull-left ml10" style="width: 80px;" id="firstPrice" placeholder=""
+												 aria-required="true"><span class="pull-left h30 lh30 ml10">元，</span>
+										
+										
+										
+												<span class="pull-left h30 lh30">每增加</span><input type="text" class="form-control h30 pull-left ml10" style="width: 80px;"
+												 id="continueNumber" placeholder="" aria-required="true"><span class="pull-left h30 lh30 ml10"><span class="unit">kg</span>，增加运费</span><input
+												 type="text" class="form-control h30 pull-left ml10" style="width: 80px;" id="continuePrice" placeholder=""
+												 aria-required="true"><span class="pull-left h30 lh30 ml10">元</span>
+											</div> -->
+										
+										</div>
+										
+									</div>
+
+									<div class="form-group ">
+										<label class="col-sm-2 control-label pull-left"></label>
+										<div class="col-sm-10 pull-left">
+
+										</div>
+									</div>
+
+
+							</form>
+						</div>
+					</div>
+					<div class="modal-footer bdno tac pt0040">
+						<button type="button" class=" btn-white clear_btn_style dialog_btn" data-dismiss="modal">关闭</button>
+						<button type="button" class=" btn-primary clear_btn_style bdno dialog_btn ml30" id="edit_btn">保存</button>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<script src="js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/bootstrap.min.js?v=3.3.6"></script>
+		<script src="js/plugins/peity/jquery.peity.min.js"></script>
+		<script src="js/content.min.js?v=1.0.0"></script>
+		<script src="js/plugins/layer/laydate/laydate.js"></script>
+		<script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+		<script src="js/plugins/iCheck/icheck.min.js"></script>
+		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/cropper.min.js"></script>
+
+		<script>
+			var tableTimeout, addTimeout, setPowerTime, editManageTimeout, deleteTimeOut, getPowerTime, limits = 20,
+				page = 1,
+				counts = 0,
+				table_title, roleID;
+			var cherk_roleId;
+
+			var totalPages = 0;
+			var maxIndex;
+			var frWayInit;
+			
+			//删除<tr/>
+			var deltr = function(index,type) {
+				console.log(type)
+				if(type == 1){ //1新增2编辑
+					$("#add_item div[id='" + index + "']").remove(); //删除当前行
+				}else{
+					$("#edit_item div[id='" + index + "']").remove(); //删除当前行
+				}
+				
+			}
+			
+			function initArea(index){
+				console.log(index);
+				$('#add_item .add_shengId'+index).change(function() {
+					getShengSelect($(this).val(),2,index);
+				});
+				
+			}
+			
+			function initEdit(index){
+				$('#edit_item .add_shengId'+index).change(function() {
+					getShengSelect($(this).val(),2,index,true);
+				});
+				
+			}
+			
+			$(document).ready(function() {
+				IsTokenSave();
+				var userMessage = JSON.parse(sessionStorage.getItem("user_message"));
+
+				InitTbodyList(page); //初始化列表数据
+				// getShengSelect("", 1);
+
+				$(".refresh_a").click(function() { //刷新按钮
+					location.reload();
+				});
+				$(".i-checks").iCheck({ //check必须有的脚本
+					checkboxClass: "icheckbox_square-green",
+					radioClass: "iradio_square-green",
+				});
+
+				$("#check_btn").click(function() { //查询按钮
+					powerName = $("#check_input").val();
+					page = 1; //重置页数
+					$(".role_page_span").html(1); //重置页数
+					InitTbodyList(page); //获取列表数据
+				});
+
+				$(".page_select").change(function() { //选择一页多少条数据的select
+					page = 1; //重置页数
+					$(".page_span").html(1); //重置页数
+					limits = $(".page_select option:selected").text(); //设置当前显示数量
+					InitTbodyList(page);
+				});
+
+				$(".last_span").click(function() { //上一页
+					if (page < 2) {
+						TipsAlert("这是最前面的数据了");
+						return false;
+					}
+					page--;
+					$(".page_span").html(parseInt($(".page_span").html()) - 1);
+					InitTbodyList(page);
+				});
+				$(".next_span").click(function() { //下一页
+
+					if (page > maxIndex - 1) {
+						TipsAlert("这是最后面的数据了");
+						return false;
+					}
+					page++;
+					$(".page_span").html(parseInt($(".page_span").html()) + 1);
+					InitTbodyList(page);
+				});
+
+				// $('.add_shengId').change(function() {
+				// 	console.log($(this).val())
+				// 	getShengSelect($(this).val(), 2);
+				// });
+				// $('.add_shiId').change(function() {
+				// 	console.log($(this).val())
+				// 	getShengSelect($(this).val(), 3);
+				// });
+				
+				
+				$("#addBut").click(function() {
+					var _len = $("#add_item div").length;
+					// console.log($("#add_item div").length);
+					$("#add_item").append('<div id="'+_len+'" class="pull-left mt10"><select name="" id="province'+_len+'" class="pull-left h30 br_e5e6e7 f14 getShengSelect add_shengId'+_len+'" style="width: 80px;height:34px;margin-left: 15px;"><option>全部</option></select><span class="pull-left h30 lh30 ml10">省</span><select name="" id="city" class="pull-left h30 br_e5e6e7 f14 getShiSelect add_shiId'+_len+'" style="width: 80px;height:34px;margin-left: 15px;"><option>全部</option></select><span class="pull-left h30 lh30 ml10">市</span><select name="" id="" class="pull-left h30 br_e5e6e7 f14 getQuSelect add_quId none" style="width: 80px;height:34px;margin-left: 15px;"></select><span class="pull-left h30 lh30 ml10 none">区</span><input type="text" class="form-control h30 pull-left ml10" style="width: 80px;" id="firstNumber'+_len+'" placeholder="" aria-required="true"><span class="pull-left h30 lh30 ml10"><span class="unit">kg</span>内</span><input type="text" class="form-control h30 pull-left ml10" style="width: 80px;" id="firstPrice'+_len+'" placeholder="" aria-required="true"><span class="pull-left h30 lh30 ml10">元，</span><span class="pull-left h30 lh30">每增加</span><input type="text" class="form-control h30 pull-left ml10" style="width: 80px;" id="continueNumber'+_len+'" placeholder="" aria-required="true"><span class="pull-left h30 lh30 ml10"><span class="unit">kg</span>，增加运费</span><input type="text" class="form-control h30 pull-left ml10" style="width: 80px;" id="continuePrice'+_len+'" placeholder="" aria-required="true"><span class="pull-left h30 lh30 ml10">元</span> <span class="pull-left h30 lh30 ml10 under_line cursor_pointer delete_span pl20 c_1ABC9C" onclick=\'deltr("' + _len + '",1)\'>删除</span></div>');
+					getShengSelect("", 1,_len,false,"","");
+					initArea(_len);
+				})
+				
+				$("#editBut").click(function() {
+					var _len = $("#edit_item div").length;
+					$("#edit_item").append('<div id="'+_len+'" class="pull-left mt10"><select name="" id="province'+_len+'" class="pull-left h30 br_e5e6e7 f14 getShengSelect add_shengId'+_len+'" style="width: 80px;height:34px;margin-left: 15px;"><option>全部</option></select><span class="pull-left h30 lh30 ml10">省</span><select name="" id="city" class="pull-left h30 br_e5e6e7 f14 getShiSelect add_shiId'+_len+'" style="width: 80px;height:34px;margin-left: 15px;"><option>全部</option></select><span class="pull-left h30 lh30 ml10">市</span><select name="" id="" class="pull-left h30 br_e5e6e7 f14 getQuSelect add_quId none" style="width: 80px;height:34px;margin-left: 15px;"></select><span class="pull-left h30 lh30 ml10 none">区</span><input type="text" class="form-control h30 pull-left ml10" style="width: 80px;" id="firstNumber'+_len+'" placeholder="" aria-required="true"><span class="pull-left h30 lh30 ml10"><span class="unit">kg</span>内</span><input type="text" class="form-control h30 pull-left ml10" style="width: 80px;" id="firstPrice'+_len+'" placeholder="" aria-required="true"><span class="pull-left h30 lh30 ml10">元，</span><span class="pull-left h30 lh30">每增加</span><input type="text" class="form-control h30 pull-left ml10" style="width: 80px;" id="continueNumber'+_len+'" placeholder="" aria-required="true"><span class="pull-left h30 lh30 ml10"><span class="unit">kg</span>，增加运费</span><input type="text" class="form-control h30 pull-left ml10" style="width: 80px;" id="continuePrice'+_len+'" placeholder="" aria-required="true"><span class="pull-left h30 lh30 ml10">元</span> <span class="pull-left h30 lh30 ml10 under_line cursor_pointer delete_span pl20 c_1ABC9C" onclick=\'deltr("' + _len + '",1)\'>删除</span></div>');
+					getShengSelect("",1,_len,true,"","")
+					initArea(_len);
+				})
+
+				$("#add_btn").click(function() { //添加的保存按钮
+					if ($("#add_form .form-control").eq(0).val().trim() == "") {
+						TipsAlert("模板名称不能为空");
+						return false;
+					}
+					
+					// console.log($("#add_item div").length);
+					var sysFreightTemplateDetaileds = [];
+					for(var i = 0;i<$("#add_item div").length;i++){
+						var obj = {
+							province: $($('#add_item .add_shengId'+i)[0]).val(),
+							city: $($('#add_item .add_shiId'+i)[0]).val(),
+							firstNumber: $($('#add_item #firstNumber'+i)[0]).val(),
+							firstPrice: $($('#add_item #firstPrice'+i)[0]).val(),
+							continueNumber: $($('#add_item #continueNumber'+i)[0]).val(),
+							continuePrice: $($('#add_item #continuePrice'+i)[0]).val(),
+						}
+						sysFreightTemplateDetaileds.push(obj);
+					}
+					console.log(sysFreightTemplateDetaileds);
+					
+					var obj = {
+						"frName": $("#frName").val(),
+						"frWay": $("input[name='danwei']:checked").val(),
+						"defaultPieceNumber": $("#defaultPieceNumber").val(),
+						"defaultPrice": $("#defaultPrice").val(),
+						"addWeightNumber": $("#addWeightNumber").val(),
+						"addPrice": $("#addPrice").val(),
+						"sysFreightTemplateDetaileds":sysFreightTemplateDetaileds
+					}
+					Showload("正在初始化列表......");
+					addTimeout = setInterval("Timeout(addTimeout)", 1000);
+					$.ajax({
+						type: "post",
+						url: urls + common_url.sysFreightTemplate_SaveOrUpdate,
+						async: true,
+						timeout: 30000,
+						dataType: "json",
+						contentType: 'application/json',
+						headers: {
+							'X-Access-Token': userMessage.token,
+						},
+						data: JSON.stringify(obj),
+						success: function(json) {
+							CheckLogout(json); //检查是否登陆过期
+							if (json.code == 0) {
+								swal({
+									title: "添加成功",
+									text: "添加成功",
+									type: "success",
+								}, function() {
+									location.reload();
+								});
+							} else {
+								TipsAlert(json.msg);
+							}
+							InitTime(addTimeout);
+						},
+						error: function(xml, text, errorThrown) {
+							if (text == "timeout") {
+								TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+							} else {
+								TipsAlert("请求数据失败,请联系后台技术人员");
+							}
+							InitTime(addTimeout);
+						}
+					});
+				});
+
+				$("#edit_btn").click(function() { //添加的保存按钮
+					if ($("#edit_form .form-control").eq(0).val().trim() == "") {
+						TipsAlert("模板名称不能为空");
+						return false;
+					}
+					console.log($("input[name='wocao']:checked").val());
+					var sysFreightTemplateDetaileds = [];
+					for(var i = 0;i<$("#edit_item div").length;i++){
+						if ($($('#edit_item .add_shengId'+i)[0]).val() == "") {
+							TipsAlert("请选择省份！");
+							return false;
+						}
+						if ($($('#edit_item .add_shiId'+i)[0]).val() == "") {
+							TipsAlert("请选择城市！");
+							return false;
+						}
+						if ($($('#edit_item #firstNumber'+i)[0]).val() == "") {
+							TipsAlert("数据不能为空！");
+							return false;
+						}
+						if ($($('#edit_item #firstPrice'+i)[0]).val() == "") {
+							TipsAlert("数据不能为空！");
+							return false;
+						}
+						if ($($('#edit_item #continueNumber'+i)[0]).val() == "") {
+							TipsAlert("数据不能为空！");
+							return false;
+						}
+						if ($($('#edit_item #continuePrice'+i)[0]).val() == "") {
+							TipsAlert("数据不能为空！");
+							return false;
+						}
+						var obj = {
+							province: $($('#edit_item .add_shengId'+i)[0]).val(),
+							city: $($('#edit_item .add_shiId'+i)[0]).val(),
+							firstNumber: $($('#edit_item #firstNumber'+i)[0]).val(),
+							firstPrice: $($('#edit_item #firstPrice'+i)[0]).val(),
+							continueNumber: $($('#edit_item #continueNumber'+i)[0]).val(),
+							continuePrice: $($('#edit_item #continuePrice'+i)[0]).val(),
+						}
+						sysFreightTemplateDetaileds.push(obj);
+					}
+					
+					var obj = {
+						"id": $("#edit_form #edit_id").val(),
+						"frName": $("#edit_form #frName").val(),
+						"frWay": frWayInit,
+						"defaultPieceNumber": $("#edit_form #defaultPieceNumber").val(),
+						"defaultPrice": $("#edit_form #defaultPrice").val(),
+						"addWeightNumber": $("#edit_form #addWeightNumber").val(),
+						"addPrice": $("#edit_form #addPrice").val(),
+						"sysFreightTemplateDetaileds": sysFreightTemplateDetaileds
+					}
+					console.log(obj);
+					Showload("正在初始化列表......");
+					addTimeout = setInterval("Timeout(addTimeout)", 1000);
+					$.ajax({
+						type: "post",
+						url: urls + common_url.sysFreightTemplate_SaveOrUpdate,
+						async: true,
+						timeout: 30000,
+						dataType: "json",
+						contentType: 'application/json',
+						headers: {
+							'X-Access-Token': userMessage.token,
+						},
+						data: JSON.stringify(obj),
+						success: function(json) {
+							CheckLogout(json); //检查是否登陆过期
+							if (json.code == 0) {
+								swal({
+									title: "编辑成功",
+									text: "编辑成功",
+									type: "success",
+								}, function() {
+									location.reload();
+								});
+							} else {
+								TipsAlert(json.msg);
+							}
+							InitTime(addTimeout);
+						},
+						error: function(xml, text, errorThrown) {
+							if (text == "timeout") {
+								TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+							} else {
+								TipsAlert("请求数据失败,请联系后台技术人员");
+							}
+							InitTime(addTimeout);
+						}
+					});
+				});
+
+				$('#wfuck').change(function() {
+					if ($(this)[0].checked == true) {
+						$(".unit").html('kg')
+					} else {
+						$(".unit").html('件')
+					}
+				});
+				$('#nima').change(function() {
+					if ($(this)[0].checked == true) {
+						$(".unit").html('件')
+					}
+				});
+				$('#zhongliang').change(function() {
+					if ($(this)[0].checked == true) {
+						frWayInit = 1;
+						$(".unit").html('kg');
+					} else {
+						frWayInit = 2;
+						$(".unit").html('件');
+					}
+				});
+				$('#jianshu').change(function() {
+					if ($(this)[0].checked == true) {
+						frWayInit = 2;
+						$(".unit").html('件');
+					} else {
+						frWayInit = 1;
+						$(".unit").html('kg');
+					}
+				});
+
+				// if(data.template.frWay == 1){
+				// 	$("#zhongliang").attr("checked", true);
+				// }else if(data.template.frWay ==2){
+				// 	$("#jianshu").attr("checked", true);
+				// }
+
+
+			});
+
+			/**
+			 * 该方法用于获取下拉列表数据
+			 * @param {Number} token是获取数据的必传参数
+			 * */
+			function getShengSelect(id,type,index,isEdit,province,city) {//
+				$.ajax({
+					type: "get",
+					url: urls + common_url.regions_regionsList,
+					async: true,
+					timeout: 30000,
+					dataType: "json",
+					headers: {
+						'X-Access-Token': userMessage.token,
+					},
+					data: {
+						parentId: id,
+						type: type
+					},
+					success: function(json) {
+						console.log(json);
+						CheckLogout(json); //检查是否登陆过期		
+						if (json.code == 0) {
+							if(isEdit){
+								if(type == 1){
+									var optionHtml = '<option value="">全部</option>';
+									var myData = json.data;
+									for (var i = 0; i < myData.length; i++) {
+										optionHtml = optionHtml + '<option value="' + myData[i]["id"] + '">' + myData[i]["name"] + '</option>';
+									}
+									$('#edit_item .add_shengId'+index).html(optionHtml);
+									$('#edit_item .add_shengId'+index).val(province);
+									getShengSelect(province,2,index,true,province,city);
+									initEdit(index);
+								}else if (type == 2){
+									var optionHtml = '<option value="">全部</option>';
+									var myData = json.data;
+									for (var i = 0; i < myData.length; i++) {
+										optionHtml = optionHtml + '<option value="' + myData[i]["id"] + '">' + myData[i]["name"] + '</option>';
+									}
+									$('#edit_item .add_shiId'+index).html(optionHtml);
+									$('#edit_item .add_shiId'+index).val(city);
+									
+									
+									
+								}
+							}else{
+								if(type == 1){
+									var optionHtml = '<option value="">全部</option>';
+									var myData = json.data;
+									for (var i = 0; i < myData.length; i++) {
+										optionHtml = optionHtml + '<option value="' + myData[i]["id"] + '">' + myData[i]["name"] + '</option>';
+									}
+									$('#add_item .add_shengId'+index).html(optionHtml);
+								}else if (type == 2){
+									var optionHtml = '<option value="">全部</option>';
+									var myData = json.data;
+									for (var i = 0; i < myData.length; i++) {
+										optionHtml = optionHtml + '<option value="' + myData[i]["id"] + '">' + myData[i]["name"] + '</option>';
+									}
+									$('#add_item .add_shiId'+index).html(optionHtml);
+								}
+							}
+							
+							
+
+						} else {
+							$(".getSelect").html('<option value="">获取菜单失败</option>');
+						}
+
+						InitTime(tableTimeout);
+					},
+					error: function(xml, text, errorThrown) {
+						if (text == "timeout") {
+							TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+						} else {
+							TipsAlert("请求数据失败,请联系后台技术人员");
+						}
+						InitTime(tableTimeout);
+					}
+				})
+			}
+
+			/**
+			 * 该方法用于初始化列表
+			 * @param {Number} startIndex startIndex是数据起始下标
+			 * */
+			function InitTbodyList(startIndex) {
+				Showload("正在初始化列表......");
+				tableTimeout = setInterval("Timeout(tableTimeout)", 1000);
+				$.ajax({
+					type: "get",
+					url: urls + common_url.sysFreightTemplate_ListPage,
+					async: true,
+					timeout: 30000,
+					dataType: "json",
+					headers: {
+						'X-Access-Token': userMessage.token,
+					},
+					data: {
+						// nameValue:$("#check_arg1_input").val(),
+						// goodsCateFirstId:$("#check_arg2_input").val(),
+						// brandId:$("#check_arg3_input").val(),
+						// goodsVerifyStatus:0,
+						page: startIndex,
+						limit: limits
+					},
+					success: function(json) {
+						console.log(json);
+						CheckLogout(json); //检查是否登陆过期
+						if (json.code == 0) {
+							totalPages = json.data.records.total;
+							var myData = json.data.records;
+							var tableHtml = "";
+							counts = json.data.total;
+							console.log(myData);
+							if (counts == 0) { //显示或隐藏分页
+								$("#footer_page_div").hide();
+							} else {
+								$("#footer_page_div").show();
+							}
+							maxIndex = (counts / limits).toCeil(0);
+							$(".count_page_span").html(maxIndex); //设置当前共几页  
+							$(".counts_span").html(counts);
+							for (var i = 0; i < myData.length; i++) {
+								if (myData[i]["frWay"] == 1) {
+									myData[i]["frWay_input"] = "按重量计算";
+									myData[i]["frWay_jiawei"] = "Kg";
+								} else {
+									myData[i]["frWay_input"] = "按商品件数计算";
+									myData[i]["frWay_jiawei"] = "件";
+								}
+
+								if (myData[i]["frStatus"] == 1) { //启用
+									myData[i]["frStatus_input"] = "启用";
+									myData[i]["isstatus"] = 2;
+								} else {
+									myData[i]["frStatus_input"] = "禁用";
+									myData[i]["isstatus"] = 1;
+								}
+
+								tableHtml = tableHtml + '<tr>' +
+									'<td data-addPrice="' + myData[i]["addPrice"] + '" data-addPrice="' + myData[i]["addPrice"] +
+									'" data-addWeightNumber="' + myData[i]["addWeightNumber"] + '" data-defaultPrice="' + myData[i][
+										"defaultPrice"
+									] + '" data-defaultPieceNumber="' + myData[i]["defaultPieceNumber"] + '" data-frWay="' + myData[i]["frWay"] +
+									'" data-frName="' + myData[i]["frName"] + '" data-status="' + myData[i]["isstatus"] + '" data-id="' +
+									myData[i]["id"] + '" data-cateName="' + myData[i]["cate_name"] + '" data-sort="' + myData[i]["sort"] + '">' +
+									myData[i]["id"] + '</td>' +
+									'<td>' + myData[i]["frName"] + '</td>' +
+									'<td>' + myData[i]["frWay_input"] + '</td>' +
+									'<td>' + myData[i]["defaultPieceNumber"] + myData[i]["frWay_jiawei"] + '</td>' +
+									'<td>' + myData[i]["defaultPrice"] + '元</td>' +
+									'<td>' + myData[i]["addWeightNumber"] + myData[i]["frWay_jiawei"] + '</td>' +
+									'<td>' + myData[i]["addPrice"] + '元</td>' +
+									'<td>' + myData[i]["createTime"] + '</td>' +
+									'<td><span class="under_line cursor_pointer set_span pl20 c_1ABC9C">' + myData[i]["frStatus_input"] +
+									'</span></td>' +
+									'<td>' +
+									'<span class="under_line cursor_pointer edit_span c_1ABC9C" data-toggle="modal" data-target="#edit_dialog">编辑</span>' +
+									'<span class="under_line cursor_pointer delete_span pl20 c_1ABC9C" >删除</span>' +
+									'</td>' +
+									'</tr>';
+							}
+							$("#list_tbody").html(tableHtml);
+							DealTable();
+							InitFunc();
+						} else {
+							TipsAlert(json.msg);
+							// if (json.return_msg == "Session过期") {
+							// 	window.location = "login_timeout.html";
+							// }else{
+							// 	TipsAlert(json.return_msg);
+							// }
+						}
+						InitTime(tableTimeout);
+					},
+					error: function(xml, text, errorThrown) {
+						if (text == "timeout") {
+							TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+						} else {
+							TipsAlert("请求数据失败,请联系后台技术人员");
+						}
+						InitTime(tableTimeout);
+					}
+
+				});
+			}
+
+
+
+			/**
+			 * 该方法用于初始化操作列里的事件
+			 * */
+			function InitFunc() {
+				$(".edit_span").each(function() { //编辑按钮
+					$(this).click(function() {
+						var dataset = $(this).parents("td").siblings("td").eq(0)[0].dataset;
+						console.log(dataset)
+						$.ajax({
+							type: "get",
+							url: urls + common_url.sysFreightTemplate_templateView,
+							async: true,
+							timeout: 30000,
+							dataType: "json",
+							headers: {
+								'X-Access-Token': userMessage.token,
+							},
+							data: {
+								id: dataset.id
+							},
+							success: function(json) {
+								console.log(json);
+								CheckLogout(json);
+								if (json.code == 0) {
+									var data = json.data;
+									$("#edit_form #edit_id").val(data.template.id);
+									$("#edit_form #frName").val(data.template.frName);
+									var unit = '';
+									if (data.template.frWay == 1) {
+										$("#zhongliang").attr("checked", true);
+										$(".unit").html('kg')
+										frWayInit = 1;
+										unit = 'kg';
+									} else if (data.template.frWay == 2) {
+										$("#jianshu").attr("checked", true);
+										$(".unit").html('件')
+										frWayInit = 2;
+										unit = '件';
+									}
+									
+									$("input[name='wocao']:checked").val(data.template.frway);
+									$("#edit_form #defaultPieceNumber").val(data.template.defaultPieceNumber);
+									$("#edit_form #defaultPrice").val(data.template.defaultPrice);
+									$("#edit_form #addWeightNumber").val(data.template.addWeightNumber);
+									$("#edit_form #addPrice").val(data.template.addPrice);
+									
+									var emmList = '';
+									for(var i = 0; i < data.sysFreightTemplateDetaileds.length;i++){
+										console.log(data.sysFreightTemplateDetaileds[i])
+										emmList = emmList + '<div id="'+i+'" class="pull-left mt10"><select name="" id="province'+i+'" class="pull-left h30 br_e5e6e7 f14 getShengSelect add_shengId'+i+'" style="width: 80px;height:34px;margin-left: 15px;"><option>全部</option></select><span class="pull-left h30 lh30 ml10">省</span><select name="" id="city" class="pull-left h30 br_e5e6e7 f14 getShiSelect add_shiId'+i+'" style="width: 80px;height:34px;margin-left: 15px;"><option>全部</option></select><span class="pull-left h30 lh30 ml10">市</span><select name="" id="" class="pull-left h30 br_e5e6e7 f14 getQuSelect add_quId none" style="width: 80px;height:34px;margin-left: 15px;"></select><span class="pull-left h30 lh30 ml10 none">区</span><input type="text" class="form-control h30 pull-left ml10" style="width: 80px;" id="firstNumber'+i+'" value="'+data.sysFreightTemplateDetaileds[i].firstNumber+'" placeholder="" aria-required="true"><span class="pull-left h30 lh30 ml10"><span class="unit">'+unit+'</span>内</span><input type="text" class="form-control h30 pull-left ml10" style="width: 80px;" id="firstPrice'+i+'" value="'+data.sysFreightTemplateDetaileds[i].firstPrice+'" placeholder="" aria-required="true"><span class="pull-left h30 lh30 ml10">元，</span><span class="pull-left h30 lh30">每增加</span><input type="text" class="form-control h30 pull-left ml10" style="width: 80px;" id="continueNumber'+i+'" value="'+data.sysFreightTemplateDetaileds[i].continueNumber+'" placeholder="" aria-required="true"><span class="pull-left h30 lh30 ml10"><span class="unit">'+unit+'</span>，增加运费</span><input type="text" class="form-control h30 pull-left ml10" style="width: 80px;" id="continuePrice'+i+'" value="'+data.sysFreightTemplateDetaileds[i].continuePrice+'" placeholder="" aria-required="true"><span class="pull-left h30 lh30 ml10">元</span> <span class="pull-left h30 lh30 ml10 under_line cursor_pointer delete_span pl20 c_1ABC9C" onclick=\'deltr("' + i + '",2)\'>删除</span></div>'
+										getShengSelect("",1,i,true,data.sysFreightTemplateDetaileds[i].province,data.sysFreightTemplateDetaileds[i].city);
+										initArea(i);
+									}
+									$("#edit_item").html(emmList);
+									
+		
+
+
+								}
+								InitTime(deleteTimeOut);
+							},
+							error: function(xml, text, e) {
+								if (text == "timeout") {
+									TipsAlert("请求超时,请检查网络或着重新操作");
+								} else {
+									TipsAlert("请求数据失败,请联系后台技术人员");
+								}
+								InitTime(deleteTimeOut);
+							}
+						});
+
+
+					});
+				}); //编辑按钮结束括号
+
+				$(".set_span").each(function() { //删除按钮
+					$(this).click(function() {
+						var dataset = $(this).parents("td").siblings("td").eq(0)[0].dataset;
+						console.log(dataset);
+						swal({
+							title: "提示",
+							text: "是否执行，请谨慎操作！",
+							type: "warning",
+							showCancelButton: true,
+							confirmButtonColor: "#DD6B55",
+							confirmButtonText: "是的",
+							cancelButtonText: "让我再考虑一下…",
+							closeOnConfirm: false,
+							closeOnCancel: true
+						}, function(yes) {
+							if (yes) {
+								Showload("正在请求数据，请稍后....");
+								deleteTimeOut = setInterval("Timeout(deleteTimeOut)", 1000);
+								$.ajax({
+									type: "post",
+									url: urls + common_url.sysFreightTemplate_updateStatus,
+									async: true,
+									timeout: 30000,
+									dataType: "json",
+									headers: {
+										'X-Access-Token': userMessage.token,
+									},
+									data: {
+										id: dataset.id,
+										status: dataset.status
+									},
+									success: function(json) {
+										console.log(json);
+										CheckLogout(json);
+										if (json.code == 0) {
+											swal({
+												title: "操作成功",
+												text: "操作成功",
+												type: "success",
+											}, function() {
+												location.reload();
+											});
+										}
+										InitTime(deleteTimeOut);
+									},
+									error: function(xml, text, e) {
+										if (text == "timeout") {
+											TipsAlert("请求超时,请检查网络或着重新操作");
+										} else {
+											TipsAlert("请求数据失败,请联系后台技术人员");
+										}
+										InitTime(deleteTimeOut);
+									}
+								});
+							}
+						});
+
+					});
+				}); //删除按钮结束括号
+
+
+				$(".delete_span").each(function() { //删除按钮
+					$(this).click(function() {
+						var dataset = $(this).parents("td").siblings("td").eq(0)[0].dataset;
+						console.log(JSON.parse(sessionStorage.getItem("user_message")));
+						var userMessage = JSON.parse(sessionStorage.getItem("user_message"));
+						console.log(userMessage.token);
+						swal({
+							title: "请再次确认是否删除？",
+							text: "删除后将无法恢复，请谨慎操作！",
+							type: "warning",
+							showCancelButton: true,
+							confirmButtonColor: "#DD6B55",
+							confirmButtonText: "是的，确定删除",
+							cancelButtonText: "让我再考虑一下…",
+							closeOnConfirm: false,
+							closeOnCancel: true
+						}, function(yes) {
+							if (yes) {
+								Showload("正在请求删除，请稍后....");
+								deleteTimeOut = setInterval("Timeout(deleteTimeOut)", 1000);
+								$.ajax({
+									type: "post",
+									url: urls + common_url.sysFreightTemplate_templateDelete,
+									async: true,
+									timeout: 30000,
+									dataType: "json",
+									headers: {
+										'X-Access-Token': userMessage.token,
+									},
+									data: {
+										id: dataset.id
+									},
+									success: function(json) {
+										console.log(json);
+										CheckLogout(json);
+										if (json.code == 0) {
+											swal({
+												title: "删除成功",
+												text: "删除成功",
+												type: "success",
+											}, function() {
+												location.reload();
+											});
+										}
+										InitTime(deleteTimeOut);
+									},
+									error: function(xml, text, e) {
+										if (text == "timeout") {
+											TipsAlert("请求超时,请检查网络或着重新操作");
+										} else {
+											TipsAlert("请求数据失败,请联系后台技术人员");
+										}
+										InitTime(deleteTimeOut);
+									}
+								});
+							}
+						});
+
+					});
+				}); //删除按钮结束括号
+			}
+		</script>
+
+
+	</body>
+</html>

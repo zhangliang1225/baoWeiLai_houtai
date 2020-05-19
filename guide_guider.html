@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html>
+
+	<!-- Mirrored from www.zi-han.net/theme/hplus/table_jqgrid.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:20:02 GMT -->
+
+	<head>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>角色管理</title>
+
+		<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+		<link href="css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+		<link href="css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+		
+		<link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+		<link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+		<link href="css/animate.min.css" rel="stylesheet">
+		<link href="css/style.min862f.css?v=4.1.0" rel="stylesheet">
+				
+		<style>
+			/* 重写bookstrap样式表 勿删 */
+			.form_inputs{width: 160px;background-color: #ebebeb;border: 1px solid #06a3f9;border-radius: 20px;-webkit-border-radius: 20px;-moz-border-radius: 20px;-o-border-radius: 20px;-ms-border-radius: 20px;}
+			.ibox-title{padding:20px;}
+			.ui-jqdialog{height: auto!important;}
+			.ui-common-table tbody{background-color: #eaf5fc!important;}
+			.modal-dialog{margin: 80px auto!important;}
+			.form-group{margin-left:0px!important;margin-right:0px!important;}
+			.modal-sm{width: 600px;}
+			.col-sm-3{width: 30%;}
+			.col-sm-8{width: 70%;}
+			.form-horizontal .control-label{text-align: left;padding-top: 5px;font-size: 18px;}
+			@media only screen and (min-width: 100px) and (max-width: 600px) {
+				.modal-sm{width: 400px;}
+				.col-sm-3{width: 40%;}
+				.col-sm-8{width: 60%;}
+				.scroll_div{width: 85%;}
+				.form-horizontal .control-label{text-align: left;padding-top: 5px;font-size: 14px;}
+				.dialog_btn{font-size: 14px!important;}
+			}
+			@media only screen and (min-width: 650px){
+				.modal-sm{width: 600px;}
+			}
+
+			/*以下是等待状态的通用样式*/
+			.wating_big_div{position: fixed;top:0px ;width: 100%;height: 100%;display: table;z-index: 9999;}
+			.zhezhao{opacity: 0.3;position: absolute;top: 0px;width: 100%;height: 100%;z-index: 9999;}
+			.wating_content_div{text-align: center;background:none;display: table-cell;vertical-align: middle;}	
+			/*以上是等待状态的通用样式*/
+		</style>
+	</head>
+
+	<body class="gray-bg">
+		<div class="wrapper wrapper-content  animated fadeInRight">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="ibox ">
+						<div class="ibox-title pull-left w100p">
+							<div class="pull-left">
+								<button class="order_mange_addbtn hover_blue br8 bdno c_f"  data-toggle="modal" data-target="#add_role_dialog">新增角色</button>
+							</div>
+						</div>
+						<div class="ibox-content pull-left w100p">
+
+                            
+							<div class="pull-left w100p">
+								<table class="table table-bordered mb0 " >
+		                            <thead>
+		                                <tr>
+		                                    <th class="none">id</th>
+		                                    <th>角色名称</th>
+                                        <th>角色描述</th>
+                                        <th>创建时间</th>
+		                                    <th>操作</th>
+		                                </tr>
+		                            </thead>
+		                            <tbody id="roleManage_list_tbody">
+		                            </tbody>
+	                            </table>
+							</div>
+                            <div class="pull-left tac c0 f14 w100p pre mt10 none" id="footer_page_div">
+                <div class="">
+                  <div class="pull-left">
+                    <div class="ibox-tools">
+                      <a class="refresh_a">
+                        <i class="fa fa-refresh"></i> 刷新
+                      </a>
+                    </div>
+                  </div>
+                  <span class="under_line cursor_pointer last_span">上一页</span>
+                  <span class="pl20 page_span">1</span>
+                  <span class="pl20 under_line cursor_pointer next_span">下一页</span>
+                  <span class="pl20">共 <span class="count_page_span">1</span> 页</span>
+                  <div class="disib ml20">
+                    每页显示：
+                    <select class="p0 disib page_select" >
+                                    <option value="">10</option>
+                                    <option value="" selected="selected">20</option>
+                                    <option value="">30</option>
+                                  </select>
+                                    条
+                  </div>
+                </div>
+								<div class="record_right_div">
+									<!--record_right_div pull-right mt10-->
+									数据库总数量： <span class="counts_span">0</span> 条
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--新增的弹框-->
+    <div class="modal inmodal fade" id="add_role_dialog" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content br8">
+                <div class="modal-header p10 bdno" >
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <span class="modal-title f18" >新增角色</span>
+                </div>
+                <div class="modal-body bg_f p0" > 
+                  <div class="ibox-content p30">
+                      <form class="form-horizontal m-t" id="add_role_form" method="post" >
+                        <input type="hidden" class="createBy_input" name="createBy" id="" value="" />
+                          <!-- <input type="hidden" class="roleCode_input" name="roleCode" value="" /> -->
+                          <div class="form-group " >
+                              <label class="col-sm-3 control-label pull-left">角色名称</label>
+                              <div class="col-sm-8 pull-left">
+                                  <input type="text" class="form-control" name="roleName" value="" required="" aria-required="true">
+                              </div>
+                          </div>
+                            <div class="form-group">
+                              <label class="col-sm-3 control-label pull-left">描述</label>
+                              <div class="col-sm-8 pull-left">
+                                  <textarea name="description" class="form-control" ></textarea>
+                              </div>
+                          </div>
+                        </form>
+                  </div>
+                </div>
+                <div class="modal-footer bdno tac pt0040">
+                    <button type="button" class=" btn-white clear_btn_style dialog_btn" data-dismiss="modal" >关闭</button>
+                    <button type="button" class=" btn-primary clear_btn_style bdno dialog_btn ml30" id="add_role_btn" >保存</button>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--修改的弹框-->
+    <div class="modal inmodal fade" id="edit_admin_dialog" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content br8">
+                <div class="modal-header p10 bdno" >
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <span class="modal-title f18" >修改角色信息</span>
+                </div>
+                <div class="modal-body bg_f p0" > 
+                  <div class="ibox-content p30">
+                      <form class="form-horizontal m-t" id="edit_role_form" method="post" >
+                        <input type="hidden" class="token_input" name="token" id="" value="" />
+                          <input type="hidden" class="userinfoId_input" name="modifyUserinfoId" value="" />
+                          <div class="form-group none">
+                              <label class="col-sm-3 control-label pull-left">id</label>
+                              <div class="col-sm-8 pull-left">
+                                  <input type="text" class="form-control" name="id" value="" required="" aria-required="true">
+                              </div>
+                          </div>
+                          <div class="form-group " >
+                              <label class="col-sm-3 control-label pull-left">角色名称</label>
+                              <div class="col-sm-8 pull-left">
+                                  <input type="text" class="form-control" name="name" value="" required="" aria-required="true">
+                              </div>
+                          </div>
+                            <div class="form-group">
+                              <label class="col-sm-3 control-label pull-left">描述</label>
+                              <div class="col-sm-8 pull-left">
+                                  <textarea name="description" class="form-control" ></textarea>
+                              </div>
+                          </div>
+                        </form>
+                  </div>
+                </div>
+                <div class="modal-footer bdno tac pt0040">
+                    <button type="button" class=" btn-white clear_btn_style dialog_btn" data-dismiss="modal" >关闭</button>
+                    <button type="button" class=" btn-primary clear_btn_style bdno dialog_btn ml30" id="edit_role_btn" >保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--设置权限的弹框-->
+    <div class="modal inmodal fade" id="set_power_dialog" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content br8">
+                <div class="modal-header p10 bdno" >
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <span class="modal-title f18" >设置权限</span>
+                </div>
+                <div class="modal-body bg_f p0" > 
+                  <div class="ibox-content p30">
+                    <div class="clear_li_style w100p" id="role_show_ul">
+                      <div class="mt10">
+                        <i class="fa fa-caret-right f16 cursor_pointer none open_father_caret w10"></i>
+                        <i class="fa fa-caret-down f16 cursor_pointer close_father_caret w10"></i>
+                        <label class="checkbox-inline father_label i-checks">
+                                  <input type="checkbox" value="option1">全选
+                        </label>
+                                <div class="w100p pl30 father_menu_div">
+                                  <ul class="clear_li_style w100p" id="father_menu_ul">
+                                    <!-- <li class="mt5 one_menu_li">
+                                      <i class="fa fa-caret-right f16 cursor_pointer w10 none open_twolevel_caret"></i>
+                                      <i class="fa fa-caret-down f16 cursor_pointer w10 close_twolevel_caret"></i>
+                                      <label class="checkbox-inline one_menu_check i-checks ">
+                                          <input type="checkbox" value="option1">一级菜单
+                                      </label>
+                                      <div class="w100p pl30 two_level_menu">
+                                        <ul class="clear_li_style w100p">
+                                          <li class="mt5 two_menu_li">
+                                            <i class="fa fa-caret-right f16 cursor_pointer w10 none open_threelevel_caret"></i>
+                                            <i class="fa fa-caret-down f16 cursor_pointer w10 close_threelevel_caret"></i>
+                                            <label class="checkbox-inline two_menu_check i-checks ">
+                                                <input type="checkbox" value="option1">二级菜单
+                                            </label>
+                                            <div class="w100p pl30 three_level_menu">
+                                              <ul class="clear_li_style w100p">
+                                                <li class="mt5">
+                                                  <label class="checkbox-inline three_menu_check i-checks ">
+                                                      <input type="checkbox" value="option1">三级菜单
+                                                  </label>
+                                                </li>
+                                                <li class="mt5">
+                                                  <label class="checkbox-inline three_menu_check i-checks ">
+                                                      <input type="checkbox" value="option1">三级菜单
+                                                  </label>
+                                                </li>
+                                                <li class="mt5">
+                                                  <label class="checkbox-inline three_menu_check i-checks ">
+                                                      <input type="checkbox" value="option1">三级菜单
+                                                  </label>
+                                                </li>
+                                              </ul>
+                                            </div>
+                                          </li>
+                                          <li class="mt5 pl13 two_menu_li">
+                                            <label class="checkbox-inline two_menu_check i-checks ">
+                                                <input type="checkbox" value="option1">二级菜单
+                                            </label>
+                                          </li>
+                                          <li class="mt5 pl13 two_menu_li">
+                                            <label class="checkbox-inline two_menu_check i-checks ">
+                                                <input type="checkbox" value="option1">二级菜单
+                                            </label>
+                                          </li>
+                                        </ul>
+                                      </div>
+                                    </li> -->
+                                    <!-- <li class="mt5 one_menu_li pl13">
+                                      <label class="checkbox-inline one_menu_check i-checks ">
+                                          <input type="checkbox" value="option1">一级菜单
+                                      </label>
+                                    </li>
+                                    <li class="mt5 one_menu_li one_menu_check pl13">
+                                      <label class="checkbox-inline i-checks ">
+                                          <input type="checkbox" value="option1">一级菜单
+                                      </label>
+                                    </li> -->
+                                  </ul>
+                                </div>
+                      </div>
+                      
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer tac">
+                    <button type="button" class=" btn-white clear_btn_style dialog_btn" data-dismiss="modal" >关闭</button>
+                    <button type="button" class=" btn-primary clear_btn_style bdno dialog_btn ml30" id="set_power_btn" >保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--加载遮罩组件-->
+    <div class="none" id="wating_show">
+      <div class="ibox wating_big_div">
+          <div class="zhezhao bg_f"></div>
+          <div class="ibox-content wating_content_div " >
+              <div class="spiner-example">
+                  <div class="sk-spinner sk-spinner-wave">
+                      <div class="sk-rect1"></div>
+                      <div class="sk-rect2"></div>
+                      <div class="sk-rect3"></div>
+                      <div class="sk-rect4"></div>
+                      <div class="sk-rect5"></div>
+                  </div>
+                  <h5 class="f20 c0" ><span id="loading_text">正在请求 ，请稍后...... </span>(<span id="second_span">0</span>)秒</h5>
+              </div>
+          </div>
+      </div>
+    </div>
+		<script src="js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>        
+		<script src="js/bootstrap.min.js?v=3.3.6"></script>
+		<script src="js/plugins/peity/jquery.peity.min.js"></script>
+		<script src="js/content.min.js?v=1.0.0"></script>
+		<script src="js/plugins/layer/laydate/laydate.js"></script>
+		<script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+		<script src="js/plugins/iCheck/icheck.min.js"></script>
+    <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/cropper.min.js"></script>
+		<script>
+			var tableTimeout,addManageTimeout,setPowerTime,editManageTimeout,deleteTimeOut,getPowerTime,limits = 20,page = 1,counts = 0,table_title,roleID;
+      var cherk_roleId;
+      
+      var totalPages = 0;
+      
+			$(document).ready(function() {
+				IsTokenSave();
+				$(".refresh_a").click(function(){//刷新按钮
+	        		location.reload();        		
+	        	});
+	        	$(".i-checks").iCheck({  //check必须有的脚本
+					checkboxClass: "icheckbox_square-green",
+					radioClass: "iradio_square-green",
+				});
+				InitTbodyList(page);//获取管理员列表数据
+				table_title = ["id","角色名称","描述"];  //用于获取当前列的值
+				
+				$("#check_btn").click(function () {//查询按钮
+					powerName = $("#check_input").val();
+					page = 1;//重置页数
+					$(".role_page_span").html(1);//重置页数
+					InitTbodyList(page);//获取列表数据
+				});
+							
+				$(".page_select").change(function() { //选择一页多少条数据的select
+            page = 1;//重置页数
+            $(".page_span").html(1);//重置页数
+            limits = $(".page_select option:selected").text();  //设置当前显示数量
+            InitTbodyList(page);
+        });
+        
+        $(".last_span").click(function() {  //上一页
+            if (page < 2) {
+                TipsAlert("这是最前面的数据了");
+                return false;
+            }
+            page--;
+            $(".page_span").html(parseInt($(".page_span").html()) - 1);
+            InitTbodyList(page);
+        });		
+        $(".next_span").click(function() { //下一页
+            if (page > totalPages-1) {
+                TipsAlert("这是最后面的数据了");
+                return false;
+            }
+            page++;
+            $(".page_span").html(parseInt($(".page_span").html()) + 1);
+            InitTbodyList(page);
+        });
+        
+
+				$("#add_role_btn").click(function () { //新增角色的保存按钮
+					if ($("#add_role_form .form-control").eq(0).val().trim() == "") {
+						TipsAlert("角色名称不能为空");
+						return false;
+					}
+					
+					$("#add_role_form .createBy_input").val(userMessage.userInfo.username);
+					console.log($("#add_role_form").serialize());
+					Showload("正在初始化列表......");
+					addManageTimeout = setInterval("Timeout(addManageTimeout)", 1000);
+					$.ajax({
+						type:"post",
+						url:urls+ common_url.role_add,
+						async:true,
+						timeout:30000,
+						dataType:"json",
+						headers:{
+							'X-Access-Token':userMessage.token,
+						},
+						data:$("#add_role_form").serialize(),
+						success:function  (json) {
+							CheckLogout (json);//检查是否登陆过期
+							if (json.code == 200) {
+								swal({
+								    title: "添加成功",
+								    text: "添加成功",
+								    type: "success",
+								},function () {
+									location.reload();
+								});
+							} else{
+								TipsAlert(json.return_msg);
+							}
+							InitTime (addManageTimeout);
+						},
+						error:function(xml, text, errorThrown) {
+							if (text == "timeout") {
+								TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+							} else{
+								TipsAlert("请求数据失败,请联系后台技术人员");
+							}
+							InitTime (addManageTimeout);
+						}
+						
+					});
+
+				});
+				$("#edit_role_btn").click(function () { //修改角色的保存按钮
+					
+					if ($("#edit_role_form .form-control").eq(1).val().trim() == "") {
+						TipsAlert("角色名称不能为空");
+						return false;
+					}
+					
+					Showload("正在修改信息......");
+					editManageTimeout = setInterval("Timeout(editManageTimeout)", 1000);
+					$.ajax({
+						type:"post",
+						url:urls+ common_url.updateRole,
+						async:true,
+						timeout:30000,
+						dataType:"json",
+						data:$("#edit_role_form").serialize(),
+						success:function(json) {
+							CheckLogout (json);//检查是否登陆过期
+							if (json.return_code == "SUCCESS") {
+								swal({
+								    title: "修改成功",
+								    text: "修改成功",
+								    type: "success",
+								},function () {
+									location.reload();
+								});
+							} else{
+								TipsAlert(json.return_msg);
+							}
+							InitTime (editManageTimeout);
+						},
+						error:function(xml, text, errorThrown) {
+							if (text == "timeout") {
+								TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+							} else{
+								TipsAlert("请求数据失败,请联系后台技术人员");
+							}
+							InitTime (editManageTimeout);
+						}
+						
+					});
+				});
+				
+				$("#set_power_btn").click(function () {//设置管理员角色的弹窗的保存按钮
+					var idHtml = '';
+					$("#father_menu_ul li").each(function() {
+						if ($(this).find(".icheckbox_square-green").hasClass("checked")) {
+							idHtml = idHtml + "," + $(this).data("powerid");
+						}
+					});
+					idHtml = idHtml.substr(1,idHtml.length);
+					console.log(idHtml);
+					console.log(cherk_roleId);
+					Showload("正在设置角色......");
+					setPowerTime = setInterval("Timeout(setPowerTime)", 1000);
+					$.ajax({
+						type:"post",
+						url:urls + common_url.role_saveRolePermission,
+						async:true,
+						timeout:30000,
+						dataType:"json",
+						headers:{
+							'X-Access-Token':userMessage.token,
+						},
+						data:{
+							roleId:cherk_roleId,
+							permissionIds:idHtml
+						},
+						success:function(json) {
+							console.log(json);
+							CheckLogout (json);
+							if (json.code == 200) {
+								swal({
+									title: "菜单分配成功",
+									text: "菜单分配成功",
+									type: "success",
+								},function () {
+									location.reload();
+								});
+							}
+							InitTime (deleteTimeOut);
+						},
+						error:function (xml,text,e) {
+							if (text == "timeout") {
+								TipsAlert("请求超时,请检查网络或着重新操作");
+							} else{
+								TipsAlert("请求数据失败,请联系后台技术人员");
+							}
+							InitTime (deleteTimeOut);
+						}
+					});
+				});
+			});
+			
+			/**
+			 * 该方法用于初始化列表
+			 * @param {Number} startIndex startIndex是数据起始下标
+			 * */
+			function InitTbodyList (startIndex) {
+				Showload("正在初始化列表......");
+				tableTimeout = setInterval("Timeout(tableTimeout)", 1000);
+				$.ajax({
+					type:"get",
+					url:urls+ common_url.role,
+					async:true,
+					timeout:30000,
+					dataType:"json",
+					headers:{
+						'X-Access-Token':userMessage.token,
+					},
+					data:{
+						column:'createTime',
+						pageSize:limits,
+						pageNo:startIndex,
+						order:'desc'
+					},
+					success:function  (json) {
+						console.log(json);
+						CheckLogout (json);//检查是否登陆过期
+
+						
+						if (json.code == 200) {
+              totalPages = json.result.pages;
+							var myData = json.result.records;
+							var tableHtml = "";
+							counts = json.result.total;
+							console.log(myData);
+							if (counts == 0) { //显示或隐藏分页
+								$("#footer_page_div").hide();
+							} else{
+								$("#footer_page_div").show();
+							}
+							$(".count_page_span").html((counts / limits).toCeil(0)); //设置当前共几页  
+							$(".counts_span").html(counts);
+							for (var i = 0; i < myData.length; i++) {
+								tableHtml = tableHtml + '<tr>'
+											+ '<td class="name" data-roleid="' + myData[i]["id"] + '">'+myData[i]["roleName"]+'</td>'
+											+ '<td>'+myData[i]["description"]+'</td>'
+											+ '<td>'+myData[i]["createTime"]+'</td>'
+											+ '<td>'
+											+ '<span class="under_line cursor_pointer edit_role_span c_5bb7ee" data-toggle="modal" data-target="#edit_admin_dialog">修改</span>'
+											+ '<span class="under_line cursor_pointer set_role_span c_5bb7ee pl20" data-toggle="modal" data-target="#set_power_dialog">菜单分配</span>'
+											+ '<span class="under_line cursor_pointer delete_role_span pl20 c_red" >删除</span>'
+											+ '</td>'
+											+ '<td class="none parentId">'+myData[i]["parentId"]+'</td>'
+											+ '<td class="none type">'+myData[i]["type"]+'</td>'
+								  		  	+ '</tr>';
+							}
+							$("#roleManage_list_tbody").html(tableHtml);
+							DealTable();
+							InitAdminFun();
+						} else{
+							if (json.return_msg == "Session过期") {
+								window.location = "login_timeout.html";
+							}else{
+								TipsAlert(json.return_msg);
+							}
+						}
+
+						InitTime (tableTimeout);
+					},
+					error:function(xml, text, errorThrown) {
+						if (text == "timeout") {
+							TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+						} else{
+							TipsAlert("请求数据失败,请联系后台技术人员");
+						}
+						InitTime (tableTimeout);
+					}
+					
+				});
+			}
+			
+			/**
+			 * 该方法用于初始化菜单分配的权限列表
+			 * @param {Number} startIndex startIndex是数据起始下标
+			 * */
+			function getPowerList(powerList){
+				$.ajax({
+					type:"get",
+					url:urls+ common_url.role_queryTreeList,
+					async:true,
+					timeout:30000,
+					dataType:"json",
+					headers:{
+						'X-Access-Token':userMessage.token,
+					},
+					data:{},
+					success:function  (json) {
+						CheckLogout (json);//检查是否登陆过期
+						console.log(json);
+						$(".father_label .icheckbox_square-green").removeClass("checked");  //全选不选中  避免重复
+						if (json.code == 200) {
+							var myData = json.result.treeList;
+							console.log(myData);
+							var powerHtml = '',child1IHtml = '';
+							var c = myData.toString();//判断是否拥有该权限参数
+							for (var i = 0; i < myData.length; i++) {
+								var child1Data = myData[i].children; // 一级菜单下的二级菜单
+								console.log(child1Data);
+								if (child1Data.length > 0) {
+									child1IHtml = '<i class="fa fa-caret-right f16 cursor_pointer w10 none open_twolevel_caret"></i><i class="fa fa-caret-down f16 cursor_pointer w10 close_twolevel_caret"></i> ';
+                  var child2IHtml = '',child2LiHtml = '';
+
+									var v = child1Data.toString();//判断是否拥有该权限参数
+									for (var j = 0; j < child1Data.length; j++) { //二级菜单的循环
+										var child2Data = child1Data[j].childPrivileges;
+										var child3LiHtml = '';
+										// if (child2Data.length > 0) {
+										// 	child2IHtml = '<i class="fa fa-caret-right f16 cursor_pointer w10 none open_threelevel_caret"></i><i class="fa fa-caret-down f16 cursor_pointer w10 close_threelevel_caret"></i> ';
+										// 	for (var k = 0; k < child2Data.length; k++) {  //三级菜单的循环
+										// 		var is3Check = ''; //是否选中的文本  3级菜单是否已选中
+										// 		switch (child2Data[k]["roleHasPrivilege"]){
+										// 			case 0:
+										// 				is3Check = '';
+										// 				break;
+										// 			case 1:
+										// 				is3Check = 'checked = "checked"';
+										// 				break;
+										// 		}
+												
+										// 		child3LiHtml = child3LiHtml + '<li class="mt5 three_menu_li" data-powerid = '+child2Data[k]["permissionId"]+'><label class="checkbox-inline three_menu_check i-checks "><input type="checkbox" '+is3Check+' value="option1">'+child2Data[k]["name"]+'</label></li>'
+										// 	}
+										// }else{
+										// 	child2IHtml = '';
+										// }
+										var is2Check = '';//2级菜单是否已选中
+										if (v.indexOf(child1Data[j].toString()) > -1) {
+											// console.log(123)
+											for (var z = 0; z < powerList.length; z++) {
+												if (child1Data[j]["key"] == powerList[z]) {
+													is2Check = 'checked = "checked"';
+												}
+											}
+										}
+
+										child2LiHtml = child2LiHtml + '<li class="mt5 two_menu_li" data-powerid = '+child1Data[j]["key"]+'>' + child2IHtml
+														+ '<label class="checkbox-inline two_menu_check i-checks "><input type="checkbox" '+is2Check+' value="option1">'+child1Data[j]["title"]+'</label>'
+														+ '<div class="w100p pl30 three_level_menu"><ul class="clear_li_style w100p three_menu_ul">'
+														+ child3LiHtml
+														+ '</ul></div>'
+														+ '</li>';
+									}
+								}else{
+                  child1IHtml = '';
+                }
+								var is1Check = '';  //1级菜单是否已选中
+								if (c.indexOf(myData[i].toString()) > -1) {
+									// console.log(123)
+									for (var j = 0; j < powerList.length; j++) {
+										if (myData[i]["key"] == powerList[j]) {
+											is1Check = 'checked = "checked"';
+										}
+									}
+								}
+								powerHtml = powerHtml + ' <li class="mt5 one_menu_li" data-powerid = '+myData[i]["key"]+'>' + child1IHtml
+											+ '<label class="checkbox-inline one_menu_check i-checks"><input type="checkbox" '+is1Check+' value="option1">'+myData[i]["title"]+'</label>'
+											+ '<div class="w100p pl30 two_level_menu"><ul class="clear_li_style w100p">'
+											+ child2LiHtml
+											+ '</ul></div>'
+											+ '</li>';
+							}
+							$("#father_menu_ul").html(powerHtml);
+							$(".i-checks").iCheck({  //check必须有的脚本
+								checkboxClass: "icheckbox_square-green",
+								radioClass: "iradio_square-green",
+							});
+							
+							$(".three_menu_li").each(function () {  //去除三级菜单未null的选项
+								if ($(this).find("label").text() == "null") { //$(this).data("powerid")
+									$(this).remove();
+								}
+							});
+							InitClick ();  //初始化显示和隐藏的方法
+							IsAllCheck () ;//检测是否全选
+							
+						} else{
+							if (json.return_msg == "Session过期") {
+								window.location = "login_timeout.html";
+							}else{
+								TipsAlert(json.return_msg);
+							}
+						}
+						InitTime (getPowerTime);
+					},
+					error:function(xml, text, errorThrown) {
+						if (text == "timeout") {
+							TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+						} else{
+							TipsAlert("请求数据失败,请联系后台技术人员");
+						}
+						InitTime (getPowerTime);
+					}
+				});
+			
+			}
+
+			/**
+			 * 该方法用于初始化操作列里的事件
+			 * */
+			function InitAdminFun () {  
+				$(".edit_role_span").each(function(){  //点击编辑按钮时  获取对应的一列的表格的值
+					$(this).click(function () {
+						var data_table = {};//用于保存键值对
+						for (var i = 0; i < table_title.length; i++) {
+							var texts = $(this).parents("td").siblings("td").eq(i).text();
+							data_table[table_title[i]] = texts;
+						}
+						for (var i = 0; i < table_title.length; i++) {
+							$("#edit_role_form .form-group").each(function(){
+								if ($(this).find("label").html().trim() == table_title[i]) {
+									$(this).find(".form-control").val(data_table[table_title[i]]);
+								}
+							});
+						}
+					});
+				});
+				
+				$(".delete_role_span").each(function() { //删除按钮
+					$(this).click(function() {
+						var thisID = $(this).parents("td").siblings("td").eq(0)[0].dataset.roleid
+						swal({
+					        title: "确定删除？",
+					        text: "您确定要删除该角色吗，请谨慎操作！",
+					        type: "warning",
+					        showCancelButton: true,
+					        confirmButtonColor: "#DD6B55",
+					        confirmButtonText: "删除",
+					        cancelButtonText: "让我再考虑一下…",
+					        closeOnConfirm: false,
+					    }, function (e) {
+					    	if (e) {
+					    		swal({
+							        title: "请再次确认是否删除？",
+							        text: "删除后将无法恢复，请谨慎操作！",
+							        type: "warning",
+							        showCancelButton: true,
+							        confirmButtonColor: "#DD6B55",
+							        confirmButtonText: "是的，确定删除",
+							        cancelButtonText: "让我再考虑一下…",
+							        closeOnConfirm: true,
+							        closeOnCancel:true
+							    }, function (yes) {
+							    	if (yes) {
+							    		Showload("正在请求删除，请稍后....");
+										deleteTimeOut = setInterval("Timeout(deleteTimeOut)", 1000);
+										$.ajax({
+											type:"delete",
+											url:urls + common_url.role_delete,
+											async:true,
+											timeout:30000,
+											dataType:"json",
+											headers:{
+												'X-Access-Token':userMessage.token,
+											},
+											data:{id:thisID},
+											success:function(json) {
+                        console.log(json.code);
+												CheckLogout (json);
+												CheckLogout (json);
+												if (json.code == 200) {
+                          location.reload();
+                        }
+												InitTime (deleteTimeOut);
+											},
+											error:function (xml,text,e) {
+												if (text == "timeout") {
+													TipsAlert("请求超时,请检查网络或着重新操作");
+												} else{
+													TipsAlert("请求数据失败,请联系后台技术人员");
+												}
+												InitTime (deleteTimeOut);
+											}
+										});
+							    	} 
+							    });
+					    	}
+					    });
+					});
+				});//删除按钮结束括号
+				
+				
+				$(".set_role_span").each(function () {//设置权限的点击事件
+					$(this).click(function () {
+						var roleId = $(this).parents("td").siblings("td").eq(0)[0].dataset.roleid;
+						cherk_roleId = roleId;
+						console.log('roleID'+roleId);
+						$.ajax({
+							type:"get",
+							url:urls+ common_url.role_queryRolePermission,
+							async:true,
+							timeout:30000,
+							dataType:"json",
+							headers:{
+								'X-Access-Token':userMessage.token,
+							},
+							data:{
+								roleId:roleId
+							},
+							success:function  (json) {
+								CheckLogout (json);//检查是否登陆过期
+								console.log(json);
+								$(".father_label .icheckbox_square-green").removeClass("checked");  //全选不选中  避免重复
+								if (json.code == 200) {
+									var myData = json.result;
+									var powerList = [];
+									for (var i = 0; i < myData.length; i++) {
+										powerList.push(myData[i]);
+									}
+									// console.log(powerList)
+									getPowerList(powerList);
+								
+								} else{
+									if (json.return_msg == "Session过期") {
+										window.location = "login_timeout.html";
+									}else{
+										TipsAlert(json.return_msg);
+									}
+								}
+								InitTime (getPowerTime);
+							},
+							error:function(xml, text, errorThrown) {
+								if (text == "timeout") {
+									TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+								} else{
+									TipsAlert("请求数据失败,请联系后台技术人员");
+								}
+								InitTime (getPowerTime);
+							}
+						});
+			
+						
+					});	
+				});
+			}
+			
+			
+			/**
+			 * 该方法用于初始化设置权限弹框里面的显示和隐藏箭头以及checkbox的选择点击事件
+			 * */
+			function InitClick () {
+				$(".father_label").click(function () {//全选的label点击事件
+					if ($(this).children(".icheckbox_square-green").hasClass("checked")) {
+						$(this).siblings(".father_menu_div").find(".icheckbox_square-green").addClass("checked");
+					} else{
+						$(this).siblings(".father_menu_div").find(".icheckbox_square-green").removeClass("checked");
+					}
+				});
+				$(".father_label .iCheck-helper").click(function () {//全选的label点击事件
+					if ($(this).parents(".icheckbox_square-green").hasClass("checked")) {
+						$(this).parents(".father_label").siblings(".father_menu_div").find(".icheckbox_square-green").addClass("checked");
+					} else{
+						$(this).parents(".father_label").siblings(".father_menu_div").find(".icheckbox_square-green").removeClass("checked");
+					}
+				});
+				$(".open_father_caret").click(function () {  //全选的显示箭头点击事件
+					$(this).siblings(".close_father_caret").show();
+					$(this).siblings(".father_menu_div").show();
+					$(this).hide();
+				});
+				$(".close_father_caret").click(function () {  //全选的隐藏箭头点击事件
+					$(this).siblings(".open_father_caret").show();
+					$(this).siblings(".father_menu_div").hide();
+					$(this).hide();
+				});
+				$(".open_twolevel_caret").each(function () {  //2级菜单的显示箭头点击事件
+					$(this).click(function () {
+						$(this).siblings(".close_twolevel_caret").show();
+						$(this).siblings(".two_level_menu").show();
+						$(this).hide();
+					});
+				});
+				$(".close_twolevel_caret").each(function () {  //2级菜单的显示箭头点击事件
+					$(this).click(function() {
+						$(this).siblings(".open_twolevel_caret").css("display","inline-block");
+						$(this).siblings(".two_level_menu").hide();
+						$(this).hide();
+					});
+				});
+				$(".open_threelevel_caret").each(function () {  //3级菜单的显示箭头点击事件
+					$(this).click(function() {
+						$(this).siblings(".close_threelevel_caret").show();
+						$(this).siblings(".three_level_menu").show();
+						$(this).hide();
+					});
+					
+				});
+				$(".close_threelevel_caret").each(function () {  //3级菜单的显示箭头点击事件
+					$(this).click(function() {
+						$(this).siblings(".open_threelevel_caret").css("display","inline-block");
+						$(this).siblings(".three_level_menu").hide();
+						$(this).hide();
+					});
+				});
+				$(".one_menu_check").each(function () {  //一级菜单的label的点击事件
+					$(this).click(function() {
+						if ($(this).children(".icheckbox_square-green").hasClass("checked")) {
+							$(this).siblings(".two_level_menu").find(".icheckbox_square-green").addClass("checked");
+						}else{
+							$(this).siblings(".two_level_menu").find(".icheckbox_square-green").removeClass("checked");
+						}
+						IsAllCheck () ;//检测是否全选
+					});
+				});
+				$(".one_menu_check .iCheck-helper").each(function () {//一级菜单的input框的点击事件  功能同上
+					$(this).click(function () {
+						if ($(this).parents(".icheckbox_square-green").hasClass("checked")) {
+							$(this).parents(".one_menu_check ").siblings(".two_level_menu").find(".icheckbox_square-green").addClass("checked");
+						}else{
+							$(this).parents(".one_menu_check ").siblings(".two_level_menu").find(".icheckbox_square-green").removeClass("checked");
+						}
+						IsAllCheck () ;//检测是否全选
+					});
+				});
+				
+				$(".two_menu_check").each(function() { //二级菜单的label点击事件
+					$(this).click(function () {
+						if ($(this).children(".icheckbox_square-green").hasClass("checked")) {
+							$(this).siblings(".three_level_menu").find(".icheckbox_square-green").addClass("checked");
+						}else{
+							$(this).siblings(".three_level_menu").find(".icheckbox_square-green").removeClass("checked");
+						}
+						IsAllCheck () ;//检测是否全选
+						IsOneCheck ($(this)); //检测是否选中一级菜单
+					});
+				});
+				$(".two_menu_check .iCheck-helper").each(function () {//二级菜单的input框的点击事件  功能同上
+					$(this).click(function () {
+						if ($(this).parents(".icheckbox_square-green").hasClass("checked")) {
+							$(this).parents(".two_menu_check ").siblings(".three_level_menu").find(".icheckbox_square-green").addClass("checked");
+						}else{
+							$(this).parents(".two_menu_check ").siblings(".three_level_menu").find(".icheckbox_square-green").removeClass("checked");
+						}
+						IsAllCheck () ;//检测是否全选
+						IsOneCheck ($(this)); //检测是否选中一级菜单
+					});
+				});
+				$(".three_menu_check").each(function() {  //三级菜单的label点击事件
+					$(this).click(function () {
+						var siblingsLength = $(this).parents(".three_menu_li").siblings("li").length + 1;  //获取当前三级菜单的兄弟节点的(包括自己)的长度 用于判断是否取消二级菜单的选择
+						if ($(this).children(".icheckbox_square-green").hasClass("checked")) {
+							$(this).parents(".three_level_menu").siblings(".two_menu_check ").find(".icheckbox_square-green").addClass("checked");
+						}
+						var parentsUl = $(this).parents(".three_menu_ul");
+						parentsUl.find("li").each(function () {
+							if (!$(this).find(".icheckbox_square-green").hasClass("checked")) {//当没有被选中的时候
+								siblingsLength--;  //长度-1
+							}
+						});
+						if (siblingsLength == 0) {//所有不选中的时候
+							$(this).parents(".three_level_menu").siblings(".two_menu_check ").find(".icheckbox_square-green").removeClass("checked");
+						}
+						IsAllCheck () ;//检测是否全选
+						IsOneCheck ($(this))
+					});
+				});
+				$(".three_menu_check .iCheck-helper").each(function() {  //三级菜单的checkbox点击事件
+					$(this).click(function () {
+						var siblingsLength = $(this).parents(".three_menu_li").siblings("li").length + 1;  //获取当前三级菜单的兄弟节点的(包括自己)的长度 用于判断是否取消二级菜单的选择
+						if ($(this).parents(".icheckbox_square-green").hasClass("checked")) {
+							$(this).parents(".three_level_menu").siblings(".two_menu_check").find(".icheckbox_square-green").addClass("checked");
+						}
+						var parentsUl = $(this).parents(".three_menu_ul");
+						parentsUl.find("li").each(function () {
+							if (!$(this).find(".icheckbox_square-green").hasClass("checked")) {//当没有被选中的时候
+								siblingsLength--;  //长度-1
+							}
+						});
+						if (siblingsLength == 0) {//所有不选中的时候
+							$(this).parents(".three_level_menu").siblings(".two_menu_check ").find(".icheckbox_square-green").removeClass("checked");
+						}
+						IsAllCheck () ;//检测是否全选
+						IsOneCheck ($(this)); //检测是否选中一级菜单
+					});
+				});
+			}
+			
+			/**
+			 * 检测是否已经全选
+			 * */
+			function IsAllCheck () {
+				var isCheckNum = 0;  //用于获取当前有几个checkbox被选中
+				$("#father_menu_ul .icheckbox_square-green").each(function (index,element) {
+					if ($(element).hasClass("checked")) {
+						isCheckNum++;
+					}
+				});
+				if (isCheckNum == parseInt($("#father_menu_ul .icheckbox_square-green").length)) {//如果被选中的checkbox数量 = 所有checkbox的数量
+					$(".father_label .icheckbox_square-green").addClass("checked");  //全选选中
+				}else{
+					$(".father_label .icheckbox_square-green").removeClass("checked");  //全选不选中
+				}
+			}
+			
+			/**
+			 * 检测一级菜单是否选中
+			 * @param {Object} self self是当前项--$(this)
+			 * */
+			function IsOneCheck (self) {
+				var checkDiv = self.parents(".two_level_menu").find(".icheckbox_square-green"); //显示出来的checkboxdiv
+				var oneMenuNum = checkDiv.length;  //获取当前一级菜单下一共有几个选项 (checkbox) 
+				checkDiv.each(function (index) {
+					if (!checkDiv.hasClass("checked")) {
+						oneMenuNum--;
+					}
+				});
+				if (oneMenuNum == 0) { //如果都不选中 就取消一级菜单的选择
+					self.parents(".two_level_menu").siblings(".one_menu_check").children(".icheckbox_square-green").removeClass("checked");
+				}else{
+					self.parents(".two_level_menu").siblings(".one_menu_check").children(".icheckbox_square-green").addClass("checked");
+				}
+				
+			}
+		</script>
+	</body>
+</html>

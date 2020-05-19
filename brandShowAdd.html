@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html class="x-admin-sm">
+<!-- 品牌管理添加页面 -->
+
+<head>
+    <meta charset="UTF-8">
+    <title>品牌管理添加页面</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+        content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <!-- 引入jq -->
+    <script src="https://cdn.bootcss.com/jquery/3.4.0/jquery.min.js"></script>
+    <script type="text/javascript" src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/xadmin.js"></script>
+    <script type="text/javascript" src="./js/common.js"></script>
+    <!-- <script type="text/javascript" src="./js/domain.js"></script> -->
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+            <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+            <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    <style>
+        .sexCont {
+            margin-left: 0;
+        }
+
+        .x-nav {
+            margin-top: 0.5px;
+            height: 50px;
+            line-height: 38px;
+            background-color: #f3f3f3;
+            border: 1px solid #e4e4e4;
+            background: #f3f3f3;
+        }
+
+        .x-nav .goods_name {
+            margin-left: 10px;
+            color: #999;
+            font-size: 15px;
+            display: inline-block;
+            margin-top: 5px;
+        }
+
+        .goodsRoload {
+            margin-top: -6px;
+            display: inline-block;
+            margin-top: -6px;
+            margin-left: 1460px;
+            width: 80px;
+            font-size: #666 !important;
+            border: 1px solid #ccc;
+            background: #fff;
+            text-align: center;
+            color: #ccc;
+            cursor: pointer;
+        }
+
+        .goods_name::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 12px;
+            margin: 0 3px;
+            background-color: #1abc9c;
+        }
+
+        .layui-form-label {
+            width: 300px !important;
+        }
+
+        /* .layui-btn {
+            margin-top: 20px !important;
+            width: 100px !important;
+        } */
+        .submit_btn {
+            font-size: 13px !important;
+            width: 180px !important;
+            height: 35px !important;
+            border-radius: 4px !important;
+            background-color: rgba(26, 188, 156, 1) !important;
+            color: #fff !important;
+            margin: 40px auto;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 头部展示 -->
+    <div class="x-nav">
+        <span class="layui-breadcrumb">
+            <span class="goods_name">品牌管理添加</span>
+        </span>
+        <a class=" layui-btn-small goodsRoload" style="line-height:1.6em;margin-top:3px;" onclick="location.reload()"
+            title="刷新">
+            <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i> 刷新
+        </a>
+    </div>
+    <div class="layui-fluid">
+        <div class="layui-row">
+            <form class="layui-form">
+                <!-- <div class="layui-form-item">
+                    <label for="L_username" class="layui-form-label"><span style="color: #f24844;">*</span>品牌名称：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="L_username" name="brandName" lay-verify="required"
+                            autocomplete="off" class="layui-input nickname" style="width: 120px;height: 30px;">
+                    </div>
+                </div> -->
+                <!-- 品牌名称 -->
+                <div class="layui-form-item">
+                    <label for="L_username" class="layui-form-label"><span style="color: #f24844;">*</span>品牌名称：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="" name="brandName" lay-verify="required" autocomplete="off"
+                            class="layui-input nickname" style="width: 120px;height: 30px;">
+                    </div>
+                </div>
+                <!-- 品牌首字母 -->
+                <div class="layui-form-item">
+                    <label for="L_username" class="layui-form-label">品牌首字母：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="" name="brandFirstname" lay-verify="nickname" autocomplete="off"
+                            class="layui-input nickname" style="width: 120px;height: 30px;">
+                    </div>
+                </div>
+
+                <!-- 品牌logo -->
+                <div class="layui-form-item">
+                    <label for="L_username" class="layui-form-label"><span
+                            style="color: #f24844;">*</span>品牌LOGO：</label>
+                    <div class="layui-input-inline">
+                        <!-- 图片展示 -->
+                        <div id="imgShow" style="width: 100px; height: 100px; display: none;margin-bottom: 10px;"> <img
+                                src="#" alt="" class="img1" style="width: 100%; height: 100%;"> </div>
+                        <button type="button" class="layui-btn" id="test1">
+                            <i class="layui-icon">&#xe67c;</i>上传图片上传
+                        </button>
+                        <p style="color:#ccc;font-size: 12px;width: 500px;">只能上传jpg/png格式文件，文件不能超过50kb</p>
+                    </div>
+                </div>
+
+                <!-- 品牌专区大图 -->
+                <div class="layui-form-item">
+                    <label for="L_username" class="layui-form-label">品牌专区大图：</label>
+                    <div class="layui-input-inline">
+                        <!-- <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+                            预览图：
+                            <div class="layui-upload-list" id="upImg" style="overflow: hidden;">
+                            </div>
+                        </blockquote> -->
+                        <!-- 图片展示 -->
+                        <div id="imgShow1" style="width: 100px; height: 100px; display: none;margin-bottom: 10px;"> <img
+                                src="#" alt="" class="img2" style="width: 100%; height: 100%;">
+                        </div>
+                        <button type="button" class="layui-btn" id="test2">
+                            <i class="layui-icon">&#xe67c;</i>上传图片上传
+                        </button>
+                        <p style="color:#ccc;font-size: 12px; width: 500px;">只能上传jpg/png格式文件，文件不能超过50kb</p>
+                    </div>
+                </div>
+
+                <!-- 品牌故事 -->
+                <div class="layui-form-item">
+                    <label for="L_username" class="layui-form-label">品牌故事：</label>
+                    <div class="layui-input-inline">
+                        <textarea name="brandStory" id="personal_signature" cols="50" rows="8"></textarea>
+                    </div>
+                </div>
+
+                <!-- 排序 -->
+                <div class="layui-form-item">
+                    <label for="L_username" class="layui-form-label">排序：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="" name="sort" lay-verify="nickname" autocomplete="off"
+                            class="layui-input nickname" style="width: 120px;height: 30px;">
+                    </div>
+                </div>
+
+
+                <!-- 是否显示 -->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">是否显示:</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="showBrand" value="1" title="是">
+                        <input type="radio" name="showBrand" value="2" title="否">
+                        <p style="font-size: 12px; color: #ccc; width: 600px;margin-top: 6px;margin-left: 200px;">
+                            当品牌下还没有商品的时候，分类页的品牌区将不会显示该品牌</p>
+                    </div>
+                </div>
+
+                <!-- 品牌制造商 -->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">品牌制造商:</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="brandFactory" value="1" title="是">
+                        <input type="radio" name="brandFactory" value="2" title="否">
+                    </div>
+                </div>
+
+
+
+                <!-- 提交按钮 -->
+                <div class="layui-form-item">
+                    <label for="L_repass" class="layui-form-label"></label>
+                    <button class="layui-btn submit_btn" lay-filter="add" lay-submit="" style="margin-top: 30px;width: 100px;"
+                        type="button">提交</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+
+        layui.use(['form', 'laydate', 'layer', 'upload'],
+            function () {
+                $ = layui.jquery;
+                var upload = layui.upload;
+                form = layui.form,
+                    layer = layui.layer;
+
+                // laydate.render({
+                //     elem: '#editTim'
+                // });
+
+                // layer.alert("添加成功！", {
+                //                     icon: 6
+                //                 })
+                // 品牌logo的上传
+                var brandLogo;
+                var uploadInst = upload.render({
+                    elem: '#test1' //绑定元素
+                    , url: uploadImgUrls //上传接口
+                    , accept: 'images'
+                    , multiple: true
+                    , headers: {
+                        'X-Access-Token': JSON.parse(sessionStorage.getItem("user_message")).token,
+                    }
+                    , done: function (res) {
+                        CheckLogout(res); //检查是否登陆过期	
+                        //  console.log(res,111)
+                        if (res.code == 0) {
+                            $('.img1').attr('src', imgUrl + res.root)
+                            $('#imgShow').css('display', 'block')
+                            brandLogo = res.root;
+                        }
+                    }
+                    , error: function () {
+                        //请求异常回调
+                    }
+                });
+
+                // 品牌专区的上传
+                var brandZonePic;
+                var uploadInst = upload.render({
+                    elem: '#test2' //绑定元素
+                    , url: uploadImgUrls //上传接口
+                    , headers: {
+                        'X-Access-Token': JSON.parse(sessionStorage.getItem("user_message")).token,
+                    }
+                    , accept: 'images'
+                    , multiple: true
+                    , done: function (res) {
+                        // console.log(res)
+                        CheckLogout(res); //检查是否登陆过
+                        if (res.code == 0) {
+                            $('.img2').attr('src', imgUrl + res.root)
+                            $('#imgShow1').css('display', 'block')
+                            brandZonePic = res.root;
+                        }
+                        //上传完毕回调
+                    }
+                    , error: function () {
+                        //请求异常回调
+                    }
+                });
+
+
+                // 提交添加接口
+                form.on('submit(add)', function (data) {
+                    // console.log(brandLogo)
+                    // console.log(brandZonePic)
+                    var dataTo = {};
+                    dataTo.brandLogo = brandLogo;
+                    dataTo.brandZonePic = brandZonePic;
+                    dataTo.brandName = data.field.brandName
+                    dataTo.brandFirstname = data.field.brandFirstname
+                    dataTo.brandStory = data.field.brandStory
+                    dataTo.sort = data.field.sort
+                    dataTo.showBrand = data.field.showBrand;
+                    dataTo.brandFactory = data.field.brandFactory
+                    //  console.log(data.field)
+                    // 调用新增请求
+
+                    // console.log(dataTo)
+
+                    $.ajax({
+                        type: 'post',
+                        url: urls + 'bSysBrand/create',
+                        data: JSON.stringify(dataTo),
+                        dataType: 'json',
+                        headers: {
+                            'X-Access-Token': JSON.parse(sessionStorage.getItem("user_message")).token,
+                        },
+                        async: false,
+                        contentType: "application/json; charset=utf-8",
+                        success: res => {
+                            CheckLogout(res); //检查是否登陆过
+                            // layer.alert("添加成功！", {
+                            //         icon: 6
+                            //     })
+                            // console.log(res,111)
+                            // alert(111)
+                            if (res.code == 0) {
+                                //  alert('添加成功！')
+                                layer.alert("添加成功！", {
+                                    icon: 6
+                                }, function () {
+                                    location.href = './brandShowList.html'
+                                })
+                            }
+                        }
+                    })
+                })
+
+
+                // // 获取页面跳转过来参数
+                // function getUrlParam(name) {
+                //     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+                //     var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+                //     if (r != null) return unescape(r[2]); return null; //返回参数值
+                // }
+                // var cancel_id = getUrlParam("id");  //当前订单id
+
+            })
+    </script>
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+    <script>
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html>
+
+	<!-- Mirrored from www.zi-han.net/theme/hplus/table_jqgrid.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:20:02 GMT -->
+
+	<head>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>技术商品添加3</title>
+
+		<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+		<link href="css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+		<link href="css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+
+		<link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+		<link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+		<link href="css/plugins/webuploader/webuploader.css" rel="stylesheet">
+		<link href="css/animate.min.css" rel="stylesheet">
+		<link href="css/style.min862f.css?v=4.1.0" rel="stylesheet">
+		<link rel="stylesheet" href="css/cropper.min.css">
+		<link rel="stylesheet" href="css/ImgCropping.css">
+		<link rel="stylesheet" href="css/newStyle.css">
+
+
+		<style>
+			input::-webkit-outer-spin-button,
+			input::-webkit-inner-spin-button {
+				-webkit-appearance: none;
+			}
+			input[type="number"]{
+				-moz-appearance: textfield;
+			}
+			.upLoadImg{
+				width: 117px;
+				height: 35px;
+				line-height: 35px;
+				text-align: center;
+				background: inherit;
+				background-color: rgba(26, 188, 156, 1);
+				border: none;
+				border-radius: 3px;
+				-moz-box-shadow: none;
+				-webkit-box-shadow: none;
+				box-shadow: none;
+				font-family: '微软雅黑';
+				font-weight: 400;
+				font-style: normal;
+				color: #FFFFFF;
+				cursor: pointer;
+			}
+			.shuxingBtnBG{
+				background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABsAAAAbCAYAAACN1PRVAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAC1SURBVEhL7ZWBCcQgDEXdQDfQzXRjR3GEHF8IWHO1NSd3hfNBEOHn/2LFGPoifxZWSqGUEoUQyBgzVehBLzx6RBhEzrm3RjMFjz5QhMUYqxirljMPEea9r8IROedaI+CBI20RrhBdhWk1O+yAVvOcMNw43t8tvqW8b3lO2BlazQ47oNX8NmzlQwyvFuHK4wEDUMvtEYOBZ62t4k8KHpfDE0CEr+IjnSn0oLcPAuOfs5gdtgCiF/IwSlB+pyTgAAAAAElFTkSuQmCC") no-repeat center;
+			}
+			.picBox > div{
+				float: left;
+			}
+			.webuploader-pick{
+				background-color: #fff;
+				margin-left: 30px;
+			}
+			.picArr{
+				overflow-y: hidden;
+			}
+
+		</style>
+	</head>
+
+	<body class="gray-bg">
+		<div class="wrapper wrapper-content  animated fadeInRight">
+			<div style="width:100%;flex;align-items: center;flex-direction: column;">
+				<div class="ibox-title pull-left w100p" style="padding: 10px 20px;">
+					<div class="pull-left">
+						<div class="ibox-tools cache5">
+							填写商品属性
+						</div>
+					</div>
+				</div>
+				<div style="width:100%;margin: 0 auto;background-color: #F9F9F9;display: flex;align-items: center;">
+					<img style="margin: 0 auto;" src="./images/add2.png" alt="">
+				</div>
+				
+				<div class="addGoodStyle_head">
+				
+					<div class="addGoodStyle_heade">
+						<div class="addGoodStyle_head_l">
+							<img style="width: 200px;position: absolute;z-index: 10;" src="./images/icon-title.png" alt="">
+							<p style="color: #fff;text-align: center;font-size: 20px;position: absolute;z-index: 11;top:18px;left: 50px;">商品相册</p>
+						</div>
+						<div class="addGoodStyle_head_r">
+							<div class="w100p" style="position: relative;">
+								<div class="ibox-content" style="padding: 30px 10%;margin:30px 0;display: flex;">
+													
+									<div>
+													
+										<div class="img" data-index="0" style="max-width:100%;float: left;">
+											<!-- <input type="hidden" class="val" name="image"/> -->
+											<div class="picBox picBox1" style="width: 100%;min-height:170px;"></div>
+											<img src="">
+										</div>
+										<div class="filePicker ml30" style="float: left;">
+											<div style="width:120px;height: 150px;position: relative;">
+												<div style="width: 150px;height: 170px;position: absolute;top:-10px;left: -15px;border: 1px solid rgba(228, 228, 228, 1);border-radius: 3px;background-color: #fff;">
+													<img style="width: 100px;" src="./img/a11.png" alt="">
+												</div>
+											</div>
+										</div>
+									</div>
+													
+								</div>
+								<div style="color: #000000;position: absolute;bottom:0;left:120px;">提示：商品相册最多可以上传5张，图片尺寸比例限1：1</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="addGoodStyle_head">
+					
+						<div class="addGoodStyle_heade">
+							<div class="addGoodStyle_head_l">
+								<img style="width: 200px;position: absolute;z-index: 10;" src="./images/icon-title.png" alt="">
+								<p style="color: #fff;text-align: center;font-size: 20px;position: absolute;z-index: 11;top:18px;left: 50px;">商品详情</p>
+							</div>
+							<div class="addGoodStyle_head_r" style="">
+							<div class="w100p">
+								<div class="ibox-content" style="padding: 30px 10%;margin:30px 0;display: flex;">
+													
+									<div>
+													
+										<div class="img" data-index="1" style="max-width:100%;float: left;">
+											<!-- <input type="hidden" class="val" name="image"/> -->
+											<div class="picBox picBox2" style="width: 100%;min-height:170px;"></div>
+											<img src="">
+										</div>
+										<div class="filePicker ml30"  style="float: left;">
+											<div style="width:120px;height: 150px;position: relative;">
+												<div style="width: 150px;height: 170px;position: absolute;top:-10px;left: -15px;border: 1px solid rgba(228, 228, 228, 1);border-radius: 3px;background-color: #fff;">
+													<img style="width: 100px;" src="./img/a11.png" alt="">
+												</div>
+											</div>
+										</div>
+									</div>
+													
+								</div>
+													
+													
+													
+							</div>
+						</div>
+					</div>
+
+
+					<div style="width: 100%;height: 20%;display: flex;align-items: center;">
+						<div id="" style="margin: 0 auto;padding: 30px 0;">
+							<button id="goBack" type="button" style="width: 180px;height: 45px;border-radius: 4px;background-color:#fff;color:rgba(26, 188, 156, 1);border: 1px solid rgba(26, 188, 156, 1);">上一步，填写商品信息</button>
+							<button id="saveBtn" type="button" style="margin:0 50px;width: 180px;height: 45px;border-radius: 4px;background-color:rgba(26, 188, 156, 1);color:#fff;">确认提交</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<script src="js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/bootstrap.min.js?v=3.3.6"></script>
+		<script src="js/plugins/peity/jquery.peity.min.js"></script>
+		<script src="js/content.min.js?v=1.0.0"></script>
+		<script src="js/plugins/layer/laydate/laydate.js"></script>
+		<script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+		<script src="js/plugins/iCheck/icheck.min.js"></script>
+		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/cropper.min.js"></script>
+		<script type="text/javascript" src="js/plugins/webuploader/webuploader.js"></script>
+
+		<script>
+			var tableTimeout;
+			var goodsNum = getURLParams(document.URL).goodnum;
+			var sysGoodsPics = [];
+			var goodsDetailsImages = [];
+			var uploadImgTimeout;
+
+
+			var userMessage = JSON.parse(sessionStorage.getItem("user_message"))
+			var info = JSON.parse(sessionStorage.getItem("goods2step"));
+
+			$(document).ready(function() {
+				IsTokenSave(); 
+				
+				
+				console.log(info);
+				
+				var $ = jQuery,
+					$index = 0, //保存触发上传事件按钮的索引，从0开始
+					$image,
+					uploader;
+
+
+				uploader = WebUploader.create({
+					fileNumLimit: 99,
+					auto: true,
+					swf: '/Uploader.swf',
+					server: uploadImgUrls,
+					pick: '.filePicker',
+					accept: {
+						title: 'Images',
+						extensions: 'gif,jpg,jpeg,bmp,png'
+					}
+				});
+				$('.filePicker').on('click', function() {
+
+					$index = $(this).index('.filePicker'); //获取索引
+					// console.log($index);
+					$image = $($('.img').get($index)); //获取该组的Dom并转成jquery对象
+					// console.log($image);
+					uploader.reset();
+
+				});
+				
+				uploader.on('fileQueued', function(file) {
+					// console.log($image[0].dataset.index);
+					if ($image[0].dataset.index == 0) {
+						var didi = this;
+						// console.log(didi);
+						didi.options.fileNumLimit = 5;
+						uploader.makeThumb(file, function(error, src) { //验证图片尺寸
+				
+							imgWidth = file._info.width;
+							imgHeight = file._info.height;
+							// console.log(imgWidth)
+							// console.log(imgHeight)
+							// console.log(Number(imgWidth)/Number(imgHeight));
+							if (Number(imgWidth) / Number(imgHeight) != 1) {
+								didi.reset();
+								TipsAlert("尺寸必须为1:1！");
+							} else {
+								// console.log(123);
+							}
+						}, 100, 100);
+					}
+				
+				});
+				
+				uploader.on('uploadBeforeSend', function(obj,data, headers) {
+					$.extend(headers, {
+						// "Origin": http://localhost:3000 ,
+						"X-Access-Token":userMessage.token
+					});
+				});
+				
+				// 文件上传成功，给该组的input、img赋值。
+				// 参数response 为后台传回的数据（可自定义我这儿是{"status" : "Success", "msg" : "服务端路径+文件名"})
+				uploader.on('uploadSuccess', function(file, response) {
+					CheckLogout(response); //检查是否登陆过期
+					console.log($image[0].dataset);
+					if ($image[0].dataset.index == 0) {
+						$image.find('.picBox').append('<div class="picArr" data-url="' + response.root +
+							'" style="width:150px;height:170px;margin-left:30px;position:relative;margin-bottom:30px;"><img style="width:100%;" src="' +
+							imgUrl + response.root +
+							'"><div style="width:150px;height:40px;position:absolute;bottom:0px;display:flex;align-items: center;background:#F9FAFC;border:1px solid rgba(228, 228, 228, 1);z-index:1;"><div style="width:40%;height:30px;line-height:30px;text-align: center;background:#279adf;color:#fff;cursor: pointer;border-radius:5px;margin:0 auto;" data-goodstype="2" data-url="' +
+							response.root +
+							'" class="setZhuPic">设为主图</div><div title="删除" class="selfmedia_addtemplate_imgDelSpan remove-this" data-url="' +
+							response.root +
+							'" style="width:40%;height:30px;line-height:30px;text-align: center;background:red;color:#fff;cursor: pointer;border-radius:5px;margin:0 auto;">删除图片</div></div>'
+						);
+						if ($(".picBox img").length > 4) {
+							// console.log()
+							// $image.parent().find('.filePicker').hide();
+						}
+
+						sysGoodsPics.push({
+							goodsNum: goodsNum,
+							url: response.root,
+							goodsType: 2,
+
+						})
+						if (sysGoodsPics.length > 4) {
+							$image.parent().find('.filePicker').hide();
+							uploader.reset();
+						}
+						sysGoodsPics[0].goodsType = 1;
+						console.log(sysGoodsPics);
+						$(".picBox1 .setZhuPic").each(function() {
+							$(this).click(function() {
+								var initData = $($(this)[0])[0];
+								var initurl = initData.dataset.url;
+								if (initData.dataset.goodstype == 2) {
+									swal({
+										title: "提示",
+										text: "确定将该图片设为主图吗？",
+										type: "warning",
+										showCancelButton: true,
+										confirmButtonColor: "#DD6B55",
+										confirmButtonText: "是的",
+										cancelButtonText: "让我再考虑一下…",
+										closeOnConfirm: false,
+										closeOnCancel: true
+									}, function(yes) {
+										if (yes) {
+
+											swal({
+												title: "通过",
+												text: "设置成功",
+												type: "success",
+											}, function() {
+												$(".picBox1 .setZhuPic").html("设为主图")
+												$(".picBox1 .setZhuPic").css("background", "#279adf");
+												$(".picBox1 .setZhuPic").data("goodstype", 2);
+
+												for (var i = 0; i < sysGoodsPics.length; i++) {
+													if (initurl == sysGoodsPics[i].url) {
+														sysGoodsPics[i].goodsType = 1;
+													} else {
+														sysGoodsPics[i].goodsType = 2;
+													}
+												}
+
+												initData.dataset.goodstype = 1;
+												initData.style.backgroundColor = '#F04844';
+												initData.innerHTML = '商品主图';
+
+												console.log(sysGoodsPics);
+
+											});
+										}
+									});
+								}
+							})
+						})
+
+						$(".picBox1 .remove-this").each(function() {
+							$(this).click(function() {
+								var initData = $($(this)[0])[0];
+								var initurl = initData.dataset.url;
+								console.log(initurl);
+								swal({
+									title: "提示",
+									text: "确定将该图片删除吗？",
+									type: "warning",
+									showCancelButton: true,
+									confirmButtonColor: "#DD6B55",
+									confirmButtonText: "是的",
+									cancelButtonText: "让我再考虑一下…",
+									closeOnConfirm: false,
+									closeOnCancel: true
+								}, function(yes) {
+									if (yes) {
+
+										swal({
+											title: "通过",
+											text: "删除成功",
+											type: "success",
+										}, function() {
+
+											for (var i = 0; i < $(".picBox1 .picArr").length; i++) {
+												if (initurl == $($(".picBox1 .picArr")[i])[0].dataset.url) {
+													$(".picBox1 .picArr")[i].remove();
+												}
+												if (initurl == sysGoodsPics[i].url) {
+													sysGoodsPics.splice(i, 1);
+												}
+											}
+											console.log(sysGoodsPics);
+											if (sysGoodsPics.length < 5) {
+												$(".filePicker").show();
+											}
+
+										});
+									}
+								});
+
+
+							})
+						})
+
+					} else if ($image[0].dataset.index == 1) {
+						// $img = $image.find('img');
+						// $image.find('.val').val(imgUrl + response.root);
+						// $img.attr('src', imgUrl + response.root);
+						$image.find('.picBox').append('<div class="picArr" data-url="' + response.root +
+							'" style="width:150px;height:170px;margin-left:30px;position:relative;margin-bottom:30px;"><img style="width:100%;" src="' +
+							imgUrl + response.root +
+							'"><div style="width:150px;height:40px;position:absolute;bottom:0px;display:flex;align-items: center;background:#F9FAFC;border:1px solid rgba(228, 228, 228, 1);z-index:1;"><div title="删除" class="selfmedia_addtemplate_imgDelSpan remove-this" data-url="' +
+							response.root +
+							'" style="width:40%;height:30px;line-height:30px;text-align: center;background:red;color:#fff;cursor: pointer;border-radius:5px;margin:0 auto;">删除图片</div></div>'
+						);
+						if ($(".picBox img").length > 8) {
+							// console.log()
+							// $image.parent().find('.filePicker').hide();
+						}
+
+						goodsDetailsImages.push({
+							goodsNum: goodsNum,
+							url: response.root
+						})
+						console.log(goodsDetailsImages);
+						$(".picBox2 .setZhuPic").each(function() {
+							$(this).click(function() {
+								var initData = $($(this)[0])[0];
+								var initurl = initData.dataset.url;
+								if (initData.dataset.goodstype == 2) {
+									swal({
+										title: "提示",
+										text: "确定将该图片设为主图吗？",
+										type: "warning",
+										showCancelButton: true,
+										confirmButtonColor: "#DD6B55",
+										confirmButtonText: "是的",
+										cancelButtonText: "让我再考虑一下…",
+										closeOnConfirm: false,
+										closeOnCancel: true
+									}, function(yes) {
+										if (yes) {
+
+											swal({
+												title: "通过",
+												text: "设置成功",
+												type: "success",
+											}, function() {
+												$(".picBox2 .setZhuPic").html("设为主图")
+												$(".picBox2 .setZhuPic").css("background", "#279adf");
+												$(".picBox2 .setZhuPic").data("goodstype", 2);
+
+												for (var i = 0; i < goodsDetailsImages.length; i++) {
+													if (initurl == goodsDetailsImages[i].url) {
+														goodsDetailsImages[i].goodsType = 1;
+													} else {
+														goodsDetailsImages[i].goodsType = 2;
+													}
+												}
+
+												initData.dataset.goodstype = 1;
+												initData.style.backgroundColor = '#F04844';
+												initData.innerHTML = '商品主图';
+
+												console.log(goodsDetailsImages);
+
+											});
+										}
+									});
+								}
+							})
+						})
+
+						$(".picBox2 .remove-this").each(function() {
+							$(this).click(function() {
+								var initData = $($(this)[0])[0];
+								var initurl = initData.dataset.url;
+								console.log(initurl);
+								swal({
+									title: "提示",
+									text: "确定将该图片删除吗？",
+									type: "warning",
+									showCancelButton: true,
+									confirmButtonColor: "#DD6B55",
+									confirmButtonText: "是的",
+									cancelButtonText: "让我再考虑一下…",
+									closeOnConfirm: false,
+									closeOnCancel: true
+								}, function(yes) {
+									if (yes) {
+
+										swal({
+											title: "通过",
+											text: "删除成功",
+											type: "success",
+										}, function() {
+
+											for (var i = 0; i < $(".picBox2 .picArr").length; i++) {
+												if (initurl == $($(".picBox2 .picArr")[i])[0].dataset.url) {
+													$(".picBox2 .picArr")[i].remove();
+												}
+												if (initurl == goodsDetailsImages[i].url) {
+													goodsDetailsImages.splice(i, 1);
+												}
+											}
+											console.log(goodsDetailsImages);
+
+										});
+									}
+								});
+
+
+							})
+						})
+
+
+
+					}
+
+
+
+				});
+
+
+
+
+				$(".addShuXing").each(function() { //上传属性图片点击按钮
+					$(this).change(function() {
+						// var dataset = $(this).parents("td").siblings("td").eq(0)[0].dataset;
+						var thats = $(this);
+						var file = this.files[0];
+						if (file.type.indexOf("image") == 0) {
+							var reader = new FileReader(); //创建FileReader对象实例reader
+							reader.readAsDataURL(file); //将图片url转换为base64码
+							reader.onload = function(e) {
+								var newUrl = this.result;
+								console.log(newUrl);
+								// oUploadImg.style.backgroundImage = 'url('+newUrl+')';
+								let blob = dataURLtoFile(newUrl, 'image/jpeg');
+								let form = new FormData();
+								form.append("bizType", "9");
+								let fileOfBlob = new File([blob], new Date() + '.jpg'); // 重命名了
+								form.append("file", fileOfBlob);
+								var finalUrl;
+								Showload("图片上传中......");
+								uploadImgTimeout = setInterval("Timeout(uploadImgTimeout)", 1000);
+								$.ajax({
+									url: uploadImgUrls,
+									type: 'post',
+									data: form,
+									dataType: "json",
+									headers: {
+										'X-Access-Token': userMessage.token,
+									},
+									async: false,
+									cache: false,
+									contentType: false,
+									processData: false,
+									success: function(data) {
+										CheckLogout(data); //检查是否登陆过期
+										console.log(data.root);
+										finalUrl = data.root;
+										setTimeout(function() {
+											InitTime(uploadImgTimeout);
+										}, 3000)
+									},
+									error: function(xml, text, e) {
+
+									}
+								});
+								console.log(finalUrl);
+								$(thats).siblings("input").eq(0)[0].value = finalUrl;
+								$(thats).parent("th").find(".imgBox").html('<img style="width:30px;" src="' + imgUrl + finalUrl + '">').css(
+									"z-index", "1");
+							}
+							console.log(reader.result);
+							console.log(reader);
+							console.log(reader);
+						};
+						console.log(reader.result);
+					});
+				});
+
+				//<tr/>居中
+				$("#tab tr").attr("align", "center");
+				//增加<tr/>
+				$("#but").click(function() {
+					var _len = $("#tab tr").length;
+					$("#tab").append("<tr id=" + _len + " align='center' class='addTr'>" +
+						'<td><input type="text" placeholder="" class="form-control jieTiNum" style="margin:0 auto;" name="" value="" required="" aria-required="true"></td>' +
+						'<td><input type="text" placeholder="" class="form-control jieTiNum" style="margin:0 auto;" name="" value="" required="" aria-required="true"></td>' +
+						'<td><input type="text" placeholder="" class="form-control jieTiNum" style="margin:0 auto;" name="" value="" required="" aria-required="true"></td>' +
+						'<td><input type="text" placeholder="" class="form-control jieTiNum" style="margin:0 auto;" name="" value="" required="" aria-required="true"></td>' +
+						'<td><input type="text" placeholder="" class="form-control jieTiNum" style="margin:0 auto;" name="" value="" required="" aria-required="true"></td>' +
+						'<td><input type="text" placeholder="" class="form-control jieTiNum" style="margin:0 auto;" name="" value="" required="" aria-required="true"></td>' +
+						'<td><input type="text" placeholder="" class="form-control jieTiNum" style="margin:0 auto;" name="" value="" required="" aria-required="true"></td>' +
+						'<th class="shuxingBtnBG" style="position: relative;width:80px;"><input type="file" style="opacity: 0;width: 80px;height:50px;position: absolute;top:0;background: transparent;" class="addShuXing hehe1" accept="image/*"  value=""/><input type="hidden" class="url_input" name="" style="padding: 0 0;" id="" value="" ><div class="imgBox" style="width: 80px;height:40px;position: absolute;top:10px;left:0;z-index: -10;"></div></th>' +
+						"<td><a href=\'#\' onclick=\'deltr(" + _len + ")\'>删除</a></td>" +
+						"</tr>");
+					$(".addShuXing").each(function() { //上传属性图片点击按钮
+						$(this).change(function() {
+							// var dataset = $(this).parents("td").siblings("td").eq(0)[0].dataset;
+							var thats = $(this);
+							var file = this.files[0];
+							if (file.type.indexOf("image") == 0) {
+								var reader = new FileReader(); //创建FileReader对象实例reader
+								reader.readAsDataURL(file); //将图片url转换为base64码
+								reader.onload = function(e) {
+									var newUrl = this.result;
+									console.log(newUrl);
+									// oUploadImg.style.backgroundImage = 'url('+newUrl+')';
+									let blob = dataURLtoFile(newUrl, 'image/jpeg');
+									let form = new FormData();
+									form.append("bizType", "9");
+									let fileOfBlob = new File([blob], new Date() + '.jpg'); // 重命名了
+									form.append("file", fileOfBlob);
+									var finalUrl;
+									$.ajax({
+										url: uploadImgUrls,
+										type: 'post',
+										data: form,
+										dataType: "json",
+										headers: {
+											'X-Access-Token': userMessage.token,
+										},
+										async: false,
+										cache: false,
+										contentType: false,
+										processData: false,
+										success: function(data) {
+											CheckLogout(response); //检查是否登陆过期
+											console.log(data.root);
+											finalUrl = data.root;
+										},
+										error: function(xml, text, e) {
+
+										}
+									});
+									console.log(finalUrl);
+									$(thats).siblings("input").eq(0)[0].value = finalUrl;
+									$(thats).parent("th").find(".imgBox").html('<img style="width:30px;" src="' + imgUrl + finalUrl +
+										'">').css("z-index", "1");
+								}
+							};
+							console.log(reader.result);
+						});
+					});
+				})
+
+
+
+
+
+				$("#goBack").click(function() {
+					history.go(-1);
+				})
+				$("#saveBtn").click(function() {
+					
+					if (sysGoodsPics.length == 0) {
+						TipsAlert("请在商品相册上传图片！");
+						return false;
+					}
+					if (goodsDetailsImages.length == 0) {
+						TipsAlert("请在商品详情上传图片！");
+						return false;
+					}
+					var initSysGoodsPics= [];
+					var initGoodsDetailsImages=[];
+					for(var i = 0; i <sysGoodsPics.length;i++){
+						initSysGoodsPics.push(sysGoodsPics[i].url);
+					}
+					for(var i = 0; i <goodsDetailsImages.length;i++){
+						initGoodsDetailsImages.push(goodsDetailsImages[i].url);
+					}
+					
+					var obj = {
+						id:"",
+						goodsName:info.goodsName,
+						goodsSubtitle:info.goodsSubtitle,
+						goodsPrice:info.goodsPrice,
+						goodsUnit:info.goodsUnit,
+						goodsGiveBao:info.goodsGiveBao,
+						goodsGrowthValue:info.goodsGrowthValue,
+						buyBaoMoney:info.buyBaoMoney,
+						goodsTra:info.goodsTra,
+						goodsStatus:info.goodsStatus,
+						goodsXin:info.newProducts,
+						goodsTui:info.recommend,
+						goodsDetailedKeyword:info.goodsDetailedKeyword,
+						goodsDetailedRemark:info.goodsDetailedRemark,
+						goodsCate:info.goodsCate,
+						sysGoodsPics: initSysGoodsPics,
+						goodsDetailsImages: initGoodsDetailsImages
+					}
+					console.log(obj);
+
+					$.ajax({
+						type: "post",
+						url: urls + common_url.bSysGoods_technGoodsSaveOrUpdate,
+						async: true,
+						timeout: 30000,
+						dataType: "json",
+						contentType: "application/json;charset=utf-8",
+						headers: {
+							'X-Access-Token': userMessage.token,
+						},
+						data: JSON.stringify(obj),
+						success: function(json) {
+							CheckLogout(json); //检查是否登陆过期		
+							if (json.code == 0) {
+								swal({
+									title: "商品添加成功",
+									text: "商品添加成功",
+									type: "success",
+								}, function() {
+									window.location = "tech_add_good1.html";
+								});
+							} else {
+								TipsAlert(json.code);
+							}
+
+							InitTime(tableTimeout);
+						},
+						error: function(xml, text, errorThrown) {
+							if (text == "timeout") {
+								TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+							} else {
+								TipsAlert("请求数据失败,请联系后台技术人员");
+							}
+							InitTime(tableTimeout);
+						}
+					})
+
+				})
+			});
+
+
+
+
+			//删除<tr/>
+			var deltr = function(index) {
+				var _len = $("#tab tr").length;
+				$("tr[id='" + index + "']").remove(); //删除当前行
+				for (var i = index + 1, j = _len; i < j; i++) {
+					var nextTxtVal = $("#desc" + i).val();
+					$("tr[id=\'" + i + "\']")
+						.replaceWith("<tr id=" + (i - 1) + " align='center'>" +
+							'<td><input type="number" placeholder="" class="form-control jieTiNum" style="margin:0 auto;" name="" value="" required="" aria-required="true"></td>' +
+							'<td><input type="number" placeholder="" class="form-control jieTiNum" style="margin:0 auto;" name="" value="" required="" aria-required="true"></td>' +
+							'<td><input type="number" placeholder="" class="form-control jieTiNum" style="margin:0 auto;" name="" value="" required="" aria-required="true"></td>' +
+							'<td><input type="number" placeholder="" class="form-control jieTiNum" style="margin:0 auto;" name="" value="" required="" aria-required="true"></td>' +
+							'<td><input type="number" placeholder="" class="form-control jieTiNum" style="margin:0 auto;" name="" value="" required="" aria-required="true"></td>' +
+							'<td><input type="number" placeholder="" class="form-control jieTiNum" style="margin:0 auto;" name="" value="" required="" aria-required="true"></td>' +
+							'<td><input type="number" placeholder="" class="form-control jieTiNum" style="margin:0 auto;" name="" value="" required="" aria-required="true"></td>' +
+							'<th class="shuxingBtnBG" style="position: relative;width:80px;"><input type="file" style="opacity: 0;width: 80px;height:50px;position: absolute;top:0;background: transparent;" class="addShuXing hehe1" accept="image/*"  value=""/><input type="hidden" class="url_input" name="" style="padding: 0 0;" id="" value="" ><div class="imgBox" style="width: 80px;height:40px;position: absolute;top:10px;left:0;z-index: -10;"></div></th>'
+
+							+
+							"<td><a href=\'#\' onclick=\'deltr(" + (i - 1) + ")\'>删除</a></td>" +
+							"</tr>");
+				}
+
+			}
+		</script>
+	</body>
+</html>

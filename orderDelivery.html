@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/table_jqgrid.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:20:02 GMT -->
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>订单发货</title>
+
+    <link href="css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="css/timePicker.css" rel="stylesheet">
+    <link href="css/newStyle.css" rel="stylesheet">
+    <link href="js/plugins/fancybox/jquery.fancybox.css" rel="stylesheet">
+
+    <style>
+        /* 重写bookstrap样式表 勿删 */
+        .form_inputs {
+            width: 160px;
+            background-color: #ebebeb;
+            border: 1px solid #06a3f9;
+            border-radius: 20px;
+            -webkit-border-radius: 20px;
+            -moz-border-radius: 20px;
+            -o-border-radius: 20px;
+            -ms-border-radius: 20px;
+        }
+
+        .ibox-title {
+            padding: 20px;
+        }
+
+        .mb30 {
+            margin-bottom: 20px;
+        }
+
+        /* 重写bookstrap样式表 勿删 */
+        .ui-jqdialog {
+            height: auto !important;
+        }
+
+        .ui-common-table tbody {
+            background-color: #eaf5fc !important;
+        }
+
+        .modal-dialog {
+            margin: 80px auto !important;
+        }
+
+        .form-group {
+            margin-left: 0px !important;
+            margin-right: 0px !important;
+        }
+
+        .modal-sm {
+            width: 600px;
+        }
+
+        .col-sm-3 {
+            width: 30%;
+        }
+
+        .col-sm-8 {
+            width: 70%;
+        }
+
+        .form-horizontal .control-label {
+            text-align: left;
+            padding-top: 5px;
+            font-size: 18px;
+        }
+
+        @media only screen and (min-width: 100px) and (max-width: 600px) {
+            .modal-sm {
+                width: 400px;
+            }
+
+            .col-sm-3 {
+                width: 40%;
+            }
+
+            .col-sm-8 {
+                width: 60%;
+            }
+
+            .scroll_div {
+                width: 85%;
+            }
+
+            .form-horizontal .control-label {
+                text-align: left;
+                padding-top: 5px;
+                font-size: 14px;
+            }
+
+            .dialog_btn {
+                font-size: 14px !important;
+            }
+        }
+
+        @media only screen and (min-width: 650px) {
+            .modal-sm {
+                width: 600px;
+            }
+        }
+
+        .coupon_content_bton{
+            width: 180px;
+            height: 45px;
+            border-radius: 4px;
+            background-color: #fff;
+            color: rgba(26, 188, 156, 1);
+            border: 1px solid rgba(26, 188, 156, 1);
+            cursor: pointer;
+        }
+        .coupon_content_btoff{
+            /* width: 160px;
+            height: 35px;
+            text-align: center;
+            line-height: 35px;
+            background: inherit;
+            background-color: rgba(26, 188, 156, 1);
+            
+            border-radius: 3px;
+            margin-left: 60px;
+            color: #fff; */
+            border: none;
+            cursor: pointer;
+            margin: 0 50px;
+            width: 180px;
+            height: 45px;
+            border-radius: 4px;
+            background-color: rgba(26, 188, 156, 1);
+            color: #fff;
+        }
+        
+        /*以下是等待状态的通用样式*/
+        .wating_big_div {
+            position: fixed;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            display: table;
+            z-index: 9999;
+        }
+
+        .zhezhao {
+            opacity: 0.3;
+            position: absolute;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+        }
+
+        .wating_content_div {
+            text-align: center;
+            background: none;
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        /*以上是等待状态的通用样式*/
+        .inputcherckStyle {
+            width: 18px;
+            height: 18px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOnAAADpwBB5RT3QAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAA3SURBVDiNY7x8/sR/BioAFgYGBgYdA3OKDLly4SQDEzVcw8DAMGrQqEGjBo1Yg1gYGCDlCaUAAGYpCP6bB9aTAAAAAElFTkSuQmCC")
+        }
+
+        .inputcherckStyle:hover {
+            background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOnAAADpwBB5RT3QAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAA2SURBVDiNY9Tpr/7PQAXARA1DGBgYGFhgjMsFLWQZoDuhhoGBgYouGjVo1KBRg+hjEOOgK48AQfgHj87Hb9sAAAAASUVORK5CYII=")
+        }
+
+        .inputcherckStyle:checked {
+            background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOnAAADpwBB5RT3QAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAEwSURBVDiNY9Tpr/7PQAXARA1DRg1CBbF6Rgz7U8sYtEUlyDcoQkePocwpiEGEm4/BQkYGt0GsTMwMUbr6DIqCwhiGBGloM1Q5hzIwMDAwbL12imHBhbO4DYrRM2SodA5lWBCawqApIg4X91HTYGhwj2BgZGRk2HHjDEPtnq0Mf///x23QwUf3GV5/+cAgxMXLMDc0hcFAQorBTUmVocUjioGRkZFh3+0LDFW7NjP8/vcXw8WM6ClbTkCIYWZAHIOMgAjDj9+/GFiZWRiYmZgYDt65xFC0fR3Dr79/MAzBcBEDAwPDow/vGJLWzGO4++Y5AwcrGwMzExPD4XtXGEp2rMdpCFaDGBgYGJ5/+cSQtG4Bw6Vn9xkO3r3MULRtLcOPP79xGoLVa+SCYZBFaG4QAHB8WIHt6FAxAAAAAElFTkSuQmCC")
+        }
+        .minheight {
+            min-height: 300px;
+        }
+    </style>
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content  animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox ">
+
+                    <div class="ibox-title pull-left w100p" style="padding: 10px 20px;">
+                        <div class="pull-left">
+                            <div class="ibox-tools cache5">
+                                批量发货
+                            </div>
+                        </div>
+
+                        <div class="pull-right">
+                            <button class="refresh_btn">
+                                <a class="refresh_b">
+                                    <i class="glyphicon glyphicon-chevron-left"></i> 返回
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="ibox-content pull-left w100p jqGrid_wrapper" id="uploadedWrap" data-gridtype="0"
+                        style="padding-top: 15px;">
+                        <div class="ibox-title pull-left w100p"
+                        style="background-color: rgb(243, 243, 243);padding: 10px 20px;border-top:0px;">
+                            <div class="pull-left">
+                                <div class="ibox-tools" style="">
+                                    <span class="titleFontIcon"></span>
+                                    <span class="pull-left" style="position: relative;top: 3px;left: 5px;">数据列表</span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="pull-left w100p minheight">
+                            <form id="submitForm">
+                                <table class="table table-bordered mb0 ">
+                                    <thead>
+                                        <tr>
+                                            <th>订单编号</th>
+                                            <th>收货人</th>
+                                            <th>手机号码</th>
+                                            <th>邮政编码</th>
+                                            <th>收货地址</th>
+                                            <th>配送方式</th>
+                                            <th>物流单号</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody_list1"></tbody>
+                                </table>
+                            </form>
+                        </div>
+                        <div class="pull-left tac c0 f14 w100p pre mt10">
+                            <button type="button" class="coupon_content_bton" id="off_btn">取消</button>
+                            <button type="button" class="coupon_content_btoff"
+                                id="sure_btn">确定</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!--加载遮罩组件-->
+    <div class="none" id="wating_show">
+        <div class="ibox wating_big_div">
+            <div class="zhezhao bg_f"></div>
+            <div class="ibox-content wating_content_div ">
+                <div class="spiner-example">
+                    <div class="sk-spinner sk-spinner-wave">
+                        <div class="sk-rect1"></div>
+                        <div class="sk-rect2"></div>
+                        <div class="sk-rect3"></div>
+                        <div class="sk-rect4"></div>
+                        <div class="sk-rect5"></div>
+                    </div>
+                    <h5 class="f20 c0"><span id="loading_text">正在请求 ，请稍后...... </span>(<span id="second_span">0</span>)秒
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="js/plugins/peity/jquery.peity.min.js"></script>
+    <script src="js/content.min.js?v=1.0.0"></script>
+    <script src="js/plugins/layer/laydate/laydate.js"></script>
+    <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+    <script src="js/plugins/iCheck/icheck.min.js"></script>
+    <script src="js/plugins/fancybox/jquery.fancybox.js"></script>
+    <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/jquery-timepicker.js" type="text/javascript" charset="utf-8"></script>
+    <!--ajax上传插件:jquery.form ajaxSubmit-->
+    <script src="js/jquery-form.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        var tableTimeout, addTimeout, setPowerTime, editManageTimeout, deleteTimeOut, getPowerTime, limits = 10,
+            page = 0,
+            counts = 0,
+            table_title, roleID;
+        var cherk_roleId;
+
+        var totalPages = 0;
+        var maxIndex;
+        var userMessage;
+        var getTwoType;
+        var orderSerialNumber = getUrlParms('id')
+        $(document).ready(function () {
+            $(".fancybox").fancybox({openEffect:"none",closeEffect:"none"});
+            IsTokenSave();
+            userMessage = JSON.parse(sessionStorage.getItem("user_message"));
+            console.log();
+            $(".refresh_a").click(function () { //刷新按钮
+                location.reload();
+            });
+            $(".refresh_b").click(function () { //刷新按钮
+                window.history.go(-1); 
+            });
+            $(".i-checks").iCheck({ //check必须有的脚本
+                checkboxClass: "icheckbox_square-green",
+                radioClass: "iradio_square-green",
+            });
+            
+            logisticsList()//快递公司
+            $("#off_btn").click(function () { //取消按钮
+                window.history.go(-1); 
+            });
+
+            $("#sure_btn").click(function () { //添加的保存按钮
+                var tabLengtha = 0
+                var tabLengthb = 0
+                var Input = false
+                var Select = false
+                $.each($('.tableInput'),function(){
+                    if ($(this).val() == '') {
+                        $(this).css("border-color","red")
+                        // TipsAlert('请将数据填写完整');
+                        return false
+                    }
+                    if (++tabLengtha === $('.tableInput').length) {
+                        Input = true
+                    }
+                });
+                $.each($('.tableSelect'),function(){
+                    if ( $(this).find("option:selected").val() == '') {
+                        $(this).parent().css("border-color","red")
+                        // TipsAlert('请将数据填写完整');
+                        return false
+                    }
+                    if (++tabLengthb === $('.tableSelect').length) {
+                        Select = true
+                    }
+                });
+                var msg = $("#submitForm").serialize()
+                    msg = decodeURIComponent(msg,true);
+                var json = "[{";
+                var msg2 = msg.split("&");   //先以“&”符号进行分割，得到一个key=value形式的数组
+                var t = false;
+                for(var i = 0; i<msg2.length; i++){
+                var msg3 = msg2[i].split("=");  //再以“=”进行分割，得到key，value形式的数组
+                for(var j = 0; j<msg3.length; j++){
+                    json+="\""+msg3[j]+"\"";
+                    if(j+1 != msg3.length){
+                    json+=":";
+                    }
+                    if(t){
+                    json+="}";
+                    if(i+1 != msg2.length){
+                        json+=",{";
+                    }
+                    t=false;
+                    }
+                    if(msg3[j] == "expressNumber"){
+                    t = true;
+                    }
+                }
+                if(!msg2[i].match("expressNumber")){  
+                    json+=";";
+                }
+                        
+                }
+                json+="]";
+
+                if (Input && Select) {
+                    Showload("正在初始化列表......");
+                    addTimeout = setInterval("Timeout(addTimeout)", 1000);
+                    $.ajax({
+                        type: "post",
+                        url: urls + common_url.bulkshipmentSubmit,
+                        async: true,
+                        timeout: 30000,
+                        dataType: "json",
+                        headers: {
+                            'X-Access-Token': userMessage.token,
+                        },
+                        data: {
+                            jsonStr: json
+                        },
+                        success: function (json) {
+                            CheckLogout(json); //检查是否登陆过期
+                            if (json.code == 0) {
+                                swal({
+                                    title: "发货成功",
+                                    text: "发货成功",
+                                    type: "success",
+                                }, function () {
+                                    var timer1=window.setTimeout(function (){
+                                        window.clearTimeout(timer1);
+                                        window.location.href = 'orderList.html?time='  + new Date().getTime().toString()
+                                    },1500);
+                                });
+                            } else {
+                                TipsAlert(json.msg);
+                            }
+                            InitTime(addTimeout);
+                        },
+                        error: function (xml, text, errorThrown) {
+                            if (text == "timeout") {
+                                TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+                            } else {
+                                TipsAlert("请求数据失败,请联系后台技术人员");
+                            }
+                            InitTime(addTimeout);
+                        }
+                    });
+                }
+                
+            });
+        });
+
+         /**
+         * 物流列表
+         * @param {Number} 
+         * */
+         function logisticsList() {
+            $.ajax({
+                type: "get",
+                url: urls + common_url.queryCompanyList,
+                async: true,
+                timeout: 30000,
+                dataType: "json",
+                data: {
+                    page: 0,
+                    limit: 100,
+                },
+                headers: {
+                        'X-Access-Token': userMessage.token,
+                    },
+                success: function (json) {
+                    CheckLogout(json); //检查是否登陆过期
+                    if (json.code == 0) {
+                        getTwoType = json.data.records
+                        InitTbodyList(1); //初始化列表数据
+                    } else {
+                        TipsAlert(json.code);
+                    }
+                },
+                error: function (xml, text, errorThrown) {
+                    if (text == "timeout") {
+                        TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+                    } else {
+                        TipsAlert("请求数据失败,请联系后台技术人员");
+                    }
+                }
+
+            });
+        }
+        
+        /**
+         * 该方法用于初始化列表
+         * @param {Number} startIndex startIndex是数据起始下标
+         * */
+        function InitTbodyList(startIndex) {
+            Showload("正在初始化列表......");
+            tableTimeout = setInterval("Timeout(tableTimeout)", 1000);
+            $.ajax({
+                type: "get",
+                url: urls + common_url.bulkshipmentList,
+                async: true,
+                timeout: 30000,
+                dataType: "json",
+                headers: {
+                    'X-Access-Token': userMessage.token,
+                },
+                data: {
+                    orderSerialNumber: orderSerialNumber,
+                    page: 1,
+                    limit: 50
+                },
+                success: function (json) {
+                    CheckLogout(json); //检查是否登陆过期
+                    if (json.code == 0) {
+                        var myData = json.data.records;
+                        var tableHtml = "";
+                        for (var i = 0; i < myData.length; i++) {
+                            var optionList = ''
+                            for (var j = 0; j < getTwoType.length; j++) {
+                                optionList += '<option value ="'+getTwoType[j].companyName+'">'+getTwoType[j].companyName+'</option>'
+                            }
+                            tableHtml +='<tr>'+
+                                '<td>' + myData[i]["order_serial_number"] + '</td>' +
+                                '<td class="c_1ABC9C">' + myData[i]["link_man"] + '</td>' +
+                                '<td>' + myData[i]["connect_phone"] + '</td>' +
+                                '<td>' + myData[i]["zip_code"] + '</td>' +
+                                '<td>' + myData[i]["address"] + '</td>' +
+                                '<input type="hidden" class="edit_id" name="orderCartId" value="'+ myData[i].orderCartId+'" />'+
+                                '<input type="hidden" class="edit_id" name="logisticsId" value="'+myData[i].logisticsId+'" />'+
+                                '<input type="hidden" class="edit_id" name="logisticsTimeId" value="'+myData[i].logisticsTimeId+'" />'+
+                                '<input type="hidden" class="edit_id" name="orderSerialNumber" value="'+myData[i].order_serial_number+'" />'+
+                                // '<input type="hidden" class="edit_id" name="handleTime" value="'+myData[i].handleTime+'" />'+
+                                '<td><select name="trackCompany" class="tableSelect">' +
+                                '<option value="" style="display: none;" disabled selected>请选择物流公司</option>'+
+                                 optionList+
+                                '</select></td>' +
+                                '<td><input type="text" class="tableInput" name="expressNumber" value="" required="" aria-required="true"></td>' +
+                                '</tr>';
+                        }
+                        $("#tbody_list1").html(tableHtml);
+
+                        DealTable();
+                        InitFunc();
+                       
+                    } else {
+                        TipsAlert(json.code);
+                        // if (json.return_msg == "Session过期") {
+                        // 	window.location = "login_timeout.html";
+                        // }else{
+                        // 	TipsAlert(json.return_msg);
+                        // }
+                    }
+                    InitTime(tableTimeout);
+                },
+                error: function (xml, text, errorThrown) {
+                    if (text == "timeout") {
+                        TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+                    } else {
+                        TipsAlert("请求数据失败,请联系后台技术人员");
+                    }
+                    InitTime(tableTimeout);
+                }
+
+            });
+        }
+
+
+        /**
+         * 该方法用于初始化操作列里的事件
+         * */
+        function InitFunc() {
+            $(".up_span").each(function () { //上架
+                $(this).click(function () {
+                    var dataset = $(this).parents("td").siblings("td").eq(0)[0].dataset;
+                    Showload("正在请求上架，请稍后....");
+                    deleteTimeOut = setInterval("Timeout(deleteTimeOut)", 1000);
+                    $.ajax({
+                        type: "post",
+                        url: urls + common_url.upperBatch,
+                        async: true,
+                        timeout: 30000,
+                        dataType: "json",
+                        headers: {
+                            'X-Access-Token': userMessage.token,
+                        },
+                        data: {
+                            id: dataset.id
+                        },
+                        success: function (json) {
+                            CheckLogout(json);
+                            if (json.code == 0) {
+                                swal({
+                                    title: "上架成功",
+                                    text: "上架成功",
+                                    type: "success",
+                                }, function () {
+                                    location.reload();
+                                });
+                            }
+                            InitTime(deleteTimeOut);
+                        },
+                        error: function (xml, text, e) {
+                            if (text == "timeout") {
+                                TipsAlert("请求超时,请检查网络或着重新操作");
+                            } else {
+                                TipsAlert("请求数据失败,请联系后台技术人员");
+                            }
+                            InitTime(deleteTimeOut);
+                        }
+                    });
+                });
+               
+            });
+            $(".down_span").each(function () { //下架
+                $(this).click(function () {
+                    var dataset = $(this).parents("td").siblings("td").eq(0)[0].dataset;
+                    Showload("正在请求下架，请稍后....");
+                    deleteTimeOut = setInterval("Timeout(deleteTimeOut)", 1000);
+                    $.ajax({
+                        type: "post",
+                        url: urls + common_url.lowerBatch,
+                        async: true,
+                        timeout: 30000,
+                        dataType: "json",
+                        headers: {
+                            'X-Access-Token': userMessage.token,
+                        },
+                        data: {
+                            id: dataset.id
+                        },
+                        success: function (json) {
+                            CheckLogout(json);
+                            if (json.code == 0) {
+                                swal({
+                                    title: "下架成功",
+                                    text: "下架成功",
+                                    type: "success",
+                                }, function () {
+                                    location.reload();
+                                });
+                            }
+                            InitTime(deleteTimeOut);
+                        },
+                        error: function (xml, text, e) {
+                            if (text == "timeout") {
+                                TipsAlert("请求超时,请检查网络或着重新操作");
+                            } else {
+                                TipsAlert("请求数据失败,请联系后台技术人员");
+                            }
+                            InitTime(deleteTimeOut);
+                        }
+                    });
+                });
+            });
+        }
+    </script>
+</body>
+
+</html>

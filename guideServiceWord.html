@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html class="x-admin-sm">
+
+<head>
+    <!-- 购买服务作品审核列表 -->
+    <meta charset="UTF-8">
+    <title>购买服务作品审核</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+        content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <link rel="stylesheet" href="./css/domain.css">
+    <link href="css/newStyle.css" rel="stylesheet">
+    <!-- 弹窗轻提示 -->
+    <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+    <!-- 引入jq -->
+    <script src="https://cdn.bootcss.com/jquery/3.4.0/jquery.min.js"></script>
+    <!-- 引入layui框架 -->
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <!-- 引入xadmin框架 -->
+    <script type="text/javascript" src="./js/xadmin.js"></script>
+    <!-- 引入请求基准路径 -->
+    <script type="text/javascript" src="./js/common.js"></script>
+    <!-- <script type="text/javascript" src="./js/domain.js"></script> -->
+    <!--[if lt IE 9]>
+          <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+          <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+</head>
+<style>
+.laytable-cell-undefined {
+    width: 116px !important;
+}
+</style>
+
+<body>
+    <div class="x-nav">
+        <!-- <span class="layui-breadcrumb"> -->
+        <span class="goods_name">购买服务作品审核</span>
+        <!-- </span> -->
+        <a class=" layui-btn-small goodsRoload" style="line-height:1.6em;margin-top:3px;" onclick="location.reload()"
+            title="刷新">
+            <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i> 刷新
+        </a>
+    </div>
+    <!-- 商品列表数据 -->
+    <div class="nav">
+        <ul class="nav-navigation">
+            <li class="nav-active"><i style="font-style: normal;">全部作品</i>(<span id="checkAll">
+                </span>)</li>
+            <!-- 这里用自定义属性获取不到 -->
+            <li><i style="font-style: normal;">待审核</i>(<span id="loding"> </span>)</li>
+            <li><i style="font-style: normal;">已通过</i>(<span id="checkYes"> </span>)</li>
+            <li><i style="font-style: normal;">已拒绝</i>(<span id="checkNo"> </span>)</li>
+            <li><i style="font-style: normal;">审核中</i>(<span id="checkLoding"> </span>)</li>
+        </ul>
+    </div>
+    <div class="layui-fluid">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <!-- 头部筛选部分 -->
+                    <div class="layui-card-body ">
+                        <!-- 筛选条件 -->
+                        <div class="search">
+                            <div class="search_if">
+                                <span>
+                                    <i class="layui-icon" style="font-size:20px"> &#xe615;</i>
+                                    筛选条件
+                                </span>
+                                <p class="choose_up" id="down"> <span><i class="layui-icon">&#xe619;</i>收起筛选</span></p>
+                                <p class="choose_up" hidden id="up"><span><i class="layui-icon">&#xe61a;</i>展开筛选</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="search_row">
+                            <form class="layui-form layui-col-space5">
+                                <span>保购账号：</span>
+                                <div class="layui-inline layui-show-xs-block">
+                                    <input type="text" name="accountPhone" placeholder="用户ID/账号" autocomplete="off"
+                                        class="layui-input input_height">
+                                </div>
+
+                                <span>保购昵称：</span>
+                                <div class="layui-inline layui-show-xs-block">
+                                    <input type="text" name="nickname" placeholder="用户昵称" autocomplete="off"
+                                        class="layui-input input_height">
+                                </div>
+                                <span>商家名称：</span>
+                                <div class="layui-inline layui-show-xs-block">
+                                    <input type="text" name="storeName" placeholder="用户昵称" autocomplete="off"
+                                        class="layui-input input_height">
+                                </div>
+                                <span>商品名称：</span>
+                                <div class="layui-inline layui-show-xs-block">
+                                    <input type="text" name="goodsName" placeholder="用户昵称" autocomplete="off"
+                                        class="layui-input input_height">
+                                </div>
+                                <!-- <span>注册时间：</span>
+                                <div class="layui-inline layui-show-xs-block">
+                                    <input type="text" class="layui-input input_height" autocomplete="off"
+                                        id="chooseTim" name="createTime" placeholder="请选择时间">
+                                </div> -->
+                                <!-- <div class="layui-inline layui-show-xs-block">
+                                    <button class="layui-btn" lay-submit="" lay-filter="sreach">
+                                        <i class="layui-icon">&#xe615;</i>
+                                    </button>
+                                </div> -->
+                                <div class="layui-inline layui-show-xs-block submit_btn">
+                                    <!-- <span id="result_list">查询结果</span> -->
+                                    <button class="layui-btn layui-btn-primary" lay-submit="" lay-filter="sreach">
+                                        查询结果</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- table结构 -->
+                    <div class="layui-card-body ">
+                        <!-- 数据列表 -->
+                        <div class="user_list">
+                            <img src="./images/icon.png" alt="数据表格">
+                            <span>数据列表</span>
+                        </div>
+                        <table id="guideListTable" lay-filter="test" style="width: 100%;"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<!-- 头部标签类别展示 -->
+<!-- <script type="text/html" id="guideListTableToolbar">
+</script> -->
+<!-- 审核状态 -->
+<script type="text/html" id="shenHeStatus">
+    {{#  if(d.verify_status == 1){ }}
+    <span style="color: green;">审核通过</span>
+    {{#  } else if(d.verify_status == 2){ }}
+    <span style="color: red;">审核不通过</span>
+    {{#  } else if(d.verify_status == 3){ }}
+    <span style="color: green;">审核中</span>
+    {{#  }  else { }}
+    <span style="color: #ff9800;">待审核</span>
+    {{#  } }}
+</script>
+<!-- 审核状态显示 -->
+<script type="text/html" id="SwitchBtn">
+     <span>￥{{d.goods_price}}/{{d.goods_num}}</span>
+</script>
+
+<script>
+    // 使用layui的方法
+    layui.use(['layedit', 'laydate', 'table', 'form'],
+        function () {
+            var table = layui.table,
+                form = layui.form,
+                layer = layui.layer,
+                layedit = layui.layedit,
+                laydate = layui.laydate;
+            laydate.render({
+                elem: '#chooseTim' //搜索时间框
+            });
+            // 操作筛选条件的收起展开
+            $('.choose_up').on('click', function () {
+                $('.search_row').toggle();
+                $('#up').toggle();
+                $('#down').toggle()
+            })
+
+
+
+
+            // 头部值的渲染
+            function initial() {
+                $.ajax({
+                    type: 'get',
+                    url: urls + 'bSaleIssueOpus/selectBuyServersCheckStatus',
+                    headers: {
+                        'X-Access-Token': JSON.parse(sessionStorage.getItem("user_message")).token,
+                    },
+                    success: function (res) {
+                        CheckLogout(res); //检查是否登陆过
+                        if (res.code == 0) {
+                            $('#checkLoding').text(res.data.checkLoding)
+                            $('#checkAll').text(res.data.checkAll)
+                            $('#checkYes').text(res.data.checkYes)
+                            $('#loding').text(res.data.loding)
+                            $('#checkNo').text(res.data.checkNo)
+                        }
+                    }
+                })
+            }
+            initial(); //进来初步渲染
+
+
+            // 上面点击导航执行
+            $('.nav-navigation li').on('click', function () {
+                // 拿到当前的数据（需要传的参数）
+                // 如果有这个类名的就停止执行
+                if ($(this).hasClass("nav-active")) {
+                    return
+                }
+                $('.nav-navigation li').removeClass("nav-active");
+                $(this).addClass("nav-active");
+                var data = $(this).children('i').text() //拿到当前值
+                // 定义导航类型
+                var idx;
+                if (data == "已通过") {
+                    idx = 1;
+                } else if (data == '已拒绝') {
+                    idx = 2;
+                } else if (data == '待审核') {
+                    idx = 0;
+                } else if (data == '全部作品') {
+                    // init();
+                    idx = '';
+                } else if (data == '审核中') {
+                    idx = 3;
+                }
+                // 重新加载表格
+                table.reload('idTest', {
+                    url: urls + 'bSaleIssueOpus/sioStatusList',
+                    headers: {
+                        'X-Access-Token': JSON.parse(sessionStorage.getItem("user_message")).token,
+                    },
+                    page: {
+                        curr: 1  //重新从第 1 页开始
+                    },
+                    where: {
+                        verifyStatus: idx,
+                        nickname: '',
+                        accountPhone: '',
+                        storeName: '',
+                        goodsName: ''
+                    }    //传递参数
+                });
+            });
+
+            // 接收传过来的参数
+            function getUrlParam(name) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+                var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+                if (r != null) return unescape(r[2]); return null; //返回参数值
+            }
+            var code_id = getUrlParam("id") || ''; //状态id 
+            //  var code_id = '0';
+            //  console.log(code_id,'123')
+            console.log(code_id, '外')
+            if (code_id === '0') {
+                console.log(code_id, '内')
+                $('.nav-navigation li').removeClass("nav-active");
+                $('.nav-navigation li:nth-child(2)').addClass("nav-active") //待审核状态
+            }
+
+            function init() {
+                Showload();
+                //第一个实例（创建table）
+                table.render({
+                    elem: '#guideListTable',
+                    toolbar: '#guideListTableToolbar',
+                    id: 'idTest',
+                    cellMinWidth: 80,
+                    height: '600',
+                    url: urls + 'bSaleIssueOpus/sioStatusList' // 购买服务作品审核数据接口
+                    , headers: {
+                        'X-Access-Token': JSON.parse(sessionStorage.getItem("user_message")).token,
+                    }
+                    , method: 'get' //如果无需自定义HTTP类型，可不加该参数
+                    , where: { verifyStatus: code_id }
+                    , page: true //开启分页
+                    , parseData: function (res) { //res 即为原始返回的数据
+                        //console.log(res,998877)
+                        CheckLogout(res); //检查是否登陆过
+                        return {
+                            "code": res.code, //解析接口状态
+                            "msg": res.msg, //解析提示文本
+                            "count": res.data.total, //解析数据长度
+                            "data": res.data.records //解析数据列表
+                        }
+                    }
+                    ,
+                    cols: [
+                        [ //表头
+                            {
+                                type: 'checkbox',
+                                width: 50
+                            }, //开启多选框
+                            {
+                                field: 'account_phone',
+                                title: '推荐编号',
+                                align: 'center',
+                                width: 130
+                            }, {
+                                field: 'order_num',
+                                title: '服务订单编号',
+                                align: 'center',
+                                // width: 130
+                            }, {
+                                field: 'goods_name',
+                                // edit: 'text',
+                                title: '商品名称',
+                                align: 'center',
+                                // width: 130
+                            }, {
+                                field: '',
+                                templet: "#SwitchBtn",
+                                title: '价格/货号',
+                                align: 'center',
+                                width: 160
+                            }, {
+                                field: 'nickname',
+                                title: '保购昵称',
+                                align: 'center',
+                                // width: 160
+                            }, {
+                                field: 'account_phone',
+                                title: '保购账号',
+                                align: 'center',
+                                // width: 150
+                            }, {
+                                field: 'store_name',
+                                title: '商家名称',
+                                align: 'center',
+                                // width: 150
+                            }, {
+                                field: 'store_phone',
+                                title: '商家账号',
+                                align: 'center',
+                                // width: 150
+                            },
+                            {
+                                field: 'id',
+                                title: '审核状态',
+                                templet: '#shenHeStatus',
+                                align: 'center',
+                                width: 150
+                            }, {
+                                field: 'verify_count',
+                                title: '提交次数',
+                                align: 'center',
+                                width: 120
+                            },
+                            , {
+                                fixed: 'right', width: 115, title: '操作', align: 'center', templet: function (res) {
+                                    if (res.verify_status == 1) {
+                                        return '<a lay-event="goods_look" ><i class="layui-icon" style="font-size:20px; margin-right: 10px;color:#1abc9c;font-size:12px;" title="审核详情">详情</i> </a> '
+                                    } else {
+                                        return ' <a lay-event="goods_check" ><i class="layui-icon" style="font-size:20px; margin-right: 10px;color:#1abc9c;font-size:12px;" title="审核">审核</i> </a>   <a lay-event="goods_look" ><i class="layui-icon" style="font-size:20px; margin-right: 10px;color:#1abc9c;font-size:12px;" title="审核详情">详情</i> </a> ';
+                                    }
+
+                                }
+                            }
+                        ]
+                    ],
+                    done: function (res, curr, count) {
+                        //重新赋值筛选后的table数量
+                        if (res.code == 0) {
+                            InitTime();
+                        } else {
+                            TipsAlert("请求数据失败,请联系后台技术人员");
+                        }
+                    }
+                });
+            }
+
+            //调用初始化表格
+            init();
+            //监听行单击事件 
+            table.on('tool(test)', function (obj) {
+                // obj为单行数据对象
+                var data = obj.data;
+                obj.tr.addClass("active_tr").siblings().removeClass("active_tr");  //标注选中行样式
+                if (obj.event === 'goods_look') {  //查看审核详情
+                    layer.open({
+                        type: 2,
+                        title: '购买服务作品审核详情',
+                        content: `./guideAudit.html?id=${obj.data.id}&goodsNum=${obj.data.goods_num}`,
+                        area: ['1200px', '720px'],
+                        btn: ['返回']
+                    });
+                } else if (obj.event === 'goods_check') {  //审核
+               
+                    layer.open({
+                        type: 2,
+                        title: '保购作品审核',
+                        content: `./guide_workDatail.html?id=${obj.data.id}`,
+                        area: ['1200px', '720px'],
+                        btn: ['返回'],
+                        end: function () {
+                            table.reload('idTest', {
+                                page: {
+                                    curr: $(".layui-laypage-em").next().html() //加载当前页
+                                }
+                            });
+                            initial();
+                        }
+                    });
+                }
+            });
+
+            //点击按钮监听提交事件 点击按钮实现筛选功能
+            form.on('submit(sreach)', function (data) {
+                table.reload('idTest', {
+                    page: {
+                        curr: 1  //重新从第 1 页开始
+                    },
+                    headers: {
+                        'X-Access-Token': JSON.parse(sessionStorage.getItem("user_message")).token,
+                    },
+                    where: {
+                        nickname: data.field.nickname,
+                        accountPhone: data.field.accountPhone,
+                        storeName: data.field.storeName,
+                        goodsName: data.field.goodsName
+                    },
+                });
+                return false;
+            });
+
+
+
+
+        });
+</script>
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+<script>
+    // 图片放大功能
+    function previewImg(obj) {
+        var img = new Image();
+        img.src = obj.src;
+        //var height = img.height + 50; // 原图片大小
+        //var width = img.width; //原图片大小
+        var imgHtml = "<img src='" + obj.src + "' width='500px' height='500px'/>";
+        //弹出层
+        layer.open({
+            type: 1,
+            shade: 0.8,
+            offset: 'auto',
+            area: [500 + 'px', 550 + 'px'], // area: [width + 'px',height+'px']  //原图显示
+            shadeClose: true,
+            scrollbar: false,
+            title: "图片预览", //不显示标题  
+            content: imgHtml, //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响  
+            cancel: function () {
+
+            }
+        });
+    }
+</script>
+
+</html>

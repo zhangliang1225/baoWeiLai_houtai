@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/froala_editor.css">
+  <link rel="stylesheet" href="css/froala_style.css">
+  <link rel="stylesheet" href="css/plugins/code_view.css">
+  <link rel="stylesheet" href="css/plugins/draggable.css">
+  <link rel="stylesheet" href="css/plugins/colors.css">
+  <link rel="stylesheet" href="css/plugins/emoticons.css">
+  <link rel="stylesheet" href="css/plugins/image_manager.css">
+  <link rel="stylesheet" href="css/plugins/image.css">
+  <link rel="stylesheet" href="css/plugins/line_breaker.css">
+  <link rel="stylesheet" href="css/plugins/table.css">
+  <link rel="stylesheet" href="css/plugins/char_counter.css">
+  <link rel="stylesheet" href="css/plugins/video.css">
+  <link rel="stylesheet" href="css/plugins/fullscreen.css">
+  <link rel="stylesheet" href="css/plugins/file.css">
+  <link rel="stylesheet" href="css/plugins/quick_insert.css">
+  <link rel="stylesheet" href="css/plugins/help.css">
+  <link rel="stylesheet" href="css/third_party/spell_checker.css">
+  <link rel="stylesheet" href="css/plugins/special_characters.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.css">
+
+  <link href="../js/plugins/webuploader/webuploader.css" rel="stylesheet">
+  <link href="../js/plugins/webuploader/style.css" rel="stylesheet">
+
+
+  <link href="../css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+  <link href="../css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+
+  <link href="../css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+  <link href="../css/animate.min.css" rel="stylesheet">
+  <link href="../css/style.min862f.css?v=4.1.0" rel="stylesheet">
+
+  <style>
+      body {
+          text-align: center;
+      }
+      input{  
+        background:none;  
+        outline:none;  
+        border:0px;
+      }
+      div#editor {
+          width: 81%;
+          margin: auto;
+          text-align: left;
+      }
+      /* 样式重写 */
+      .fr-wrapper{
+        min-height: 500px!important;
+      }
+      .fr-wrapper > div[style*='z-index: 9999'] {
+           position: absolute;
+           top: -10000px;
+           opacity: 0;
+       }
+      .fr-box.fr-basic .fr-element {
+          margin-top: 0px;
+      }
+
+      #artcleName > input{
+        width: 100%;
+        height: 46px;
+        font-size: 24px;
+      }
+      #authorName > input{
+        width: 100%;
+        height: 22px;
+        font-size: 16px;
+      }
+      .draftWarp{
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        position: fixed;
+        top: 0;
+        display: flex;
+        align-items: center;
+      }
+      .none{
+        display: none!important;
+      }
+      #editCover{
+        display: none;
+        width: 100%;
+        position: absolute!important;
+        top: 0!important;
+        z-index: 999!important;
+        padding: 15px 15px;
+        margin: 15px 0;
+        background-color: #fafafa;
+        box-shadow: inset 0 3px 6px rgba(0, 0, 0, .05);
+        border-color: #e5e5e5 #eee #eee;
+        border-style: solid;
+        border-width: 1px 0;
+        min-width: 325px;
+      }
+      #editCover .wrapper{
+        text-align: center;
+        border: 3px dashed #ccc;
+        /* background: url(../images/image.png) center 93px no-repeat; */
+        color: #cccccc;
+        font-size: 18px;
+        position: relative;
+        padding: 0 20px;
+      }
+  </style>
+</head>
+
+<body class="gray-bg">
+  <div class="wrapper wrapper-content  animated fadeInRight">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="ibox ">
+            <div class="ibox-title p30 w100p">
+              <div class="pull-left w100p f18 pd10 ">
+                <div class="pull-left pd10 bd_9db3c0 w100p">
+                  <span class="back_span pull-left"><a onClick="javascript :history.go(-1);" class="c0">返回</a></span>
+                  <i class="fa fa-angle-left pl10 pull-left" style="margin-top: 4px;"></i>
+                  <span class="c_5bb7ee pl10 pull-left">新建文章</span>
+                </div>
+              </div>
+              <form class="form-horizontal m-t" enctype="multipart/form-data" method="post" id="add_new_form">
+                <input type="hidden" class="token_input" name="token" id="token" value="" />
+								<input type="hidden" class="userinfoId_input" name="userinfoId" value="" />
+								<input type="hidden" id="region" name="region" value=""/>
+
+                
+                <article class="page-container"  style="margin-left:25px;">
+                  <input type="hidden" name="articleId" id="articleId" value="${article.article_id}"/>
+                  <div class="row cl" >
+                    <div class="form-group ">
+                      <label class="col-sm-2 control-label pull-left"><span class="pull-left">*标题：</span></label>
+                      <div class="col-sm-8 pull-left" id="articleTitle">
+                          <input type="text" class="form-control" name="title" aria-required="true" class="input-text" placeholder="输入文章标题">
+                      </div>
+                    </div>
+                    <div class="form-group ">
+                      <label class="col-sm-2 control-label pull-left"><span class="pull-left">*标签类别：</span></label>
+                      <select name="" class="h30 br_e5e6e7 f14 one_level_select pull-left" style="width: 120px;margin-left: 15px;" id="sxid">
+                          
+                      </select>
+                    </div>
+
+                    <div class="form-group ">
+                      <label class="col-sm-2 control-label pull-left"><span class="pull-left">*正文：</span></label>
+                    </div>
+                        
+                        
+                    <div id="edit"></div>
+
+                    <div class="form-group" style="margin-top: 50px;">
+                      <label class="col-sm-2 control-label pull-left"><span class="pull-left">*上传封面：</span></label>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 50px;position: relative;">
+                      <div class="uploader uploader4">
+                        <div class="message">
+                          可以尝试文件拖拽，或者点击选择文件按钮，来体验此demo。(不限制类型,不限制个数)
+                        </div>
+                        <div class="wrapper">
+                          <div class="file-list"></div>
+                        </div>
+                        <div class="actions-area">
+                          <div class="actions">
+                            <div class="filePicker action">选择文件</div>
+                            <input class="uploadFile action upload-btn disabled" type="button" value="上传文件"></input>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- 编辑时带有封面 -->
+                      <div class="" id="editCover">
+                        <div class="message" style="font-size: 16px;margin-bottom: 20px;">
+                          可以尝试文件拖拽，或者点击选择文件按钮，来体验此demo。(不限制类型,不限制个数)
+                        </div>
+                        <div class="wrapper">
+                          <div class="file-list" id="editFile"></div>
+                        </div>
+                        <div class="actions-area">
+                          <div class="actions">
+                            <input class="uploadFile action upload-btn disabled" type="button" value="上传文件"></input>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 50px;">
+                      <label class="col-sm-2 control-label pull-left"><span class="pull-left">*选择发布用户：</span></label>
+                      <!-- <span class="pull-left">
+                          <input class="pull-left  control-label ml30" type="radio" style="margin-top: 9px;" value="1"><p class="pull-left control-label">扬言官方</p>
+                      　　<input class="pull-left  control-label" type="radio" style="margin-top: 9px; margin-left: 20px;" value="2"><p class="pull-left control-label">随机账号</p>
+                      </span> -->
+                      <select name="" class="h30 br_e5e6e7 f14 xn_one_level_select pull-left" style="width: 120px;margin-left: 15px;" id="xnid">
+                          
+                      </select>
+                      
+                  　　
+                      
+                    </div>
+
+
+                  </div>
+                  
+                  <div class="row cl" style="margin:50px 0;">
+                    <div class="col-xs-8 col-sm-7 col-xs-offset-4 col-sm-offset-3">
+                      <input class="btn btn-primary radius ml10 saveArticle" type="button" data-fabustyle="0" value="&nbsp;&nbsp;提交审核&nbsp;&nbsp;">
+                      <input class="btn btn-primary radius ml10 saveArticle" type="button" data-fabustyle="4" value="&nbsp;&nbsp;保存为草稿&nbsp;&nbsp;">
+                      <input class="btn btn-primary radius ml10" type="button" onclick="showDraft()" value="&nbsp;&nbsp;预览&nbsp;&nbsp;">
+                    </div>
+                  </div>
+
+                </article>
+              
+              
+              
+              </form>
+              
+
+              
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <div class="none draftWarp">
+    <div style="width: 450px;height: 828px;margin:0 auto;display:flex;flex-direction: column;background: #fff;">
+      <div class="col-sm-6" style="width:436px;height: 728px;background:#fff;margin: 0 auto;">
+        <div class="pull-left" id="articleViewAreaTit" style="width: 100%;height: 48px;margin-top:20px;"></div>
+        <div class="pull-left" id="articleViewAreaCont" style="width: 100%;height: 48px;margin-top:20px;"></div>
+      </div>
+      <div class="closeWarp" onclick="closeWarp()" style="width: 100px;height: 50px;line-height:50px;margin: 30px auto;border-radius: 4px;border: 1px solid #676a6c;">关闭</div>
+    </div>
+    
+  </div>
+  <!--加载遮罩组件-->
+  <div class="none" id="wating_show">
+    <div class="ibox wating_big_div">
+        <div class="zhezhao bg_f"></div>
+        <div class="ibox-content wating_content_div " >
+            <div class="spiner-example">
+                <div class="sk-spinner sk-spinner-wave">
+                    <div class="sk-rect1"></div>
+                    <div class="sk-rect2"></div>
+                    <div class="sk-rect3"></div>
+                    <div class="sk-rect4"></div>
+                    <div class="sk-rect5"></div>
+                </div>
+                <h5 class="f20 c0" ><span id="loading_text">正在请求 ，请稍后...... </span>(<span id="second_span">0</span>)秒</h5>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <script src="../js/jquery.min.js?v=2.1.4"></script>
+  <script src="../js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../js/plugins/peity/jquery.peity.min.js"></script>
+  <script src="../js/content.min.js?v=1.0.0"></script>
+  <script src="../js/plugins/layer/laydate/laydate.js"></script>
+  <script src="../js/plugins/sweetalert/sweetalert.min.js"></script>
+  <script src="../js/common.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../js/jquery-form.js" type="text/javascript" charset="utf-8"></script>
+
+  <script src="../js/plugins/webuploader/webuploader.support.js"></script>
+  <script src="../js/plugins/webuploader/webuploader.js"></script>
+
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/mode/xml/xml.min.js"></script>
+
+  <script type="text/javascript" src="js/froala_editor.min.js" ></script>
+  <script type="text/javascript" src="js/plugins/align.min.js"></script>
+  <script type="text/javascript" src="js/plugins/char_counter.min.js"></script>
+  <script type="text/javascript" src="js/plugins/code_beautifier.min.js"></script>
+  <script type="text/javascript" src="js/plugins/code_view.min.js"></script>
+  <script type="text/javascript" src="js/plugins/colors.min.js"></script>
+  <script type="text/javascript" src="js/plugins/draggable.min.js"></script>
+  <script type="text/javascript" src="js/plugins/emoticons.min.js"></script>
+  <script type="text/javascript" src="js/plugins/entities.min.js"></script>
+  <script type="text/javascript" src="js/plugins/file.min.js"></script>
+  <script type="text/javascript" src="js/plugins/font_size.min.js"></script>
+  <script type="text/javascript" src="js/plugins/font_family.min.js"></script>
+  <script type="text/javascript" src="js/plugins/fullscreen.min.js"></script>
+  <script type="text/javascript" src="js/plugins/image.min.js"></script>
+  <script type="text/javascript" src="js/plugins/image_manager.min.js"></script>
+  <script type="text/javascript" src="js/plugins/line_breaker.min.js"></script>
+  <script type="text/javascript" src="js/plugins/inline_style.min.js"></script>
+  <script type="text/javascript" src="js/plugins/link.min.js"></script>
+  <script type="text/javascript" src="js/plugins/lists.min.js"></script>
+  <script type="text/javascript" src="js/plugins/paragraph_format.min.js"></script>
+  <script type="text/javascript" src="js/plugins/paragraph_style.min.js"></script>
+  <script type="text/javascript" src="js/plugins/quick_insert.min.js"></script>
+  <script type="text/javascript" src="js/plugins/quote.min.js"></script>
+  <script type="text/javascript" src="js/plugins/table.min.js"></script>
+  <script type="text/javascript" src="js/plugins/save.min.js"></script>
+  <script type="text/javascript" src="js/plugins/url.min.js"></script>
+  <script type="text/javascript" src="js/plugins/video.min.js"></script>
+  <script type="text/javascript" src="js/plugins/help.min.js"></script>
+  <script type="text/javascript" src="js/plugins/print.min.js"></script>
+  <script type="text/javascript" src="js/third_party/spell_checker.min.js"></script>
+  <script type="text/javascript" src="js/plugins/special_characters.min.js"></script>
+  <script type="text/javascript" src="js/plugins/word_paste.min.js"></script>
+  <script type="text/javascript" src="js/languages/zh_cn.js"></script>
+  
+
+  <script>
+    var tableTimeout,addManageTimeout,setPowerTime,editManageTimeout,deleteTimeOut,getPowerTime,limits = 20,page = 1,counts = 0,table_title,roleID;
+    var roleObj;
+    var r_userUrl;
+    var r_userName;
+    var articleId = '';
+    var apiUrl = '';
+    var ajaxType = '';
+    $(function (){
+      IsTokenSave();
+      articleId = getURLParams(document.URL).id;
+      console.log(articleId);
+      
+      if(articleId != undefined){
+        console.log('编辑')
+        queryArticleInfo(articleId);
+        apiUrl = common_url.articleInfo_review;
+        ajaxType = "put";
+      }else{
+        console.log('新建')
+        var editContent = '';
+        apiUrl = common_url.articleInfo_add;
+        ajaxType = "post";
+        initFroalaEditor(editContent);
+        getarticleTags();
+        userInfoPager();
+        initWebUploader();
+      }
+      
+      
+    
+    })
+    /**
+			 * 该方法用于初始化列表
+			 * @param {Number} startIndex startIndex是数据起始下标
+    **/
+    function queryArticleInfo (articleId) {
+      Showload("正在初始化列表......");
+      tableTimeout = setInterval("Timeout(tableTimeout)", 1000);
+      $.ajax({
+        type:"get",
+        url:urls+ common_url.queryArticleInfo,
+        async:true,
+        timeout:30000,
+        dataType:"json",
+        headers:{
+          'X-Access-Token':userMessage.token,
+        },
+        data:{
+          id:articleId
+        },
+        success:function  (json) {
+          console.log(json);
+          CheckLogout (json);//检查是否登陆过期
+          if (json.code == 200) {
+            var myData = json.result;
+            console.log(myData);
+            initFroalaEditor(myData.content);
+            getarticleTags(myData.tagId);
+            userInfoPager(myData.userId);
+            initWebUploader();
+            $("#articleTitle input").val(myData.articleTitle);
+            if(myData.coverUrl != null){
+              $("#editCover").css("display","block");
+              var tableHtml = "";
+              tableHtml = tableHtml + '<div class="file-item thumbnail" id="WU_FILE_0" style="width: 150px; height: 150px;">'
+                      +'<div class="file-info">'+ myData.coverUrl +'</div>'
+                      +'<div class="file-operations"><div class="file-delete"><button id="editD" data-url="'+ myData.coverUrl +'" onclick="editDelCover()" type="button">删除</button></div><div class="file-retry"><button type="button">重试</button></div></div>'
+                      +'<div class="progress" style="display:none;"><div class="progress-bar" style="width: 100%;"></div></div>'
+                      +'<div class="state success">上传成功</div>'
+                      +'<input type="hidden" class="picurl" value="'+ myData.coverUrl +'">'
+                      +'<img src="'+ myData.coverUrl +'">'
+										+ '</div>';
+              $("#editFile").html(tableHtml)
+              
+            }
+
+        
+
+          } else{
+            if (json.return_msg == "Session过期") {
+              window.location = "login_timeout.html";
+            }else{
+              TipsAlert(json.return_msg);
+            }
+          }
+
+          InitTime (tableTimeout);
+        },
+        error:function(xml, text, errorThrown) {
+          if (text == "timeout") {
+            TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+          } else{
+            TipsAlert("请求数据失败,请联系后台技术人员");
+          }
+          InitTime (tableTimeout);
+        }
+        
+      });
+    }
+			
+
+    //初始化富文本调用的froalaEditor插件
+    function initFroalaEditor(editContent){
+      //超大屏幕的功能按钮
+      var toolbarButtons   = ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'fontFamily', 'fontSize', '|', 'color', 'emoticons', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', 'insertHR', '-', 'insertLink', 'insertImage', 'insertVideo', 'insertFile', 'insertTable', 'undo', 'redo', 'clearFormatting', 'selectAll', 'html'];
+      //大屏幕的功能按钮
+      var toolbarButtonsMD = ['fullscreen', 'bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'color', 'paragraphStyle', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', 'insertHR', 'insertLink', 'insertImage', 'insertVideo', 'insertFile', 'insertTable', 'undo', 'redo', 'clearFormatting'];
+      //小屏幕的功能按钮
+      var toolbarButtonsSM = ['fullscreen', 'bold', 'italic', 'underline', 'fontFamily', 'fontSize', 'insertLink', 'insertImage', 'insertTable', 'undo', 'redo'];
+      //手机的功能按钮
+      var toolbarButtonsXS = ['bold', 'italic', 'fontFamily', 'fontSize', 'undo', 'redo'];
+      //var pid = $('#pid').val();
+
+      //编辑器初始化并赋值
+      $('#edit').on('froalaEditor.initialized', function (e, editor) {
+          $('#edit').froalaEditor('html.set',editContent);
+
+      })
+      .froalaEditor({
+          placeholderText: '请输入文章内容', //默认填充内容
+          charCounterCount       : true,//默认 显示字数
+          saveInterval           : 0,//不自动保存，默认10000，0为不自动保存
+          //theme                  : "dark",//主题：dark，red，gray，royal，注意需要引入对应主题的css
+          height                  : "400px",
+          toolbarBottom           : false,//默认
+          toolbarButtonsMD        : toolbarButtonsMD,
+          toolbarButtonsSM        : toolbarButtonsSM,
+          toolbarButtonsXS        : toolbarButtonsXS,
+          toolbarInline           : false,//true选中设置样式,默认false
+          imageUploadMethod       : 'POST',
+          heightMin: 450,
+          charCounterMax: 3000,  //最大字数限制，-1为不限制
+          saveURL: '${ctx}/webmana/article/saveArticle',  //自动保存的地址（body参数为html内容）
+          saveParams: { postId: '1'},  //保存内容时传的参数
+          // spellcheck: false,  //是否允许浏览器对输入内容进行拼写检查
+          imageUploadURL: 'http://47.107.248.102:8281/yy-admin/oss/upload',//上传到本地服务器
+          imageUploadParams: {isPin: 1}, //上传图片时带的参数
+          ///imageDefaultWidth: 100, //上传图片后的默认大小
+          //imageResizeWithPercent: true,//不设置这个，imageDefaultWidth的单位为像素，设置后为%
+          videoUploadURL:'${ctx}/webmana/attachment/uploadArticleVideo',
+          enter: $.FroalaEditor.ENTER_BR, //设置回车键功能
+          language: 'zh_cn',
+          // toolbarButtons: ['bold', 'italic', 'underline', 'paragraphFormat', 'align','color','fontSize','insertImage','insertTable','undo', 'redo']
+      });
+    }
+    
+    //初始化上传封面调用的WebUploader插件
+    function initWebUploader(){
+      //不限制文件类型
+      var w4 = new WebUploaderSupport({
+        server: "http://47.107.248.102:8281/yy-admin/oss/upload"
+        ,swf: '../webuploader/Uploader.swf'  // swf文件所处路径
+        ,accept: {
+          title: 'Images',
+          extensions: 'gif,jpg,jpeg,bmp,png',
+          mimeTypes: 'image/!'
+        }
+        ,support: {
+          uploader: ".uploader.uploader4",
+          fileSize: 1,
+        }
+        
+      });
+    }
+    
+    function editDelCover(){
+      console.log($("#editD")[0].dataset.url);
+      var imgUrl = $("#editD")[0].dataset.url;
+      var index = imgUrl.lastIndexOf("/");  
+
+      imgUrl  = imgUrl.substring(index + 1, imgUrl.length);
+      console.log(imgUrl);
+      swal({
+        title: "确定要删除这张图片吗？",
+        text: "提示",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "是",
+        cancelButtonText: "否",
+        closeOnConfirm: false,
+        closeOnCancel:true
+      }, function (yes) {
+        if (yes) {
+          Showload("正在请求服务，请稍后....");
+          
+          deleteTimeOut = setInterval("Timeout(deleteTimeOut)", 1000);
+          $.ajax({
+            type:"post",
+            url:"http://47.107.248.102:8281/yy-admin/oss/delete",
+            async:true,
+            timeout:30000,
+            dataType:"json",
+            headers:{
+              'X-Access-Token':userMessage.token,
+            },
+            data:{
+              filePath:imgUrl,
+            },
+            success:function(json) {
+              console.log(json);    
+              if (json.return_code == "SUCCESS") {
+                swal({
+                  title: "封面删除成功",
+                  text: "封面删除成功",
+                  type: "success",
+                },function () {
+                  $("#editCover").css("display","none");
+                });
+              }
+              InitTime (deleteTimeOut);
+            },
+            error:function (xml,text,e) {
+              if (text == "timeout") {
+                TipsAlert("请求超时,请检查网络或着重新操作");
+              } else{
+                TipsAlert("请求数据失败,请联系后台技术人员");
+              }
+              InitTime (deleteTimeOut);
+            }
+          });
+      
+        } 
+    
+      });
+    }
+    //提交文章按钮  checkStatus 0 待审核 1已审核 2草稿 3删除
+    $(".saveArticle").each(function(){
+      $(this).click(function () {
+        console.log($(this)[0].dataset);
+        var checkStatus = $(this)[0].dataset.fabustyle; //0 待审核 1已审核 2草稿 3删除
+        console.log('checkStatus:'+checkStatus)
+        var articleTitle = $("#articleTitle input").val();
+        console.log("标题："+articleTitle);
+        if(articleTitle ==''){
+          TipsAlert("标题不能为空");
+          return false;
+        }
+
+        var tagId = $("#sxid").val();
+        console.log("标签类别："+tagId);
+        if(tagId == 0){
+          TipsAlert("标签类别不能为空");
+          return false;
+        }
+        
+        var html=$('#edit').froalaEditor('html.get', true); //返回富文本编辑里面的html代码
+        // html = html.substring(0,html.length-229);
+        console.log("内容：" + html);
+        if(html ==''){
+          TipsAlert("内容不能为空");
+          return false;
+        }
+    
+        
+        var fengmian = $(".picurl").val();
+        if(fengmian ==undefined){
+          TipsAlert("封面不能为空");
+          return false;
+        }
+        console.log("封面："+fengmian);
+
+        var userType=$("#xnid").val();
+        console.log("选择发布用户："+userType);
+
+        if(userType ==0){
+          TipsAlert("请选择发布用户");
+          return false;
+        }
+
+        $.ajax({
+          type:ajaxType,
+          url:urls + apiUrl,
+          async:true,
+          timeout:30000,
+          dataType:"json",
+          headers:{
+            'X-Access-Token':userMessage.token,
+          },
+          data:{
+            id:articleId,
+            sysUserId:userMessage.userInfo.id,
+            sysUserName:userMessage.userInfo.username,
+            checkStatus:checkStatus,//0 待审核 1已审核 2草稿 3删除
+            type:1,//1 sys, 2 app
+            articleTitle:articleTitle,
+            tagId:tagId,
+            content:html,
+            coverUrl:fengmian,
+            userType:userType
+            
+          },
+          success:function(json) {
+            console.log(json)
+            CheckLogout (json);
+            if (json.code == 200) {
+              swal({
+                title: "添加成功",
+                text: "通过",
+                type: "success",
+              },function () {
+                location.reload();
+              });
+            }else{
+              TipsAlert("错误：" + json.return_msg + ",原因:" + json.return_error);
+            }
+            InitTime (deleteTimeOut);
+          },
+          error:function (xml,text,e) {
+            if (text == "timeout") {
+              TipsAlert("请求超时,请检查网络或着重新操作");
+            } else{
+              TipsAlert("请求数据失败,请联系后台技术人员");
+            }
+            InitTime (deleteTimeOut);
+          }
+        });
+        
+      });
+    });
+    
+    // 获取标签类别下拉框内容
+    function getarticleTags (tagId) {
+      Showload("正在获取菜单列表......");
+      getPowerList = setInterval("Timeout(getPowerList)", 1000);
+      $.ajax({
+        type:"get",
+        url:urls+ common_url.article_articleTags,
+        async:true,
+        timeout:30000,
+        dataType:"json",
+        headers:{
+          'X-Access-Token':userMessage.token,
+        },
+        data:{
+          status:'',
+          id:'',
+          tagsName:'',
+          column:'createTime',
+          pageSize:limits,
+          pageNo:page,
+          order:'desc'
+        },
+        success:function  (json) {
+          console.log(json);
+          CheckLogout (json);//检查是否登陆过期
+          if (json.code == 200) {
+            var myData = json.result.records;
+            var oneLevelHtml = '<option value="0">全部</option>';
+
+            for (var i = 0; i < myData.length; i++) {
+              // switch (type){
+              // 	case 0:
+                  oneLevelHtml = oneLevelHtml + '<option value="'+myData[i]["id"]+'">'+myData[i]["tagName"]+'</option>' ;
+                // 	break;
+                // case 1:
+                // 	twoLevelHtml = twoLevelHtml + '<option value="'+myData[i]["permissionId"]+'">'+myData[i]["name"]+'</option>' ;
+                // 	break;
+                // case 2:
+                // 	threeLevelHtml = threeLevelHtml + '<option value="'+myData[i]["id"]+'">'+myData[i]["name"]+'</option>' ;
+                // 	break;
+              // }
+            }
+            $(".one_level_select").html(oneLevelHtml);
+            // switch (type){
+            // 	case 0:
+            // 		$(".one_level_select").html(oneLevelHtml);
+            // 		break;
+            // 	case 1:
+            // 		$(parentsFormSelect+" .two_level_select").html(twoLevelHtml);
+            // 		break;
+            // 	// case 2:
+            // 	// 	$(parentsFormSelect+" .three_level_select").html(threeLevelHtml);
+            // 	// 	break;
+              
+            // 	// 	break;
+            // }
+          } else{
+            $(".one_level_select").html('<option value="">获取菜单失败，请刷新当前页面</option>');
+            $(parentsFormSelect+" .two_level_select").html('<option value="">获取菜单失败，请刷新当前页面</option>');
+            $(parentsFormSelect+" .three_level_select").html('<option value="">获取菜单失败，请刷新当前页面</option>');
+            TipsAlert(json.return_msg);
+          }
+          if(tagId){
+            var sxid_options = document.getElementById('sxid').children;
+            for (var i = 0; i < sxid_options.length; i++){
+              if (sxid_options[i].value == tagId){  
+                sxid_options[i].selected = true;
+              }
+            }
+          }
+          InitTime (getPowerList);
+        },
+        error:function(xml, text, errorThrown) {
+          if (text == "timeout") {
+            TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+          } else{
+            TipsAlert("请求数据失败,请联系后台技术人员");
+          }
+          $(".one_level_select").html('<option value="">获取菜单失败，请刷新当前页面</option>');
+          $(parentsFormSelect+" .two_level_select").html('<option value="">获取菜单失败，请刷新当前页面</option>');
+          $(parentsFormSelect+" .three_level_select").html('<option value="">获取菜单失败，请刷新当前页面</option>');
+          InitTime (getPowerList);
+        }
+      });
+    }
+    
+    // 获取选择发布用户下拉框内容
+    function userInfoPager (userId) {
+      Showload("正在获取菜单列表......");
+      getPowerList = setInterval("Timeout(getPowerList)", 1000);
+      $.ajax({
+        type:"get",
+        url:urls+ common_url.userInfo_pager,
+        async:true,
+        timeout:30000,
+        dataType:"json",
+        headers:{
+          'X-Access-Token':userMessage.token,
+        },
+        data:{
+          checkStatus:0,
+          tagsId:0,
+          type:0,
+          title:'',
+          startTime:'',
+          endTime:'',
+          userId:'',
+          userName:'',
+          pageNo:1,
+          pageSize:999
+        },
+        success:function  (json) {
+          console.log(json);
+          CheckLogout (json);//检查是否登陆过期
+          if (json.code == 200) {
+            var myData = json.result.records;
+            var oneLevelHtml = '<option value="0">全部</option>';
+            roleObj = myData;
+            for (var i = 0; i < myData.length; i++) {
+              // switch (type){
+              // 	case 0:
+                  oneLevelHtml = oneLevelHtml + '<option data-imgUrl="'+ myData[i]["appPicture"] +'" value="'+myData[i]["userId"]+'">'+myData[i]["appNickname"]+'</option>' ;
+                // 	break;
+                // case 1:
+                // 	twoLevelHtml = twoLevelHtml + '<option value="'+myData[i]["permissionId"]+'">'+myData[i]["name"]+'</option>' ;
+                // 	break;
+                // case 2:
+                // 	threeLevelHtml = threeLevelHtml + '<option value="'+myData[i]["id"]+'">'+myData[i]["name"]+'</option>' ;
+                // 	break;
+              // }
+            }
+            $(".xn_one_level_select").html(oneLevelHtml);
+            // switch (type){
+            // 	case 0:
+            // 		$(".xn_one_level_select").html(oneLevelHtml);
+            // 		break;
+            // 	case 1:
+            // 		$(parentsFormSelect+" .two_level_select").html(twoLevelHtml);
+            // 		break;
+            // 	// case 2:
+            // 	// 	$(parentsFormSelect+" .three_level_select").html(threeLevelHtml);
+            // 	// 	break;
+              
+            // 	// 	break;
+            // }
+          } else{
+            $(".xn_one_level_select").html('<option value="">获取菜单失败，请刷新当前页面</option>');
+            $(parentsFormSelect+" .two_level_select").html('<option value="">获取菜单失败，请刷新当前页面</option>');
+            $(parentsFormSelect+" .three_level_select").html('<option value="">获取菜单失败，请刷新当前页面</option>');
+            TipsAlert(json.return_msg);
+          }
+          if(userId){
+            var xnid_options = document.getElementById('xnid').children;
+            for (var i = 0; i < xnid_options.length; i++){
+              if (xnid_options[i].value == userId){  
+                xnid_options[i].selected = true;
+              }
+            }
+          }
+          InitTime (getPowerList);
+        },
+        error:function(xml, text, errorThrown) {
+          if (text == "timeout") {
+            TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+          } else{
+            TipsAlert("请求数据失败,请联系后台技术人员");
+          }
+          $(".xn_one_level_select").html('<option value="">获取菜单失败，请刷新当前页面</option>');
+          $(parentsFormSelect+" .two_level_select").html('<option value="">获取菜单失败，请刷新当前页面</option>');
+          $(parentsFormSelect+" .three_level_select").html('<option value="">获取菜单失败，请刷新当前页面</option>');
+          InitTime (getPowerList);
+        }
+      });
+    }
+    //监听选择发布用户状态改变
+    $(".xn_one_level_select").change(function () {
+        var ss = $(this).children('option:selected').val();
+        console.log(roleObj);
+        console.log(ss);
+        for(var i = 0;i<roleObj.length;i++){
+          // console.log(roleObj[i])
+          if (roleObj[i].userId == ss) {
+            // console.log(roleObj[i].appPicture)
+            r_userUrl = roleObj[i].appPicture;
+            r_userName = roleObj[i].appNickname;
+          }
+        }
+        
+    });
+    
+    //打开预览弹窗
+    function showDraft () {
+
+      var articleTitle = $("#articleTitle input").val();
+      if(articleTitle ==''){
+        TipsAlert("标题不能为空");
+        return false;
+      }
+
+      var tagId = $("#sxid").val();
+      console.log("标签类别："+tagId);
+      if(tagId == 0){
+        TipsAlert("标签类别不能为空");
+        return false;
+      }
+      
+      var html=$('#edit').froalaEditor('html.get', true); //返回富文本编辑里面的html代码
+      // html = html.substring(0,html.length-229);
+      console.log("内容：" + html);
+      if(html ==''){
+        TipsAlert("内容不能为空");
+        return false;
+      }
+  
+      
+      var fengmian = $(".picurl").val();
+      if(fengmian ==undefined){
+        TipsAlert("封面不能为空");
+        return false;
+      }
+      console.log("封面："+fengmian);
+
+      var userType=$("#xnid").val();
+      console.log("选择发布用户："+userType);
+
+      if(userType ==0){
+        TipsAlert("请选择发布用户");
+        return false;
+      }
+
+      $(".draftWarp").removeClass("none");
+      var titleArea = '<img src="'+ imgUrl + r_userUrl +'" style="width:48px;height:48px;border-radius:50%;float:left;" alt="">'+'<div style="width:100px;line-height:48px;float:left;margin-left:10px;">'+ r_userName +'</div>'+'<div style="width:200px;line-height:48px;float:right;margin-left:10px;"></div>';
+      
+      
+      var contArea= '<div style="width:375px;height:592px;margin: 0 auto;border-radius:5px;background:rgba(32, 32, 32, 1);overflow:hidden;box-shadow: 0px 0px 10px #888888;">'
+											+ '<div class="container" style="padding:0;width:100%;height:100%;overflow-y:auto;overflow-x:hidden;">'
+												+ '<div style="width:100%;"><img src="'+ fengmian +'" style="width:100%;" alt=""></div>'
+												+ '<div style="width:100%;font-size:16px;font-weight:bold;margin:10px auto;">'+ articleTitle +'</div>'
+												+ '<div style="width:100%;text-align:center;padding-bottom:30px;">'+ html +'</div>'
+											+'</div>'
+                    + '</div>'
+
+      $("#articleViewAreaTit").html(titleArea);
+      $("#articleViewAreaCont").html(contArea);
+    }
+    
+    //关闭预览弹窗
+    function closeWarp(){
+      $(".draftWarp").addClass("none")
+    }
+   
+    
+    
+  </script>
+</body>
+</html>

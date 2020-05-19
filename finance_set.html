@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html class="x-admin-sm">
+<!-- 财务管理提现设置页面 -->
+
+<head>
+    <meta charset="UTF-8">
+    <title>提现设置</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+        content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <link href="css/newStyle.css" rel="stylesheet">
+    <!-- 弹窗轻提示 -->
+    <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+    <!-- 引入jq -->
+    <script src="https://cdn.bootcss.com/jquery/3.4.0/jquery.min.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/xadmin.js"></script>
+    <script type="text/javascript" src="./js/common.js"></script>
+    <!-- <script type="text/javascript" src="./js/domain.js"></script> -->
+    <style>
+        .x-nav {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5px;
+            height: 50px;
+            line-height: 38px;
+            background-color: #f3f3f3;
+            border: 1px solid #e4e4e4;
+            background: #f3f3f3;
+        }
+
+        .x-nav .goods_name {
+            margin-left: 10px;
+            color: #999;
+            font-size: 15px;
+            display: inline-block;
+            margin-top: 5px;
+        }
+
+        .goodsRoload {
+            margin-top: 6px !important;
+            display: inline-block;
+            margin-right: 80px;
+            height: 32px;
+            line-height: 50px;
+            width: 80px;
+            font-size: #666 !important;
+            border: 1px solid #ccc;
+            background: #fff;
+            text-align: center;
+            color: #ccc;
+            cursor: pointer;
+        }
+
+        .goods_name::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 12px;
+            margin: 0 3px;
+            background-color: #1abc9c;
+        }
+
+
+        .layui-form-item .layui-input-inline {
+            width: 200px;
+        }
+
+        .limtWidth {
+            width: 80px;
+        }
+
+        .fl {
+            display: flex;
+        }
+
+        .spanText {
+            font-size: 30px;
+            margin: 0px 5px;
+        }
+
+        .bgc {
+            width: 45px;
+            padding: 0;
+            background: #f1f1f1;
+            position: relative;
+            top: 0;
+            left: -10px;
+            text-align: center;
+        }
+
+        .layui-form-label {
+            width: 190px !important;
+        }
+
+        .layui-input {
+            height: 40px !important;
+            /* width: 50px !important;  */
+        }
+
+        .one_user .layui-input {
+            height: 30px !important;
+        }
+
+        .textAlart {
+            color: #666;
+            font-size: 12px;
+            width: 300px;
+            position: relative;
+            top: -30px;
+            left: 165px;
+        }
+
+        .input_width {
+            width: 160px !important;
+        }
+
+        .input_width1 {
+            position: relative;
+            left: 0 !important;
+            width: 50px !important;
+        }
+
+        .none {
+            display: none;
+        }
+
+        .layui-row {
+            width: 60%;
+            height: calc(100% - 15px);
+            background-color: #fff;
+            /* margin-left: 180px; */
+            margin: 0 auto !important;
+            padding: 0 100px;
+        }
+
+        .title_set {
+            color: #666;
+            font-size: 12px;
+            padding-left: 10px;
+            height: 40px;
+            line-height: 40px;
+            background-color: #eee;
+            width: calc(60% + 190px);
+            margin: 0 auto !important;
+            border: 1px solid #ccc;
+        }
+
+        .layui-btn {
+            font-size: 13px !important;
+            width: 180px !important;
+            height: 35 px !important;
+            border-radius: 4px !important;
+            background-color: rgba(26, 188, 156, 1) !important;
+            color: #fff !important;
+            margin: 0 auto;
+        }
+        body {
+			padding-right: 0px !important;
+			/* 强制设置右侧填充为0，这样弹窗的代码就改不动它了 */
+			overflow-y: scroll !important;
+			/* 所有页面都显示滚动条 */
+		}
+    </style>
+</head>
+
+<body>
+    <!-- 导航条模块 -->
+    <!-- 头部展示 -->
+    <div class="x-nav">
+        <!-- <span class="layui-breadcrumb"> -->
+        <span class="goods_name">提现设置</span>
+        <!-- </span> -->
+        <a class=" layui-btn-small goodsRoload" style="line-height:1.6em;margin-top:3px;" onclick="location.reload()"
+            title="刷新">
+            <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i> 刷新
+        </a>
+    </div>
+    <div class="layui-fluid">
+
+        <div class="title_set"> 提现设置</div>
+        <div class="layui-row" style="border: 1px #ccc solid; border-top: none;">
+            <!-- 保购提现 -->
+            <div style="padding-top: 60px;">
+                <div class="gudit_title"
+                    style="height: 40px;line-height: 40px;background-color: #eee;padding-left: 20px;color: #666; ">
+                    保购提现:
+                </div>
+            </div>
+
+            <form class="layui-form" style="margin-left: 100px; position: relative;">
+                <div class="guide_set"
+                    style="position: absolute;z-index: 9999;top: -80px;left: -111px; border: 1px solid #666;display: none;">
+                    <img src="./images/guide_set.png" alt="">
+                </div>
+                <!--  提现需缴纳税率 -->
+                <div class="layui-form-item" style="padding-top: 60px; ">
+                    <label for="L_username" class="layui-form-label" style="color: #666;">
+                        <span class="x-red">*</span>提现需缴纳税率：</label>
+                    <div class="layui-input-inline">
+                        <div class="layui-input-inline " style="width: 80px;">
+                            <input type="text" name="payRates" class="layui-input input_width payRates"
+                                style="width: 120px;" placeholder="">
+                        </div>
+                        <div class="layui-input-inline" style="width:30px;margin-left: 70px;">
+                            <input type="text" placeholder="%" class="layui-input bgc input_width1" disabled=''
+                                style="width: 30px; position: relative; left: -40px;">
+                        </div>
+                        <!-- <span class="textAlart">未付款，订单自动关闭</span> -->
+                    </div>
+                </div>
+
+                <!-- 平台服务费率 -->
+                <div class="layui-form-item">
+                    <label for="L_username" class="layui-form-label" style="color: #666;">
+                        <span class="x-red">*</span>平台服务费率：</label>
+                    <div class="layui-input-inline">
+                        <div class="layui-input-inline" style="width: 80px;">
+                            <input type="text" name="platformServiceRate"
+                                class="layui-input input_width platformServiceRate" style="width: 120px;"
+                                placeholder="">
+                        </div>
+                        <div class="layui-input-inline" style="width:30px;margin-left: 70px;">
+                            <input type="text" placeholder="%" class="layui-input bgc input_width1" disabled=''
+                                style="width: 30px; position: relative; left: -40px;">
+                        </div>
+                        <!-- <span class="textAlart">未付款，订单自动关闭</span> -->
+                    </div>
+                </div>
+
+                <!-- 最低可提现金额 -->
+                <div class="layui-form-item">
+                    <label for="L_username" class="layui-form-label" style="color: #666;">
+                        <span class="x-red">*</span>最低可提现金额：</label>
+                    <div class="layui-input-inline">
+                        <div class="layui-input-inline" style="width: 80px;">
+                            <input type="text" name="minPayRates" class="layui-input input_width minPayRates"
+                                style="width: 120px;" placeholder="">
+                        </div>
+                        <div class="layui-input-inline" style="width:30px;margin-left: 70px;">
+                            <input type="text" placeholder="元" class="layui-input bgc input_width1" disabled=''
+                                style="width: 30px; position: relative; left: -40px;">
+
+                        </div>
+                        <!-- <span class="textAlart">未收货，订单自动结束交易，不能申请售后</span> -->
+                    </div>
+                </div>
+
+                <!-- 提现最低平台收费 -->
+                <div class="layui-form-item">
+                    <!-- <img src="./images/gudit_biao.png" alt=""
+                        style="position: relative;left: -242px;top: -8px;display: inline-block;cursor: pointer;"
+                        class="img_code"> -->
+
+                    <label for="L_username" class="layui-form-label" style="color: #666;">
+                        <span class="x-red">*</span>提现最低最低收费：</label>
+                    <div class="layui-input-inline">
+                        <div class="layui-input-inline" style="width: 80px;">
+                            <input type="text" name="minPlatformServiceRate"
+                                class="layui-input input_width minPlatformServiceRate" style="width: 120px;"
+                                placeholder="">
+                        </div>
+                        <div class="layui-input-inline" style="width:30px;margin-left: 70px;">
+                            <input type="text" placeholder="元" class="layui-input bgc input_width1" disabled=''
+                                style="width: 30px; position: relative; left: -40px;">
+                        </div>
+                        <!-- <span class="textAlart">自动结束交易，不能申请售后</span> -->
+                    </div>
+                </div>
+
+
+                <!-- 提交按钮 -->
+                <div class="layui-form-item" style="margin-top: 150px ;padding-bottom: 300px;">
+                    <label for="L_repass" class="layui-form-label"></label>
+                    <button class="layui-btn" lay-filter="add" lay-submit="" style="width: 100px;height: 40px;"
+                        type="button">提交</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+
+<script>
+    // 使用layui的方法
+    layui.use(['layedit', 'laydate', 'table', 'form'],
+        function () {
+            var table = layui.table,
+                form = layui.form,
+                layer = layui.layer,
+                layedit = layui.layedit,
+                laydate = layui.laydate;
+            laydate.render({
+                elem: '#chooseTim'  //搜索时间框
+            });
+
+            // 点击显示隐藏
+            // $('.img_code').on('click', function () {
+            //     // console.log(1223)
+            //     $('.guide_set').toggle();
+            // })
+
+
+            //财务报表
+            Showload();
+            $.ajax({
+                url: urls + 'bSysGoods/selectShoppingGuideTaxRate',
+                type: 'get',
+                headers: {
+                    'X-Access-Token': JSON.parse(sessionStorage.getItem("user_message")).token,
+                },
+                success: function (res) {
+                    CheckLogout(res); //检查是否登陆过
+                    // console.log(res)
+                    if (res.code == 0) {
+                        InitTime();
+                        $('.payRates').val(res.data.pay_rates)
+                        $('.platformServiceRate').val(res.data.platform_service_rate)
+                        $('.minPayRates').val(res.data.min_pay_rates)
+                        $('.minPlatformServiceRate').val(res.data.min_platform_service_rate)
+                    } else {
+                        TipsAlert("请求数据失败,请联系后台技术人员");
+                    }
+                }
+            })
+
+
+
+            //点击按钮监听提交事件 点击按钮实现筛选功能    提交商城订单设置
+            form.on('submit(add)', function (data) {
+                console.log(JSON.stringify(data.field))
+                $.ajax({
+                    type: 'post',
+                    url: urls + 'bSysGoods/shoppingGuideTaxRateUpdate',
+                    dataType: 'JSON',
+                    // contentType: 'application/json;charset=UTF-8', 
+                    data: {
+                        minPayRates: data.field.minPayRates,
+                        platformServiceRate: data.field.platformServiceRate,
+                        payRates: data.field.payRates,
+                        minPlatformServiceRate: data.field.minPlatformServiceRate
+                    },
+                    headers: {
+                        'X-Access-Token': JSON.parse(sessionStorage.getItem("user_message")).token,
+                    },
+                    success: function (res) {
+                        CheckLogout(res); //检查是否登陆过
+                        if (res.code == 0) {
+                            //   提交成功提示
+                            layer.alert("提交成功", {
+                                icon: 6
+                            })
+                            // swal({
+                            //     title: "提交成功",
+                            //     type: "success",
+                            // });
+                        } else {
+                            layer.msg(res.msg);
+                        }
+                    },
+                    error: function (res) {
+                        // console.log(123)
+                    }
+                })
+            })
+        })
+</script>
+
+</html>

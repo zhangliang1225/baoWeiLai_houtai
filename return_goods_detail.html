@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/table_jqgrid.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:20:02 GMT -->
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>退货详情</title>
+
+    <link href="css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="css/timePicker.css" rel="stylesheet">
+    <link href="css/newStyle.css" rel="stylesheet">
+    <!--图片插件-->
+	<link href="js/plugins/fancybox/jquery.fancybox.css" rel="stylesheet">
+
+    <style>
+        /* 重写bookstrap样式表 勿删 */
+        .form_inputs {
+            width: 160px;
+            background-color: #ebebeb;
+            border: 1px solid #06a3f9;
+            border-radius: 20px;
+            -webkit-border-radius: 20px;
+            -moz-border-radius: 20px;
+            -o-border-radius: 20px;
+            -ms-border-radius: 20px;
+        }
+
+        .ibox-title {
+            padding: 20px;
+        }
+
+        .mb30 {
+            margin-bottom: 20px;
+        }
+
+        /* 重写bookstrap样式表 勿删 */
+        .ui-jqdialog {
+            height: auto !important;
+        }
+
+        .ui-common-table tbody {
+            background-color: #eaf5fc !important;
+        }
+
+        .modal-dialog {
+            margin: 80px auto !important;
+        }
+
+        .form-group {
+            margin-left: 0px !important;
+            margin-right: 0px !important;
+        }
+
+        .modal-sm {
+            width: 600px;
+        }
+
+        .col-sm-3 {
+            width: 30%;
+        }
+
+        .col-sm-8 {
+            width: 70%;
+        }
+
+        .form-horizontal .control-label {
+            text-align: left;
+            padding-top: 5px;
+            font-size: 18px;
+        }
+
+        @media only screen and (min-width: 100px) and (max-width: 600px) {
+            .modal-sm {
+                width: 400px;
+            }
+
+            .col-sm-3 {
+                width: 40%;
+            }
+
+            .col-sm-8 {
+                width: 60%;
+            }
+
+            .scroll_div {
+                width: 85%;
+            }
+
+            .form-horizontal .control-label {
+                text-align: left;
+                padding-top: 5px;
+                font-size: 14px;
+            }
+
+            .dialog_btn {
+                font-size: 14px !important;
+            }
+        }
+
+        @media only screen and (min-width: 650px) {
+            .modal-sm {
+                width: 600px;
+            }
+        }
+
+        /*以下是等待状态的通用样式*/
+        .wating_big_div {
+            position: fixed;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            display: table;
+            z-index: 9999;
+        }
+
+        .zhezhao {
+            opacity: 0.3;
+            position: absolute;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+        }
+
+        .wating_content_div {
+            text-align: center;
+            background: none;
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        /*以上是等待状态的通用样式*/
+        .inputcherckStyle {
+            width: 18px;
+            height: 18px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOnAAADpwBB5RT3QAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAA3SURBVDiNY7x8/sR/BioAFgYGBgYdA3OKDLly4SQDEzVcw8DAMGrQqEGjBo1Yg1gYGCDlCaUAAGYpCP6bB9aTAAAAAElFTkSuQmCC")
+        }
+
+        .inputcherckStyle:hover {
+            background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOnAAADpwBB5RT3QAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAA2SURBVDiNY9Tpr/7PQAXARA1DGBgYGFhgjMsFLWQZoDuhhoGBgYouGjVo1KBRg+hjEOOgK48AQfgHj87Hb9sAAAAASUVORK5CYII=")
+        }
+
+        .inputcherckStyle:checked {
+            background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOnAAADpwBB5RT3QAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAEwSURBVDiNY9Tpr/7PQAXARA1DRg1CBbF6Rgz7U8sYtEUlyDcoQkePocwpiEGEm4/BQkYGt0GsTMwMUbr6DIqCwhiGBGloM1Q5hzIwMDAwbL12imHBhbO4DYrRM2SodA5lWBCawqApIg4X91HTYGhwj2BgZGRk2HHjDEPtnq0Mf///x23QwUf3GV5/+cAgxMXLMDc0hcFAQorBTUmVocUjioGRkZFh3+0LDFW7NjP8/vcXw8WM6ClbTkCIYWZAHIOMgAjDj9+/GFiZWRiYmZgYDt65xFC0fR3Dr79/MAzBcBEDAwPDow/vGJLWzGO4++Y5AwcrGwMzExPD4XtXGEp2rMdpCFaDGBgYGJ5/+cSQtG4Bw6Vn9xkO3r3MULRtLcOPP79xGoLVa+SCYZBFaG4QAHB8WIHt6FAxAAAAAElFTkSuQmCC")
+        }
+
+        #timebox {
+            width: 50%;
+            height: 100%;
+            /* display: flex;
+        align-items: center; */
+        }
+
+        #timebox>span {
+            width: 4.16%;
+            display: block;
+            float: left;
+        }
+
+        .order_choose {
+            padding: 5px 10px;
+            margin: 5px;
+            font-size: 14px;
+            margin-right: 10px;
+            margin-top: 8px;
+            border: 1px solid #ccc;
+            text-align: center;
+            cursor: pointer;
+        }
+       
+        .coupon_content{
+            width: 95%;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+        .coupon_content_box{
+            background: #fff;
+        }
+        .coupon_content_pading{
+            width: 95%;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+        .coupon_title{
+            width: 100%;
+            background: #f4f4f4;
+        }
+        .coupon_title_box{
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 0;
+            align-items: center;
+        }
+        .coupon_title_box i{
+            font-size: 16px;
+            color:red;
+        }
+        .coupon_title_left span{
+            font-size: 15px;
+            color: red;
+        }
+        .coupon_title_right{
+            width: 80px;
+            height: 35px;
+            border: 1px solid #999999;
+            line-height: 35px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .coupon_info{
+            width: 100%;
+            margin: 20px 0 10px;
+            font-size: 16px;
+        }
+        .coupon_content_info{
+            width: 100%;
+            margin-bottom: 40px;
+        }
+        .coupon_content_kaiguan{
+            width: 100%;
+            display: none;
+        }
+        .coupon_content_goods{
+            width: 100%;
+            display: none;
+        }
+        .coupon_content_button{
+            width: 100%;
+            margin: 50px 0px;
+            display: flex;
+            justify-content: center;
+        }
+        .coupon_content_bton{
+            width: 160px;
+            height: 35px;
+            border: 1px solid #000000;
+            text-align: center;
+            line-height: 35px;
+            border-radius: 3px;
+            color: #000;
+            cursor: pointer;
+        }
+        .coupon_content_btoff{
+            width: 160px;
+            height: 35px;
+            text-align: center;
+            line-height: 35px;
+            background: inherit;
+            background-color: rgba(26, 188, 156, 1);
+            border: none;
+            border-radius: 3px;
+            margin-left: 60px;
+            color: #fff;
+            cursor: pointer;
+        }
+        .coupon_goods_bton{
+            width: 180px;
+            height: 45px;
+            border-radius: 4px;
+            background-color: #fff;
+            color: rgba(26, 188, 156, 1);
+            border: 1px solid rgba(26, 188, 156, 1);
+            cursor: pointer;
+            text-align: center;
+            line-height: 45px;
+        }
+        .coupon_goods_btoff{
+            border: none;
+            cursor: pointer;
+            margin: 0 50px;
+            width: 180px;
+            height: 45px;
+            border-radius: 4px;
+            background-color: rgba(26, 188, 156, 1);
+            color: #fff;
+            text-align: center;
+            line-height: 45px;
+        }
+        #order_photo{
+            overflow: hidden;
+        }
+        #order_photo a{
+            display: block;
+            width: 150px;
+            height: 85px;
+            margin-left: 10px;
+            float: left;
+        }
+        .videosList{
+            width: 140px!important;
+            height: 80px!important;
+        }
+        .coupon_table_footer{
+            width: 100%;
+        }
+      
+        .coupon_table_fbox{
+            width: 100%;
+            height: 47px;
+            line-height: 47px;
+            text-align: right;
+            background: #eaf5fc;
+            border-bottom: 1px solid #e7eaec;
+            border-right: 1px solid #e7eaec;
+            border-left: 1px solid #e7eaec;
+        }
+        .coupon_table_fbox span{
+            color: red;
+            margin-right: 20px;
+        }
+        .coupon_table_info tr th:nth-child(1){
+            width: 20%;
+        }
+        .coupon_table_info tr th:nth-child(2){
+            background: #fff;
+            text-align: left;
+        }
+        .coupon_table_form{
+            margin-top: 20px;
+            display: none;
+        }
+        .coupon_table_form tr th:nth-child(1){
+            width: 20%;
+        }
+        .coupon_table_form tr th:nth-child(2){
+            background: #fff;
+            text-align: left;
+        }
+        #check_div select{
+            width: 140px;
+        }
+        #freight_price label{
+            line-height: 30px;
+            height: 30px;
+            overflow: hidden;
+        }
+        #freight_price input{
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content  animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox ">
+                    <div class="ibox-title pull-left w100p" style="padding: 10px 20px;border-bottom: 1px solid #e4e4e4;">
+                        <div class="pull-left">
+                            <div class="ibox-tools cache5">
+                                退货详情
+                            </div>
+                        </div>
+
+                        <div class="pull-right">
+                            <button class="refresh_btn">
+                                <a class="refresh_a">
+                                    <i class="glyphicon glyphicon-chevron-left"></i> 返回
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="coupon_title">
+                            <div class="coupon_content">
+                                <div class="coupon_title_box">
+                                    <div class="coupon_title_left">
+                                        <i class="layui-icon layui-icon-tips"></i>
+                                        <span>退货状态：</span>
+                                        <span class="noStates"></span>
+                                    </div>
+                                    <!-- <div class="coupon_title_right">备注订单</div> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="coupon_content_box">
+                            <div class="coupon_content_pading">
+                                <div class="coupon_content_info">
+                                    <div class="coupon_info">
+                                        <i class="glyphicon glyphicon-th-list"></i>
+                                        <span>退货商品</span>
+                                    </div>
+                                    <div class="coupon_table_b">
+                                        <table class="table table-bordered mb0 ">
+                                            <thead>
+                                                <tr>
+                                                    <th>商品图片</th>
+                                                    <th>商品名称</th>
+                                                    <th>价格/货号</th>
+                                                    <th>属性</th>
+                                                    <th>数量</th>
+                                                    <th>小计</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tbody_list1"></tbody>
+                                            
+                                        </table>
+                                    </div>
+                                    <div class="coupon_table_footer">
+                                        <div class="coupon_table_fbox">
+                                            合计：<span class="coupon_table_allmany">¥0.00</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="coupon_content_info">
+                                    <div class="coupon_info">
+                                        <i class="glyphicon glyphicon-th-list"></i>
+                                        <span>服务单信息</span>
+                                    </div>
+                                    <div class="coupon_table_info">
+                                        <!-- <div class="flexw100">
+                                            <table class="table table-bordered mb0">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="thl">服务单号</th><th class="thr" class="order_server"></th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="thl">申请状态</th><th class="thr" class="order_states"></th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="thl">订单编号</th><th class="thr" class="order_serial"></th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="thl">申请时间</th><th class="thr" class="order_time"></th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="thl">用户账号</th><th class="thr" class="order_account"></th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="thl">联系人</th><th class="thr" class="order_people"></th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="thl">联系电话</th><th class="thr" class="order_phone"></th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="thl">退货原因</th><th class="thr" class="order_why"></th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="thl">问题描述</th><th class="thr" class="order_describe"></th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="thl">凭证照片</th><th class="thr" class="order_photo"></th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div> -->
+                                    </div>
+
+                                    <div class="coupon_table_form formBefore">
+                                        <div class="flexw100">
+                                            <table class="table table-bordered mb0" >
+                                                <thead>
+                                                    <tr>
+                                                        <th class="thl">订单金额</th><th class="thr" id="goods_name"></th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="thl">收货人姓名</th><th class="thr" id="freight_name">
+                                                            <input name="freightName" type="text">
+                                                        </th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="thl">详细地址</th><th class="thr" id="freight_detail">
+                                                            <input name="freightDetail" type="text">
+                                                        </th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="thl">联系电话</th><th class="thr" id="freight_phone">
+                                                            <input name="freightPhone" type="text">
+                                                        </th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="thl">处理备注</th><th class="thr" id="freight_note">
+                                                            <input name="freightNote" type="text">
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="coupon_table_form formFor">
+                                        <div class="flexw100">
+                                            <table class="table table-bordered mb0" >
+                                                <thead>
+                                                    <tr>
+                                                        <th class="thl">订单金额</th><th class="thr" id="goods_namea"></th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="thl">收货人姓名</th><th class="thr" id="freight_namea"></th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="thl">详细地址</th><th class="thr" id="freight_detaila"></th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="thl">联系电话</th><th class="thr" id="freight_phonea"></th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="thl">处理备注</th><th class="thr" id="freight_notea"></th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="coupon_content_kaiguan">
+                                    <div class="coupon_content_button">
+                                        <div data-code="4" class="coupon_btn coupon_content_bton">拒绝</div>
+                                        <div data-code="3" class="coupon_btn coupon_content_btoff">通过</div>
+                                    </div>
+                                </div>
+                                <div class="coupon_content_goods">
+                                    <div class="coupon_content_button">
+                                        <div data-code="8" class="goods_btn coupon_goods_bton">拒绝收货</div>
+                                        <div data-code="6" class="goods_btn coupon_goods_btoff">确认退货</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="js/plugins/peity/jquery.peity.min.js"></script>
+    <script src="js/content.min.js?v=1.0.0"></script>
+    <script src="js/plugins/layer/laydate/laydate.js"></script>
+    <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+    <script src="js/plugins/fancybox/jquery.fancybox.js"></script>
+    <script src="js/plugins/iCheck/icheck.min.js"></script>
+    <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/jquery-timepicker.js" type="text/javascript" charset="utf-8"></script>
+    <!--ajax上传插件:jquery.form ajaxSubmit-->
+    <script src="js/jquery-form.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        var tableTimeout, limits = 10,
+            page = 1,
+            counts = 0,
+            table_title, roleID;
+        var cherk_roleId;
+        var allMany = 0;
+        var totalPages = 0;
+        var maxIndex;
+        var tableHtml;
+        var goodsHtml = '';
+        var userMessage;
+        var applyDescribe,linkMan,connectPhone,address,applyFailure,applyRemark
+        var listId = getUrlParms('id')//上一页列表id
+        var listCode = getUrlParms('code')//上一页列表订单号
+        var listNumber = getUrlParms('number')//上一页
+        var listPayType = getUrlParms('payType')//上一页
+        
+        $(document).ready(function () {
+            IsTokenSave();
+            $(".fancybox").fancybox({openEffect:"none",closeEffect:"none"});
+            userMessage = JSON.parse(sessionStorage.getItem("user_message"));
+            $(".refresh_a").click(function () { //返回上一页
+                // window.history.back();
+                window.location.href='./return_goods.html?time='+new Date().getTime().toString()
+            });
+            $(".i-checks").iCheck({ //check必须有的脚本
+                checkboxClass: "icheckbox_square-green",
+                radioClass: "iradio_square-green",
+            });
+
+            // 退货 已发货审核
+            var isGoods = true
+            $(".goods_btn").click(function () {
+                if (isGoods == false) {
+                    return
+                }
+                isGoods = false
+                var goodsType = $(this).attr("data-code");
+                $.ajax({
+                    type: "post",
+                    url: urls + common_url.updateGoodsYesOrNo,
+                    async: true,
+                    timeout: 30000,
+                    dataType: "json",
+                    headers: {
+                        'X-Access-Token': userMessage.token,
+                    },
+                    data: {
+                        id: listId,
+                        goodsType: goodsType
+                    },
+                    success: function (json) {
+                        isGoods = true
+                        CheckLogout(json); //检查是否登陆过期
+                        if (json.code == 0) {
+                            swal({
+                                title: "操作成功",
+                                text: "操作成功",
+                                type: "success",
+                            }, function () {
+                                location.reload();
+                            });
+                            DealTable();
+                        } else {
+                            TipsAlert(json.code);
+                        }
+                        InitTime(tableTimeout);
+                    },
+                    error: function (xml, text, errorThrown) {
+                        isGoods = true
+                        if (text == "timeout") {
+                            TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+                        } else {
+                            TipsAlert("请求数据失败,请联系后台技术人员");
+                        }
+                        InitTime(tableTimeout);
+                    }
+
+                });
+
+                
+            });
+            // 审核退货申请
+            var isbton = true
+            $(".coupon_btn").click(function () { //查询按钮
+                if (isbton == false) {
+                    return
+                }
+                isbton = false
+                var yesOrNo = $(this).attr("data-code");
+
+                linkMan = $('input[name="freightName"]').val()
+                if (linkMan == '') {
+                    TipsAlert("请填写联系人");
+                    isbton = true
+                    return
+                }
+
+                address = $('input[name="freightDetail"]').val()
+                if (address == '') {
+                    TipsAlert("请填写详细地址");
+                    isbton = true
+                    return
+                }
+
+                connectPhone = $('input[name="freightPhone"]').val()
+                if (connectPhone == '') {
+                    TipsAlert("请填写联系电话");
+                    isbton = true
+                    return
+                }
+
+                applyFailure = $('input[name="freightNote"]').val()
+            
+
+                $.ajax({
+                    type: "post",
+                    url: urls + common_url.updateServerOederInfo,
+                    async: true,
+                    timeout: 30000,
+                    dataType: "json",
+                    headers: {
+                        'X-Access-Token': userMessage.token,
+                    },
+                    data: {
+                        sys_goods_num: listNumber,
+                        order_serial_number: listCode,
+                        pay_type: listPayType,
+                        applyRemark: applyRemark,
+                        applyDescribe: applyDescribe,
+                        linkMan: linkMan,
+                        connectPhone: connectPhone,
+                        address: address,
+                        applyFailure: applyFailure,
+                        yesOrNo: yesOrNo,
+                        totalMoney: allMany
+                    },
+                    success: function (json) {
+                        isbton = true
+                        CheckLogout(json); //检查是否登陆过期
+                        if (json.code == 0) {
+                            swal({
+                                title: "操作成功",
+                                text: "操作成功",
+                                type: "success",
+                            }, function () {
+                                location.reload();
+                            });
+                            DealTable();
+                        } else {
+                            TipsAlert(json.msg);
+                        }
+                        InitTime(tableTimeout);
+                    },
+                    error: function (xml, text, errorThrown) {
+                        isbton = true
+                        if (text == "timeout") {
+                            TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+                        } else {
+                            TipsAlert("请求数据失败,请联系后台技术人员");
+                        }
+                        InitTime(tableTimeout);
+                    }
+
+                });
+
+                
+            });
+
+                        
+            InitTbodyList()
+            getOederInfo()
+            // getAddress(1, 1, '#check_div');
+        });
+      
+                /**
+         * 该方法用于获取省市区地址
+         * @param {Number} parentId parentId是父级地区的id
+         * @param {Number} which which是用于判断是哪个select 0是省 1是市 2是区
+         * */
+        function getAddress(parentId, which, id) {
+            $.ajax({
+                type: "get",
+                url: urls + common_url.merchant_apiservice,
+                async: false,
+                timeout: 3000,
+                dataType: 'json',
+                data: { token: token, parent: parentId },
+                success: function (json) {
+                    console.log(json);
+                    if (json.return_code == "SUCCESS") {
+                        var html = "";
+                        switch (which) {
+                            case 1:
+                                html = ' <option value="">省</option>';
+                                break;
+                            case 2:
+                                html = ' <option value="">市</option>';
+                                break;
+                            case 3:
+                                html = ' <option value="">区</option>';
+                                break;
+                        }
+                        var data = json.result;
+
+                        // alert(which+"省...");
+                        for (var i = 0; i < data.length; i++) {
+                            html = html + '<option value="' + data[i]["id"] + '">' + data[i]["name"] + '</option>';
+
+                        }
+
+                        switch (which) {
+                            case 1:
+                                $(id).find(".sheng").html(html);
+                                break;
+                            case 2:
+                                $(id).find(".Shi").html(html);
+                                break;
+                            case 3:
+                                $(id).find(".Qu").html(html);
+                                break;
+                        }
+
+                        // alert(html);
+
+                    } else {
+                        TipsAlert(json.return_msg);
+                    }
+
+                },
+                error: function (xml, text, e) {
+                    if (text == "timeout") {
+                        alert("请求超时,请重试")
+                    } else {
+                        alert("请求失败,请检查网络")
+                    }
+                }
+
+            });
+        }
+
+        function getOederInfo() {
+            $.ajax({
+                type: "get",
+                url: urls + common_url.selectServerOederInfo,
+                async: false,
+                timeout: 3000,
+                dataType: 'json',
+                headers: {
+                    'X-Access-Token': userMessage.token,
+                },
+                data: {
+                    order_serial_number: listCode
+                },
+                success: function (json) {
+                    CheckLogout(json); //检查是否登陆过期
+                    if (json.code == 0) {
+                        if (json.data[0].status == 1) {
+                            $('.noStates').html('审核中')
+
+                            $('.formBefore').show()
+                            
+                            $('.coupon_content_kaiguan').show()
+
+                        } else if (json.data[0].status == 2) {
+                            $('.noStates').html('取消退货退款')
+                        } else if (json.data[0].status == 3) {
+                            $('.noStates').html('审核已通过')
+
+                            $('.formFor').show()
+                           
+                            $('#freight_namea').html(json.data[0].link_man)
+                            $('#freight_detaila').html(json.data[0].address)
+                            $('#freight_phonea').html(json.data[0].connect_phone)
+                            $('#freight_notea').html(json.data[0].treatmentMemo)
+                        } else if (json.data[0].status == 4) {
+                            $('.noStates').html('申请失败')
+                        } else if (json.data[0].status == 5) {
+                            $('.noStates').html('退回货物审核中')
+                            $('.coupon_content_goods').show()
+                        } else if (json.data[0].status == 6) {
+                            $('.noStates').html('商家已确认退货')
+                        } else if (json.data[0].status == 7) {
+                            $('.noStates').html('退回货物已完成')
+                        } else if (json.data[0].status == 8) {
+                            $('.noStates').html('退回货物已拒绝')
+                            
+                        }
+
+                        for (var i = 0; i < json.data.length; i++) {
+                            var imgList = ''
+                            if (json.data[i].pic.length>0) {
+                                for (var y = 0; y < json.data[i].pic.length; y++) {
+                                    imgList+= '<a class="fancybox" style="display: inline" href="'+imgUrl + json.data[i].pic[y].after_sale_pic+'" title="功能图标"><img class="videosList" src="'+imgUrl+json.data[i].pic[y].after_sale_pic+'" alt=""></a>'
+                                }
+                                
+                            }
+                            goodsHtml = goodsHtml + '<div class="flexw100" style="margin-top: 20px;">\
+                                            <table class="table table-bordered mb0">\
+                                                <thead>\
+                                                    <tr>\
+                                                        <th class="thl">服务单号</th><th class="thr" class="order_server">'+json.data[i].after_sale_num+'</th>\
+                                                    </tr>\
+                                                    <tr>\
+                                                        <th class="thl">订单编号</th><th class="thr" class="order_serial">'+json.data[i].order_serial_number+'</th>\
+                                                    </tr>\
+                                                    <tr>\
+                                                        <th class="thl">申请时间</th><th class="thr" class="order_time">'+json.data[i].create_time+'</th>\
+                                                    </tr>\
+                                                    <tr>\
+                                                        <th class="thl">用户账号</th><th class="thr" class="order_account">'+json.data[i].phone+'</th>\
+                                                    </tr>\
+                                                    <tr>\
+                                                        <th class="thl">联系人</th><th class="thr" class="order_people">'+json.data[i].nickName+'</th>\
+                                                    </tr>\
+                                                    <tr>\
+                                                        <th class="thl">联系电话</th><th class="thr" class="order_phone">'+json.data[i].connect_phone+'</th>\
+                                                    </tr>\
+                                                    <tr>\
+                                                        <th class="thl">退货原因</th><th class="thr" class="order_why">'+json.data[i].apply_remark+'</th>\
+                                                    </tr>\
+                                                    <tr>\
+                                                        <th class="thl">问题描述</th><th class="thr" class="order_describe">'+json.data[i].apply_describe+'</th>\
+                                                    </tr>\
+                                                    <tr>\
+                                                        <th class="thl">凭证照片</th><th class="thr" class="order_photo">'+imgList+'</th>\
+                                                    </tr>\
+                                                </thead>\
+                                            </table>\
+                                        </div>'
+                        }
+                        $('.coupon_table_info').html(goodsHtml)
+                        // $('#order_server').html(json.data.after_sale_num)
+                        // $('#order_serial').html(json.data.order_serial_number)
+                        // $('#order_time').html(json.data.create_time)
+                        // $('#order_account').html(json.data.phone)
+                        // $('#order_people').html(json.data.nickName)
+                        // $('#order_phone').html(json.data.connect_phone)
+                        // $('#order_why').html(json.data.apply_remark)
+                        // $('#order_describe').html(json.data.apply_describe)
+
+                        applyRemark = json.data[0].apply_remark
+                        applyDescribe = json.data[0].apply_describe
+
+                        // var picList = ''
+                        // if (json.data.pic.length>0) {
+                        //     for (var i = 0; i < json.data.pic.length; i++) {
+                        //         picList+= '<a class="fancybox" href="'+imgUrl + json.data.pic[i].after_sale_pic+'" title="功能图标"><img class="videosList" src="'+imgUrl+json.data.pic[i].after_sale_pic+'" alt=""></a>'
+                        //     }
+                            
+                        // }
+                        // $('#order_photo').html(picList)
+                       
+                    } else {
+                        TipsAlert(json.return_msg);
+                    }
+                },
+                error: function (xml, text, e) {
+                    if (text == "timeout") {
+                        alert("请求超时,请重试")
+                    } else {
+                        alert("请求失败,请检查网络")
+                    }
+                }
+
+            });
+
+
+        }
+
+        /**
+         * 该方法用于初始化列表
+         * @param {Number} startIndex startIndex是数据起始下标
+         * */
+        function InitTbodyList(startIndex) {
+            Showload("正在初始化列表......");
+            tableTimeout = setInterval("Timeout(tableTimeout)", 1000);
+            $.ajax({
+                type: "get",
+                url: urls + common_url.selectReturnedGoodsInfo,
+                async: true,
+                timeout: 30000,
+                dataType: "json",
+                headers: {
+                    'X-Access-Token': userMessage.token,
+                },
+                data: {
+                    id: listId
+                },
+                success: function (json) {
+                    CheckLogout(json); //检查是否登陆过期
+                    if (json.code == 0) {
+                        var myData = json.data
+                        for (var i = 0; i < myData.length; i++) {
+                            allMany = floatAdd(allMany,myData[i]["sum_price"])
+                            tableHtml = tableHtml + '<tr>'+
+                                '<td><a class="fancybox" href="'+imgUrl + myData[i].url+'" title="功能图标"><img src="'+imgUrl +myData[i].url+'" width="60px" height="60px" class="layui-upload-img gw_previewImg"></a></td>' +
+                                '<td class="c_1ABC9C">' + myData[i]["goods_name"] + '</td>' +
+                                '<td><p>价格：'+myData[i]["price"]+'</p><p>货号：'+myData[i].sys_goods_num+'</p></td>' +
+                                '<td><p>尺寸：'+myData[i]["goods_size"]+'</p><p>颜色：'+myData[i].goods_color+'</p></td>' +
+                                '<td>' + myData[i]["order_sum_number"] + '</td>' +
+                                '<td>' + myData[i]["sum_price"] + '</td>' +
+                                '</tr>';
+                        }
+                        $("#tbody_list1").html(tableHtml);
+                        $(".coupon_table_allmany").html(allMany);
+                        $('#goods_name').html(allMany)
+                        $('#goods_namea').html(allMany)
+                        DealTable();
+                    } else {
+                        TipsAlert(json.code);
+                    }
+                    InitTime(tableTimeout);
+                },
+                error: function (xml, text, errorThrown) {
+                    if (text == "timeout") {
+                        TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+                    } else {
+                        TipsAlert("请求数据失败,请联系后台技术人员");
+                    }
+                    InitTime(tableTimeout);
+                }
+
+            });
+        }
+         //加法运算    
+        function floatAdd(arg1, arg2) {
+            var r1, r2, m;
+            try { r1 = arg1.toString().split(".")[1].length } catch (e) { r1 = 0 }
+            try { r2 = arg2.toString().split(".")[1].length } catch (e) { r2 = 0 }
+            m = Math.pow(10, Math.max(r1, r2));
+            return (arg1 * m + arg2 * m) / m;
+        }
+    </script>
+</body>
+
+</html>

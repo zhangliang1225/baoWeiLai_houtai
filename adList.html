@@ -1,0 +1,1643 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/table_jqgrid.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:20:02 GMT -->
+
+<head>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>广告列表</title>
+
+	<link rel="shortcut icon" href="favicon.ico">
+	<link href="css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+	<link href="css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+	<!--图片插件-->
+	<link href="js/plugins/fancybox/jquery.fancybox.css" rel="stylesheet">
+	<link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+	<link href="css/animate.min.css" rel="stylesheet">
+	<link href="css/style.min862f.css?v=4.1.0" rel="stylesheet">
+	<link href="css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
+	<link href="css/newStyle.css" rel="stylesheet">
+	<!-- switch -->
+	<link rel="stylesheet" href="css/honeySwitch.css">
+
+	<style>
+		/* 重写bookstrap样式表 勿删 */
+		.ibox-title {
+			padding: 20px;
+		}
+
+		.ui-jqdialog {
+			height: auto !important;
+		}
+
+		.ui-common-table tbody {
+			background-color: #eaf5fc !important;
+		}
+
+		.modal-dialog {
+			margin: 80px auto !important;
+		}
+
+		.form-group {
+			margin-left: 0px !important;
+			margin-right: 0px !important;
+		}
+
+		.modal-sm {
+			width: 600px;
+		}
+
+		.col-sm-3 {
+			width: 30%;
+		}
+
+		.col-sm-8 {
+			width: 70%;
+		}
+
+		.form-horizontal .control-label {
+			text-align: left;
+			padding-top: 5px;
+			font-size: 18px;
+		}
+
+		@media only screen and (min-width: 100px) and (max-width: 600px) {
+			.modal-sm {
+				width: 400px;
+			}
+
+			.col-sm-3 {
+				width: 40%;
+			}
+
+			.col-sm-8 {
+				width: 60%;
+			}
+
+			.scroll_div {
+				width: 85%;
+			}
+
+			.form-horizontal .control-label {
+				text-align: left;
+				padding-top: 5px;
+				font-size: 14px;
+			}
+
+			.dialog_btn {
+				font-size: 14px !important;
+			}
+		}
+
+		@media only screen and (min-width: 650px) {
+			.modal-sm {
+				width: 600px;
+			}
+		}
+
+		/*以下是等待状态的通用样式*/
+		.wating_big_div {
+			position: fixed;
+			top: 0px;
+			width: 100%;
+			height: 100%;
+			display: table;
+			z-index: 9999;
+		}
+
+		.zhezhao {
+			opacity: 0.3;
+			position: absolute;
+			top: 0px;
+			width: 100%;
+			height: 100%;
+			z-index: 9999;
+		}
+
+		.wating_content_div {
+			text-align: center;
+			background: none;
+			display: table-cell;
+			vertical-align: middle;
+		}
+
+		/*以上是等待状态的通用样式*/
+
+		/* switch开关按钮样式 */
+		.switch {
+			display: inline-block;
+		}
+
+		.bootstrap-switch {
+			border-radius: 22px;
+
+			width: 52px !important;
+			height: 22px !important;
+
+		}
+
+		.bootstrap-switch .bootstrap-switch-handle-off,
+		.bootstrap-switch .bootstrap-switch-handle-on,
+		.bootstrap-switch .bootstrap-switch-label {
+
+			padding: 0px;
+
+			font-size: 12px;
+
+			display: inline-block;
+
+		}
+
+		.bootstrap-switch .bootstrap-switch-label {
+
+			width: 42px !important;
+
+			height: 22px;
+
+			border-radius: 11px !important;
+
+			position: relative;
+
+		}
+
+		.bootstrap-switch .bootstrap-switch-handle-on {
+
+			width: 52px !important;
+
+			margin-right: -22px;
+
+			padding-right: 22px;
+
+		}
+
+		.bootstrap-switch .bootstrap-switch-handle-off {
+
+			width: 52px !important;
+
+			border-radius: 11px;
+
+			margin-left: -11px;
+
+			padding-right: 2px;
+
+			position: relative;
+
+			color: #fff !important;
+
+		}
+	</style>
+</head>
+
+<body class="gray-bg">
+	<div class="wrapper wrapper-content  animated fadeInRight">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox ">
+					<div class="ibox-title pull-left w100p" style="padding: 10px 20px;">
+						<div class="pull-left">
+							<div class="ibox-tools cache5">
+								广告列表
+							</div>
+						</div>
+
+						<div class="pull-right">
+							<button class="refresh_btn">
+								<a class="refresh_a" style="">
+									<i class="fa fa-refresh"></i> 刷新
+								</a>
+							</button>
+						</div>
+					</div>
+
+
+					<div class="ibox-content pull-left w100p">
+						<div class="w100p chaxunBorder">
+							<div class="ibox-title w100p" style="height:50px;background-color: rgb(243, 243, 243);padding: 10px 20px;border-top:0px;">
+								<div class="ibox-tools pull-left">
+									<span class="titleFindIcon pull-left"></span>
+									<span class="pull-left" style="position: relative;top: 3px;left: 5px;">筛选查询</span>
+								</div>
+								<div class="pull-right">
+									<button class="opera_btn" id="check_btn">查询结果</button>
+								</div>
+							</div>
+							<div class="w100p p20" style="display: flex;">
+								<div class="ml30">
+									<span class="f14 pull-left  h30 lh30 mt10">广告名称</span>
+								<div class="pull-left ml20 mt10">
+									<input type="text" class="form-control h30 w100p" id="check_input" placeholder="输入广告名称"
+										aria-required="true">
+								</div>
+								</div>
+								<div class="ml30">
+									<span class="f14 pull-left  h30 lh30 mt10 ml20">广告位置：</span>
+								<div class="pull-left ml20 mt10">
+									<select name="" class="br_e5e6e7 h30" id="check_select">
+										<option value="">全部</option>
+										<option value="0">APP首页轮播</option>
+										<option value="1">商城首页</option>
+										<option value="2">分类广告</option>
+										<option value="3">技术服务首页轮播</option>
+									</select>
+								</div>
+								</div>
+								<div class="ml30">
+									<span class="f14 pull-left  h30 lh30 mt10 ml20">到期时间：</span>
+								<div class="pull-left ml20 mt10">
+									<select name="" class="br_e5e6e7 h30" id="check_dueTime">
+										<option value="">全部</option>
+										<option value="">1天内</option>
+										<option value="">3天内</option>
+										<option value="">1周内</option>
+									</select>
+								</div>
+								</div>
+							
+							</div>
+						</div>
+						
+						<!-- <div class="pull-left">
+							<button class="order_mange_addbtn hover_blue br8 bdno c_f" data-toggle="modal"
+								data-target="#add_dialog">新增</button>
+							<button class="btn-danger br8 bdno c_f w80 p5 f18 ml10" id="title_delete_btn">删除</button>
+						</div> -->
+						<div class="pull-left ml20 ">
+							
+							
+							
+							<!-- <span class="f14 pull-left  h30 lh30">状态：</span>
+								<div class="pull-left">
+	                                <select name="" class="br_e5e6e7 h30" id="check_select">
+	                                	<option value="">全部</option>
+	                                	<option value="0">待发布</option>
+	                                	<option selected="selected" value="1">上架</option>
+	                                	<option value="2">下架</option>
+	                                </select>
+	                            </div> -->
+							<!-- <button class="bg_279adf hover_blue clear_btn_style bdno c_f h30 b4r20 w80 ml30 mt10"
+								id="check_btn">查询</button> -->
+						</div>
+					</div>
+					<div class="ibox-content pull-left w100p">
+						<div class="ibox-title pull-left w100p table-head" style="background-color: rgb(243, 243, 243);padding: 10px 20px;border-top:0px;">
+							<div class="pull-left">
+								<div class="ibox-tools" style="">
+									<span class="titleFontIcon"></span>
+									<span class="pull-left" style="position: relative;top: 3px;left: 5px;">数据列表</span>
+								</div>
+							</div>
+							<div class="pull-right">
+								<button class="opera_btn" data-toggle="modal" data-target="#add_dialog">增加</button>
+								<button class="opera_btn" id="title_delete_btn">删除</button>
+							</div>
+						</div>
+						<div class="pull-left w100p">
+							<table class="table table-bordered mb0 ">
+								<thead>
+									<tr>
+										<th class="none">id</th>
+										<th>
+											<input type="checkbox" name="" class="w20 h20" id="all_check_checkbox"
+												value="" />
+										</th>
+										<th>编号</th>
+										<th>广告名称</th>
+										<th>广告位置</th>
+										<th>广告图片</th>
+										<th>时间</th>
+										<th>上线/下线</th>
+										<th>点击次数</th>
+										<th>生成订单</th>
+										<th>操作</th>
+									</tr>
+								</thead>
+								<tbody id="tbody_list"></tbody>
+							</table>
+						</div>
+						<div class="pull-left tac c0 f14 w100p pre mt10 none" id="footer_page_div">
+							<div class="">
+								<div class="pull-left">
+									<div class="ibox-tools">
+										<a class="refresh_a">
+											<i class="fa fa-refresh"></i> 刷新
+										</a>
+										<!--<a class="collapse-link">
+				                                <i class="fa fa-chevron-up"></i>
+				                            </a>-->
+									</div>
+								</div>
+								<span class="under_line cursor_pointer last_span">上一页</span>
+								<span class="pl20 page_span">1</span>
+								<span class="pl20 under_line cursor_pointer next_span">下一页</span>
+								<span class="pl20">共 <span class="count_page_span">1</span> 页</span>
+								<div class="disib ml20">
+									每页显示：
+									<select class="p0 disib page_select">
+										<option value="">10</option>
+										<option value="" selected="selected">20</option>
+										<option value="">30</option>
+									</select>
+									条
+								</div>
+							</div>
+							<div class="record_right_div">
+								<!--record_right_div pull-right mt10-->
+								数据库总数量： <span class="counts_span">0</span> 条
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--新增的弹框-->
+	<div class="modal inmodal fade" id="add_dialog" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content br8">
+				<div class="modal-header p10 bdno">
+					<button type="button" class="close" data-dismiss="modal"><span
+							aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<span class="modal-title f18">新增</span>
+				</div>
+				<div class="modal-body bg_f p0">
+					<div class="ibox-content p30">
+						<form class="form-horizontal m-t" id="add_form" enctype="multipart/form-data" method="post">
+							<input type="hidden" class="token_input" name="token" id="" value="" />
+							<!--<input type="hidden" class="userinfoId_input" name="createUserinfoId" value="" />-->
+							<div class="form-group ">
+								<label class="col-sm-3 control-label pull-left">广告名称：</label>
+								<div class="col-sm-8 pull-left">
+									<input id="" name="advertisementName" class="form-control" type="text" required=""
+										aria-required="true">
+									<!-- <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 请输入你的广告名称</span> -->
+								</div>
+							</div>
+							<div class="form-group ">
+								<label class="col-sm-3 control-label pull-left">广告位置：</label>
+								<div class="col-sm-8 pull-left">
+									<select name="location" class="form-control {required:true}">
+										<!-- <option value="">全部</option> -->
+										<option value="0">APP首页轮播</option>
+										<option value="1">商城首页</option>
+										<option value="2">分类广告</option>
+										<option value="3">技术服务首页轮播</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label pull-left">开始时间：</label>
+								<div class="col-sm-8 pull-left">
+									<input type="text" name="startTime" autocomplete="off"
+										class="layer-date h30 form-control mt10" placeholder="YYYY-MM-DD hh:mm:ss"
+										onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" required=""
+										aria-required="true">
+								</div>
+
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label pull-left">到期时间：</label>
+								<div class="col-sm-8 pull-left">
+									<input type="text" name="dueTime" autocomplete="off"
+										class="layer-date h30 form-control mt10 " placeholder="YYYY-MM-DD hh:mm:ss"
+										onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" required=""
+										aria-required="true">
+								</div>
+							</div>
+
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label pull-left">上线/下线：</label>
+								<div class="col-sm-8 pull-left">
+									<div class="radio radio-success radio-inline" data-range="1">
+										<input type="radio" id="inlineRadio1" value="option3" name="radioInline"
+											checked="checked">
+										<label for="inlineRadio1" class="label_radio" data-range="1"> <b>上线</b> </label>
+									</div>
+									<div class="radio radio-success radio-inline" data-range="2">
+										<input type="radio" id="inlineRadio2" value="option2" name="radioInline">
+										<label for="inlineRadio2" class="label_radio" data-range="2"> <b>下线</b> </label>
+									</div>
+									<input type="hidden" name="status" value="1">
+								</div>
+							</div>
+							<div class="form-group ">
+								<label class="col-sm-3 control-label pull-left">广告图片(750*400像素)：</label>
+								<div class="col-sm-8 pull-left">
+									<div class="input-group">
+										<input type="hidden" name="picture" value="">
+										<input type="file" class="form-control upload_img_input" name=""
+											id="add_form_fileinput" value="" required="" aria-required="true">
+
+										<img src="" class="none upload_img" />
+										<span class="input-group-btn check_img_btn br0">
+											<button type="button" class="btn btn-primary h36 br0">检测图片大小</button>
+										</span>
+									</div>
+
+								</div>
+							</div>
+							<div class="form-group ">
+								<label class="col-sm-3 control-label pull-left">广告链接：</label>
+								<div class="col-sm-8 pull-left">
+									<input type="text" class="form-control" name="linksUrl" required=""
+										aria-required="true">
+								</div>
+							</div>
+
+							<div class="form-group ">
+								<label class="col-sm-3 control-label pull-left">广告备注：</label>
+								<div class="col-sm-8 pull-left">
+									<textarea class="form-control describe" name="remark" required=""
+										aria-required="true"></textarea>
+								</div>
+							</div>
+
+
+							<!-- <div class="form-group " >
+	                                <label class="w100p control-label pull-left c_5bb7ee">主题颜色</label>
+	                                <div class="w100p pull-left mt10">
+	                                	<input type="text" class="form-control" name="backgroundColor" value="" />
+	                                </div>
+	                            </div>
+	                            <div class="form-group " >
+	                                <label class="w100p control-label pull-left c_5bb7ee">请点击图片关联显示的商品</label>
+	                                <div class="w100p pull-left mt10">
+	                                	<select name="goodsId" class="form-control gl_goods_list" >
+	                                		<option value="">请选择</option>
+	                                	</select>
+	                                </div>
+	                            </div> -->
+							<!-- <div class="form-group " >
+	                                <label class="w100p control-label pull-left c_5bb7ee">请填写播放序号</label>
+	                                <div class="w100p pull-left mt10">
+	                                	<input type="text" class="form-control" name="sort" id="" value="" />
+	                                </div>
+	                            </div> -->
+
+					</div>
+				</div>
+				<div class="modal-footer bdno tac pt0040">
+					<button type="button" class=" btn-white clear_btn_style dialog_btn" data-dismiss="modal">关闭</button>
+					<button type="submit" class=" btn-primary clear_btn_style bdno dialog_btn ml30"
+						id="add_btn">保存</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--修改的弹框-->
+	<div class="modal inmodal fade" id="edit_dialog" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content br8">
+				<div class="modal-header p10 bdno">
+					<button type="button" class="close" data-dismiss="modal"><span
+							aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<span class="modal-title f18">修改信息</span>
+				</div>
+				<div class="modal-body bg_f p0">
+					<div class="ibox-content p30">
+						<form class="form-horizontal m-t" id="edit_form" enctype="multipart/form-data" method="post">
+							<input type="hidden" class="token_input" name="token" id="" value="" />
+							<input type="hidden" class="edit_id_input" name="id" id="" value="" />
+
+							<!--<input type="hidden" class="userinfoId_input" name="createUserinfoId" value="" />-->
+							<div class="form-group ">
+								<label class="col-sm-3 control-label pull-left">广告名称：</label>
+								<div class="col-sm-8 pull-left">
+									<input id="" name="advertisementName" class="form-control" type="text" required=""
+										aria-required="true">
+									<!-- <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 请输入你的广告名称</span> -->
+								</div>
+							</div>
+							<div class="form-group ">
+								<label class="col-sm-3 control-label pull-left">广告位置：</label>
+								<div class="col-sm-8 pull-left">
+									<select name="location" class="form-control {required:true}">
+										<!-- <option value="">全部</option> -->
+										<option value="0">APP首页轮播</option>
+										<option value="1">商城首页</option>
+										<option value="2">分类广告</option>
+										<option value="3">技术服务首页轮播</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label pull-left">开始时间：</label>
+								<div class="col-sm-8 pull-left">
+									<input type="text" id="start_time1" name="startTime" autocomplete="off"
+										class="layer-date h30 form-control mt10" placeholder="YYYY-MM-DD hh:mm:ss"
+										onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" required=""
+										aria-required="true">
+								</div>
+
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label pull-left">到期时间：</label>
+								<div class="col-sm-8 pull-left">
+									<input type="text" id="finish_time1" autocomplete="off" name="dueTime"
+										class="layer-date h30 form-control mt10 " placeholder="YYYY-MM-DD hh:mm:ss"
+										onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" required=""
+										aria-required="true">
+								</div>
+							</div>
+
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label pull-left">上线/下线：</label>
+								<div class="col-sm-8 pull-left">
+									<div class="radio radio-success radio-inline" data-range="1">
+										<input type="radio" id="inlineRadio3" value="option3" name="radioInline"
+											checked="checked">
+										<label for="inlineRadio3" class="label_radio" data-range="1"> <b>上线</b> </label>
+									</div>
+									<div class="radio radio-success radio-inline" data-range="2">
+										<input type="radio" id="inlineRadio4" value="option2" name="radioInline">
+										<label for="inlineRadio4" class="label_radio" data-range="2"> <b>下线</b> </label>
+									</div>
+									<input type="hidden" name="status" id="levale_input" value="">
+								</div>
+							</div>
+							<div class="form-group ">
+								<label class="col-sm-3 control-label pull-left">广告图片(750*400像素)：</label>
+								<div class="col-sm-8 pull-left">
+									<div class="input-group">
+										<input type="hidden" name="picture" value="">
+										<input type="file" class="form-control upload_img_input" name=""
+											id="edit_form_fileinput" value="" aria-required="true">
+
+										<img src="" class="none upload_img" />
+										<span class="input-group-btn check_img_btn br0">
+											<button type="button" class="btn btn-primary h36 br0">检测图片大小</button>
+										</span>
+									</div>
+
+								</div>
+							</div>
+							<div class="form-group ">
+								<label class="col-sm-3 control-label pull-left">广告链接：</label>
+								<div class="col-sm-8 pull-left">
+									<input type="text" class="form-control" name="linksUrl" required=""
+										aria-required="true">
+								</div>
+							</div>
+
+							<div class="form-group ">
+								<label class="col-sm-3 control-label pull-left">广告备注：</label>
+								<div class="col-sm-8 pull-left">
+									<textarea class="form-control describe" name="remark" required=""
+										aria-required="true"></textarea>
+								</div>
+							</div>
+
+					</div>
+				</div>
+				<div class="modal-footer bdno tac pt0040">
+					<button type="button" class=" btn-white clear_btn_style dialog_btn" data-dismiss="modal">关闭</button>
+					<button type="submit" class=" btn-primary clear_btn_style bdno dialog_btn ml30"
+						id="edit_btn">保存</button>
+					</form>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<!--加载遮罩组件-->
+	<div class="none" id="wating_show">
+		<div class="ibox wating_big_div">
+			<div class="zhezhao bg_f"></div>
+			<div class="ibox-content wating_content_div ">
+				<div class="spiner-example">
+					<div class="sk-spinner sk-spinner-wave">
+						<div class="sk-rect1"></div>
+						<div class="sk-rect2"></div>
+						<div class="sk-rect3"></div>
+						<div class="sk-rect4"></div>
+						<div class="sk-rect5"></div>
+					</div>
+					<h5 class="f20 c0"><span id="loading_text">正在请求 ，请稍后...... </span>(<span id="second_span">0</span>)秒
+					</h5>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/bootstrap.min.js?v=3.3.6"></script>
+	<script src="js/plugins/peity/jquery.peity.min.js"></script>
+	<script src="js/content.min.js?v=1.0.0"></script>
+	<script src="js/plugins/validate/jquery.validate.min.js"></script>
+	<script src="js/plugins/validate/messages_zh.min.js"></script>
+	<script src="js/demo/form-validate-demo.min.js"></script>
+	<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+	<script src="js/plugins/layer/laydate/laydate.js"></script>
+	<script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+	<script src="js/plugins/fancybox/jquery.fancybox.js"></script>
+	<script src="js/jquery-form.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/plugins/iCheck/icheck.min.js"></script>
+	<script src="js/xss.js" type="text/javascript" charset="utf-8"></script>
+
+	<!-- switch开关 -->
+	<script src="js/honeySwitch.js" type="text/javascript" charset="utf-8"></script>
+
+	<!-- <script src="js/common.js" type="text/javascript" charset="utf-8"></script> -->
+	<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		var tBodyTimeout, addManageTimeout, setPowerTime, editManageTimeout, deleteTimeOut, getPowerTime, limits = 20, page = 0, counts = 0, isCheck = -1, editIsCheck = -1;
+		$(document).ready(function () {
+			IsTokenSave();
+
+			$("#add_form").validate();
+			$("#edit_form").validate();
+
+			InitTBodyList(page);//获取列表数据
+			$(".i-checks").iCheck({  //check必须有的脚本
+				checkboxClass: "icheckbox_square-green",
+				radioClass: "iradio_square-green",
+			});
+			$(".fancybox").fancybox({ openEffect: "none", closeEffect: "none" });
+			$(".refresh_a").click(function () {//刷新按钮
+				location.reload();
+			});
+			$("#add_dialog .btn-white").click(function () {  //关闭按钮 清除输入框内容
+				$("#add_form .form-control").val("");
+			});
+			// $("#add_dialog .close").click(function () {
+			// 	$("#add_form .form-control").val("");
+			// });
+
+			CheckPictrue("#add_form", "add_form_fileinput", 0);//新增的检测图片
+			CheckPictrue("#edit_form", "edit_form_fileinput", 1);//编辑的检测图片
+
+			// $.ajax({
+			// 	type:"get",
+			// 	url:urls+ common_url.all_goods_list,
+			// 	async:true,
+			// 	timeout:30000,
+			// 	dataType:"json",
+			// 	data:{token:token},
+			// 	success:function  (json) {
+			// 		CheckLogout (json);//检查是否登陆过期
+			// 		if (json.return_code == "SUCCESS") {
+			// 			var myData = json.result;
+			// 			var selectHtml = '<option value="">请选择</option>';
+			// 			for (var i = 0; i < myData.length; i++) {
+			// 				selectHtml = selectHtml + '<option value="'+myData[i]["id"]+'">'+myData[i]["goodsName"]+'</option>';
+			// 			}
+			// 			$(".gl_goods_list").html(selectHtml);
+			// 		} else{
+			// 			$(".gl_goods_list").html('<option value="">获取数据商品列表失败，请刷新页面</option>');
+			// 		}
+			// 	},
+			// 	error:function(xml, text, errorThrown) {
+			// 		$(".gl_goods_list").html('<option value="">获取数据商品列表失败，请刷新页面</option>');
+			// 	}
+
+			// });
+
+			$(".page_select").change(function () { //选择一页多少条数据的select
+				page = 0;//重置页数
+				$(".page_span").html(1);//重置页数
+				limits = $(".page_select option:selected").text();  //设置当前显示数量
+				InitTBodyList(page);
+			});
+
+			$("#check_btn").click(function () {
+				$(".page_span").html(1);
+				page = 0;//重置页数
+				InitTBodyList(page);
+			});
+			$(".last_span").click(function () {  //上一页
+				if (page == 0) {
+					TipsAlert("这是最前面的数据了");
+					return false;
+				}
+				page--;
+				var start = page * limits;
+				$(".page_span").html(parseInt($(".page_span").html()) - 1);
+				InitTBodyList(start);
+			});
+
+			$(".next_span").click(function () { //下一页
+				page++;
+				var start = page * limits;
+				if (start >= counts) {
+					TipsAlert("这是最后面的数据了");
+					var s = counts / limits;
+					page = s.toCeil(0) - 1;
+					return false;
+				}
+				$(".page_span").html(parseInt($(".page_span").html()) + 1);
+				InitTBodyList(start);
+			});
+
+			$("#all_check_checkbox").click(function () {
+				if ($(this).is(":checked")) {
+					$(".td_checkbox").prop("checked", true);
+				} else {
+					$(".td_checkbox").prop("checked", false);
+				}
+			});
+
+
+			$("#title_delete_btn").click(function () {  //删除按钮
+
+				var idStr = OfficialCommonGetIdString();
+				if (idStr == "") {
+					TipsAlert("请选择需要删除的");
+					return false;
+				}
+				swal({
+					title: "确定删除吗？",
+					text: "确定删除吗？请谨慎考虑",
+					type: "warning",
+					showCancelButton: true,
+					confirmButtonColor: "#5bb7ee",
+					confirmButtonText: "是的",
+					cancelButtonText: "让我再考虑一下…",
+					closeOnConfirm: false,
+					closeOnCancel: true
+				}, function (isConfirm) {
+					if (isConfirm) {
+						var ajaxUrl = urls + common_url.adDelete;
+						OfficialCommonMake(ajaxUrl, { token: token, id: idStr });
+					}
+				});
+			});
+
+			// 上线下线
+			$(".radio-success").each(function () { //单选的点击事件  获取哪个权限
+				$(this).click(function () {
+					$(this).siblings('input[name="status"]').val($(this).data("range"));
+				});
+			});
+
+			// 上线下线
+			// if (json.result.ObjBean[0].businessPaystatus == 1) {
+			// 	$(".radio-success").find("#inlineRadio1")[0].checked = true;
+			// 	$("#levale_input").val(1);
+			// } else if (json.result.ObjBean[0].businessPaystatus == 2) {
+			// 	$(".radio-success").find("#inlineRadio2")[0].checked = true;
+			// 	$("#levale_input").val(2);
+			// }
+
+			// 上线下线
+			// if ($("#levale_input").val() == "-1") {
+			// 	TipsAlert("请选择买单按钮开关");
+			// 	return false;
+			// }
+
+			$("#add_btn").click(function () { //新增的保存按钮
+				if (!$("#add_form").valid()) {
+					return false;
+				}
+				if (isCheck == -1) {
+					TipsAlert("请先检测图片是否符合尺寸");
+					return false;
+				} else if (isCheck == 0) {
+					TipsAlert("图片像素不及格，请重新选择图片");
+					isCheck = -1;
+					return false;
+				}
+				// if ($("#add_form .form-control").eq(0).val().trim() == "") {
+				// 	TipsAlert("请选择图片");
+				// 	return false;
+				// }
+				// if (isCheck == -1) {
+				// 	TipsAlert("请先检测图片是否符合尺寸");
+				// 	return false;
+				// } else if (isCheck == 0) {
+				// 	TipsAlert("图片像素不及格，请重新选择图片");
+				// 	isCheck = -1;
+				// 	return false;
+				// }
+				// if ($("#add_form .form-control").eq(1).val().trim() == "") {
+				// 	TipsAlert("请选择点击图片关联显示的商品");
+				// 	return false;
+				// }
+				// if ($("#add_form .form-control").eq(3).val().trim() == "") {
+				// 	TipsAlert("请填写播放序号");
+				// 	return false;
+				// }
+				// var reg = /^[0-9]*$/;
+				// if (!reg.test($("#add_form .form-control").eq(3).val()) || parseInt($("#add_form .form-control").eq(2).val()) <= 0) {
+				// 	TipsAlert("播放序号只能输入大于0的整数");
+				// 	return false;
+				// }
+				$("#add_form").submit(function () {
+					Showload("正在添加......");
+					addManageTimeout = setInterval("Timeout(addManageTimeout)", 1000);
+					$(this).ajaxSubmit({
+						type: "post",
+						url: urls + common_url.adAddition,
+						async: true,
+						timeout: 30000,
+						dataType: "json",
+						headers: {
+							'X-Access-Token': userMessage.token,
+						},
+						success: function (json) {
+							CheckLogout(json);//检查是否登陆过期
+							if (json.code == 0) {
+								swal({
+									title: "添加成功",
+									text: "添加成功",
+									type: "success",
+								}, function () {
+									location.reload();
+								});
+							} else {
+								if (json.msg == "Session过期") {
+									window.location = "login_timeout.html";
+								} else {
+									TipsAlert(json.msg, function () {
+										location.reload();
+									});
+								}
+							}
+							InitTime(addManageTimeout);
+						},
+						error: function (xml, text, errorThrown) {
+							if (text == "timeout") {
+								TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+							} else {
+								TipsAlert("请求数据失败,请联系后台技术人员");
+							}
+							InitTime(addManageTimeout);
+						}
+					})
+					return false;
+				});
+			});
+			$("#edit_btn").click(function () { //修改角色的保存按钮
+				if (!$("#edit_form").valid()) {
+					return false;
+				}
+				// if ($("#edit_form .form-control").eq(0).val().trim() != "") {
+				// 	$("#edit_form_fileinput").attr("name", "files");
+				// 	// if (editIsCheck == -1) {
+				// 	// 	TipsAlert("请先检测图片是否符合尺寸");
+				// 	// 	return false;
+				// 	// }else if(editIsCheck == 0){
+				// 	// 	TipsAlert("图片像素不及格，请重新选择图片");
+				// 	// 	editIsCheck = -1;
+				// 	// 	return false;
+				// 	// }
+				// }
+
+				// if ($("#edit_form .form-control").eq(1).val().trim() == "") {
+				// 	TipsAlert("请选择点击图片关联显示的商品");
+				// 	return false;
+				// }
+				// if ($("#edit_form .form-control").eq(3).val().trim() == "") {
+				// 	TipsAlert("请填写播放序号");
+				// 	return false;
+				// }
+				// var reg = /^[0-9]*$/;
+				// if (!reg.test($("#edit_form .form-control").eq(3).val()) || parseInt($("#edit_form .form-control").eq(2).val()) <= 0) {
+				// 	TipsAlert("播放序号只能输入大于0的整数");
+				// 	return false;
+				// }
+				$("#edit_form").submit(function () {
+					Showload("正在添加......");
+					editTimeout = setInterval("Timeout(editTimeout)", 1000);
+					$(this).ajaxSubmit({
+						type: "post",
+						url: urls + common_url.advertisingEditor,
+						async: true,
+						timeout: 30000,
+						dataType: "json",
+						headers: {
+							'X-Access-Token': userMessage.token,
+						},
+						success: function (json) {
+							CheckLogout(json);//检查是否登陆过期
+							if (json.code == 0) {
+								swal({
+									title: "修改成功",
+									text: "修改成功",
+									type: "success",
+								}, function () {
+									location.reload();
+								});
+							} else {
+								if (json.msg == "Session过期") {
+									window.location = "login_timeout.html";
+								} else {
+									TipsAlert(json.msg, function () {
+										location.reload();
+									});
+								}
+							}
+							InitTime(editTimeout);
+						},
+						error: function (xml, text, errorThrown) {
+							if (text == "timeout") {
+								TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+							} else {
+								TipsAlert("请求数据失败,请联系后台技术人员");
+							}
+							InitTime(editTimeout);
+						}
+					})
+					return false;
+				});
+			});
+		});
+
+		/**
+		 * 该方法用于初始化列表
+		 * @param {Number} startIndex startIndex是数据起始下标
+		 * */
+		function InitTBodyList(startIndex) {
+			// Showload("正在初始化列表......");
+			tBodyTimeout = setInterval("Timeout(tBodyTimeout)", 1000);
+			$.ajax({
+				type: "get",
+				url: urls + common_url.adList,
+				async: true,
+				timeout: 30000,
+				dataType: "json",
+				headers: {
+					'X-Access-Token': userMessage.token,
+				},
+				data: {
+					token: token,
+					limit: limits,
+					start: startIndex,
+					// status: $("#check_select").val(),
+					advertisementName: $("#check_input").val(),//广告名称
+					location: $('#check_select').val(), //广告位置(0:APP首页轮播,1:商城首页,2:分类广告)
+					dueTime: $('#check_dueTime').val(), //到期时间
+				},
+				success: function (json) {
+					CheckLogout(json);//检查是否登陆过期
+					if (json.code == 0) {
+						var myData = json.data.records;
+						var tableHtml = "";
+						counts = json.data.total;
+						if (counts == 0) { //显示或隐藏分页
+							$("#footer_page_div").hide();
+						} else {
+							$("#footer_page_div").show();
+						}
+						$(".count_page_span").html((counts / limits).toCeil(0)); //设置当前共几页  
+						$(".counts_span").html(json.data.total);
+						for (var i = 0; i < myData.length; i++) {
+							// switch (parseInt(myData[i]["status"])){//上架状态：0 待发布，1：上架 2：下架
+							// 	case 0:
+							// 		myData[i]["status_text"] = "待发布";
+							// 		myData[i]["make"] = '<span class="under_line cursor_pointer sale_span pl20 c_5bb7ee">上架</span>';
+							// 		break;
+							// 	case 1:
+							// 		myData[i]["status_text"] = "上架";
+							// 		myData[i]["make"] = '<span class="under_line cursor_pointer deal_span pl20 c_5bb7ee">下架</span>'; 
+							// 		break;
+							// 	case 2:
+							// 		myData[i]["status_text"] = "下架";
+							// 		myData[i]["make"] = '<span class="under_line cursor_pointer sale_span pl20 c_5bb7ee">上架</span>';
+							// 		break;
+							// 	default:
+							// 		myData[i]["status_text"] = "";
+							// 		myData[i]["make"] = '';
+							// 		break;
+							// }
+
+							switch (parseInt(myData[i]["status"])) {//上架状态：1:上线；2:下线
+								case 1:
+									// myData[i]["status_text"] = "上线";
+									myData[i]["status_text"] = '<span class="switch-on" data-id="' + myData[i]["id"] + '"></span>';
+									// $('[name="switch"]').bootstrapSwitch({
+									// 	onText: "上线",
+									// 	offText: "下线",
+									// 	onColor: "success",
+									// 	offColor: "info",
+									// 	size: "small",
+									// 	onSwitchChange: function (event, state) {
+									// 		if (state == true) {
+									// 			$(this).val("1");
+									// 			console.log('上线了');
+									// 		} else {
+									// 			$(this).val("2");
+									// 			console.log('下线了');
+									// 			console.log();
+									// 		}
+									// 	}
+									// }).bootstrapSwitch('state',true);
+									// myData[i]["make"] = '<span class="under_line cursor_pointer deal_span pl20 c_5bb7ee">下架</span>'; 
+									break;
+								case 2:
+									// myData[i]["status_text"] = "下线";
+									// myData[i]["status_text"] = '<input name="status" type="checkbox" data-size="small">';
+									myData[i]["status_text"] = '<span class="switch-off" data-id="' + myData[i]["id"] + '"></span>';
+									// myData[i]["make"] = '<span class="under_line cursor_pointer sale_span pl20 c_5bb7ee">上架</span>';
+									// $('[name="switch"]').bootstrapSwitch({
+									// 	onText: "上线",
+									// 	offText: "下线",
+									// 	onColor: "success",
+									// 	offColor: "info",
+									// 	size: "small",
+									// 	onSwitchChange: function (event, state) {
+									// 		if (state == true) {
+									// 			$(this).val("1");
+									// 			console.log('上线了');
+									// 		} else {
+									// 			$(this).val("2");
+									// 			console.log('下线了');
+									// 			console.log();
+									// 		}
+									// 	}
+									// }).bootstrapSwitch('state',false);
+									break;
+								default:
+									myData[i]["status_text"] = "";
+									myData[i]["make"] = '';
+									break;
+							}
+							/**
+							* @name: location
+							* @test: test font
+							* @msg: 0:APP首页轮播,1:商城首页,2:PC端分类广告
+							* @param {type} 
+							* @return: 
+							*/
+							switch (parseInt(myData[i]["location"])) {//广告位置 0:APP首页轮播,1:商城首页,2:PC端分类广告
+								case 0:
+									myData[i]["location_text"] = 'APP首页轮播';
+									break;
+								case 1:
+									myData[i]["location_text"] = '商城首页';
+									break;
+								case 2:
+									myData[i]["location_text"] = '分类广告';
+									break;
+								case 3:
+									myData[i]["location_text"] = '技术服务首页轮播';
+									break;
+								default:
+									myData[i]["location_text"] = "";
+									break;
+							}
+							tableHtml = tableHtml + '<tr>'
+								+ '<td class="td_id none"><span>' + myData[i]["id"] + '</span></td>'
+								+ '<td><input type="checkbox" name="" class="td_checkbox w15 h15" value="" /></td>'
+								+ '<td><span>' + myData[i]["id"] + '</span></td>'
+								+ '<td><span>' + myData[i]["advertisementName"] + '</span></td>'
+								+ '<td><span>' + myData[i]["location_text"] + '</span></td>'
+								+ '<td><a class="fancybox" href="' + imgUrl + myData[i]["picture"] + '" title="图片"><img alt="image" src="' + imgUrl + myData[i]["picture"] + '" class="w60"/></a></td>'
+
+								+ '<td>开始时间：<span>' + myData[i]["startTime"] + '</span><br>结束时间：<span>' + myData[i]["dueTime"] + '</span></td>'
+								+ '<td>' + myData[i]["status_text"] + '</td>'
+
+								+ '<td><span>' + myData[i]["licks"] + '</span></td>'
+								+ '<td><span>' + myData[i]["generateOrder"] + '</span></td>'
+								// + '<td><span>' + myData[i]["status_text"] + '</span></td>'
+								+ '<td>'
+								+ '<span class="under_line cursor_pointer top_span pl20 c_1ABC9C" >置顶</span>'
+								+ '<span class="under_line cursor_pointer edit_span pl20 c_1ABC9C" data-toggle="modal" data-target="#edit_dialog">编辑</span>'
+								+ '<span class="under_line cursor_pointer delete_span pl20 c_1ABC9C" >删除</span>'
+								+ '</td>'
+								+ '</tr>';
+						}
+						$("#tbody_list").html(tableHtml);
+						honeySwitch.init();
+						var thisId, uoDownStatus;
+						$('.switch-on').on('click', function () {
+							thisId = $(this).attr('data-id');
+							// console.log($(this).attr('data-id'));
+						});
+						$('.switch-off').on('click', function () {
+							thisId = $(this).attr('data-id');
+							// console.log($(this).attr('data-id'));
+						});
+						switchEvent(".switch-off", function () {
+							// 开啦
+							// console.log(this);
+							console.log('switch-off开:' + thisId);
+							uoDownStatus = '1';
+							// console.log('开');
+							upAndDown(thisId, uoDownStatus);
+						}, function () {
+							// 关啦
+							// console.log('关')
+							// console.log(this);
+							console.log('switch-off关:' + thisId);
+							uoDownStatus = '2';
+							upAndDown(thisId, uoDownStatus);
+						});
+						switchEvent(".switch-on", function () {
+							// 开啦
+							// console.log('开');
+							// console.log(this);
+							console.log('switch-on开:' + thisId);
+							uoDownStatus = '1';
+							// console.log('开');
+							upAndDown(thisId, uoDownStatus);
+						}, function () {
+							// 关啦
+							// console.log('关')
+							// console.log(this);
+							console.log('switch-on关:' + thisId);
+							uoDownStatus = '2';
+							upAndDown(thisId, uoDownStatus);
+
+						});
+
+
+
+						DealTable();//处理表格null以及点击事件
+						InitFun();
+					} else {
+						if (json.return_msg == "Session过期") {
+							window.location = "login_timeout.html";
+						} else {
+							TipsAlert(json.return_msg);
+						}
+					}
+					InitTime(tBodyTimeout);
+				},
+				error: function (xml, text, errorThrown) {
+					if (text == "timeout") {
+						TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+					} else {
+						TipsAlert("请求数据失败,请联系后台技术人员");
+					}
+					InitTime(tBodyTimeout);
+				}
+
+			});
+		}
+
+		/**
+		 * 该方法用于初始化操作列里的事件
+		 * */
+		function InitFun() {
+			$(".edit_span").each(function () {  //点击编辑按钮时  获取对应的一列的表格的值
+				$(this).click(function () {
+					// var data_table = {};//用于保存键值对
+					// var table_title = ["id", "图片效果", "主题颜色", "关联的商品编号", "关联的商品名称", "播放序号", "状态"];  //用于获取当前列的值
+					// for (var i = 0; i < table_title.length; i++) {
+					// 	var texts = $(this).parents("td").siblings("td").eq(i).find("span").text();
+					// 	data_table[table_title[i]] = texts;
+					// }
+					// $(".edit_id_input").val(data_table["id"]);//修改的id输入框
+					// for (var i = 0; i < table_title.length; i++) {
+					// 	$("#edit_form .form-group").each(function () {
+					// 		if ($(this).find("label").html().trim() == table_title[i]) {
+					// 			$(this).find(".form-control").val(data_table[table_title[i]]);
+					// 		}
+					// 	});
+					// }
+					// $("#edit_form .gl_goods_list").children("option").each(function () {
+					// 	if ($(this).text() == data_table["关联的商品名称"]) {
+					// 		$(this).parents("select").val($(this).val());
+					// 	}
+					// });
+					// console.log(data_table);
+					var thisId = $(this).parents("td").siblings("td").eq(0).find("span").text();
+					$.ajax({
+						type: "get",
+						url: urls + common_url.advertisingManagementDataDisplay,
+						async: true,
+						timeout: 30000,
+						dataType: "json",
+						headers: {
+							'X-Access-Token': userMessage.token,
+						},
+						data: { id: thisId, token: token },
+						success: function (json) {
+							CheckLogout(json); //检查是否登陆过期
+
+							if (json.code == 0) {
+								$('.edit_id_input').val(thisId);
+								$('#edit_form input[name="advertisementName"]').val(json.data.advertisementName);
+								$('#edit_form select[name="location"]').val(json.data.location);
+								$('#edit_form input[name="startTime"]').val(json.data.startTime);
+
+								$('#edit_form input[name="dueTime"]').val(json.data.dueTime);
+
+								if (json.data.status == 1) {
+									$(".radio-success").find("#inlineRadio3")[0].checked = true;
+									$("#levale_input").val(1);
+								} else if (json.data.status == 2) {
+									$(".radio-success").find("#inlineRadio4")[0].checked = true;
+									$("#levale_input").val(2);
+								}
+
+								$('#edit_form input[name="linksUrl"]').val(json.data.linksUrl);
+
+								$('#edit_form textarea[name="remark"]').val(json.data.remark);
+								// $('#edit_form_fileinput').val(json.data.picture);
+								$('#edit_form input[name="picture"]').val(json.data.picture);
+								// console.log(json.data.picture);
+
+							}
+						}
+					});
+				});
+			});
+
+			$(".delete_span").each(function () { //删除按钮
+				$(this).click(function () {
+					var thisID = $(this).parents("td").siblings("td").eq(0).text();//当前行id
+					swal({
+						title: "请确认是否删除？",
+						text: "删除后将无法恢复，请谨慎操作！",
+						type: "warning",
+						showCancelButton: true,
+						confirmButtonColor: "#5bb7ee",
+						confirmButtonText: "是的，确定删除",
+						cancelButtonText: "让我再考虑一下…",
+						closeOnConfirm: false,
+						closeOnCancel: true
+					}, function (yes) {
+						if (yes) {
+							Showload("正在请求删除，请稍后....");
+							deleteTimeOut = setInterval("Timeout(deleteTimeOut)", 1000);
+							({
+								type: "post",
+								url: urls + common_url.adDelete,
+								async: true,
+								timeout: 30000,
+								dataType: "json",
+								data: { id: thisID, token: token },
+								headers: {
+									'X-Access-Token': userMessage.token,
+								},
+								success: function (json) {
+									CheckLogout(json);
+									if (json.code == 0) {
+										swal({
+											title: "删除成功",
+											text: "删除成功",
+											type: "success",
+										}, function () {
+											location.reload();
+										});
+									} else {
+										if (json.msg == "Session过期") {
+											window.location = "login_timeout.html";
+										} else {
+											TipsAlert(json.msg);
+										}
+									}
+									InitTime(deleteTimeOut);
+								},
+								error: function (xml, text, e) {
+									if (text == "timeout") {
+										TipsAlert("请求超时,请检查网络或着重新操作");
+									} else {
+										TipsAlert("请求数据失败,请联系后台技术人员");
+									}
+									InitTime(deleteTimeOut);
+								}
+							});
+						}
+					});
+				});
+			});//删除按钮结束括号
+
+			$(".sale_span").click(function () {  //上架按钮
+				var thisId = $(this).parents("td").siblings("td").eq(0).find("span").text();
+				swal({
+					title: "请确认是否上架？",
+					text: "请谨慎操作！",
+					type: "warning",
+					showCancelButton: true,
+					confirmButtonColor: "#5bb7ee",
+					confirmButtonText: "是的，确定",
+					cancelButtonText: "让我再考虑一下…",
+					closeOnConfirm: false,
+					closeOnCancel: true
+				}, function (yes) {
+					if (yes) {
+						PublishFun(thisId, 1);
+					}
+				});
+			});
+			$(".deal_span").click(function () {  //下架按钮
+				var thisId = $(this).parents("td").siblings("td").eq(0).find("span").text();
+				swal({
+					title: "请确认是否下架？",
+					text: "请谨慎操作！",
+					type: "warning",
+					showCancelButton: true,
+					confirmButtonColor: "#5bb7ee",
+					confirmButtonText: "是的，确定",
+					cancelButtonText: "让我再考虑一下…",
+					closeOnConfirm: false,
+					closeOnCancel: true
+				}, function (yes) {
+					if (yes) {
+						PublishFun(thisId, 2);
+					}
+				});
+			});
+
+
+			$(".top_span").each(function () { //置顶按钮
+				$(this).click(function () {
+					swal("暂无此功能", "开发中！", "error");
+					// swal({
+					// 	title: "您确定要置顶这文章吗",
+					// 	type: "warning",
+					// 	showCancelButton: true,
+					// 	confirmButtonColor: "#DD6B55",
+					// 	confirmButtonText: "确定",
+					// 	cancelButtonText: "让我再考虑一下…",
+					// 	closeOnConfirm: false,
+					// 	closeOnCancel: true
+					// }, function (isConfirm) {
+					// 	if (isConfirm) {
+					// 		swal("已成功", "已经置顶此文章", "success");
+					// 	} else {
+					// 		swal("已取消", "您取消了操作！", "error");
+					// 	}
+					// })
+				})
+			});
+
+
+			// switch开关
+			$('[name="switch"]').each(function () {
+				var that = $(this);
+				$(this).on('switch-change', function (e, data) {
+					var $el = $(data.el)
+						, value = data.value;
+					console.log(e, $el, value);
+				});
+				$(this).bootstrapSwitch({
+					onText: "上线",
+					offText: "下线",
+					onColor: "success",
+					offColor: "info",
+					size: "small",
+					onSwitchChange: function (event, state) {
+
+						if (state == true) {
+							$(this).val("1");
+							// console.log('上线了');
+							// console.log('一thisId：' + thisId);
+						} else {
+							$(this).val("2");
+							// console.log('下线了');
+							// console.log('二thisId：' + thisId);
+						}
+
+
+
+					}
+				});
+				if ($(that).attr('data-status') == 1) {
+					$(that).bootstrapSwitch('state', true);
+				} else if ($(that).attr('data-status') == 2) {
+					$(that).bootstrapSwitch('state', false);
+				}
+
+
+			});
+
+
+
+		}
+
+		/**
+		 * 该方法封装了上下架功能
+		 * @param {Number} tdid tdid 是上下架的当前列的id
+		 * @param {Number} statusNum statusNum 是上下架状态 0 待发布，1：上架 2：下架
+		 * */
+		function PublishFun(tdid, statusNum) {
+			Showload("正在操作......");
+			pubTimeout = setInterval("Timeout(pubTimeout)", 1000);
+			$.ajax({
+				type: "post",
+				url: urls + common_url.publist_sysBanna_pictureList,
+				async: true,
+				timeout: 30000,
+				dataType: "json",
+				data: { token: token, id: tdid, status: statusNum },
+				headers: {
+					'X-Access-Token': userMessage.token,
+				},
+				success: function (json) {
+					CheckLogout(json);//检查是否登陆过期
+					if (json.return_code == "SUCCESS") {
+						swal({
+							title: "操作成功",
+							text: "操作成功！",
+							type: "success",
+						}, function () {
+							location.reload();
+						});
+					} else {
+						if (json.return_msg == "Session过期") {
+							window.location = "login_timeout.html";
+						} else {
+							TipsAlert(json.return_msg);
+						}
+					}
+					InitTime(pubTimeout);
+				},
+				error: function (xml, text, errorThrown) {
+					if (text == "timeout") {
+						TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+					} else {
+						TipsAlert("请求数据失败,请联系后台技术人员");
+					}
+					InitTime(pubTimeout);
+				}
+
+			});
+		}
+
+		/**
+		 * 该方法是用来封装了新增及修改的检测图片的方法
+		 * @param {String} formName formName 是父层form的选择器
+		 * @param {String} fileInputName fileInputName 是fileinput的id属性
+		 * @param {Number} whichCheck whichCheck 是用于辨别是新增还是修改 0是新增 1是修改
+		 * */
+		function CheckPictrue(formName, fileInputName, whichCheck) {
+			var checkNum = -1;
+			switch (parseInt(whichCheck)) {
+				case 0:
+					checkNum = isCheck;
+					break;
+				case 1:
+					checkNum = editIsCheck;
+					break;
+			}
+
+			$(formName + " .upload_img_input").change(function () {   //上传图片的输入框
+				checkNum = -1;//重新选择图片后，重置检测值
+				switch (parseInt(whichCheck)) {
+					case 0:
+						isCheck = checkNum;
+						break;
+					case 1:
+						editIsCheck = checkNum;
+						break;
+				}
+				var files = document.getElementById(fileInputName).files[0];  //获取到文件对象
+				if (files) {
+					if (files.type != "image/png" && files.type != "image/jpg" && files.type != "image/jpeg") {
+						TipsAlert("请选择图片文件(格式：png,jpg,jpeg)");
+						$(this).val("");
+					}
+				}
+			});
+			$(formName + " .check_img_btn").click(function () {//检测图片
+				if ($(formName + " .upload_img_input").val() != "") {
+					var files = document.getElementById(fileInputName).files[0];  //获取到文件对象
+					var imgWidth = null, imgHeight = null;
+					var reader = new FileReader();   //新建一个读取文件的对象
+					reader.readAsDataURL(files);  //	将文件读取为 DataURL base64码
+					reader.onloadend = function (e) {//文件加载完成后
+						var urlData = this.result;//返回  base64的文本
+						$(formName + " .upload_img").attr("src", urlData);//赋值给隐藏的img标签
+						setTimeout(function () {
+							imgWidth = $(formName + " .upload_img").width();  //获取宽度
+							imgHeight = $(formName + " .upload_img").height();//获取高度
+							console.log("图片宽度:" + imgWidth + ",高度:" + imgHeight);
+							// if (imgWidth > 750 || imgHeight > 350) {
+							// 	TipsAlert("商品宽度不能超过750px，高度不能超过350px,当前宽度：" + imgWidth + ",当前高度:"+imgHeight);
+							// 	checkNum = 0;
+							// 	switch (parseInt(whichCheck)){
+							// 		case 0:
+							// 			isCheck = checkNum;
+							// 			break;
+							// 		case 1:
+							// 			editIsCheck = checkNum;
+							// 			break;
+							// 	}
+							// 	return false;
+							// }
+							if (imgWidth > 750 || imgWidth < 750 || imgHeight > 400 || imgHeight < 400) {
+								TipsAlert("商品宽度不能超过750px,当前宽度：" + imgWidth + ",当前高度:" + imgHeight);
+								checkNum = 0;
+								switch (parseInt(whichCheck)) {
+									case 0:
+										isCheck = checkNum;
+										break;
+									case 1:
+										editIsCheck = checkNum;
+										break;
+								}
+								return false;
+							}
+							checkNum = 1;
+							switch (parseInt(whichCheck)) {
+								case 0:
+									isCheck = checkNum;
+									break;
+								case 1:
+									editIsCheck = checkNum;
+									break;
+							}
+							var blob = dataURLtoFile(urlData, 'image/jpeg');
+							var fileOfBlob = new File([blob], new Date() + '.jpg'); // // 重命名了
+							var formData = new FormData();
+
+							formData.append('file', fileOfBlob);
+
+							$.ajax({
+								url: uploadImgUrls,
+								type: 'post',
+								data: formData,
+								dataType: "json",
+								async: false,
+								cache: false,
+								contentType: false,
+								processData: false,
+								headers: {
+									'X-Access-Token': userMessage.token,
+								},
+								success: function (json) {
+									CheckLogout(json); //检查是否登陆过期
+
+									//alert(data['img_url']);
+									if (json.code == 0) {
+										if (json.root != '' || json.root != null || json.root != undefined) {
+											$(formName + ' input[name="picture"]').val(json.root);//赋值给隐藏的img标签
+
+											swal({
+												title: "上传成功",
+												text: "当前图片可用,宽度：" + imgWidth + ",高度:" + imgHeight,
+												type: "success",
+											});
+										}
+
+									}
+
+
+								},
+								error: function (json) {
+									TipsAlert(json.msg);
+								}
+							});
+
+						}, 100)
+					};
+				} else {
+					TipsAlert("请先选择图片文件");
+				}
+			});
+		}
+
+
+		/**
+		* @name: 上下线
+		* @test: test font
+		* @msg: 
+		* @param {int} id id
+		* @param {int} status status 状态(1:上线；2:下线)
+		* @return: 
+		*/
+		function upAndDown(id, status) {
+			// console.log('打印ID:'+ id);
+			Showload("正在操作......");
+			pubTimeout = setInterval("Timeout(pubTimeout)", 1000);
+			$.ajax({
+				type: "post",
+				url: urls + common_url.advertisingListShelf,
+				async: true,
+				timeout: 30000,
+				dataType: "json",
+				headers: {
+					'X-Access-Token': userMessage.token,
+				},
+				data: { token: token, id: id, status: status },
+				success: function (json) {
+					CheckLogout(json);//检查是否登陆过期
+					if (json.code == 0) {
+						// swal({
+						// 	title: json.msg,
+						// 	text: json.msg,
+						// 	type: "success",
+						// }, function () {
+						// 	// location.reload();
+						// });
+					} else {
+						if (json.msg == "Session过期") {
+							window.location = "login_timeout.html";
+						} else {
+							TipsAlert(json.msg);
+						}
+					}
+					InitTime(pubTimeout);
+				},
+				error: function (xml, text, errorThrown) {
+					if (text == "timeout") {
+						TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+					} else {
+						TipsAlert("请求数据失败,请联系后台技术人员");
+					}
+					InitTime(pubTimeout);
+				}
+
+			});
+		}
+	</script>
+</body>
+
+</html>

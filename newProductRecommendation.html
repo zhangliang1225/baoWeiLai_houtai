@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html>
+<!-- Mirrored from www.zi-han.net/theme/hplus/table_jqgrid.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:20:02 GMT -->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新品推荐广告管理</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+
+    <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <!--图片插件-->
+    <link href="js/plugins/fancybox/jquery.fancybox.css" rel="stylesheet">
+    <link href="css/newStyle.css" rel="stylesheet">
+
+    <style>
+        /* 重写bookstrap样式表 勿删 */
+        .ibox-title {
+            padding: 20px;
+        }
+
+        .ui-jqdialog {
+            height: auto !important;
+        }
+
+        .ui-common-table tbody {
+            background-color: #eaf5fc !important;
+        }
+
+        .modal-dialog {
+            margin: 80px auto !important;
+        }
+
+        .form-group {
+            margin-left: 0px !important;
+            margin-right: 0px !important;
+        }
+
+        .modal-sm {
+            width: 600px;
+        }
+
+        .col-sm-3 {
+            width: 30%;
+        }
+
+        .col-sm-8 {
+            width: 70%;
+        }
+
+        .form-horizontal .control-label {
+            text-align: left;
+            padding-top: 5px;
+            font-size: 18px;
+        }
+
+        @media only screen and (min-width: 100px) and (max-width: 600px) {
+            .modal-sm {
+                width: 400px;
+            }
+
+            .col-sm-3 {
+                width: 40%;
+            }
+
+            .col-sm-8 {
+                width: 60%;
+            }
+
+            .scroll_div {
+                width: 85%;
+            }
+
+            .form-horizontal .control-label {
+                text-align: left;
+                padding-top: 5px;
+                font-size: 14px;
+            }
+
+            .dialog_btn {
+                font-size: 14px !important;
+            }
+        }
+
+        @media only screen and (min-width: 650px) {
+            .modal-sm {
+                width: 600px;
+            }
+        }
+
+        .note-editable {
+            min-height: 200px;
+        }
+
+        /*编辑器的输入区域的最小高度*/
+        /*以下是等待状态的通用样式*/
+        .wating_big_div {
+            position: fixed;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            display: table;
+            z-index: 9999;
+        }
+
+        .zhezhao {
+            opacity: 0.3;
+            position: absolute;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+        }
+
+        .wating_content_div {
+            text-align: center;
+            background: none;
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        .allImg {
+            width: 800px;
+            height: 80%;
+            /* display: flex;
+            flex-wrap: wrap; */
+        }
+
+        /* 
+        .allImg div {
+            float: left;
+            margin-bottom: 15px;
+            margin-left: 15px;
+        } */
+
+        .updateImg {
+            width: 100%;
+        }
+
+        .ibox {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .allImg .numImg {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            float: left;
+            margin-bottom: 15px;
+            margin-left: 15px;
+        }
+
+        .allImg div input {
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            position: absolute;
+            margin: 0 auto;
+            opacity: 0;
+            z-index: 99999;
+            width: 100%;
+            height: 100%;
+        }
+
+        .allImg img {
+            margin: 0 auto;
+            display: block;
+        }
+
+        .imDiv {
+            width: 100%;
+            height: 100%;
+        }
+
+        /*以上是等待状态的通用样式*/
+    </style>
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content  animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox ">
+                    <div class="ibox-title pull-left w100p" style="padding: 10px 20px;">
+                        <div class="pull-left">
+                            <div class="ibox-tools cache5">
+                                新品推荐广告管理
+                            </div>
+                        </div>
+
+                        <div class="pull-right">
+                            <button class="refresh_btn">
+                                <a class="refresh_a">
+                                    <i class="fa fa-refresh"></i> 刷新
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="allImg">
+                        <div class="firstImg numImg"
+                            style="border: 1px solid black; background-color: #F6F3F7;width: 190px;height: 274px;">
+                            <div class="imDiv pull-left imgA">
+                                <input type="file" name="file1" data-type="1"
+                                    class="pull-left br_e5e6e7 p5 imgIn1 changImg" />
+                                <img src="./img/icon_add.png" class="imgimg1" style="margin-top: 120px;" />
+                                <div class='delect-img2 cursor_pointer'></div>
+                                <div style="position: absolute;top:0;">190*274</div>
+                            </div>
+                        </div>
+                        <div class="twoImg numImg"
+                            style="border: 1px solid black;background-color: #F6F3F7;width: 288px;height: 132px;">
+                            <div class="imDiv pull-left imgB">
+                                <input type="file" name="file2" data-type="2"
+                                    class="pull-left br_e5e6e7 p5 imgIn2 changImg" />
+                                <img src="./img/icon_add.png" class="imgimg2" style="margin-top: 60px;" />
+                                <div class='delect-img2 cursor_pointer'></div>
+                                <div style="position: absolute;top:0;">288*132</div>
+                            </div>
+                        </div>
+                        <div class="fourImg numImg"
+                            style="border: 1px solid black;background-color: #F6F3F7;width: 288px;height: 132px;">
+                            <div class="imDiv pull-left imgD">
+                                <input type="file" name="file4" data-type="4"
+                                    class="pull-left br_e5e6e7 p5 imgIn4 changImg" />
+                                <img src="./img/icon_add.png" class="imgimg4" style="margin-top: 60px;" />
+                                <div class='delect-img2 cursor_pointer'></div>
+                                <div style="position: absolute;top:0;">288*132</div>
+                            </div>
+                        </div>
+                        <div class="threeImg numImg"
+                            style="border: 1px solid black;background-color: #F6F3F7;width: 192px;height: 274px;position: relative;top: -146px;">
+                            <div class="imDiv pull-left imgC">
+                                <input type="file" name="file3" data-type="3"
+                                    class="pull-left br_e5e6e7 p5 imgIn3 changImg" />
+                                <img src="./img/icon_add.png" class="imgimg3" style="margin-top: 60px;" />
+                                <div class='delect-img2 cursor_pointer'></div>
+                                <div style="position: absolute;top:0;">192*274</div>
+                            </div>
+                        </div>
+                        <div class="fiveImg numImg"
+                            style="border: 1px solid black;background-color: #F6F3F7;width: 340px;height: 160px;position: relative;top: -146px;">
+                            <div class="imDiv pull-left imgE">
+                                <input type="file" name="file5" data-type="5"
+                                    class="pull-left br_e5e6e7 p5 imgIn5 changImg" />
+                                <img src="./img/icon_add.png" class="imgimg5" style="margin-top: 60px;" />
+                                <div class='delect-img2 cursor_pointer'></div>
+                                <div style="position: absolute;top:0;">340*160</div>
+                            </div>
+                        </div>
+                        <div class="sixImg numImg"
+                            style="border: 1px solid black;background-color: #F6F3F7;width: 340px;height: 160px;position: relative;top: -146px;">
+                            <div class="imDiv pull-left imgF">
+                                <input type="file" name="file6" data-type="6"
+                                    class="pull-left br_e5e6e7 p5 imgIn6 changImg" />
+                                <img src="./img/icon_add.png" class="imgimg6" style="margin-top: 60px;" />
+                                <div class='delect-img2 cursor_pointer'></div>
+                                <div style="position: absolute;top:0;">340*160</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--加载遮罩组件-->
+        <div class="none" id="wating_show">
+            <div class="ibox wating_big_div">
+                <div class="zhezhao bg_f"></div>
+                <div class="ibox-content wating_content_div ">
+                    <div class="spiner-example">
+                        <div class="sk-spinner sk-spinner-wave">
+                            <div class="sk-rect1"></div>
+                            <div class="sk-rect2"></div>
+                            <div class="sk-rect3"></div>
+                            <div class="sk-rect4"></div>
+                            <div class="sk-rect5"></div>
+                        </div>
+                        <h5 class="f20 c0"><span id="loading_text">正在请求 ，请稍后...... </span>(<span
+                                id="second_span">0</span>)秒
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/html5media.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/bootstrap.min.js?v=3.3.6"></script>
+        <script src="js/plugins/peity/jquery.peity.min.js"></script>
+        <script src="js/content.min.js?v=1.0.0"></script>
+        <script src="js/plugins/layer/laydate/laydate.js"></script>
+        <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+        <script src="js/plugins/fancybox/jquery.fancybox.js"></script>
+        <script src="js/plugins/summernote/summernote.min.js"></script>
+        <script src="js/plugins/summernote/summernote-zh-CN.js"></script>
+        <script src="js/plugins/iCheck/icheck.min.js"></script>
+        <script src="js/jquery-form.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/xss.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+        <script>
+            $(document).ready(function () {
+                // IsTokenSave();
+                var allImgList = [];
+                setimgList();
+
+                // $(".refresh_a").click(function () {//刷新按钮
+                //     location.reload();
+                // });
+                // 选择显示图片
+                // $(document).on("click", ".changImg", function () {
+                //     console.log(123)
+                //     $(this).change(function () {
+                //         var that = this
+                //         // console.log($(that).attr("data-type"))
+                //         var files = that.files[0];
+                //         var reader = new FileReader(); //新建一个读取文件的对象
+                //         reader.readAsDataURL(files); //	将文件读取为 DataURL base64码
+                //         reader.onloadend = function (e) { //文件加载完成后
+                //             var urlData = this.result;
+                //             //						console.log(this.result)
+                //             isCheckC = null;
+
+                //         }
+                //     })
+                // })
+                $(".refresh_a").click(function () {
+                    location.reload();
+                })
+                $('.changImg').change(function () {
+                    var that = this
+                    // console.log($(that).attr("data-type"))
+                    var type = $(that).attr("data-type")
+                    var files = that.files[0];
+                    var reader = new FileReader(); //新建一个读取文件的对象
+                    reader.readAsDataURL(files); //	将文件读取为 DataURL base64码
+                    reader.onloadend = function (e) { //文件加载完成后
+                        var urlData = this.result;
+                        $('.imgimg' + type).attr("src", urlData)
+                        setTimeout(function () {
+
+                            if (isImgOk(type)) {
+                                Showload("正在操作。。。。");
+                                $('.imgimg' + type).css("margin", "0");
+                                var formData = new FormData();
+                                var imgIsOk = false;
+                                console.log(urlData)
+                                let blob = dataURLtoFile(urlData, 'image/jpeg');
+                                let fileOfBlob = new File([blob], new Date() + '.jpg'); // // 重命名了
+                                formData.set("file", fileOfBlob);
+                                $.ajax({
+                                    url: uploadImgUrls,
+                                    type: 'post',
+                                    data: formData,
+                                    dataType: "json",
+                                    async: false,
+                                    cache: false,
+                                    contentType: false,
+                                    processData: false,
+                                    headers: {
+                                        'X-Access-Token': userMessage.token,
+                                    },
+                                    success: function (json) {
+                                        CheckLogout(json); //检查是否登陆过期
+
+                                        if (json.success) {
+                                            setImg(json.root, type)
+                                        }
+                                    },
+                                    error: function (json) {
+                                    }
+                                })
+                            } else {
+                                var imgWidth = $('.imgimg' + type)[0].naturalWidth;
+                                var imgHeight = $('.imgimg' + type)[0].naturalHeight;
+                                $('.imgimg' + type).attr("src", "./img/icon_add.png")
+                                TipsAlert("图片不符合,当前宽度：" + imgWidth + ",当前高度:" + imgHeight);
+                                swal({
+                                    title: "错误",
+                                    text: "图片不符合,当前宽度：" + imgWidth + ",当前高度:" + imgHeight,
+                                    type: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "#DD6B55",
+                                    confirmButtonText: "好的",
+                                    cancelButtonText: "关闭",
+                                    closeOnConfirm: false,
+                                    closeOnCancel: true
+                                }, function (yes) {
+                                    if (yes) {
+                                        location.reload();
+                                    } else {
+                                        location.reload();
+                                    }
+                                })
+                            }
+                        }, 100)
+
+                    }
+                })
+                function setimgList() {
+                    $.ajax({
+                        url: urls + common_url.advertisementHurdlesView,
+                        type: 'get',
+                        timeout: 30000,
+                        data: {
+                            state: "2"
+                        },
+                        headers: {
+                            'X-Access-Token': userMessage.token,
+                        },
+                        dataType: "json",
+                        success: function (res) {
+                            CheckLogout(res); //检查是否登陆过期
+
+                            if (res.code == 0) {
+                                res.data.forEach(function (e, i) {
+                                    $('.imgimg' + e.type).attr("src", imgUrl + e.imgUrl)
+                                    $('.imgimg' + e.type).css("margin", "0");
+                                    allImgList.push(e.type)
+                                })
+                            }
+                        }
+                    })
+                }
+            })
+            function setImg(imgurl, type) {
+                $.ajax({
+                    url: urls + common_url.advertisementHurdlesSaveOrUpdate,
+                    type: 'POST',
+                    cache: false,
+                    data: {
+                        imgUrl: imgurl,
+                        type: type,
+                        state: "2"
+                    },
+                    headers: {
+                        'X-Access-Token': userMessage.token,
+                    },
+                }).done(function (json) {
+                    CheckLogout(json); //检查是否登陆过期
+
+                    swal({
+                        title: "上传成功",
+                        text: "上传成功！",
+                        type: "success",
+                    }, function () {
+                        location.reload();
+                    });
+                })
+            }
+            function isImgOk(type) {
+                var imgWidth = $('.imgimg' + type)[0].naturalWidth;
+                var imgHeight = $('.imgimg' + type)[0].naturalHeight;
+                switch (type) {
+                    case "1":
+                        if (imgWidth != 190 || imgHeight != 274) {
+                            return false
+                        } else {
+                            return true
+                        }
+                        break;
+                    case "2":
+                        if (imgWidth != 288 || imgHeight != 132) {
+                            return false
+                        } else {
+                            return true
+                        }
+                        break;
+                    case "3":
+                        if (imgWidth != 192 || imgHeight != 274) {
+                            return false
+                        } else {
+                            return true
+                        }
+                        break;
+                    case "4":
+                        if (imgWidth != 288 || imgHeight != 132) {
+                            return false
+                        } else {
+                            return true
+                        }
+                        break;
+                    case "5":
+                        if (imgWidth != 340 || imgHeight != 160) {
+                            return false
+                        } else {
+                            return true
+                        }
+                        break;
+                    case "6":
+                        if (imgWidth != 340 || imgHeight != 160) {
+                            return false
+                        } else {
+                            return true
+                        }
+                        break;
+                }
+            }
+
+        </script>
+</body>
+
+</html>

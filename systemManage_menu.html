@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html>
+
+	<!-- Mirrored from www.zi-han.net/theme/hplus/table_jqgrid.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:20:02 GMT -->
+
+	<head>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>菜单管理</title>
+
+		<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+		<link href="css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+		<link href="css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+
+		<link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+		<link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+		<link href="css/animate.min.css" rel="stylesheet">
+		<link href="css/style.min862f.css?v=4.1.0" rel="stylesheet">
+		<link href="css/newStyle.css" rel="stylesheet">
+
+		<style>
+			/* 重写bookstrap样式表 勿删 */
+			.form_inputs{width: 160px;background-color: #ebebeb;border: 1px solid #06a3f9;border-radius: 20px;-webkit-border-radius: 20px;-moz-border-radius: 20px;-o-border-radius: 20px;-ms-border-radius: 20px;}
+			.ibox-title{padding:20px;}
+			/* 重写bookstrap样式表 勿删 */
+			.ui-jqdialog{height: auto!important;}
+			.ui-common-table tbody{background-color: #eaf5fc!important;}
+			.modal-dialog{margin: 80px auto!important;}
+			.form-group{margin-left:0px!important;margin-right:0px!important;}
+			.modal-sm{width: 600px;}
+			.col-sm-3{width: 30%;}
+			.col-sm-8{width: 70%;}
+			.form-horizontal .control-label{text-align: left;padding-top: 5px;font-size: 18px;}
+			@media only screen and (min-width: 100px) and (max-width: 600px) {
+				.modal-sm{width: 400px;}
+				.col-sm-3{width: 40%;}
+				.col-sm-8{width: 60%;}
+				.scroll_div{width: 85%;}
+				.form-horizontal .control-label{text-align: left;padding-top: 5px;font-size: 14px;}
+				.dialog_btn{font-size: 14px!important;}
+			}
+			@media only screen and (min-width: 650px){
+				.modal-sm{width: 600px;}
+			}
+			/*以下是等待状态的通用样式*/
+			.wating_big_div{position: fixed;top:0px ;width: 100%;height: 100%;display: table;z-index: 9999;}
+			.zhezhao{opacity: 0.3;position: absolute;top: 0px;width: 100%;height: 100%;z-index: 9999;}
+			.wating_content_div{text-align: center;background:none;display: table-cell;vertical-align: middle;}	
+			/*以上是等待状态的通用样式*/
+		</style>
+	</head>
+
+	<body class="gray-bg">
+		<div class="wrapper wrapper-content  animated fadeInRight">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="ibox ">
+						<div class="ibox-title pull-left w100p" style="padding: 10px 20px;">
+							<div class="pull-left">
+								<div class="ibox-tools cache5">
+									菜单管理
+								</div>
+							</div>
+
+							<div class="pull-right">
+								<button class="refresh_btn">
+									<a class="refresh_a" style="">
+										<i class="fa fa-refresh"></i> 刷新
+									</a>
+								</button>
+							</div>
+						</div>
+
+						<div class="ibox-content pull-left w100p">
+
+							<div class="w100p chaxunBorder">
+								<div class="ibox-title w100p" style="height:50px;background-color: rgb(243, 243, 243);padding: 10px 20px;border-top:0px;">
+									<div class="ibox-tools pull-left">
+										<span class="titleFindIcon pull-left"></span>
+										<span class="pull-left" style="position: relative;top: 3px;left: 5px;">筛选查询</span>
+									</div>
+									<div class="pull-right">
+										<button class="opera_btn" id="check_btn">查询结果</button>
+									</div>
+								</div>
+
+								<div class="w100p p20" style="display: flex;">
+									<div class="ml30">
+										<span class="f14 pull-left h30 lh30">菜单名称：</span>
+										<div class="pull-left">
+											<input type="text" class="form-control h30 w100p ml10" style="width: 150px;" id="check_arg1_input"
+											 placeholder="输入菜单名称" aria-required="true">
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="ibox-title pull-left w100p table-head" style="background-color: rgb(243, 243, 243);padding: 10px 20px;border-top:0px;">
+								<div class="pull-left">
+									<div class="ibox-tools" style="">
+										<span class="titleFontIcon"></span>
+										<span class="pull-left" style="position: relative;top: 3px;left: 5px;">数据列表</span>
+									</div>
+								</div>
+								<div class="pull-right">
+									<button class="opera_btn" data-toggle="modal" data-target="#add_dialog">新增</button>
+								</div>
+							</div>
+							<div class="pull-left w100p">
+								<table class="table table-bordered mb0 ">
+									<thead>
+										<tr>
+											<th>菜单名称</th>
+											<th>描述</th>
+											<th>URL</th>
+											<th>创建时间</th>
+											<th class="">操作</th>
+										</tr>
+									</thead>
+									<tbody id="list_tbody">
+									</tbody>
+								</table>
+							</div>
+							<div class="pull-left tac c0 f14 w100p pre mt10 none" id="footer_page_div">
+								<div class="">
+									<div class="pull-left">
+										<div class="ibox-tools">
+											<a class="refresh_a">
+												<i class="fa fa-refresh"></i> 刷新
+											</a>
+										</div>
+									</div>
+									<span class="under_line cursor_pointer last_span">上一页</span>
+									<span class="pl20 page_span">1</span>
+									<span class="pl20 under_line cursor_pointer next_span">下一页</span>
+									<span class="pl20">共 <span class="count_page_span">1</span> 页</span>
+									<div class="disib ml20">
+										每页显示：
+										<select class="p0 disib page_select">
+											<option value="">10</option>
+											<option value="" selected="selected">20</option>
+											<option value="">30</option>
+										</select>
+										条
+									</div>
+								</div>
+								<div class="record_right_div">
+									<!--record_right_div pull-right mt10-->
+									数据库总数量： <span class="counts_span">0</span> 条
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--新增的弹框-->
+		<div class="modal inmodal fade" id="add_dialog" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content br8">
+					<div class="modal-header p10 bdno">
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+						<span class="modal-title f18">新增菜单</span>
+					</div>
+					<div class="modal-body bg_f p0">
+						<div class="ibox-content p30">
+							<form class="form-horizontal m-t" id="add_form" method="post">
+								<input type="hidden" class="token_input" name="token" id="" value="" />
+								<input type="hidden" class="userinfoId_input" name="createUserinfoId" value="" />
+								<input type="hidden" class="parentId_input" name="parentId" value="" />
+								<input type="hidden" class="type_input" name="menuType" value="0" />
+								<div class="form-group">
+									<label class="col-sm-3 control-label pull-left">一级菜单</label>
+									<div class="col-sm-8 pull-left">
+										<select class="form-control w100p h34 mb0 one_level_select parent_id" name="">
+											<option value="0">请选择菜单</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label pull-left">二级菜单</label>
+									<div class="col-sm-8 pull-left">
+										<select class="form-control w100p h34 mb0 two_level_select" name="" id="">
+											<option value="0">请选择菜单</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group ">
+									<label class="col-sm-3 control-label pull-left">菜单名称</label>
+									<div class="col-sm-8 pull-left">
+										<input type="text" class="form-control name" name="name" required="" aria-required="true">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label pull-left">描述</label>
+									<div class="col-sm-8 pull-left">
+										<textarea name="description" class="form-control description"></textarea>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label pull-left">URL</label>
+									<div class="col-sm-8 pull-left">
+										<input type="text" class="form-control url" name="url" required="" aria-required="true">
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="modal-footer bdno tac pt0040">
+						<button type="button" class=" btn-white clear_btn_style dialog_btn" data-dismiss="modal">关闭</button>
+						<button type="button" class=" btn-primary clear_btn_style bdno dialog_btn ml30" id="add_btn">保存</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--修改的弹框-->
+		<div class="modal inmodal fade" id="edit_dialog" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content br8">
+					<div class="modal-header p10 bdno">
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+						<span class="modal-title f18">修改菜单</span>
+					</div>
+					<div class="modal-body bg_f p0">
+						<div class="ibox-content p30">
+							<form class="form-horizontal m-t" id="edit_form" method="post">
+								<input type="hidden" class="id" name="" value="" />
+								<input type="hidden" class="parentid" name="" value="" />
+								
+								<div class="form-group">
+									<label class="col-sm-3 control-label pull-left">菜单名称</label>
+									<div class="col-sm-8 pull-left">
+										<input type="text" class="form-control name" name="name" required="" aria-required="true">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label pull-left">描述</label>
+									<div class="col-sm-8 pull-left">
+										<textarea name="description" class="form-control description"></textarea>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label pull-left">URL</label>
+									<div class="col-sm-8 pull-left">
+										<input type="text" class="form-control url" name="url" required="" aria-required="true">
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="modal-footer bdno tac pt0040">
+						<button type="button" class=" btn-white clear_btn_style dialog_btn" data-dismiss="modal">关闭</button>
+						<button type="button" class=" btn-primary clear_btn_style bdno dialog_btn ml30" id="edit_btn">保存</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<script src="js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/bootstrap.min.js?v=3.3.6"></script>
+		<script src="js/plugins/peity/jquery.peity.min.js"></script>
+		<script src="js/content.min.js?v=1.0.0"></script>
+		<script src="js/plugins/layer/laydate/laydate.js"></script>
+		<script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+		<script src="js/plugins/iCheck/icheck.min.js"></script>
+		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			var tableTimeout, addManageTimeout, setRoleTime, editManageTimeout, deleteTimeOut, getPowerList, powerName = "",
+				limits = 20,
+				page = 1,
+				counts = 0,
+				table_title;
+
+			var totalPages = 0;
+
+			$(document).ready(function() {
+				IsTokenSave();
+				InitTbodyList(page); //初始化列表数据
+				$(".refresh_a").click(function() { //刷新按钮
+					location.reload();
+				});
+				$(".i-checks").iCheck({ //check必须有的脚本
+					checkboxClass: "icheckbox_square-green",
+					radioClass: "iradio_square-green",
+				});
+
+				$("#check_btn").click(function() { //查询按钮
+					powerName = $("#check_input").val();
+					page = 1; //重置页数
+					$(".role_page_span").html(1); //重置页数
+					InitTbodyList(page); //获取列表数据
+				});
+
+				$(".page_select").change(function() { //选择一页多少条数据的select
+					page = 1; //重置页数
+					$(".page_span").html(1); //重置页数
+					limits = $(".page_select option:selected").text(); //设置当前显示数量
+					InitTbodyList(page);
+				});
+
+				$(".last_span").click(function() { //上一页
+					if (page < 2) {
+						TipsAlert("这是最前面的数据了");
+						return false;
+					}
+					page--;
+					$(".page_span").html(parseInt($(".page_span").html()) - 1);
+					InitTbodyList(page);
+				});
+				$(".next_span").click(function() { //下一页
+
+					if (page > maxIndex - 1) {
+						TipsAlert("这是最后面的数据了");
+						return false;
+					}
+					page++;
+					$(".page_span").html(parseInt($(".page_span").html()) + 1);
+					InitTbodyList(page);
+				});
+
+				PowerSelect(1,0)
+				
+				$('#add_form .one_level_select').change(function() {
+				  PowerSelect(2,$(this).val());
+				});
+
+
+				$("#add_btn").click(function() { //新增菜单的保存按钮 
+					if ($("#add_form .name").val() == "") {
+						TipsAlert("菜单名称不能为空");
+						return false;
+					}
+					if ($("#add_form .name").val() == "") {
+						TipsAlert("菜单描述不能为空");
+						return false;
+					}
+					if ($("#add_form .name").val() == "") {
+						TipsAlert("url不能为空");
+						return false;
+					}
+					var parent_id = 0;
+					if($("#add_form .one_level_select").val() != "0"){
+						parent_id = $("#add_form .one_level_select").val();
+					}
+					if($("#add_form .two_level_select").val() != "0"){
+						parent_id = $("#add_form .two_level_select").val();
+					}
+					Showload("正在添加菜单......");
+					addManageTimeout = setInterval("Timeout(addManageTimeout)", 1000);
+					$.ajax({
+						type: "post",
+						url: urls + common_url.sysPrivilegeInfo_AddPrivilegeInfo,
+						async: true,
+						timeout: 30000,
+						dataType: "json",
+						headers: {
+							'X-Access-Token': userMessage.token,
+						},
+						data: {
+							name:$("#add_form .name").val(),
+							parent_id:parent_id,
+							url:$("#add_form .url").val(),
+							description:$("#add_form .description").val(),
+						},
+						success: function(json) {
+							console.log(json)
+							CheckLogout(json); //检查是否登陆过期
+							if (json.code == 0) {
+								swal({
+									title: "添加成功",
+									text: "添加成功",
+									type: "success",
+								}, function() {
+									location.reload();
+								});
+							} else {
+								TipsAlert(json.msg);
+							}
+							InitTime(addManageTimeout);
+						},
+						error: function(xml, text, errorThrown) {
+							if (text == "timeout") {
+								TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+							} else {
+								TipsAlert("请求数据失败,请联系后台技术人员");
+							}
+							InitTime(addManageTimeout);
+						}
+
+					});
+				});
+
+				$("#edit_btn").click(function() { //新增菜单的保存按钮
+					if ($("#edit_form .name").val() == "") {
+						TipsAlert("菜单名称不能为空");
+						return false;
+					}
+					if ($("#edit_form .name").val() == "") {
+						TipsAlert("菜单描述不能为空");
+						return false;
+					}
+					if ($("#edit_form .name").val() == "") {
+						TipsAlert("url不能为空");
+						return false;
+					}
+					
+					Showload("正在添加菜单......");
+					addManageTimeout = setInterval("Timeout(addManageTimeout)", 1000);
+					$.ajax({
+						type: "post",
+						url: urls + common_url.sysPrivilegeInfo_UpdatePrivilegeInfo,
+						async: true,
+						timeout: 30000,
+						dataType: "json",
+						headers: {
+							'X-Access-Token': userMessage.token,
+						},
+						data: {
+							id:$("#edit_form .id").val(),
+							name:$("#edit_form .name").val(),
+							parent_id:$("#edit_form .parentid").val(),
+							url:$("#edit_form .url").val(),
+							description:$("#edit_form .description").val(),
+						},
+						success: function(json) {
+							console.log(json)
+							CheckLogout(json); //检查是否登陆过期
+							if (json.code == 0) {
+								swal({
+									title: "修改成功",
+									text: "修改成功",
+									type: "success",
+								}, function() {
+									location.reload();
+								});
+							} else {
+								TipsAlert(json.msg);
+							}
+							InitTime(addManageTimeout);
+						},
+						error: function(xml, text, errorThrown) {
+							if (text == "timeout") {
+								TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+							} else {
+								TipsAlert("请求数据失败,请联系后台技术人员");
+							}
+							InitTime(addManageTimeout);
+						}
+				
+					});
+				});
+				
+			});
+
+			/**
+			 * 该方法用于初始化列表
+			 * @param {Number} startIndex startIndex是数据起始下标
+			 * */
+			function InitTbodyList(startIndex) {
+				Showload("正在初始化列表......");
+				console.log(startIndex);
+
+				tableTimeout = setInterval("Timeout(tableTimeout)", 1000);
+				$.ajax({
+					type: "get",
+					url: urls + common_url.sysPrivilegeInfo_PrivilegeInfoList,
+					async: true,
+					timeout: 30000,
+					dataType: "json",
+					headers: {
+						'X-Access-Token': userMessage.token,
+					},
+					data: {
+						name: $("#check_arg1_input").val(),
+						limit: limits,
+						page: startIndex
+					},
+					success: function(json) {
+						console.log(json);
+						CheckLogout(json); //检查是否登陆过期
+
+
+						if (json.code == 0) {
+							totalPages = json.data.records.total;
+							var myData = json.data.records;
+							var tableHtml = "";
+							counts = json.data.total;
+							// console.log(myData);
+							if (counts == 0) { //显示或隐藏分页
+								$("#footer_page_div").hide();
+							} else {
+								$("#footer_page_div").show();
+							}
+							maxIndex = (counts / limits).toCeil(0);
+							$(".count_page_span").html(maxIndex); //设置当前共几页  
+							$(".counts_span").html(counts);
+							for (var i = 0; i < myData.length; i++) {
+								// console.log(myData)
+
+
+								tableHtml = tableHtml + '<tr>' +
+									'<td class="none" data-id="' + myData[i]["id"] + '" data-parentId="' + myData[i]["parentId"] + '" data-name="' + myData[i]["name"] +
+									'" data-description="' + myData[i]["description"] +
+									'" data-url="' + myData[i]["url"] + '"></td>' +
+									'<td>' + myData[i]["name"] + '</td>' +
+									'<td>' + myData[i]["description"] + '</td>' +
+									'<td>' + myData[i]["url"] + '</td>' +
+									'<td>' + myData[i]["createTime"] + '</td>' +
+									'<td>' +
+									'<span class="under_line cursor_pointer edit_span c_1ABC9C" data-toggle="modal" data-target="#edit_dialog">修改</span>'+
+									'<span class="under_line cursor_pointer delete_span pl20 c_1ABC9C">删除</span>' +
+									'</td>' +
+									'</tr>';
+							}
+							$("#list_tbody").html(tableHtml);
+							InitPowerFun();
+							DealTable();
+						} else {
+							if (json.return_msg == "Session过期") {
+								window.location = "login_timeout.html";
+							} else {
+								TipsAlert(json.return_msg);
+							}
+						}
+
+						InitTime(tableTimeout);
+					},
+					error: function(xml, text, errorThrown) {
+						if (text == "timeout") {
+							TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+						} else {
+							TipsAlert("请求数据失败,请联系后台技术人员");
+						}
+						InitTime(tableTimeout);
+					}
+
+				});
+			}
+
+			/**
+			 * 该方法用于初始化操作列里的事件
+			 * */
+			function InitPowerFun() {
+				$(".edit_span").each(function() { //点击编辑按钮时  获取对应的一列的表格的值
+					$(this).click(function() {
+						console.log($(this).parents("td").siblings("td").eq(0)[0].dataset);
+						var dataset = $(this).parents("td").siblings("td").eq(0)[0].dataset;
+						console.log(dataset)
+						$("#edit_form .id").val(dataset.id);
+						$("#edit_form .parentid").val(dataset.parentid);
+						$("#edit_form .name").val(dataset.name);
+						$("#edit_form .description").val(dataset.description);
+						$("#edit_form .url").val(dataset.url);
+						// if(dataset.description =)
+						// var isEdit = 'yes';
+						// PowerSelect(2,dataset.parentid,isEdit,dataset.id);
+						// if ($(this).parents("td").siblings("td").eq(0)[0].dataset.menutype == 1) {
+						// 	PowerSelect("#edit_power_form");
+						// 	console.log($("#edit_power_form .one_level_select")[0].options)
+						// } else {
+
+						// }
+
+						// var data_table = {};//用于保存键值对
+						// for (var i = 0; i < table_title.length; i++) {
+						// 	var texts = $(this).parents("td").siblings("td").eq(i).text();
+						// 	data_table[table_title[i]] = texts;
+						// }
+						// for (var i = 0; i < table_title.length; i++) {
+						// 	$("#edit_power_form .form-group").each(function(){
+						// 		if ($(this).find("label").html().trim() == table_title[i]) {
+						// 			$(this).find(".form-control").val(data_table[table_title[i]]);
+						// 		}
+						// 	});
+						// }
+						// $("#edit_power_form .type_select option").each(function () {
+						// 	if ($(this).text() == data_table["type"]) {
+						// 		$(this).parents("select").val($(this).val());
+						// 	}
+						// });
+						// $("#edit_power_form .id_input").val(data_table.id);
+						// $("#edit_power_form .parentId_input").val(data_table.parentId);
+						// $("#edit_power_form .type_input").val(data_table.type);
+						// for(var i =0;i <$("#edit_power_form .one_level_select")[0].length;i++){
+						// 	if(data_table.parentId == $("#edit_power_form .one_level_select")[0][i].value){
+						// 		$("#edit_power_form .one_level_select")[0][i].selected = true;
+						// 	}
+						// }
+
+					});
+				});
+
+				$(".delete_span").each(function() { //删除按钮
+					$(this).click(function() {
+						var dataset = $(this).parents("td").siblings("td").eq(0)[0].dataset;
+						console.log(dataset);
+						swal({
+							title: "确定删除？",
+							text: "您确定要删除该菜单吗，请谨慎操作！",
+							type: "warning",
+							showCancelButton: true,
+							confirmButtonColor: "#DD6B55",
+							confirmButtonText: "删除",
+							cancelButtonText: "让我再考虑一下…",
+							closeOnConfirm: false,
+						}, function(e) {
+							if (e) {
+								swal({
+									title: "请再次确认是否删除？",
+									text: "删除后将无法恢复，请谨慎操作！",
+									type: "warning",
+									showCancelButton: true,
+									confirmButtonColor: "#DD6B55",
+									confirmButtonText: "是的，确定删除",
+									cancelButtonText: "让我再考虑一下…",
+									closeOnConfirm: false,
+									closeOnCancel: true
+								}, function(yes) {
+									if (yes) {
+										Showload("正在请求删除，请稍后....");
+										deleteTimeOut = setInterval("Timeout(deleteTimeOut)", 1000);
+										$.ajax({
+											type: "POST",
+											url: urls + common_url.sysPrivilegeInfo_DeletePrivilegeInfo,
+											async: true,
+											timeout: 30000,
+											dataType: "json",
+											headers: {
+												'X-Access-Token': userMessage.token,
+											},
+											data: {
+												id: dataset.id
+											},
+											success: function(json) {
+												console.log(json);
+												CheckLogout(json);
+												if (json.code == 0) {
+													swal({
+														title: "删除成功",
+														text: "删除成功",
+														type: "success",
+													}, function() {
+														location.reload();
+													});
+												}else{
+													TipsAlert(json.msg);
+												}
+												InitTime(deleteTimeOut);
+											},
+											error: function(xml, text, e) {
+												if (text == "timeout") {
+													TipsAlert("请求超时,请检查网络或着重新操作");
+												} else {
+													TipsAlert("请求数据失败,请联系后台技术人员");
+												}
+												InitTime(deleteTimeOut);
+											}
+										});
+									}
+								});
+							}
+						});
+					});
+				}); //删除按钮结束括号
+			}
+			/**
+			 * 该方法用于通过父层选择器控制选择菜单的select的值
+			 * @param {Object} fatherFormSelect fatherFormSelect是父层的form的选择器
+			 * */
+			function PowerSelect(type,parentId,isEdit,selfId) {
+				$.ajax({
+					type:"get",
+					url:urls+ common_url.sysPrivilegeInfo_PrivilegeInfoLevelOne,
+					async:true,
+					timeout:30000,
+					dataType:"json",
+					headers: {
+						'X-Access-Token': userMessage.token,
+					},
+					data:{
+						type:type,
+						parentId:parentId
+					},
+					success:function  (json) {
+						console.log(json);
+						CheckLogout (json);//检查是否登陆过期		
+						if (json.code == 0) {
+							if(isEdit == 'yes'){
+								console.log(666);
+								if(type == 1){
+									var optionHtml = '<option value="0">全部</option>';
+									var myData = json.data.records;
+									for (var i = 0; i < myData.length; i++) {
+										optionHtml = optionHtml + '<option value="' + myData[i]["id"] + '">' + myData[i]["name"] + '</option>';
+									}
+									$("#edit_form .one_level_select").html(optionHtml);
+								}else if (type == 2){
+									var optionHtml = '<option value="0">全部</option>';
+									var myData = json.data.records;
+									for (var i = 0; i < myData.length; i++) {
+										optionHtml = optionHtml + '<option value="' + myData[i]["id"] + '">' + myData[i]["name"] + '</option>';
+									}
+									console.log(parentId);
+									$("#edit_form .two_level_select").html(optionHtml);
+									$("#edit_form .two_level_select").val(selfId);
+								}
+							}else{
+								if(type == 1){
+									var optionHtml = '<option value="0">全部</option>';
+									var myData = json.data.records;
+									for (var i = 0; i < myData.length; i++) {
+										optionHtml = optionHtml + '<option value="' + myData[i]["id"] + '">' + myData[i]["name"] + '</option>';
+									}
+									$("#add_form .one_level_select").html(optionHtml);
+								}else if (type == 2){
+									var optionHtml = '<option value="0">全部</option>';
+									var myData = json.data.records;
+									for (var i = 0; i < myData.length; i++) {
+										optionHtml = optionHtml + '<option value="' + myData[i]["id"] + '">' + myData[i]["name"] + '</option>';
+									}
+									$("#add_form .two_level_select").html(optionHtml);
+								}
+							}
+							
+							
+						} else{
+							$(".one_level_select").html('<option value="">获取菜单失败</option>');
+							$(".one_level_select").html('<option value="">获取菜单失败</option>');
+						}
+				
+						InitTime (tableTimeout);
+					},
+					error:function(xml, text, errorThrown) {
+						if (text == "timeout") {
+							TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+						} else{
+							TipsAlert("请求数据失败,请联系后台技术人员");
+						}
+						InitTime (tableTimeout);
+					}
+				})
+			}
+		
+		</script>
+	</body>
+</html>

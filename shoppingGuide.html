@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html>
+<!-- Mirrored from www.zi-han.net/theme/hplus/table_jqgrid.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:20:02 GMT -->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>保购员列表</title>
+    <link href="css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="css/timePicker.css" rel="stylesheet">
+    <link href="css/newStyle.css" rel="stylesheet">
+    <link href="js/plugins/fancybox/jquery.fancybox.css" rel="stylesheet">
+    <style>
+        /* 重写bookstrap样式表 勿删 */
+        .ibox-title {
+            padding: 20px;
+        }
+
+        .ui-jqdialog {
+            height: auto !important;
+        }
+
+        .ui-common-table tbody {
+            background-color: #eaf5fc !important;
+        }
+
+        .modal-dialog {
+            margin: 80px auto !important;
+        }
+
+        .form-group {
+            margin-left: 0px !important;
+            margin-right: 0px !important;
+        }
+
+        .modal-sm {
+            width: 600px;
+        }
+
+        .col-sm-3 {
+            width: 30%;
+        }
+
+        .col-sm-8 {
+            width: 70%;
+        }
+
+        .form-horizontal .control-label {
+            text-align: left;
+            padding-top: 5px;
+            font-size: 18px;
+        }
+
+        @media only screen and (min-width: 100px) and (max-width: 600px) {
+            .modal-sm {
+                width: 400px;
+            }
+
+            .col-sm-3 {
+                width: 40%;
+            }
+
+            .col-sm-8 {
+                width: 60%;
+            }
+
+            .scroll_div {
+                width: 85%;
+            }
+
+            .form-horizontal .control-label {
+                text-align: left;
+                padding-top: 5px;
+                font-size: 14px;
+            }
+
+            .dialog_btn {
+                font-size: 14px !important;
+            }
+        }
+
+        @media only screen and (min-width: 650px) {
+            .modal-sm {
+                width: 850px;
+            }
+        }
+
+        .note-editable {
+            min-height: 200px;
+        }
+
+        /*编辑器的输入区域的最小高度*/
+        /*以下是等待状态的通用样式*/
+        .wating_big_div {
+            position: fixed;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            display: table;
+            z-index: 9999;
+        }
+
+        .zhezhao {
+            opacity: 0.3;
+            position: absolute;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+        }
+
+        .wating_content_div {
+            text-align: center;
+            background: none;
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        /*以上是等待状态的通用样式*/
+        #timebox {
+            width: 50%;
+            height: 100%;
+            /* display: flex;
+        align-items: center; */
+        }
+
+        #timebox>span {
+            width: 4.16%;
+            display: block;
+            float: left;
+        }
+
+        .order_choose {
+            padding: 5px 10px;
+            font-size: 14px;
+            margin-right: 10px;
+            margin-top: 8px;
+            margin-bottom: 5px;
+            border: 1px solid #ccc;
+            text-align: center;
+            cursor: pointer;
+        }
+        .ibox-content{
+            margin-top: 20px;
+        }
+        .nonetext{
+            width: 100%;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            display: none;
+        }
+        #tbody_listb{
+            display: none;
+        }
+        #tbody_listc{
+            display: none;
+        }
+        #tbody_listd{
+            display: none;
+        }
+        #tbody_liste{
+            display: none;
+        }
+        #tbody_listf{
+            display: none;
+        }
+
+        .modal_input {
+            width: 40%;
+        }
+        .modal_list{
+            width: 100%;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+
+<body class="gray-bg">
+
+    <div class="wrapper wrapper-content  animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox ">
+                    <div class="ibox-title pull-left w100p" style="padding: 10px 20px;">
+                        <div class="pull-left">
+                            <div class="ibox-tools cache5">
+                                保购
+                            </div>
+                        </div>
+
+                        <div class="pull-right">
+                            <button class="refresh_btn">
+                                <a class="refresh_a">
+                                    <i class="fa fa-refresh"></i> 刷新
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="w100p pull-left" style="padding-top:20px;padding-left: 30px;background: #fff;">
+                        <div class="pull-left order_choose order_choose_active" data-ordertype="0">热门关注
+                            </div>
+                        <div class="pull-left order_choose" data-ordertype="1"> 人气推荐
+                            </div>
+                        <div class="pull-left order_choose" data-ordertype="2"> 种草大人
+                            </div>
+                        <div class="pull-left order_choose" data-ordertype="3">带货排行
+                           </div>
+                        <div class="pull-left order_choose" data-ordertype="4">保购卡片
+                            </div>
+                        <div class="pull-left order_choose" data-ordertype="5">保购首页
+                            </div>
+                    </div>
+
+                    <div class="ibox-content pull-left w100p">
+                        <div class="pull-left w100p">
+                            <table class="table table-bordered mb0 ">
+                                <thead>
+                                    <tr>
+                                        <th class="">顺序号</th>
+                                        <th>保购员账号</th>
+                                        <th>保购员昵称</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody_lista">
+                                    <tr class="trList1">
+                                        <td class="td_id">1</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="1" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList2">
+                                        <td class="td_id">2</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="2" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList3">
+                                        <td class="td_id">3</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="3" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList4">
+                                        <td class="td_id">4</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="4" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList5">
+                                        <td class="td_id">5</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="5" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList6">
+                                        <td class="td_id">6</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="6" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList7">
+                                        <td class="td_id">7</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="7" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList8">
+                                        <td class="td_id">8</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="8" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <!-- <tr class="trList9">
+                                        <td class="td_id">9</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="9" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList10">
+                                        <td class="td_id">10</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="10" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList11">
+                                        <td class="td_id">11</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="11" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList12">
+                                        <td class="td_id">12</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="12" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList13">
+                                        <td class="td_id">13</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="13" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList14">
+                                        <td class="td_id">14</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="14" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList15">
+                                        <td class="td_id">15</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="15" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList16">
+                                        <td class="td_id">16</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="16" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList17">
+                                        <td class="td_id">17</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="17" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList18">
+                                        <td class="td_id">18</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="18" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr> -->
+                                </tbody>
+                                <tbody id="tbody_listb">
+                                    <tr class="trList1">
+                                        <td class="td_id">1</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="1" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList2">
+                                        <td class="td_id">2</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="2" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList3">
+                                        <td class="td_id">3</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="3" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList4">
+                                        <td class="td_id">4</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="4" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList5">
+                                        <td class="td_id">5</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="5" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList6">
+                                        <td class="td_id">6</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="6" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList7">
+                                        <td class="td_id">7</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="7" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList8">
+                                        <td class="td_id">8</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="8" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                </tbody>
+                                <tbody id="tbody_listc">
+                                    <tr class="trList1">
+                                        <td class="td_id">1</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="1" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList2">
+                                        <td class="td_id">2</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="2" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList3">
+                                        <td class="td_id">3</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="3" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList4">
+                                        <td class="td_id">4</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="4" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList5">
+                                        <td class="td_id">5</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="5" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList6">
+                                        <td class="td_id">6</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="6" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList7">
+                                        <td class="td_id">7</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="7" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList8">
+                                        <td class="td_id">8</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="8" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                </tbody>
+                                <tbody id="tbody_listd">
+                                    <tr class="trList1">
+                                        <td class="td_id">1</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="1" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList2">
+                                        <td class="td_id">2</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="2" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList3">
+                                        <td class="td_id">3</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="3" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList4">
+                                        <td class="td_id">4</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="4" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList5">
+                                        <td class="td_id">5</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="5" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList6">
+                                        <td class="td_id">6</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="6" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList7">
+                                        <td class="td_id">7</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="7" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList8">
+                                        <td class="td_id">8</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="8" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                </tbody>
+                                <tbody id="tbody_liste">
+                                    <tr class="trList1">
+                                        <td class="td_id">1</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="1" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList2">
+                                        <td class="td_id">2</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="2" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList3">
+                                        <td class="td_id">3</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="3" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                </tbody>
+
+                                <tbody id="tbody_listf">
+                                    <tr class="trList1">
+                                        <td class="td_id">1</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="1" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList2">
+                                        <td class="td_id">2</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="2" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList3">
+                                        <td class="td_id">3</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="3" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList4">
+                                        <td class="td_id">4</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="4" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList5">
+                                        <td class="td_id">5</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="5" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList6">
+                                        <td class="td_id">6</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="6" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList7">
+                                        <td class="td_id">7</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="7" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                    <tr class="trList8">
+                                        <td class="td_id">8</td>
+                                        <td class="account_phone"></td>
+                                        <td class="nickname"></td>
+                                        <td><a class="clickDialog" data-id="8" data-toggle="modal"
+                                                data-target="#edit_dialog">选择保购</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        
+        <div class="modal inmodal fade" id="edit_dialog" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content br8">
+                    <div class="modal-header p10 bdno">
+                        <button type="button" class="close" data-dismiss="modal"><span
+                                aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <span class="modal-title f18">保购员列表</span>
+                    </div>
+                    <div class="modal-body bg_f p0">
+                        <div class="ibox-content p30">
+                            <div class="modal_input">
+                                <div class="input-group">
+                                    <input type="text" id='check_input' class="form-control" placeholder="输入保购账号">
+                                    <span class="input-group-btn queryButton">
+                                        <button class="btn btn-default" id='check_btn' type="button"><span
+                                                class="glyphicon glyphicon-search"></span></button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="modal_list">
+                                <div class="pull-left w100p">
+                                    <table class="table table-bordered mb0 ">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th class="">保购员编号</th>
+                                                <th>保购员账号</th>
+                                                <th>保购员昵称</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tbody_list2">
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="pull-left tac c0 f14 w100p pre mt10 none" id="footer_page_div">
+                                    <div>
+                                        <div class="pull-left">
+                                            <div class="ibox-tools">
+                                                <a class="refresh_a">
+                                                    <i class="fa fa-refresh"></i> 刷新
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <span class="under_line cursor_pointer last_span">上一页</span>
+                                        <span class="pl20 page_span">1</span>
+                                        <span class="pl20 under_line cursor_pointer next_span">下一页</span>
+                                        <span class="pl20">共 <span class="count_page_span">1</span> 页</span>
+                                        <div class="disib ml20">
+                                            每页显示：
+                                            <select class="p0 disib page_select">
+                                                <option value="" selected="selected">10</option>
+                                                <option value="">20</option>
+                                                <option value="">30</option>
+                                            </select>
+                                            条
+                                        </div>
+                                    </div>
+                                    <div class="record_right_div">
+                                        数据库总数量： <span class="counts_span">0</span> 条
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer bdno tac pt0040">
+                        <button type="button" class=" btn-white clear_btn_style dialog_btn"
+                            data-dismiss="modal">关闭</button>
+                        <button type="submit" class=" btn-primary clear_btn_style bdno dialog_btn ml30"
+                            id="edit_btn">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <script src="js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/bootstrap.min.js?v=3.3.6"></script>
+        <script src="js/plugins/peity/jquery.peity.min.js"></script>
+        <script src="js/content.min.js?v=1.0.0"></script>
+        <script src="js/plugins/layer/laydate/laydate.js"></script>
+        <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+        <script src="js/jquery-form.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/plugins/fancybox/jquery.fancybox.js"></script>
+        <script src="js/xss.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+        <script>
+            var dataJson = { keyValue: "", page: 1, limit: 10 };
+            var start = 0;
+            var changeId = 0;
+            var counts = 0;
+            var dataList = [];
+            var total = 0;
+            var type = 9;
+            $(document).ready(function () {
+                // IsTokenSave();
+                InitTBodyList(type);
+                $('.all_check_checkbox').change(function () {
+                    console.log($(this).prop("checked"));
+                    if ($(this).prop("checked")) {
+                        $("#tbody_list input").removeAttr("checked");
+                        $(this)[0].checked = true;
+                    }
+                })
+                $(".page_select").change(function () { //选择一页多少条数据的select
+                    dataJson.page = 1;//重置页数
+                    $(".page_span").html(1);//重置页数
+                    dataJson.limit = $(".page_select option:selected").text();  //设置当前显示数量
+                    InitTBodyList2();
+                });
+                $(".last_span").click(function () {  //上一页
+                    if (dataJson.page == 1) {
+                        TipsAlert("这是最前面的数据了");
+                        return false;
+                    }
+                    dataJson.page--;
+                    start = dataJson.page * dataJson.limits;
+                    $(".page_span").html(dataJson.page);
+                    InitTBodyList2();
+                });
+                $(".next_span").click(function () {  //下一页
+                    if (counts == dataJson.page) {
+                        TipsAlert("这是最后面的数据了");
+                        return false;
+                    }
+                    dataJson.page++;
+                    start = dataJson.page * dataJson.limits;
+                    $(".page_span").html(dataJson.page);
+                    InitTBodyList2();
+                });
+                $(".refresh_a").click(function () {//刷新按钮
+                    $("#check_input").val("")
+                    dataJson = { keyValue: "", page: 1, limit: 10 }
+                    InitTBodyList2();
+                });
+                $(".queryButton").click(function () {
+                    //查询
+                    dataJson.keyValue = $("#check_input").val();
+                    dataJson.page = 1;
+                    dataJson.limit = 10;
+                    InitTBodyList2();
+                })
+                $("#edit_btn").click(function () {
+                    // if()
+                    var storeId = $("#tbody_list2 input:checked").attr("data-id");
+                    var storeName = $("#tbody_list2 input:checked").attr("data-name");
+                    if (storeId) {
+                        submitButton(storeId, storeName);
+                    } else {
+                        TipsAlert("请选择店铺")
+                    }
+                })
+                InitTBodyList2()
+                $(".order_choose").click(function () { //tab点击
+                    $(".order_choose").removeClass("order_choose_active");
+                    $(this).addClass("order_choose_active");
+                    var orderType = parseInt($(this).data("ordertype"));
+                    if (orderType == 0) {
+                        type = 9
+                        $("#tbody_lista").show()
+                        $("#tbody_listb").hide()
+                        $("#tbody_listc").hide()
+                        $("#tbody_listd").hide()
+                        $("#tbody_liste").hide()
+                        $("#tbody_listf").hide()
+                        $(".account_phone").text('')
+                        $(".nickname").text('')
+                        InitTBodyList(type);
+                    } else if (orderType == 1) {
+                        type = 10
+                        $("#tbody_lista").hide()
+                        $("#tbody_listb").show()
+                        $("#tbody_listc").hide()
+                        $("#tbody_listd").hide()
+                        $("#tbody_liste").hide()
+                        $("#tbody_listf").hide()
+                        $(".account_phone").text('')
+                        $(".nickname").text('')
+                        InitTBodyList(type);
+                    } else if (orderType == 2) {
+                        type = 11
+                        $("#tbody_lista").hide()
+                        $("#tbody_listb").hide()
+                        $("#tbody_listc").show()
+                        $("#tbody_listd").hide()
+                        $("#tbody_liste").hide()
+                        $("#tbody_listf").hide()
+                        $(".account_phone").text('')
+                        $(".nickname").text('')
+                        InitTBodyList(type);
+                    } else if (orderType == 3) {
+                        type = 12
+                        $("#tbody_lista").hide()
+                        $("#tbody_listb").hide()
+                        $("#tbody_listc").hide()
+                        $("#tbody_listd").show()
+                        $("#tbody_liste").hide()
+                        $("#tbody_listf").hide()
+                        $(".account_phone").text('')
+                        $(".nickname").text('')
+                        InitTBodyList(type);
+                    } else if (orderType == 4) {
+                        type = 13
+                        $("#tbody_lista").hide()
+                        $("#tbody_listb").hide()
+                        $("#tbody_listc").hide()
+                        $("#tbody_listd").hide()
+                        $("#tbody_liste").show()
+                        $("#tbody_listf").hide()
+                        $(".account_phone").text('')
+                        $(".nickname").text('')
+                        InitTBodyList(type);
+                    } else if (orderType == 5) {
+                        type = 14
+                        $("#tbody_lista").hide()
+                        $("#tbody_listb").hide()
+                        $("#tbody_listc").hide()
+                        $("#tbody_listd").hide()
+                        $("#tbody_liste").hide()
+                        $("#tbody_listf").show()
+                        $(".account_phone").text('')
+                        $(".nickname").text('')
+                        InitTBodyList(type);
+                    }
+                });
+            });
+            /**
+             * 该方法用于初始化列表
+             * @param {Number} startIndex startIndex是数据起始下标
+             * */
+            function InitTBodyList(type) {
+                $.ajax({
+                    url: urls + common_url.brandStoreSaleList,
+                    type: 'get',
+                    timeout: 30000,
+                    dataType: "json",
+                    headers: {
+                        'X-Access-Token': userMessage.token,
+                    },
+                    data: {
+                        type: type
+                    },
+                    success: function (res) {
+                        CheckLogout(res); //检查是否登陆过期
+
+                        if (res.code == 0) {
+                            var html = "";
+                            res.data.forEach(function (e, i) {
+                                $(".trList" + e.sort + " .account_phone").text(e.account_phone)
+                                $(".trList" + e.sort + " .nickname").text(e.salesName)
+                            })
+                            $(".clickDialog").click(function () {
+                                dataJson = { keyValue: "", page: 1, limit: 10 }
+                                changeId = $(this).attr("data-id");
+                                $(".page_span").html(1);//重置页数
+                                InitTBodyList2()
+                            })
+                        }
+                    }
+                })
+            }
+            function InitTBodyList2() {
+                var html = "";
+                $.ajax({
+                    url: urls + common_url.getBrandSalesList,
+                    type: "get",
+                    timeout: 30000,
+                    dataType: "json",
+                    data: dataJson,
+                    headers: {
+                        'X-Access-Token': userMessage.token,
+                    },
+                    success: function (res) {
+                        CheckLogout(res); //检查是否登陆过期
+
+                        if (res.code == 0 && res.data.records.length != 0) {
+                            res.data.records.forEach(function (e, i) {
+                                html += '<tr>' +
+                                    '<th>' +
+                                    '<input type="checkbox" data-name="' + e.salesName + '" data-id="' + e.id + '" name="" class="w20 h20 checkbox" value="" />' +
+                                    '</th>' +
+                                    '<th>' + e.id + '</th>' +
+                                    '<th>' + e.accountPhone + '</th>' +
+                                    '<th>' + e.salesName + '</th>' +
+                                    '</tr>';
+                            })
+                            dataList = res.data.records
+                            $(".counts_span").text(res.data.total);
+                            $("#tbody_list2").html(html);
+                            $(".count_page_span").text(res.data.pages);
+                            counts = res.data.pages;
+                            if (res.data.total == 0) { //显示或隐藏分页
+                                $("#footer_page_div").hide();
+                            } else {
+                                $("#footer_page_div").show();
+                            }
+                            $(".checkbox").change(function () {
+                                //单选
+                                if ($(this).attr("checked") != "checked") {
+                                    $("#tbody_list2 input").removeAttr("checked");
+                                    $(this)[0].checked = true;
+                                }
+                            });
+                        } else {
+                            html = '<tr><th colspan="3">暂无数据</th></tr>'
+                            $("#tbody_list2").html(html);
+                        }
+                    }
+                })
+            }
+            function submitButton(storeId, storeName) {
+                $.ajax({
+                    url: urls + common_url.sysBrandPavilionSaveOrUpdate,
+                    type: "post",
+                    timeout: 30000,
+                    dataType: "json",
+                    data: {
+                        storeId: storeId,
+                        storeName: storeName,
+                        type: type,
+                        sort: changeId
+                    },
+                    headers: {
+                        'X-Access-Token': userMessage.token,
+                    },
+                    success: function (res) {
+                        CheckLogout(res); //检查是否登陆过期
+
+                        if (res.code == 0) {
+                            // location.reload();
+                            $("#tbody_list2 input").removeAttr("checked");
+                            $('#edit_dialog').modal('hide')
+                            InitTBodyList(type);
+                        } else {
+                            TipsAlert(res.msg);
+                        }
+                    }
+                })
+            }
+        </script>
+</body>
+
+</html>

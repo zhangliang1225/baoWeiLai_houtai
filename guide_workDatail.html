@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/table_jqgrid.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:20:02 GMT -->
+
+<head>
+    <!-- 保购购买服务服务作品审核页面 -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>保购购买服务作品审核</title>
+
+    <link href="css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="css/timePicker.css" rel="stylesheet">
+    <link href="css/newStyle.css" rel="stylesheet">
+    <!-- 引入jq -->
+    <script src="https://cdn.bootcss.com/jquery/3.4.0/jquery.min.js"></script>
+    <!-- <script src="./js/domain.js"></script> -->
+
+    <!-- 引入layui框架 -->
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <style>
+        /* 重写bookstrap样式表 勿删 */
+        .form_inputs {
+            width: 160px;
+            background-color: #ebebeb;
+            border: 1px solid #06a3f9;
+            border-radius: 20px;
+            -webkit-border-radius: 20px;
+            -moz-border-radius: 20px;
+            -o-border-radius: 20px;
+            -ms-border-radius: 20px;
+        }
+
+        .ibox-title {
+            padding: 20px;
+        }
+
+        .mb30 {
+            margin-bottom: 20px;
+        }
+
+        /* 重写bookstrap样式表 勿删 */
+        .ui-jqdialog {
+            height: auto !important;
+        }
+
+        .ui-common-table tbody {
+            background-color: #eaf5fc !important;
+        }
+
+        .modal-dialog {
+            margin: 80px auto !important;
+        }
+
+        .form-group {
+            margin-left: 0px !important;
+            margin-right: 0px !important;
+        }
+
+        .modal-sm {
+            width: 600px;
+        }
+
+        .col-sm-3 {
+            width: 30%;
+        }
+
+        .col-sm-8 {
+            width: 70%;
+        }
+
+        .form-horizontal .control-label {
+            text-align: left;
+            padding-top: 5px;
+            font-size: 18px;
+        }
+
+        @media only screen and (min-width: 100px) and (max-width: 600px) {
+            .modal-sm {
+                width: 400px;
+            }
+
+            .col-sm-3 {
+                width: 40%;
+            }
+
+            .col-sm-8 {
+                width: 60%;
+            }
+
+            .scroll_div {
+                width: 85%;
+            }
+
+            .form-horizontal .control-label {
+                text-align: left;
+                padding-top: 5px;
+                font-size: 14px;
+            }
+
+            .dialog_btn {
+                font-size: 14px !important;
+            }
+        }
+
+        @media only screen and (min-width: 650px) {
+            .modal-sm {
+                width: 600px;
+            }
+        }
+
+        /*以下是等待状态的通用样式*/
+        .wating_big_div {
+            position: fixed;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            display: table;
+            z-index: 9999;
+        }
+
+        .zhezhao {
+            opacity: 0.3;
+            position: absolute;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+        }
+
+        .wating_content_div {
+            text-align: center;
+            background: none;
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        /*以上是等待状态的通用样式*/
+        .inputcherckStyle {
+            width: 18px;
+            height: 18px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOnAAADpwBB5RT3QAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAA3SURBVDiNY7x8/sR/BioAFgYGBgYdA3OKDLly4SQDEzVcw8DAMGrQqEGjBo1Yg1gYGCDlCaUAAGYpCP6bB9aTAAAAAElFTkSuQmCC")
+        }
+
+        .inputcherckStyle:hover {
+            background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOnAAADpwBB5RT3QAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAA2SURBVDiNY9Tpr/7PQAXARA1DGBgYGFhgjMsFLWQZoDuhhoGBgYouGjVo1KBRg+hjEOOgK48AQfgHj87Hb9sAAAAASUVORK5CYII=")
+        }
+
+        .inputcherckStyle:checked {
+            background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOnAAADpwBB5RT3QAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAEwSURBVDiNY9Tpr/7PQAXARA1DRg1CBbF6Rgz7U8sYtEUlyDcoQkePocwpiEGEm4/BQkYGt0GsTMwMUbr6DIqCwhiGBGloM1Q5hzIwMDAwbL12imHBhbO4DYrRM2SodA5lWBCawqApIg4X91HTYGhwj2BgZGRk2HHjDEPtnq0Mf///x23QwUf3GV5/+cAgxMXLMDc0hcFAQorBTUmVocUjioGRkZFh3+0LDFW7NjP8/vcXw8WM6ClbTkCIYWZAHIOMgAjDj9+/GFiZWRiYmZgYDt65xFC0fR3Dr79/MAzBcBEDAwPDow/vGJLWzGO4++Y5AwcrGwMzExPD4XtXGEp2rMdpCFaDGBgYGJ5/+cSQtG4Bw6Vn9xkO3r3MULRtLcOPP79xGoLVa+SCYZBFaG4QAHB8WIHt6FAxAAAAAElFTkSuQmCC")
+        }
+
+        #timebox {
+            width: 50%;
+            height: 100%;
+            /* display: flex;
+        align-items: center; */
+        }
+
+        #timebox>span {
+            width: 4.16%;
+            display: block;
+            float: left;
+        }
+
+        .title_choose {
+            padding: 5px 10px;
+            margin: 5px;
+            font-size: 14px;
+            margin-right: 10px;
+            margin-top: 8px;
+            border: 1px solid #ccc;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .coupon_table {
+            margin: 20px 0;
+        }
+
+        .coupon_table_box {
+            width: 100%;
+            font-size: 12px;
+        }
+
+        .coupon_table_box tr {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .coupon_table_box td {
+            border: 1px solid #ccc;
+            border-right: none;
+            border-top: none;
+            display: inline-block;
+            padding: 0;
+            width: 16%;
+        }
+
+        .coupon_table_box td:last-child {
+            border-right: 1px solid #ccc !important;
+        }
+
+        .my_title {
+            /* padding: 15px 0; */
+            height: 40px;
+            line-height: 40px;
+            background: #F5F5F6;
+            border-bottom: 1px solid #ccc;
+            width: 100%;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .my_title1 {
+            border-top: 1px solid #ccc;
+        }
+
+        .my_content {
+            height: 70px !important;
+            line-height: 70px;
+            width: 100%;
+            text-align: center;
+            background: #eaf5fc;
+        }
+
+        .my_content1 {
+            height: 100px !important;
+            line-height: 100px;
+            width: 100%;
+            text-align: center;
+            background: #eaf5fc;
+        }
+
+        #goodsInfo td {
+            width: 24%;
+        }
+
+        #andGoodsInfo td {
+            width: 24%;
+        }
+
+        .coupon_content {
+            width: 95%;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .coupon_content_box {
+            background: #fff;
+            /* margin: 0 auto !important; */
+            margin-left: 40px !important;
+        }
+
+        .coupon_content_pading {
+            width: 95%;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .coupon_title {
+            width: 100%;
+            background: #f4f4f4;
+        }
+
+        .coupon_title_box {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 0;
+            align-items: center;
+        }
+
+        .coupon_title_box i {
+            font-size: 16px;
+            color: red;
+        }
+
+        .coupon_title_left span {
+            font-size: 15px;
+            color: red;
+        }
+
+        .coupon_title_right {
+            width: 80px;
+            height: 30px;
+            border: 1px solid #ccc;
+            line-height: 28px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .coupon_info {
+            width: 100%;
+            margin: 20px 0 10px;
+            font-size: 16px;
+        }
+
+        .coupon_content_info {
+            width: 100%;
+            margin-bottom: 40px;
+        }
+
+        .coupon_content_button {
+            width: 100%;
+            margin: 50px 30px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .coupon_content_bton {
+            width: 160px;
+            height: 35px;
+            border: 1px solid #666;
+            text-align: center;
+            line-height: 35px;
+            border-radius: 3px;
+            color: #000;
+            cursor: pointer;
+        }
+
+        .coupon_content_btoff {
+            width: 160px;
+            height: 35px;
+            text-align: center;
+            line-height: 35px;
+            background: inherit;
+            background-color: rgba(26, 188, 156, 1);
+            border: none;
+            border-radius: 3px;
+            margin-left: 60px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .goodsInfob video,
+        .goodsInfob img {
+            height: 80px !important;
+            width: 80px !important;
+            margin-top: 10px !important;
+        }
+    </style>
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content  animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox ">
+                    <div class="ibox-title pull-left w100p" style="padding: 10px 20px;">
+                        <div class="pull-left">
+                            <div class="ibox-tools cache5">
+                                作品审核详情
+                            </div>
+                        </div>
+
+                        <div class="pull-right">
+                            <button class="refresh_btn">
+                                <a class="refresh_a">
+                                   刷新
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="coupon_title">
+                            <div class="coupon_content">
+                                <div class="coupon_title_box">
+                                    <div class="coupon_title_left">
+                                        <i class="layui-icon layui-icon-tips"></i>
+                                        <span>当前作品状态：</span>
+                                        <span class="now">待审核</span>
+                                    </div>
+                                    <div class="coupon_title_right">备注订单</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="coupon_content_box">
+                            <div class="coupon_content_pading">
+                                <div class="coupon_content_info">
+                                    <div class="coupon_info">
+                                        <i class="glyphicon glyphicon-th-list"></i>
+                                        <span>基本信息</span>
+                                    </div>
+                                    <div class="coupon_table">
+                                        <table class="coupon_table_box">
+                                            <tr>
+                                                <td>
+                                                    <div class="my_title">推广编号</div>
+                                                    <div class="my_content infoa"></div>
+                                                </td>
+                                                <td>
+                                                    <div class="my_title">商家名称</div>
+                                                    <div class="my_content infob"></div>
+                                                </td>
+                                                <td>
+                                                    <div class="my_title">商家账号</div>
+                                                    <div class="my_content infoc"></div>
+                                                </td>
+                                                <td>
+                                                    <div class="my_title">导购员昵称</div>
+                                                    <div class="my_content infod"></div>
+                                                </td>
+                                                <td>
+                                                    <div class="my_title">导购员账号</div>
+                                                    <div class="my_content infoe"></div>
+                                                </td>
+                                                <td>
+                                                    <div class="my_title">导购员星级</div>
+                                                    <div class="my_content infof"></div>
+                                                </td>
+                                                <td>
+                                                    <div class="my_title">作品内容</div>
+                                                    <div class="my_content infog"></div>
+                                                </td>
+                                                <td>
+                                                    <div class="my_title">提交时间</div>
+                                                    <div class="my_content infoh"></div>
+                                                </td>
+                                                <td>
+                                                    <div class="my_title">关联产品</div>
+                                                    <div class="my_content infoi"></div>
+                                                </td>
+                                                <td>
+                                                    <div class="my_title">提交金额/件</div>
+                                                    <div class="my_content infoj"></div>
+                                                </td>
+                                                <td>
+                                                    <div class="my_title"></div>
+                                                    <div class="my_content"></div>
+                                                </td>
+                                                <td>
+                                                    <div class="my_title"></div>
+                                                    <div class="my_content"></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="coupon_content_info">
+                                    <div class="coupon_info">
+                                        <i class="glyphicon glyphicon-th-list"></i>
+                                        <span>导购作品详情信息</span>
+                                    </div>
+                                    <div class="coupon_table">
+                                        <table id="goodsInfo" class="coupon_table_box">
+                                            <tr>
+                                                <td>
+                                                    <div class="my_title my_title1">关联商品</div>
+                                                    <div class="my_content1 goodsInfoa"></div>
+                                                </td>
+                                                <td>
+                                                    <div class="my_title my_title1">提交作品</div>
+                                                    <div class="my_content1 goodsInfob"></div>
+                                                </td>
+                                                <td>
+                                                    <div class="my_title my_title1">最近提交时间</div>
+                                                    <div class="my_content1 goodsInfoc"></div>
+                                                </td>
+                                                <td>
+                                                    <div class="my_title my_title1">提交次数</div>
+                                                    <div class="my_content1 goodsInfod"></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="coupon_content_info">
+                                    <div class="coupon_info">
+                                        <i class="glyphicon glyphicon-th-list"></i>
+                                        <span>关联商品信息</span>
+                                    </div>
+                                    <div class="coupon_table">
+                                        <table id="andGoodsInfo" class="coupon_table_box">
+                                            <tr>
+                                                <td>
+                                                    <div class="my_title my_title1">商品名称</div>
+                                                    <div class="my_content andGoodsInfoa"
+                                                        style="height: 100px !important;"></div>
+                                                </td>
+                                                <td>
+                                                    <div class="my_title my_title1">品牌</div>
+                                                    <div class="my_content andGoodsInfob"
+                                                        style="height: 100px !important;"></div>
+                                                </td>
+                                                <td>
+                                                    <div class="my_title my_title1">价格/货号</div>
+                                                    <div class="my_content andGoodsInfoc"
+                                                        style="height: 100px !important;"></div>
+                                                </td>
+                                                <td>
+                                                    <div class="my_title my_title1">提成</div>
+                                                    <div class="my_content andGoodsInfod"
+                                                        style="height: 100px !important;"></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="coupon_content_button">
+                                    <div class="coupon_content_bton" id="unPass">拒绝</div>
+                                    <div class="coupon_content_btoff" id="pass">通过</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="js/plugins/peity/jquery.peity.min.js"></script>
+    <script src="js/content.min.js?v=1.0.0"></script>
+    <script src="js/plugins/layer/laydate/laydate.js"></script>
+    <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+    <script src="js/plugins/iCheck/icheck.min.js"></script>
+    <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/jquery-timepicker.js" type="text/javascript" charset="utf-8"></script>
+    <!--ajax上传插件:jquery.form ajaxSubmit-->
+    <script src="js/jquery-form.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        layui.use(['layedit', 'laydate', 'table', 'form'], function () {
+            var table = layui.table
+                , layer = layui.layer
+
+            var tableTimeout, addTimeout, setPowerTime, editManageTimeout, deleteTimeOut, getPowerTime, limits = 10,
+                page = 1,
+                counts = 0,
+                table_title, roleID;
+            var cherk_roleId;
+
+            var totalPages = 0;
+            var maxIndex;
+            var userMessage;
+            var nickname, accountPhone, storeName, goodsName
+            // var sale_id = getUrlParms('sale_id')//上一页列表id
+            // var goods_num = getUrlParms('goods_num')
+            // var listid = getUrlParms('listid')
+            function getUrlParam(name) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+                var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+                if (r != null) return unescape(r[2]); return null; //返回参数值
+            }
+            var shopId = getUrlParam("id");
+            // console.log(shopId,111)
+
+            $(document).ready(function () {
+                // IsTokenSave();
+                userMessage = JSON.parse(sessionStorage.getItem("user_message"));
+                console.log();
+                $(".refresh_btn").click(function () { //返回上一页
+                    // window.history.go(-1);
+                    window.location.reload();
+                });
+                $(".i-checks").iCheck({ //check必须有的脚本
+                    checkboxClass: "icheckbox_square-green",
+                    radioClass: "iradio_square-green",
+                });
+                var isbtoff = true
+                $(".coupon_content_btoff").click(function () { //审核通过按钮
+                    if (isbtoff == false) {
+                        return
+                    }
+                    isbtoff = false
+                    // 审核通过
+                    $.ajax({
+                        type: "get",
+                        headers: {
+                            'X-Access-Token': JSON.parse(sessionStorage.getItem("user_message")).token,
+                        },
+                        url: urls + 'bSaleIssueOpus/updateServerCheckStatus',
+                        async: true,
+                        timeout: 30000,
+                        dataType: "json",
+                        // headers: {
+                        //     'X-Access-Token': userMessage.token,
+                        // },
+                        data: {
+                            id: shopId,
+                            type: 0
+                        },
+                        success: function (json) {
+                            CheckLogout(json); //检查是否登陆过期
+                            if (json.code == 0) {
+                                // 审核通过成功
+                                layer.alert('已通过,请返回！', { icon: 1 });
+                                // alert('提交成功')
+                                $('#unPass').css('display', 'none');
+                                $('#pass').css('display', 'none');
+
+                            } else {
+                                TipsAlert(json.code);
+                            }
+                            InitTime();
+                            isbtoff = true
+                        },
+                        error: function (xml, text, errorThrown) {
+                            isbtoff = true
+                            if (text == "timeout") {
+                                TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+                            } else {
+                                TipsAlert("请求数据失败,请联系后台技术人员");
+                            }
+                            InitTime();
+                        }
+
+                    });
+                });
+                var isbton = true
+                // 审核拒绝
+                $(".coupon_content_bton").click(function () { //审核拒绝
+                    if (isbton == false) {
+                        return
+                    }
+                    isbton = false
+                    $.ajax({
+                        type: "get",
+                        url: urls + 'bSaleIssueOpus/updateServerCheckStatus',
+                        headers: {
+                            'X-Access-Token': JSON.parse(sessionStorage.getItem("user_message")).token,
+                        },
+                        async: true,
+                        timeout: 30000,
+                        dataType: "json",
+                        // headers: {
+                        //     'X-Access-Token': userMessage.token,
+                        // },
+                        data: {
+                            id: shopId,
+                            type: 1
+                        },
+                        success: function (json) {
+                            // isbton = true
+                            CheckLogout(json); //检查是否登陆过期
+                            if (json.code == 0) {
+                                //   审核不通过成功
+                                layer.alert('已拒绝，请返回！', { icon: 1 });
+                                // alert('提交成功')
+                                $('#unPass').css('display', 'none');
+                                $('#pass').css('display', 'none');
+                                // DealTable();
+                            } else {
+                                TipsAlert(json.code);
+                            }
+                            InitTime();
+                        },
+                        error: function (xml, text, errorThrown) {
+                            isbton = true
+                            if (text == "timeout") {
+                                TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+                            } else {
+                                TipsAlert("请求数据失败,请联系后台技术人员");
+                            }
+                            // InitTime(tableTimeout);
+                        }
+
+                    });
+                });
+                tabFun();
+                InitTbodyList()
+            });
+            // 画表格
+            function tabFun() {
+                var tabW = $(".coupon_table tr").width(); // 表格的宽度
+                var tdW = $(".coupon_table_box td").width(); // 一个内容的宽度
+                var bor = parseInt(tabW / tdW); // 一行有多少个td
+                var cha = tabW - tdW * bor; // 差值
+                if (cha <= bor) { // 去掉一个边框的宽度
+                    bor--;
+                }
+                // 清空边框
+                $(".coupon_table_box td").css({ "border-right": "none", "border-top": "none" });
+                // 设置相应的边框
+                $(".coupon_table_box td:nth-child(" + bor + "n)").css({ "border-right": "1px solid #ccc" });
+                $(".coupon_table_box td").slice(0, bor).css({ "border-top": "1px solid #ccc" });
+
+                // 所有.my_title的高度集合
+                var titH = [];
+                // 所有.my_content的高度集合
+                var conH = [];
+                $(".my_content").each(function (index, el) {
+                    // 把高度数据存放到conH数组里面
+                    conH.push($(this).height());
+                });
+                $(".my_title").each(function (index, el) {
+                    // 把高度数据存放到titH数组里面
+                    titH.push($(this).height());
+                });
+                // 获取最大高度并把其它my_content高度设为最大高度
+                $(".my_content").height(Math.max.apply(null, conH));
+                // 获取最大高度并把其它my_title高度设为最大高度
+                $(".my_title").height(Math.max.apply(null, titH));
+            }
+            /**
+             * 该方法用于初始化列表
+             * @param {Number} startIndex startIndex是数据起始下标
+             * */
+            function InitTbodyList(startIndex) {
+                Showload();
+                // tableTimeout = setInterval("Timeout(tableTimeout)", 1000);
+                $.ajax({
+                    type: "get",
+                    url: urls + 'smallOrderStoreService/examineDetails',
+                    headers: {
+                        'X-Access-Token': JSON.parse(sessionStorage.getItem("user_message")).token,
+                    },
+                    async: true,
+                    timeout: 30000,
+                    dataType: "json",
+                    // headers: {
+                    //     'X-Access-Token': userMessage.token,
+                    // },
+                    data: {
+                        id: shopId
+                        // goodsNum: goods_num
+                    },
+                    success: function (json) {
+                        CheckLogout(json); //检查是否登陆过期
+                        console.log(json)
+                        if (json.code == 0) {
+                            //  审核状态的判断
+                            if (json.data.verify_status == 0) {
+                                $('.now').text('待审核');
+                                $('.now').css('color', '#ff9800')
+                            } else if (json.data.verify_status == 1) {
+                                $('.now').text('审核通过');
+                                $('.now').css('color', 'green')
+                            } else if (json.data.verify_status == 2) {
+                                $('.now').text('审核不通过');
+                            }
+                            // 处理页面展示
+                            $('.infoa').html(json.data.order_serial_number);
+                            $('.infob').html(json.data.store_name);
+                            $('.infoc').html(json.data.store_phone);
+                            $('.infod').html(json.data.nickname);
+                            $('.infoe').html(json.data.account_phone);
+                            $('.infof').html(json.data.grade);
+                            if (json.data.work_form == 1) {
+                                $('.infog').html('图片');
+                            } else {
+                                $('.infog').html('视频');
+                            }
+                            $('.infoh').html(json.data.create_time);
+                            $('.infoi').html(json.data.goods_name);
+                            $('.infoj').html(json.data.price);
+                            // ！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
+                            $('.goodsInfoa').html(json.data.goods_name);
+                            if (json.data.file_type == 1) {
+                                $('.goodsInfob').append('<a class="fancybox" href="' + imgUrl + json.data.fileUrl + '" title="功能图标"><img  src="' + imgUrl + json.data.fileUrl + '" alt=""></a>');
+                            } else {
+                                $('.goodsInfob').append('<video src="' + imgUrl + json.data.fileUrl + '" controls="controls"></video>');
+                            }
+                            $('.goodsInfoc').html(json.data.createTime);
+                            $('.goodsInfod').html('1');
+                            // ！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
+                            $('.andGoodsInfoa').html(json.data.goods_name);
+                            $('.andGoodsInfob').html(json.data.brand_name);
+                            $('.andGoodsInfoc').html(json.data.goods_price + '/' + json.data.goods_num);
+                            $('.andGoodsInfod').html(json.data.price);
+                            DealTable();
+                        } else {
+                            TipsAlert(json.msg);
+                        }
+                        InitTime();
+                    },
+                    error: function (xml, text, errorThrown) {
+                        if (text == "timeout") {
+                            TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+                        } else {
+                            TipsAlert("请求数据失败,请联系后台技术人员");
+                        }
+                        InitTime();
+                    }
+
+                });
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html>
+
+	<!-- Mirrored from www.zi-han.net/theme/hplus/table_jqgrid.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:20:02 GMT -->
+
+	<head>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>帐号管理</title>
+
+		<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+		<link href="css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+		<link href="css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+
+		<link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+		<link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+		<link href="css/animate.min.css" rel="stylesheet">
+		<link href="css/style.min862f.css?v=4.1.0" rel="stylesheet">
+		<link href="css/newStyle.css" rel="stylesheet">
+
+		<style>
+			/* 重写bookstrap样式表 勿删 */
+			.form_inputs{width: 160px;background-color: #ebebeb;border: 1px solid #06a3f9;border-radius: 20px;-webkit-border-radius: 20px;-moz-border-radius: 20px;-o-border-radius: 20px;-ms-border-radius: 20px;}
+			.ibox-title{padding:20px;}
+			.ui-jqdialog{height: auto!important;}
+			.ui-common-table tbody{background-color: #eaf5fc!important;}
+			.modal-dialog{margin: 80px auto!important;}
+			.form-group{margin-left:0px!important;margin-right:0px!important;}
+			.modal-sm{width: 600px;}
+			.col-sm-3{width: 30%;}
+			.col-sm-8{width: 70%;}
+			.form-horizontal .control-label{text-align: left;padding-top: 5px;font-size: 18px;}
+			@media only screen and (min-width: 100px) and (max-width: 600px) {
+				.modal-sm{width: 400px;}
+				.col-sm-3{width: 40%;}
+				.col-sm-8{width: 60%;}
+				.scroll_div{width: 85%;}
+				.form-horizontal .control-label{text-align: left;padding-top: 5px;font-size: 14px;}
+				.dialog_btn{font-size: 14px!important;}
+			}
+			@media only screen and (min-width: 650px){
+				.modal-sm{width: 600px;}
+			}
+
+
+			/*以下是等待状态的通用样式*/
+			.wating_big_div{position: fixed;top:0px ;width: 100%;height: 100%;display: table;z-index: 9999;}
+			.zhezhao{opacity: 0.3;position: absolute;top: 0px;width: 100%;height: 100%;z-index: 9999;}
+			.wating_content_div{text-align: center;background:none;display: table-cell;vertical-align: middle;}	
+			/*以上是等待状态的通用样式*/
+			
+
+		</style>
+	</head>
+
+	<body class="gray-bg">
+		<div class="wrapper wrapper-content  animated fadeInRight">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="ibox ">
+						<div class="ibox-title pull-left w100p" style="padding: 10px 20px;">
+							<div class="pull-left">
+								<div class="ibox-tools cache5">
+									帐号管理
+								</div>
+							</div>
+
+							<div class="pull-right">
+								<button class="refresh_btn">
+									<a class="refresh_a" style="">
+										<i class="fa fa-refresh"></i> 刷新
+									</a>
+								</button>
+							</div>
+						</div>
+
+
+
+						<div class="ibox-content pull-left w100p">
+
+							<div class="w100p chaxunBorder">
+								<div class="ibox-title w100p" style="height:50px;background-color: rgb(243, 243, 243);padding: 10px 20px;border-top:0px;">
+									<div class="ibox-tools pull-left">
+										<span class="titleFindIcon pull-left"></span>
+										<span class="pull-left" style="position: relative;top: 3px;left: 5px;">筛选查询</span>
+									</div>
+									<div class="pull-right">
+										<button class="opera_btn" id="check_btn">查询结果</button>
+									</div>
+								</div>
+
+								<div class="w100p p20" style="display: flex;">
+									<div class="ml30">
+										<span class="f14 pull-left h30 lh30">状态：</span>
+										<div class="pull-left">
+											<select id="check_arg1_input" name="" class="pull-left h30 br_e5e6e7 f14" style="width: 150px;margin-left: 15px;">
+												<option value="">全部</option>
+												<option value="1">正常</option>
+												<option value="2">停用</option>
+											</select>
+										</div>
+									</div>
+									<div class="ml30">
+										<span class="f14 pull-left h30 lh30">部门：</span>
+										<div class="pull-left">
+											<input type="text" class="form-control h30 w100p " style="width: 150px;" id="check_arg2_input" placeholder=""
+											 aria-required="true">
+										</div>
+									</div>
+									<div class="ml30">
+										<span class="f14 pull-left h30 lh30">账号：</span>
+										<div class="pull-left">
+											<input type="text" class="form-control h30 w100p " style="width: 150px;" id="check_arg3_input" placeholder=""
+											 aria-required="true">
+										</div>
+									</div>
+									<div class="ml30">
+										<span class="f14 pull-left h30 lh30">状态：</span>
+										<div class="pull-left">
+											<select id="check_arg4_input" name="" class="pull-left h30 br_e5e6e7 f14" style="width: 150px;margin-left: 15px;">
+												<option value="">全部</option>
+											</select>
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="ibox-title pull-left w100p  table-head" style="background-color: rgb(243, 243, 243);padding: 10px 20px;border-top:0px;">
+								<div class="pull-left">
+									<div class="ibox-tools" style="">
+										<span class="titleFontIcon"></span>
+										<span class="pull-left" style="position: relative;top: 3px;left: 5px;">数据列表</span>
+									</div>
+								</div>
+								<div class="pull-right">
+									<button class="opera_btn" data-toggle="modal" data-target="#add_dialog">新增</button>
+								</div>
+							</div>
+
+							<div class="pull-left w100p">
+								<table class="table table-bordered mb0 ">
+									<thead>
+										<tr>
+											<th>账号</th>
+											<th>姓名</th>
+											<th>部门</th>
+											<th>角色</th>
+											<th>状态</th>
+											<th>创建时间</th>
+											<th>操作</th>
+										</tr>
+									</thead>
+									<tbody id="list_tbody">
+										<!-- <tr>
+											<td data-id="999">admin</td>
+											<td>管理员</td>
+											<td>无</td>
+											<td>超级管理员</td>
+											<td>正常</td>
+											<td>2020-4-15</td>
+											<td></td>
+										</tr>
+										<tr>
+											<td data-id="998">duan</td>
+											<td>ddd</td>
+											<td>软件部</td>
+											<td>H5工程师</td>
+											<td>正常</td>
+											<td>2020-4-15</td>
+											<td><span class="under_line cursor_pointer set_span c_1ABC9C pl20" data-toggle="modal" data-target="#set_dialog">角色分配</span><span class="under_line cursor_pointer look_span pl20 c_1ABC9C">修改</span><span class="under_line cursor_pointer delete_span pl20 c_1ABC9C">删除</span></td>
+										</tr> -->
+									</tbody>
+								</table>
+							</div>
+							<div class="pull-left tac c0 f14 w100p pre mt10 none" id="footer_page_div">
+								<div class="">
+
+									<span class="under_line cursor_pointer last_span">上一页</span>
+									<span class="pl20 page_span">1</span>
+									<span class="pl20 under_line cursor_pointer next_span">下一页</span>
+									<span class="pl20">共 <span class="count_page_span">1</span> 页</span>
+									<div class="disib ml20">
+										每页显示：
+										<select class="p0 disib page_select">
+											<option value="">10</option>
+											<option value="" selected="selected">20</option>
+											<option value="">30</option>
+										</select>
+										条
+									</div>
+								</div>
+								<div class="record_right_div">
+									<!--record_right_div pull-right mt10-->
+									数据库总数量： <span class="counts_span">0</span> 条
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--新增的弹框-->
+		<div class="modal inmodal fade" id="add_dialog" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content br8">
+					<div class="modal-header p10 bdno">
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+						<span class="modal-title f18">新增账号</span>
+					</div>
+					<div class="modal-body bg_f p0">
+						<div class="ibox-content p30">
+							<form class="form-horizontal m-t" id="add_form" method="post">
+								<!-- <input type="hidden" name="type" class="add_type" value="1" /> -->
+								<div class="form-group ">
+									<label class="col-sm-3 control-label pull-left">账号</label>
+									<div class="col-sm-8 pull-left">
+										<input type="text" class="form-control" name="userName" value="" required="" aria-required="true">
+									</div>
+								</div>
+
+								<div class="form-group ">
+									<label class="col-sm-3 control-label pull-left">姓名</label>
+									<div class="col-sm-8 pull-left">
+										<input type="text" class="form-control" name="userNick" value="" required="" aria-required="true">
+									</div>
+								</div>
+
+								<div class="form-group ">
+									<label class="col-sm-3 control-label pull-left">密码</label>
+									<div class="col-sm-8 pull-left">
+										<input type="password" class="form-control" name="password" value="" required="" aria-required="true">
+									</div>
+								</div>
+
+								<div class="form-group ">
+									<label class="col-sm-3 control-label pull-left">再次确认密码</label>
+									<div class="col-sm-8 pull-left">
+										<input type="password" class="form-control" name="" value="" required="" aria-required="true">
+									</div>
+								</div>
+
+								<div class="form-group ">
+									<label class="col-sm-3 control-label pull-left">部门</label>
+									<div class="col-sm-8 pull-left">
+										<input type="text" class="form-control" name="userDepName" value="" required="" aria-required="true">
+									</div>
+								</div>
+
+								<div class="form-group ">
+									<label class="col-sm-3 control-label pull-left">状态</label>
+									<select name="status" class="pull-left h30 br_e5e6e7 f14 getSecSelect add_secParentId" style="width: 120px;height:34px;margin-left: 15px;">
+										<option value="1">正常</option>
+										<option value="2">停用</option>
+									</select>
+								</div>
+
+
+
+
+							</form>
+						</div>
+					</div>
+					<div class="modal-footer bdno tac pt0040">
+						<button type="button" class=" btn-white clear_btn_style dialog_btn" data-dismiss="modal">关闭</button>
+						<button type="button" class=" btn-primary clear_btn_style bdno dialog_btn ml30" id="add_btn">保存</button>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--修改的弹框-->
+		<div class="modal inmodal fade" id="edit_dialog" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content br8">
+					<div class="modal-header p10 bdno">
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+						<span class="modal-title f18">修改账号</span>
+					</div>
+					<div class="modal-body bg_f p0">
+						<div class="ibox-content p30">
+							<form class="form-horizontal m-t" id="edit_form" method="post">
+								<input class="edit_id" type="hidden" name="id" value="" />
+								<input class="userName" type="hidden" name="userName" value="" />
+								<div class="form-group ">
+									<label class="col-sm-3 control-label pull-left">账号</label>
+									<div class="col-sm-8 pull-left">
+										<input type="text" disabled="disabled" class="form-control userName" name="" value="" required=""
+										 aria-required="true">
+									</div>
+								</div>
+
+								<div class="form-group ">
+									<label class="col-sm-3 control-label pull-left">姓名</label>
+									<div class="col-sm-8 pull-left">
+										<input type="text" class="form-control userNick" name="userNick" value="" required="" aria-required="true">
+									</div>
+								</div>
+
+								<div class="form-group ">
+									<label class="col-sm-3 control-label pull-left">密码</label>
+									<div class="col-sm-3 pull-left">
+										<input type="password" disabled="disabled" class="form-control password" name="password" value="" required=""
+										 aria-required="true">
+									</div>
+
+									<div class="col-sm-4 pull-left" style="display: flex;align-items: center;height: 34px;">
+										<input id="editPwd" name="state" class="inputcherckStyle" type="checkbox" style="margin-top: 0px;margin-right: 10px;"
+										 value="2" />修改密码
+									</div>
+
+								</div>
+
+								<div class="form-group wuwuwu hide">
+									<label class="col-sm-3 control-label pull-left">再次确认密码</label>
+									<div class="col-sm-6 pull-left">
+										<input type="password" class="form-control" name="" value="" required="" aria-required="true">
+									</div>
+								</div>
+
+								<div class="form-group ">
+									<label class="col-sm-3 control-label pull-left">部门</label>
+									<div class="col-sm-8 pull-left">
+										<input type="text" class="form-control userDepName" name="userDepName" value="" required="" aria-required="true">
+									</div>
+								</div>
+
+								<div class="form-group ">
+									<label class="col-sm-3 control-label pull-left">状态</label>
+									<select name="status" class="pull-left h30 br_e5e6e7 f14 getSecSelect add_secParentId status" style="width: 120px;height:34px;margin-left: 15px;">
+										<option value="1">正常</option>
+										<option value="2">停用</option>
+									</select>
+								</div>
+
+
+
+
+							</form>
+						</div>
+					</div>
+					<div class="modal-footer bdno tac pt0040">
+						<button type="button" class=" btn-white clear_btn_style dialog_btn" data-dismiss="modal">关闭</button>
+						<button type="button" class=" btn-primary clear_btn_style bdno dialog_btn ml30" id="edit_btn">保存</button>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--设置角色的弹框-->
+		<div class="modal inmodal fade" id="set_dialog" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content br8">
+					<div class="modal-header p10 bdno">
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+						<span class="modal-title f18">设置角色</span>
+					</div>
+					<div class="modal-body bg_f p0">
+						<div class="ibox-content p30">
+							<ul class="clear_li_style w100p tac" id="role_show_ul">
+								<li class="w30p disib mt10">
+									<label class="checkbox-inline i-checks">
+										<input type="checkbox" checked="checked" value="option1">管理员:超级管理员</label>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div class="modal-footer bdno tac pt0040">
+						<button type="button" class=" btn-white clear_btn_style dialog_btn" data-dismiss="modal">关闭</button>
+						<button type="button" class=" btn-primary clear_btn_style bdno dialog_btn ml30" id="set_btn">保存</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/bootstrap.min.js?v=3.3.6"></script>
+		<script src="js/plugins/peity/jquery.peity.min.js"></script>
+		<script src="js/content.min.js?v=1.0.0"></script>
+		<script src="js/plugins/layer/laydate/laydate.js"></script>
+		<script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+		<script src="js/plugins/iCheck/icheck.min.js"></script>
+		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/md5.js" type="text/javascript" charset="utf-8"></script>
+
+		<script>
+			var tableTimeout, addTimeout, setPowerTime, editManageTimeout, deleteTimeOut, getPowerTime, limits = 20,
+				page = 1,
+				counts = 0,
+				table_title, roleID;
+			var cherk_roleId;
+
+			var totalPages = 0;
+			var maxIndex;
+			$(document).ready(function() {
+				IsTokenSave();
+
+				InitTbodyList(page); //初始化列表数据
+				// InitFunc();
+
+				$(".refresh_a").click(function() { //刷新按钮
+					location.reload();
+				});
+				$(".i-checks").iCheck({ //check必须有的脚本
+					checkboxClass: "icheckbox_square-green",
+					radioClass: "iradio_square-green",
+				});
+
+				$("#check_btn").click(function() { //查询按钮
+					powerName = $("#check_input").val();
+					page = 1; //重置页数
+					$(".role_page_span").html(1); //重置页数
+					InitTbodyList(page); //获取列表数据
+				});
+
+				$(".page_select").change(function() { //选择一页多少条数据的select
+					page = 1; //重置页数
+					$(".page_span").html(1); //重置页数
+					limits = $(".page_select option:selected").text(); //设置当前显示数量
+					InitTbodyList(page);
+				});
+
+				$(".last_span").click(function() { //上一页
+					if (page < 2) {
+						TipsAlert("这是最前面的数据了");
+						return false;
+					}
+					page--;
+					$(".page_span").html(parseInt($(".page_span").html()) - 1);
+					InitTbodyList(page);
+				});
+				$(".next_span").click(function() { //下一页
+
+					if (page > maxIndex - 1) {
+						TipsAlert("这是最后面的数据了");
+						return false;
+					}
+					page++;
+					$(".page_span").html(parseInt($(".page_span").html()) + 1);
+					InitTbodyList(page);
+				});
+				
+				$("#set_btn").click(function () {//设置管理员角色的弹窗的保存按钮
+					var idHtml = '';
+					$("#role_show_ul li").each(function() {
+						if ($(this).find(".icheckbox_square-green").hasClass("checked")) {
+							idHtml = idHtml + "," + $(this).data("roleid");
+						}
+					});
+					idHtml = idHtml.substr(1,idHtml.length);
+					console.log(cherck_userId);
+					console.log(idHtml);
+				
+					Showload("正在设置账号......");
+					setRoleTime = setInterval("Timeout(setRoleTime)", 1000);
+					$.ajax({
+						type:"post",
+						url:urls+ common_url.roleinfo_AllotRoleInfo,
+						async:true,
+						timeout:30000,
+						dataType:"json",
+						headers:{
+							'X-Access-Token':userMessage.token,
+						},
+						data:{
+							userId:cherck_userId,
+							roleId:idHtml
+						},
+						success:function  (json) {
+							CheckLogout (json);//检查是否登陆过期
+							if (json.code == 0) {
+								swal({
+								    title: "设置成功",
+								    text: "设置成功!",
+								    type: "success",
+								},function () {
+									location.reload();
+								});
+							} else{
+								TipsAlert(json.msg);
+							}
+							InitTime (setRoleTime);
+						},
+						error:function(xml, text, errorThrown) {
+							if (text == "timeout") {
+								TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+							} else{
+								TipsAlert("请求数据失败,请联系后台技术人员");
+							}
+							InitTime (setRoleTime);
+						}
+						
+					});
+				});
+
+
+				$("#add_btn").click(function() { //新增管理员的保存按钮
+					// $("#add_form .createBy_input").val(userMessage.userInfo.username);
+					if ($("#add_form .form-control").eq(0).val().trim() == "") {
+						TipsAlert("登录账号不能为空");
+						return false;
+					}
+					if ($("#add_form .form-control").eq(1).val().trim() == "") {
+						TipsAlert("真实姓名不能为空");
+						return false;
+					}
+					if ($("#add_form .form-control").eq(2).val().trim() == "") {
+						TipsAlert("密码不能为空");
+						return false;
+					}
+					if ($("#add_form .form-control").eq(3).val().trim() == "") {
+						TipsAlert("再次确认密码不能为空");
+						return false;
+					}
+					if ($("#add_form .form-control").eq(2).val() != $("#add_form .form-control").eq(3).val()) {
+						TipsAlert("两次输入的密码不一致,请重新输入.");
+						return false;
+					}
+					if ($("#add_form .form-control").eq(4).val().trim() == "") {
+						TipsAlert("部门不能为空");
+						return false;
+					}
+					var pasWdMd5 = hex_md5($("#add_form .form-control").eq(2).val());
+					
+					$("#add_form .form-control").eq(2).val(pasWdMd5)
+
+					Showload("正在初始化列表......");
+					addManageTimeout = setInterval("Timeout(addManageTimeout)", 1000);
+					$.ajax({
+						type: "post",
+						url: urls + common_url.sysUserInfo_sysUserInfoSave,
+						async: true,
+						timeout: 30000,
+						dataType: "json",
+						headers: {
+							'X-Access-Token': userMessage.token,
+						},
+						data: $("#add_form").serialize(),
+						success: function(json) {
+							CheckLogout(json); //检查是否登陆过期
+							if (json.code == 0) {
+								swal({
+									title: "添加成功",
+									text: "添加成功",
+									type: "success",
+								}, function() {
+									location.reload();
+								});
+							} else {
+								TipsAlert(json.msg);
+							}
+							InitTime(addManageTimeout);
+						},
+						error: function(xml, text, errorThrown) {
+							if (text == "timeout") {
+								TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+							} else {
+								TipsAlert("请求数据失败,请联系后台技术人员");
+							}
+							InitTime(addManageTimeout);
+						}
+					});
+				});
+
+				$("#edit_btn").click(function() { //新增管理员的保存按钮
+					// $("#add_form .createBy_input").val(userMessage.userInfo.username);
+					if ($("#edit_form .form-control").eq(0).val().trim() == "") {
+						TipsAlert("登录账号不能为空");
+						return false;
+					}
+					if ($("#edit_form .form-control").eq(1).val().trim() == "") {
+						TipsAlert("真实姓名不能为空");
+						return false;
+					}
+					if($("#edit_form #editPwd").val() == 1){
+						if ($("#edit_form .form-control").eq(2).val().trim() == "") {
+							TipsAlert("密码不能为空");
+							return false;
+						}
+						if ($("#edit_form .form-control").eq(3).val().trim() == "") {
+							TipsAlert("再次确认密码不能为空");
+							return false;
+						}
+						
+						if ($("#edit_form .form-control").eq(2).val() != $("#edit_form .form-control").eq(3).val()) {
+							TipsAlert("两次输入的密码不一致,请重新输入.");
+							return false;
+						}
+						
+						if ($("#edit_form .form-control").eq(4).val().trim() == "") {
+							TipsAlert("部门不能为空");
+							return false;
+						}
+						
+						var pasWdMd5 = hex_md5($("#edit_form .form-control").eq(2).val());
+						
+						$("#edit_form .form-control").eq(2).val(pasWdMd5)
+					}else{
+						if ($("#edit_form .form-control").eq(4).val().trim() == "") {
+							TipsAlert("部门不能为空");
+							return false;
+						}
+						$("#edit_form #editPwd").val(2)
+					}
+					
+					
+					
+
+
+					Showload("正在初始化列表......");
+					addManageTimeout = setInterval("Timeout(addManageTimeout)", 1000);
+					$.ajax({
+						type: "post",
+						url: urls + common_url.sysUserInfo_sysUserInfoEdit,
+						async: true,
+						timeout: 30000,
+						dataType: "json",
+						headers: {
+							'X-Access-Token': userMessage.token,
+						},
+						data: {
+							userName:$("#edit_form .userName").val(),
+							password:$("#edit_form .password").val(),
+							userDepName:$("#edit_form .userDepName").val(),
+							status:$("#edit_form .status").val(),
+							userNick:$("#edit_form .userNick").val(),
+							id:$("#edit_form .edit_id").val(),
+							state:$("#edit_form #editPwd").val()
+						},
+						success: function(json) {
+							CheckLogout(json); //检查是否登陆过期
+							if (json.code == 0) {
+								swal({
+									title: "修改成功",
+									text: "修改成功",
+									type: "success",
+								}, function() {
+									location.reload();
+								});
+							} else {
+								TipsAlert(json.msg);
+							}
+							InitTime(addManageTimeout);
+						},
+						error: function(xml, text, errorThrown) {
+							if (text == "timeout") {
+								TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+							} else {
+								TipsAlert("请求数据失败,请联系后台技术人员");
+							}
+							InitTime(addManageTimeout);
+						}
+					});
+				});
+
+				$("#editPwd").change(function() {
+					console.log($(this)[0].checked);
+					if($(this)[0].checked == true){
+						$(this).val(1);
+						$("#edit_form .form-control").eq(2).removeAttr("disabled", "disabled");
+						$("#edit_form .wuwuwu").removeClass("hide");
+					}else{
+						$(this).val(2);
+						$("#edit_form .form-control").eq(2).attr("disabled", "disabled");
+						$("#edit_form .wuwuwu").addClass("hide");
+					}
+					console.log($(this).val())
+					// if($(this))
+					// tequanIndex = $(this).val();
+					// if ($(this).val() == 2) { //1修改 2不修改
+					// 	$(this).attr("checked", false);
+					// 	$(this).val(1);
+					// 	$("#edit_form .form-control").eq(2).attr("disabled", "disabled");
+					// } else {
+					// 	$(this).attr("checked", true);
+					// 	$(this).val(2);
+					// 	$("#edit_form .form-control").eq(2).removeAttr("disabled", "disabled");
+					// }
+				});
+
+			});
+
+			/**
+			 * 该方法用于初始化列表
+			 * @param {Number} startIndex startIndex是数据起始下标
+			 * */
+			function InitTbodyList(startIndex) {
+				Showload("正在初始化列表......");
+				tableTimeout = setInterval("Timeout(tableTimeout)", 1000);
+				$.ajax({
+					type: "get",
+					url: urls + common_url.sysUserInfo_sysUserInfoListPage,
+					async: true,
+					timeout: 30000,
+					dataType: "json",
+					headers: {
+						'X-Access-Token': userMessage.token,
+					},
+					data: {
+						status: $("#check_arg1_input").val(),
+						userDepName: $("#check_arg2_input").val(),
+						start: startIndex,
+						limit: limits
+					},
+					success: function(json) {
+						console.log(json);
+						CheckLogout(json); //检查是否登陆过期
+						if (json.code == 0) {
+							totalPages = json.data.records.total;
+							var myData = json.data.records;
+							var tableHtml = "";
+							counts = json.data.total;
+							console.log(myData);
+							if (counts == 0) { //显示或隐藏分页
+								$("#footer_page_div").hide();
+							} else {
+								$("#footer_page_div").show();
+							}
+							maxIndex = (counts / limits).toCeil(0);
+							$(".count_page_span").html(maxIndex); //设置当前共几页  
+							$(".counts_span").html(counts);
+							for (var i = 0; i < myData.length; i++) {
+								if (myData[i]["status"] == 1) { //1:
+									myData[i]["status_text"] = "正常"
+								} else {
+									myData[i]["status_text"] = "停用"
+								}
+
+
+								tableHtml = tableHtml + '<tr>' +
+									'<td class="none" data-id="' + myData[i]["id"] + '" data-userName="' + myData[i]["userName"] +
+									'" data-userNick="' + myData[i]["userNick"] + '" data-userDepName="' + myData[i]["userDepName"] +
+									'" data-status="' + myData[i]["status"] + '"></td>' +
+									'<td>' + myData[i]["userName"] + '</td>' +
+									'<td>' + myData[i]["userNick"] + '</td>' +
+									'<td>' + myData[i]["userDepName"] + '</td>' +
+									'<td></td>' +
+									'<td>' + myData[i]["status_text"] + '</td>' +
+									'<td>' + myData[i]["createTime"] + '</td>' +
+									'<td>' +
+									'<span class="under_line cursor_pointer set_span c_1ABC9C pl20" data-toggle="modal" data-target="#set_dialog">角色分配</span>' +
+									'<span class="under_line cursor_pointer edit_span pl20 c_1ABC9C" data-toggle="modal" data-target="#edit_dialog">修改</span>' +
+									'<span class="under_line cursor_pointer delete_span pl20 c_1ABC9C">删除</span>' +
+									'</td>' +
+									'</tr>';
+							}
+							$("#list_tbody").html(tableHtml);
+							InitFunc();
+						} else {
+							TipsAlert(json.code);
+							// if (json.return_msg == "Session过期") {
+							// 	window.location = "login_timeout.html";
+							// }else{
+							// 	TipsAlert(json.return_msg);
+							// }
+						}
+						InitTime(tableTimeout);
+					},
+					error: function(xml, text, errorThrown) {
+						if (text == "timeout") {
+							TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+						} else {
+							TipsAlert("请求数据失败,请联系后台技术人员");
+						}
+						InitTime(tableTimeout);
+					}
+
+				});
+			}
+
+			/**
+			 * 该方法用于获取新增管理员里面的上级的select
+			 * */
+			function getRoleList(roleData) {
+				Showload("正在初始化列表......");
+				tableTimeout = setInterval("Timeout(tableTimeout)", 1000);
+				$.ajax({
+					type: "get",
+					url: urls + common_url.role,
+					async: true,
+					timeout: 30000,
+					dataType: "json",
+					headers: {
+						'X-Access-Token': userMessage.token,
+					},
+					data: {
+						column: 'createTime',
+						pageSize: 50,
+						pageNo: 1,
+						order: 'desc'
+					},
+					success: function(json) {
+						console.log(json);
+						CheckLogout(json); //检查是否登陆过期
+						var roleHtml = '';
+
+						if (json.code == 0) {
+							var moreRole = json.result.records;
+							for (var i = 0; i < moreRole.length; i++) {
+								// console.log(moreRole[i])
+								// console.log(roleData)
+								if (roleData != undefined) {
+									for (var j = 0; j < roleData.length; j++) {
+										if (roleData[j] == moreRole[i]["id"]) {
+											moreRole[i]["isCheck"] = 'checked="checked"';
+										}
+									}
+								}
+
+
+								roleHtml = roleHtml + '<li class="w30p disib mt10" data-roleid=' + moreRole[i]["id"] +
+									'><label class="checkbox-inline i-checks"><input type="checkbox" ' + moreRole[i]["isCheck"] +
+									' value="option1">' + moreRole[i]["roleName"] + '</label></li>'
+
+							}
+
+
+							$("#role_show_ul").html(roleHtml);
+							$(".i-checks").iCheck({ //自定义复选框
+								checkboxClass: "icheckbox_square-green",
+								radioClass: "iradio_square-green",
+							});
+						} else {
+							TipsAlert(json.msg);
+						}
+
+						InitTime(tableTimeout);
+					},
+					error: function(xml, text, errorThrown) {
+						if (text == "timeout") {
+							TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+						} else {
+							TipsAlert("请求数据失败,请联系后台技术人员");
+						}
+						InitTime(tableTimeout);
+					}
+
+				});
+
+			}
+
+			/**
+			 * 该方法用于初始化操作列里的事件
+			 * */
+			function InitFunc() {
+				$(".edit_span").each(function() {
+					$(this).click(function() {
+						var dataset = $(this).parents("td").siblings("td").eq(0)[0].dataset;
+						console.log(dataset);
+						$("#editPwd").val(2);
+						$("#editPwd").attr("checked",false);
+						$("#edit_form .form-control").eq(2).attr("disabled", "disabled");
+						
+						$("#edit_form .edit_id").val(dataset.id);
+						$("#edit_form .userName").val(dataset.username);
+						$("#edit_form .userNick").val(dataset.usernick);
+						$("#edit_form .userDepName").val(dataset.userdepname);
+						$("#edit_form .status").val(dataset.status);
+						// window.location = "goods_evaluate_detail.html?id=" + dataset.id;
+					})
+				});
+
+				$(".set_span").each(function() {
+					$(this).click(function() {
+						var userId = $(this).parents("td").siblings("td").eq(0)[0].dataset.id;
+						cherck_userId = userId;
+						console.log(userId)
+						// roleAdminID = $(this).parents("td").siblings("td").eq(1).text();//当前行userId
+						// var roleNameStr = $(this).parents("td").siblings(".edit_roleName").html();
+						// var roleNameArr = roleNameStr.split(",");
+						$.ajax({
+							type: "get",
+							url: urls + common_url.roleinfo_getAllotRoleInfo,
+							async: true,
+							timeout: 30000,
+							dataType: "json",
+							headers: {
+								'X-Access-Token': userMessage.token,
+							},
+							data: {
+								userId: userId
+							},
+							success: function(json) {
+								CheckLogout(json); //检查是否登陆过期
+								if (json.code == 0) {
+									var moreRole = json.data;
+									var roleHtml = '';
+									for (var i = 0; i < moreRole.length; i++) {
+										console.log(moreRole[i])
+										if (moreRole[i]["type"] > 0) {
+											moreRole[i]["isCheck"] = 'checked="checked"';
+										}
+								
+										roleHtml = roleHtml + '<li class="w30p disib mt10" data-roleid=' + moreRole[i]["id"] +
+											'><label class="checkbox-inline i-checks"><input type="checkbox" ' + moreRole[i]["isCheck"] +
+											' value="option1">' + moreRole[i]["role_name"] + '</label></li>'
+								
+									}
+								
+								
+									$("#role_show_ul").html(roleHtml);
+									$(".i-checks").iCheck({ //自定义复选框
+										checkboxClass: "icheckbox_square-green",
+										radioClass: "iradio_square-green",
+									});
+								} else {
+									TipsAlert(json.msg);
+								}
+							},
+							// error: function(xml, text, errorThrown) {
+							// 	if (text == "timeout") {
+							// 		TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+							// 	} else {
+							// 		TipsAlert("请求数据失败,请联系后台技术人员");
+							// 	}
+							// }
+						});
+
+					});
+				});
+
+
+				$(".delete_span").each(function() { //删除按钮
+					$(this).click(function() {
+						var dataset = $(this).parents("td").siblings("td").eq(0)[0].dataset;
+						swal({
+							title: "请再次确认是否删除？",
+							text: "删除后将无法恢复，请谨慎操作！",
+							type: "warning",
+							showCancelButton: true,
+							confirmButtonColor: "#DD6B55",
+							confirmButtonText: "是的，确定删除",
+							cancelButtonText: "让我再考虑一下…",
+							closeOnConfirm: false,
+							closeOnCancel: true
+						}, function(yes) {
+							if (yes) {
+								Showload("正在请求删除，请稍后....");
+								deleteTimeOut = setInterval("Timeout(deleteTimeOut)", 1000);
+								$.ajax({
+									type: "post",
+									url: urls + common_url.sysUserInfo_sysUserInfoDelete,
+									async: true,
+									timeout: 30000,
+									dataType: "json",
+									headers: {
+										'X-Access-Token': userMessage.token,
+									},
+									data: {
+										id: dataset.id
+									},
+									success: function(json) {
+										console.log(json);
+										CheckLogout(json);
+										if (json.code == 0) {
+											swal({
+												title: "删除成功",
+												text: "删除成功",
+												type: "success",
+											}, function() {
+												location.reload();
+											});
+										}
+										InitTime(deleteTimeOut);
+									},
+									error: function(xml, text, e) {
+										if (text == "timeout") {
+											TipsAlert("请求超时,请检查网络或着重新操作");
+										} else {
+											TipsAlert("请求数据失败,请联系后台技术人员");
+										}
+										InitTime(deleteTimeOut);
+									}
+								});
+							}
+						});
+
+					});
+				}); //删除按钮结束括号
+			}
+		</script>
+
+
+	</body>
+</html>

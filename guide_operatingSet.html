@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html class="x-admin-sm">
+<!-- 保购配置页面 -->
+
+<head>
+    <meta charset="UTF-8">
+    <title>运营个性配置-保购设置</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+        content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <link href="css/newStyle.css" rel="stylesheet">
+    <!-- 弹窗轻提示 -->
+    <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+    <!-- 引入jq -->
+    <script src="https://cdn.bootcss.com/jquery/3.4.0/jquery.min.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/xadmin.js"></script>
+    <script type="text/javascript" src="./js/common.js"></script>
+    <style>
+        .x-nav {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5px;
+            height: 50px;
+            line-height: 38px;
+            background-color: #f3f3f3;
+            border: 1px solid #e4e4e4;
+            background: #f3f3f3;
+        }
+
+        .x-nav .goods_name {
+            margin-left: 10px;
+            color: #999;
+            font-size: 15px;
+            display: inline-block;
+            margin-top: 5px;
+        }
+
+        .goodsRoload {
+            margin-top: 6px !important;
+            display: inline-block;
+            margin-right: 80px;
+            height: 32px;
+            line-height: 50px;
+            width: 80px;
+            font-size: #666 !important;
+            border: 1px solid #ccc;
+            background: #fff;
+            text-align: center;
+            color: #ccc;
+            cursor: pointer;
+        }
+
+        .goods_name::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 12px;
+            margin: 0 3px;
+            background-color: #1abc9c;
+        }
+
+        .layui-row {
+            width: 85%;
+            height: calc(100% - 15px);
+            background-color: #fff;
+            /* margin-left: 180px; */
+            margin: 0 auto !important;
+            padding: 0 40px;
+            border: 1px solid #e4e4e4;
+        }
+
+        table td {
+            background-color: #eaf5fc;
+        }
+
+        .info_one {
+            width: 100%;
+            padding: 70px 40px;
+            display: flex;
+        }
+
+        .img_title {
+            height: 198px;
+            width: 165px;
+            margin-right: 80px;
+        }
+
+        .img_title img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .text_info td {
+            border: 1px solid #d7d7d7;
+            height: 65px;
+            width: 250px;
+            line-height: 65px;
+            text-align: center;
+            color: #666;
+        }
+
+        .name_info {
+            background-color: #f2f2f2;
+        }
+
+        .info_two {
+            padding-left: 40px;
+            padding-bottom: 80px;
+        }
+
+        .info_two p {
+            color: #666;
+            font-weight: 600;
+            font-size: 17px;
+            margin-bottom: 30px;
+        }
+
+        .info_two td {
+            border: 1px solid #d7d7d7;
+            height: 60px;
+            width: 165px;
+            text-align: center;
+            color: #666;
+            /* line-height: 60px; */
+        }
+
+        .two_text {
+            width: 253px !important;
+        }
+
+        #star_set {
+            height: 33px;
+            width: 160px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+
+        .up_star,
+        .down_star {
+            cursor: pointer;
+            width: 15px;
+            height: 15px;
+            position: relative;
+            top: 3px;
+            left: -3px;
+        }
+
+        .star_num {
+            width: 160px;
+            height: 33px;
+            background-color: #f2f2f2;
+            outline: none;
+            border: 0;
+            padding-left: 6px;
+            border: 1px solid #ccc;
+        }
+
+        .starN {
+            width: 200px;
+        }
+
+        .start_up,
+        .end_up {
+            background-color: #f2f2f2;
+            height: 33px;
+            outline: none;
+            border: 0;
+            width: 90px;
+            padding-left: 5px;
+            border: 1px solid #ccc;
+        }
+
+        #tbody_list1 tr {
+            height: 100px !important;
+        }
+
+        #tbody_list1 tr td img {
+            width: 70px;
+            height: 70px;
+            cursor: pointer;
+        }
+
+        .input_zhi {
+            display: inline-block;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+
+        .sava_btn {
+            display: block;
+            margin: 0 auto;
+            height: 40px;
+            width: 340px;
+            line-height: 40px;
+            color: #fff;
+            text-align: center;
+            background-color: #13bc75;
+            border-radius: 5px;
+            margin-bottom: 60px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 导航条模块 -->
+    <!-- 头部展示 -->
+    <div class="x-nav">
+        <!-- <span class="layui-breadcrumb"> -->
+        <span class="goods_name">运营个性配置-保购设置</span>
+        <!-- </span> -->
+        <a class=" layui-btn-small goodsRoload" style="line-height:1.6em;margin-top:3px;" onclick="location.reload()"
+            title="刷新">
+            <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i> 刷新
+        </a>
+    </div>
+    <div class="layui-fluid">
+        <div class="layui-row">
+            <!-- 第一部分  -->
+            <div class="info_one">
+                <div class="img_title"><img
+                        src="http://contentcms-bj.cdn.bcebos.com/cmspic/0f16db4c3d3faddba64ed6299fd38d59.jpeg?x-bce-process=image/crop,x_0,y_0,w_895,h_487"
+                        alt=""></div>
+                <div class="text_info">
+                    <table style="border: 1px solid #d7d7d7; border-collapse: collapse ;">
+                        <tbody>
+                            <tr>
+                                <td class="name_info">保购账号</td>
+                                <td class="text_im1">
+                                </td>
+                                <td class="name_info">保购昵称</td>
+                                <td class="text_im2"></td>
+                            </tr>
+                            <tr>
+                                <td class="name_info">真实姓名</td>
+                                <td class="text_im3"></td>
+                                <td class="name_info">联系电话</td>
+                                <td class="text_im4"></td>
+                            </tr>
+                            <tr>
+                                <td class="name_info">支付宝账号</td>
+                                <td class="text_im5"></td>
+                                <td class="name_info"></td>
+                                <td class="text_im6"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- 第二部分 -->
+            <div class="info_two">
+                <p>配置</p>
+                <table style="border: 1px solid #d7d7d7; border-collapse: collapse ;">
+                    <tr>
+                        <td class="name_info">保购星级</td>
+                        <td class="two_text">
+                            <select name="" id="star_set">
+                                <option value="">新手</option>
+                                <option value="">一星</option>
+                                <option value="">二星</option>
+                                <option value="">三星</option>
+                                <option value="">四星</option>
+                                <option value="">五星</option>
+                                <option value="">六星</option>
+                                <option value="">七星</option>
+                                <option value="">八星</option>
+                            </select>
+
+                        </td>
+                        <td class="name_info">升级条件</td>
+                        <td class="two_text">
+                            <input type="checkbox" class="up_star">
+                            第二条件升级</td>
+                        <td class="name_info">降级条件</td>
+                        <td class="two_text">
+                            <input type="checkbox" class="down_star">
+                            第二条件降级</td>
+                    </tr>
+                    <tr>
+                        <td class="name_info">粉丝数量</td>
+                        <td class="two_text">
+                            <input type="text" class="star_num">
+                        </td>
+                        <td class="name_info">粉丝增量/天(设置区间,区间内随机新增)</td>
+                        <td class="two_text">
+                            <input type="text" class="start_up">
+                            &nbsp;
+                            至
+                            &nbsp;
+                            <input type="text" class="end_up">
+
+                        </td>
+                        <td class="name_info"></td>
+                        <td class="two_text"></td>
+                    </tr>
+                </table>
+            </div>
+            <!-- 第三部分 -->
+            <div class="info_two info_three">
+                <p>作品配置</p>
+                <table style="border: 1px solid #d7d7d7; border-collapse: collapse ;">
+                    <thead>
+                        <tr>
+                            <td class="name_info" style="width: 170px;">推广编号</td>
+                            <td class="name_info" style="width: 240px;">通过审核</td>
+                            <td class="name_info" style="width: 220px;">作品详情</td>
+                            <td class="name_info" style="width: 290px;">点赞数量</td>
+                            <td class="name_info" style="width: 335px;">
+                                点赞新增/天 <br>
+                                (设置区间，区间内随机新增)
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody_list1">
+                    </tbody>
+                </table>
+            </div>
+            <!-- 保存按钮 -->
+            <span class="sava_btn">保存更改</span>
+        </div>
+    </div>
+</body>
+
+
+<script>
+    // 使用layui的方法
+    // layui.use(['layer', 'form'],
+    //     function () {
+    //         var form = layui.form,
+    //             layer = layui.layer,
+    //     })
+
+    $(function () {
+        // 作品配置渲染
+        var tableHtml = "";
+        $.ajax({
+            type: "get",
+            url: urls + 'technologyService/selectInterceptLog',
+            async: true,
+            dataType: "json",
+            headers: {
+                'X-Access-Token': JSON.parse(sessionStorage.getItem("user_message")).token,
+            },
+            data: {
+                page: 1,
+                limit: 5
+            },
+            success: function (res) {
+                CheckLogout(res); //检查是否登陆过期
+                if (res.code == 0) {
+                    var myData = res.data.records;
+                    for (var i = 0; i < myData.length; i++) {
+                        tableHtml += '<tr>' +
+                            '<td>' + myData[i]["ipAddress"] + '</td>' +
+                            '<td class="c_1ABC9C">' + myData[i]["phone"] + '</td>' +
+                            '<td><img src="http://contentcms-bj.cdn.bcebos.com/cmspic/0f16db4c3d3faddba64ed6299fd38d59.jpeg?x-bce-process=image/crop,x_0,y_0,w_895,h_487" onclick="previewImg(this)"></td>' +
+                            '<td><input type="text" class="star_num starN" id="star' + i + '"></td>' +
+                            '<td><input type="text" class="start_up" id="start' + i + '"><span class="input_zhi">至</span><input type="text" class="end_up" id="end' + i + '"></td>' +
+                            '</tr>';
+                    }
+                    $("#tbody_list1").html(tableHtml);
+                } else {
+                    TipsAlert(json.code);
+                }
+            }
+        });
+
+        // 点击保存按钮的操作
+        $('.sava_btn').on('click', function () {
+            console.log($('#star0').val())
+            console.log($('#star1').val())
+            console.log($('#star2').val())
+
+            console.log($('#start0').val())
+            console.log($('#start1').val())
+            console.log($('#start2').val())
+
+            console.log($('#end0').val())
+            console.log($('#end1').val())
+            console.log($('#end2').val())
+            // console.log($('#end3').val())
+
+            swal({
+                title: "保存成功",
+                type: "success",
+            });
+        })
+    })
+
+
+
+</script>
+
+<script>
+    function previewImg(obj) {
+        var img = new Image();
+        img.src = obj.src;
+        //var height = img.height + 50; // 原图片大小
+        //var width = img.width; //原图片大小
+        var imgHtml = "<img src='" + obj.src + "' width='500px' height='500px'/>";
+        //弹出层
+        layer.open({
+            type: 1,
+            shade: 0.8,
+            offset: 'auto',
+            area: [500 + 'px', 550 + 'px'],  // area: [width + 'px',height+'px']  //原图显示
+            shadeClose: true,
+            scrollbar: false,
+            title: "图片预览", //不显示标题  
+            content: imgHtml, //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响  
+            cancel: function () {
+                //layer.msg('捕获就是从页面已经存在的元素上，包裹layer的结构', { time: 5000, icon: 6 });  
+            }
+        });
+    }
+</script>
+
+</html>

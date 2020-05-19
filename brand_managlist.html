@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html>
+
+	<!-- Mirrored from www.zi-han.net/theme/hplus/table_jqgrid.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:20:02 GMT -->
+
+	<head>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>待审核商品列表</title>
+
+		<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+		<link href="css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+		<link href="css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+		
+		<link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+		<link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+		<link href="css/animate.min.css" rel="stylesheet">
+		<link href="css/style.min862f.css?v=4.1.0" rel="stylesheet">
+		<link href="css/newStyle.css" rel="stylesheet">
+				
+		<style>
+			/* 重写bookstrap样式表 勿删 */
+			.form_inputs{width: 160px;background-color: #ebebeb;border: 1px solid #06a3f9;border-radius: 20px;-webkit-border-radius: 20px;-moz-border-radius: 20px;-o-border-radius: 20px;-ms-border-radius: 20px;}
+			.ibox-title{padding:20px;}
+			.ui-jqdialog{height: auto!important;}
+			.ui-jaroy-table tbody{background-color: #eaf5fc!important;}
+			.modal-dialog{margin: 80px auto!important;}
+			.form-group{margin-left:0px!important;margin-right:0px!important;}
+			.modal-sm{width: 600px;}
+			.col-sm-3{width: 30%;}
+			.col-sm-8{width: 70%;}
+			.form-horizontal .control-label{text-align: left;padding-top: 5px;font-size: 18px;}
+			@media only screen and (min-width: 100px) and (max-width: 600px) {
+				.modal-sm{width: 400px;}
+				.col-sm-3{width: 40%;}
+				.col-sm-8{width: 60%;}
+				.scroll_div{width: 85%;}
+				.form-horizontal .control-label{text-align: left;padding-top: 5px;font-size: 14px;}
+				.dialog_btn{font-size: 14px!important;}
+			}
+			@media only screen and (min-width: 650px){
+				.modal-sm{width: 600px;}
+			}
+
+
+			/*以下是等待状态的通用样式*/
+			.wating_big_div{position: fixed;top:0px ;width: 100%;height: 100%;display: table;z-index: 9999;}
+			.zhezhao{opacity: 0.3;position: absolute;top: 0px;width: 100%;height: 100%;z-index: 9999;}
+			.wating_content_div{text-align: center;background:none;display: table-cell;vertical-align: middle;}	
+			/*以上是等待状态的通用样式*/
+			
+
+		</style>
+	</head>
+
+	<body class="gray-bg">
+		<div class="wrapper wrapper-content  animated fadeInRight">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="ibox ">
+						<div class="ibox-title pull-left w100p" style="padding: 10px 20px;">
+							<div class="pull-left">
+							  <div class="ibox-tools cache5">
+							    待审核商品列表
+							  </div>
+							</div>
+							
+							<div class="pull-right">
+								<button class="refresh_btn">
+									<a class="refresh_a" style="">
+									  <i class="fa fa-refresh"></i> 刷新
+									</a>
+								</button>
+							</div>
+						</div>
+						
+						
+						
+						<div class="ibox-content pull-left w100p">
+							
+							<div class="w100p">
+								<div class="ibox-title w100p" style="height:50px;background-color: rgb(243, 243, 243);padding: 10px 20px;border-top:0px;">
+									<div class="ibox-tools pull-left">
+										<span class="titleFontIcon pull-left"></span>
+										<span class="pull-left" style="position: relative;top: 3px;left: 5px;">筛选查询</span>
+									</div>
+										<div class="pull-right">
+										<button class="opera_btn" id="check_btn">查询结果</button>
+									</div>	
+								</div>
+								
+								<div class="w100p p20" style="display: flex;">
+									<div class="ml30">
+										<span class="f14 pull-left h30 lh30">输入搜索：</span>
+										<div class="pull-left">
+											<input type="text" class="form-control h30 w100p" style="width: 150px;" id="check_arg1_input" placeholder="商家名称/商品货号" aria-required="true">
+										</div>
+									</div>
+									<div class="ml30">
+										<span class="f14 pull-left h30 lh30">商家分类：</span>
+										<div class="pull-left">
+											<input type="text" class="form-control h30 w100p " style="width: 150px;" id="check_arg2_input" placeholder="商家分类" aria-required="true">
+										</div>
+									</div>
+									<div class="ml30">
+										<span class="f14 pull-left h30 lh30">商品品牌：</span>
+										<div class="pull-left">
+											<select id="check_arg3_input" name="" class="pull-left h30 br_e5e6e7 f14 getBrandSelect" style="width: 150px;height:34px;margin-left: 15px;">
+											</select>
+										</div>
+									</div>
+								</div>
+								
+							</div>
+							
+							<div class="ibox-title pull-left w100p" style="background-color: rgb(243, 243, 243);padding: 10px 20px;border-top:0px;">
+								<div class="pull-left">
+								  <div class="ibox-tools" style="">
+									<span class="titleFontIcon"></span>
+								    <span class="pull-left" style="position: relative;top: 3px;left: 5px;">数据列表</span>
+								  </div>
+								</div>
+								<div class="pull-right">
+									<!-- <button class="opera_btn" data-toggle="modal" data-target="#add_dialog">新增</button> -->
+								</div>	
+							</div>
+		                    
+							<div class="pull-left w100p">
+								<table class="table table-bordered mb0 " >
+		                            <thead>
+		                                <tr>
+		                                    <th>编号</th>
+		                                    <th>商品图片</th>
+		                                    <th>商品名称</th>
+		                                    <th>价格/货号</th>
+		                                    <th>标签</th>
+		                                    <th>排序</th>
+		                                    <th>销量</th>
+		                                    <th>审核状态</th>
+		                                    <th>操作</th>
+		                                </tr>
+		                            </thead>
+		                            <tbody id="list_tbody">
+		                            </tbody>
+		                        </table>
+							</div>
+		                    <div class="pull-left tac c0 f14 w100p pre mt10 none" id="footer_page_div">
+		        <div class="">
+		          
+		          <span class="under_line cursor_pointer last_span">上一页</span>
+		          <span class="pl20 page_span">1</span>
+		          <span class="pl20 under_line cursor_pointer next_span">下一页</span>
+		          <span class="pl20">共 <span class="count_page_span">1</span> 页</span>
+		          <div class="disib ml20">
+		            每页显示：
+		            <select class="p0 disib page_select" >
+		                            <option value="">10</option>
+		                            <option value="" selected="selected">20</option>
+		                            <option value="">30</option>
+		                          </select>
+		                            条
+		          </div>
+		        </div>
+								<div class="record_right_div">
+									<!--record_right_div pull-right mt10-->
+									数据库总数量： <span class="counts_span">0</span> 条
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+
+		<script src="js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>        
+		<script src="js/bootstrap.min.js?v=3.3.6"></script>
+		<script src="js/plugins/peity/jquery.peity.min.js"></script>
+		<script src="js/content.min.js?v=1.0.0"></script>
+		<script src="js/plugins/layer/laydate/laydate.js"></script>
+		<script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+		<script src="js/plugins/iCheck/icheck.min.js"></script>
+		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/cropper.min.js"></script>
+	
+		<script>
+			var tableTimeout,addTimeout,setPowerTime,editManageTimeout,deleteTimeOut,getPowerTime,limits = 20,page = 1,counts = 0,table_title,roleID;
+			var cherk_roleId;
+		      
+			var totalPages = 0;
+			var maxIndex;
+			$(document).ready(function() {
+				IsTokenSave();
+				var userMessage = JSON.parse(sessionStorage.getItem("user_message"));
+				
+				// InitTbodyList(page);//初始化列表数据
+				getBrandSelect();//获取下拉列表数据
+				
+				$(".refresh_a").click(function(){//刷新按钮
+		    		location.reload();        		
+		    	});
+		    	$(".i-checks").iCheck({  //check必须有的脚本
+					checkboxClass: "icheckbox_square-green",
+					radioClass: "iradio_square-green",
+				});
+				
+				$("#check_btn").click(function () {//查询按钮
+					powerName = $("#check_input").val();
+					page = 1;//重置页数
+					$(".role_page_span").html(1);//重置页数
+					InitTbodyList(page);//获取列表数据
+				});
+							
+				$(".page_select").change(function() { //选择一页多少条数据的select
+					page = 1;//重置页数
+					$(".page_span").html(1);//重置页数
+					limits = $(".page_select option:selected").text();  //设置当前显示数量
+					InitTbodyList(page);
+				});
+		
+				$(".last_span").click(function() {  //上一页
+					if (page < 2) {
+						TipsAlert("这是最前面的数据了");
+						return false;
+					}
+					page--;
+					$(".page_span").html(parseInt($(".page_span").html()) - 1);
+					InitTbodyList(page);
+				});		
+				$(".next_span").click(function() { //下一页
+				
+					if (page > maxIndex - 1) {
+						TipsAlert("这是最后面的数据了");
+						return false;
+					}
+					page++;
+					$(".page_span").html(parseInt($(".page_span").html()) + 1);
+					InitTbodyList(page);
+				});
+				
+				
+			});
+			
+			/**
+			 * 该方法用于初始化列表
+			 * @param {Number} startIndex startIndex是数据起始下标
+			 * */
+			function InitTbodyList (startIndex) {
+				Showload("正在初始化列表......");
+				tableTimeout = setInterval("Timeout(tableTimeout)", 1000);
+				$.ajax({
+					type:"get",
+					url:urls+ jaroy_url.goodsList,
+					async:true,
+					timeout:30000,
+					dataType:"json",
+					headers:{
+						'X-Access-Token':userMessage.token,
+					},
+					data:{
+						nameValue:$("#check_arg1_input").val(),
+						goodsCateFirstId:$("#check_arg2_input").val(),
+						brandId:$("#check_arg3_input").val(),
+						goodsVerifyStatus:0,
+						page:startIndex,
+						limit:limits
+					},
+					success:function  (json) {
+						console.log(json);
+						CheckLogout (json);//检查是否登陆过期
+						if (json.code == 0 ) {
+							totalPages = json.data.records.total;
+							var myData = json.data.records;
+							var tableHtml = "";
+							counts = json.data.total;
+							console.log(myData);
+							if (counts == 0) { //显示或隐藏分页
+								$("#footer_page_div").hide();
+							} else{
+								$("#footer_page_div").show();
+							}
+							maxIndex = (counts / limits).toCeil(0);
+							$(".count_page_span").html(maxIndex); //设置当前共几页  
+							$(".counts_span").html(counts);
+							for (var i = 0; i < myData.length; i++) {
+								if(myData[i]["goods_tui"] == 1){//1:
+									myData[i]["goods_tui_text"] = "推荐"
+								}else{
+									myData[i]["goods_tui_text"] = ""
+								}
+								
+								if(myData[i]["goods_verify_status"] == 0){//1:
+									myData[i]["goods_verify_status_text"] = "未审核"
+								}else if(myData[i]["goods_verify_status"] == 1){
+									myData[i]["goods_verify_status_text"] = "审核通过"
+								}else if(myData[i]["goods_verify_status"] == 2){
+									myData[i]["goods_verify_status_text"] = "审核不通过"
+								}
+									
+								tableHtml = tableHtml + '<tr>'
+											+ '<td data-id="'+myData[i]["id"]+'" data-cateName="'+myData[i]["cate_name"]+'" data-sort="'+myData[i]["sort"]+'">'+myData[i]["id"]+'</td>'	
+											+ '<td>'+'<div class="preview_media br8 bdno c_f" style="cursor: pointer;" id="add_pic_btn" data-toggle="modal" data-target="#preview_media_dialog" data-type="img" data-src="' + imgUrl + myData[i]["url"] + '"><img src="'+ imgUrl+myData[i]["url"] + '" style="width:120px;"><div>'+'</td>'
+											+ '<td>'+myData[i]["goods_name"]+'</td>'
+											+ '<td>'+myData[i]["goods_num"]+'</td>'
+											+ '<td>'+myData[i]["goods_tui_text"]+'</td>'
+											+ '<td>'+myData[i]["goods_sort"]+'</td>'
+											+ '<td>'+myData[i]["saleCount"]+'</td>'
+											+ '<td>'+myData[i]["goods_verify_status_text"]+'</td>'
+											+ '<td>'
+												+ '<span class="under_line cursor_pointer cherk_span c_1ABC9C" data-toggle="modal" data-target="#edit_dialog">查看</span>'
+												+ '<span class="under_line cursor_pointer audited_span pl20 c_1ABC9C" >审核</span>'
+											+ '</td>'
+										+ '</tr>';
+							}
+							$("#list_tbody").html(tableHtml);
+							DealTable();
+							InitFunc();
+						}else{
+							TipsAlert(json.code);
+							// if (json.return_msg == "Session过期") {
+							// 	window.location = "login_timeout.html";
+							// }else{
+							// 	TipsAlert(json.return_msg);
+							// }
+						}
+						InitTime (tableTimeout);
+					},
+					error:function(xml, text, errorThrown) {
+						if (text == "timeout") {
+							TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+						} else{
+							TipsAlert("请求数据失败,请联系后台技术人员");
+						}
+						InitTime (tableTimeout);
+					}
+					
+				});
+			}
+			
+			/**
+			 * 该方法用于品牌获取下拉列表数据
+			 * @param {Number} token是获取数据的必传参数
+			* */
+			function getBrandSelect() {
+				$.ajax({
+					type:"get",
+					url:urls+ jaroy_url.bSysBrand_brandList,
+					async:true,
+					timeout:30000,
+					dataType:"json",
+					headers:{
+						'X-Access-Token':userMessage.token,
+					},
+					data:{
+						
+					},
+					success:function  (json) {
+						console.log(json);
+						CheckLogout (json);//检查是否登陆过期		
+						if (json.code == 0) {
+							
+							var optionHtml = '<option value="">请选择品牌</option>';
+							var myData = json.data;
+							for (var i = 0; i < myData.length; i++) {
+								optionHtml = optionHtml + '<option data-brandName="' + myData[i]["brandName"] + '" data-id="' + myData[i]["id"] + '" value="' + myData[i]["id"] + '">' + myData[i]["brandName"] + '</option>';
+							}
+							$(".getBrandSelect").html(optionHtml);
+					
+							InitFunc();
+							
+						} else{
+							$(".getBrandSelect").html('<option>获取下拉失败</option>');
+						}
+				
+						InitTime (tableTimeout);
+					},
+					error:function(xml, text, errorThrown) {
+						if (text == "timeout") {
+							TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+						} else{
+							TipsAlert("请求数据失败,请联系后台技术人员");
+						}
+						InitTime (tableTimeout);
+					}
+				})
+			}
+		
+			/**
+			 * 该方法用于初始化操作列里的事件
+			 * */
+			function InitFunc () {  		
+				$(".audited_span").each(function() { //审核按钮
+					$(this).click(function() {
+						var dataset = $(this).parents("td").siblings("td").eq(0)[0].dataset;
+						console.log(dataset)
+						window.location = "goods_audited_detail.html?id="+dataset.id;
+					});
+				});//审核按钮结束括号
+				
+				
+				$(".delete_span").each(function () {//删除按钮
+					$(this).click(function () {
+						var dataset = $(this).parents("td").siblings("td").eq(0)[0].dataset;
+						console.log(JSON.parse(sessionStorage.getItem("user_message")));
+						var userMessage = JSON.parse(sessionStorage.getItem("user_message"));
+						console.log(userMessage.token);
+						swal({
+						    title: "请再次确认是否删除？",
+						    text: "删除后将无法恢复，请谨慎操作！",
+						    type: "warning",
+						    showCancelButton: true,
+						    confirmButtonColor: "#DD6B55",
+						    confirmButtonText: "是的，确定删除",
+						    cancelButtonText: "让我再考虑一下…",
+						    closeOnConfirm: false,
+						    closeOnCancel:true
+						}, function (yes) {
+							if (yes) {
+								Showload("正在请求删除，请稍后....");
+								deleteTimeOut = setInterval("Timeout(deleteTimeOut)", 1000);
+								$.ajax({
+									type:"post",
+									url:urls + jaroy_url.bsysGoodsCate_delete,
+									async:true,
+									timeout:30000,
+									dataType:"json",
+									headers:{
+										'X-Access-Token':userMessage.token,
+									},
+									data:{id:dataset.id},
+									success:function(json) {
+										console.log(json);
+										CheckLogout (json);
+										if (json.code == 0) {
+											swal({
+											    title: "删除成功",
+											    text: "删除成功",
+											    type: "success",
+											},function () {
+												location.reload();
+											});
+										}
+										InitTime (deleteTimeOut);
+									},
+									error:function (xml,text,e) {
+										if (text == "timeout") {
+											TipsAlert("请求超时,请检查网络或着重新操作");
+										} else{
+											TipsAlert("请求数据失败,请联系后台技术人员");
+										}
+										InitTime (deleteTimeOut);
+									}
+								});
+							} 
+						});
+						
+					});	
+				});//删除按钮结束括号
+			}
+			
+			
+		
+		</script>
+
+			
+	</body>
+</html>

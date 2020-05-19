@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/table_jqgrid.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:20:02 GMT -->
+<!-- 消息选择用户页面  -->
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>消息选择用户列表</title>
+
+    <link href="css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="css/timePicker.css" rel="stylesheet">
+    <link href="css/newStyle.css" rel="stylesheet">
+    <link href="js/plugins/fancybox/jquery.fancybox.css" rel="stylesheet">
+
+    <style>
+        /* 重写bookstrap样式表 勿删 */
+        .form_inputs {
+            width: 160px;
+            background-color: #ebebeb;
+            border: 1px solid #06a3f9;
+            border-radius: 20px;
+            -webkit-border-radius: 20px;
+            -moz-border-radius: 20px;
+            -o-border-radius: 20px;
+            -ms-border-radius: 20px;
+        }
+
+        .ibox-title {
+            padding: 20px;
+        }
+
+        .mb30 {
+            margin-bottom: 20px;
+        }
+
+        /* 重写bookstrap样式表 勿删 */
+        .ui-jqdialog {
+            height: auto !important;
+        }
+
+        .ui-common-table tbody {
+            background-color: #eaf5fc !important;
+        }
+
+        .modal-dialog {
+            margin: 80px auto !important;
+        }
+
+        .form-group {
+            margin-left: 0px !important;
+            margin-right: 0px !important;
+        }
+
+        .modal-sm {
+            width: 600px;
+        }
+
+        .col-sm-3 {
+            width: 30%;
+        }
+
+        .col-sm-8 {
+            width: 70%;
+        }
+
+        .form-horizontal .control-label {
+            text-align: left;
+            padding-top: 5px;
+            font-size: 18px;
+        }
+
+        @media only screen and (min-width: 100px) and (max-width: 600px) {
+            .modal-sm {
+                width: 400px;
+            }
+
+            .col-sm-3 {
+                width: 40%;
+            }
+
+            .col-sm-8 {
+                width: 60%;
+            }
+
+            .scroll_div {
+                width: 85%;
+            }
+
+            .form-horizontal .control-label {
+                text-align: left;
+                padding-top: 5px;
+                font-size: 14px;
+            }
+
+            .dialog_btn {
+                font-size: 14px !important;
+            }
+        }
+
+        @media only screen and (min-width: 650px) {
+            .modal-sm {
+                width: 600px;
+            }
+        }
+
+        /*以下是等待状态的通用样式*/
+        .wating_big_div {
+            position: fixed;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            display: table;
+            z-index: 9999;
+        }
+
+        .zhezhao {
+            opacity: 0.3;
+            position: absolute;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+        }
+
+        .wating_content_div {
+            text-align: center;
+            background: none;
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        /*以上是等待状态的通用样式*/
+        .inputcherckStyle {
+            width: 18px;
+            height: 18px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOnAAADpwBB5RT3QAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAA3SURBVDiNY7x8/sR/BioAFgYGBgYdA3OKDLly4SQDEzVcw8DAMGrQqEGjBo1Yg1gYGCDlCaUAAGYpCP6bB9aTAAAAAElFTkSuQmCC")
+        }
+
+        .inputcherckStyle:hover {
+            background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOnAAADpwBB5RT3QAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAA2SURBVDiNY9Tpr/7PQAXARA1DGBgYGFhgjMsFLWQZoDuhhoGBgYouGjVo1KBRg+hjEOOgK48AQfgHj87Hb9sAAAAASUVORK5CYII=")
+        }
+
+        .inputcherckStyle:checked {
+            background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOnAAADpwBB5RT3QAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAEwSURBVDiNY9Tpr/7PQAXARA1DRg1CBbF6Rgz7U8sYtEUlyDcoQkePocwpiEGEm4/BQkYGt0GsTMwMUbr6DIqCwhiGBGloM1Q5hzIwMDAwbL12imHBhbO4DYrRM2SodA5lWBCawqApIg4X91HTYGhwj2BgZGRk2HHjDEPtnq0Mf///x23QwUf3GV5/+cAgxMXLMDc0hcFAQorBTUmVocUjioGRkZFh3+0LDFW7NjP8/vcXw8WM6ClbTkCIYWZAHIOMgAjDj9+/GFiZWRiYmZgYDt65xFC0fR3Dr79/MAzBcBEDAwPDow/vGJLWzGO4++Y5AwcrGwMzExPD4XtXGEp2rMdpCFaDGBgYGJ5/+cSQtG4Bw6Vn9xkO3r3MULRtLcOPP79xGoLVa+SCYZBFaG4QAHB8WIHt6FAxAAAAAElFTkSuQmCC")
+        }
+
+        #timebox {
+            width: 50%;
+            height: 100%;
+            /* display: flex;
+        align-items: center; */
+        }
+
+        #timebox>span {
+            width: 4.16%;
+            display: block;
+            float: left;
+        }
+
+        .title_choose {
+            padding: 5px 10px;
+            font-size: 14px;
+            margin-right: 10px;
+            margin-top: 8px;
+            margin-bottom: 5px;
+            border: 1px solid #ccc;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .nonetext {
+            width: 100%;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            display: none;
+        }
+
+        /* 物流 */
+        .logistics_content {
+            text-align: center;
+            min-height: 200px;
+        }
+
+        .logistics_li {
+            position: relative;
+            padding: 0px 0 20px 25px;
+            line-height: 18px;
+            border-left: 1px solid #A6ABAF;
+            color: #999;
+        }
+
+        .logistics_li .logistics_icona {
+            display: block;
+            position: absolute;
+            left: -7px;
+            top: 0;
+            width: 15px;
+            height: 15px;
+            z-index: 9;
+        }
+
+        .logistics_li .logistics_iconb {
+            display: block;
+            position: absolute;
+            left: -5px;
+            top: 0;
+            width: 10px;
+            height: 10px;
+            z-index: 9;
+        }
+
+        .logistics_text {
+            color: #999999;
+            font-size: 12px;
+            text-align: left;
+            margin-bottom: 10px;
+        }
+
+        .logistics_time {
+            color: #CCCCCC;
+            font-size: 12px;
+            text-align: left;
+        }
+
+        .input_height {
+            height: 34px;
+            border: 1px solid #ccc;
+        }
+
+        .form-horizontal .control-label {
+            font-size: 16px !important;
+        }
+
+        .layer-date {
+            height: 35px !important;
+            width: 150px !important;
+        }
+
+        /* 多选框样式 */
+        .input_choose {
+            width: 16px;
+            height: 16px;
+            position: relative;
+            top: 3px;
+            cursor: pointer;
+        }
+
+        .input_text {
+            color: #999;
+            font-size: 13px;
+            font-weight: normal;
+            cursor: pointer;
+        }
+
+        .input_div {
+            margin-left: 50px;
+        }
+
+        /* 筛选样式按钮 */
+        .opera_btn {
+            background-color: #1abc9c !important;
+            height: 40px;
+            width: 140px;
+            color: #fff;
+            border-radius: 5px;
+            margin-top: -5px;
+        }
+
+        .onoffswitch {
+            margin: 0 auto !important;
+        }
+
+        .send_btn {
+            width: 100%;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .send_btn span {
+            display: inline-block;
+            height: 40px;
+            line-height: 40px;
+            width: 180px;
+            background-color: #1abc9c;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content  animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+
+                <div class="ibox ">
+                    <div class="ibox-title pull-left w100p" style="padding: 10px 20px;">
+                        <div class="pull-left">
+                            <div class="ibox-tools cache5">
+                                选择用户
+                            </div>
+                        </div>
+
+                        <div class="pull-right">
+                            <button class="refresh_btn">
+                                <a class="refresh_a">
+                                    <i class="fa fa-refresh"></i> 刷新
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+
+
+                    <div class="ibox-content pull-left w100p jqGrid_wrapper" id="uploadedWrap" data-gridtype="0"
+                        style="padding-top: 0px;">
+                        <div class="w100p chaxunBorder">
+                            <div class="ibox-title w100p"
+                                style="height:50px;background-color: rgb(243, 243, 243);padding: 10px 20px;border-top:0px;">
+                                <div class="ibox-tools pull-left">
+                                    <span class="titleFindIcon pull-left"></span>
+                                    <span class="pull-left" style="position: relative;top: 3px;left: 5px;">筛选条件</span>
+                                </div>
+                                <!-- <div class="pull-right">
+                                    <button class="opera_btn" id="check_btn">查询</button>
+                                </div> -->
+                            </div>
+                            <!-- 普通用户 -->
+                            <div class="w100p p20" style="border-top: 1px solid #eee;">
+                                <div class="ml30">
+                                    <span class="f14 pull-left h30 lh30">普通用户：</span>
+                                    <div class="pull-left" style="display: flex;">
+
+                                        <div class="input_div">
+                                            <input type="checkbox" name="" id="all_nom" class="input_choose" checked>
+                                            <label for="all_nom" class="input_text">全部</label>
+                                        </div>
+
+                                        <div class="input_div">
+                                            <input type="checkbox" name="" id="nom1" class="input_choose">
+                                            <label for="nom1" class="input_text">7天未打开App</label>
+                                        </div>
+
+                                        <div class="input_div">
+                                            <input type="checkbox" name="" id="nom2" class="input_choose">
+                                            <label for="nom2" class="input_text">首次登陆App</label>
+                                        </div>
+
+                                        <div class="input_div">
+                                            <input type="checkbox" name="" id="nom3" class="input_choose">
+                                            <label for="nom3" class="input_text">30天未登陆App</label>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- 导购员 -->
+                            <div class="w100p p20" style="display: flex;border-top: 1px solid #eee;">
+                                <div class="ml30">
+                                    <span class="f14 pull-left h30 lh30">保购员：</span>
+                                    <div class="pull-left">
+                                        <div style="margin-left: 64px;">
+                                            <input type="checkbox" name="" id="all_nom1" class="input_choose" checked>
+                                            <label for="all_nom1" class="input_text">全部</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 线上商户 -->
+                            <div class="w100p p20" style="display: flex;border-top: 1px solid #eee;">
+                                <div class="ml30">
+                                    <span class="f14 pull-left h30 lh30">线上商户：</span>
+                                    <div class="pull-left">
+                                        <div class="input_div">
+                                            <input type="checkbox" name="" id="all_nom2" class="input_choose" checked>
+                                            <label for="all_nom2" class="input_text">全部</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 技术服务商 -->
+                            <div class="w100p p20" style="display: flex; border-top: 1px solid #eee;">
+                                <div class="ml30">
+                                    <span class="f14 pull-left h30 lh30">技术服务商：</span>
+                                    <div class="pull-left">
+                                        <div style="margin-left: 36px;">
+                                            <input type="checkbox" name="" id="all_nom3" class="input_choose" checked>
+                                            <label for="all_nom3" class="input_text">全部</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 选择发送用户 -->
+                            <div class="w100p p20" style="display: flex; border-top: 1px solid #eee;">
+                                <div class="ml30" style="position: relative;width: 100%;">
+                                    <span class="f14 pull-left h30 lh30">请选择发送用户：</span>
+                                    <div class="pull-left" style="position: absolute;right: 10px;">
+                                        <button class="opera_btn" id="check_btn">确认</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ibox-title pull-left w100p table-head"
+                            style="background-color: rgb(243, 243, 243);padding: 10px 20px;border-top:0px;">
+                            <div class="pull-left">
+                                <div class="ibox-tools">
+                                    <span class="titleFontIcon"></span>
+                                    <span class="pull-left" style="position: relative;top: 3px;left: 5px;">数据列表</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 列表标题 -->
+                        <div class="pull-left w100p">
+                            <table class="table table-bordered mb0 ">
+                                <thead>
+                                    <tr>
+                                        <th><input name="Fruit" class="w20 h20 header_checkbox" type="checkbox" checked
+                                                value="" /></th>
+                                        <th>用户身份</th>
+                                        <th>店铺名称</th>
+                                        <th>用户账号</th>
+                                        <th>用户昵称</th>
+                                        <th>保购星级</th>
+                                        <th>联系电话</th>
+                                    </tr>
+                                </thead>
+                                <!-- 列表的数据 -->
+                                <tbody id="tbody_list1">
+
+                                </tbody>
+                            </table>
+                            <div class="nonetext">暂无数据</div>
+                        </div>
+                        <div class="pull-left tac c0 f14 w100p pre mt10" id="footer_page_div">
+                            <div class="">
+                                <div class="pull-left">
+                                    <div class="ibox-tools">
+                                        <a class="refresh_a">
+                                            <i class="fa fa-refresh"></i> 刷新
+                                        </a>
+                                    </div>
+                                </div>
+                                <!-- 操作分页 -->
+                                <span class="under_line cursor_pointer f_last_span">上一页</span>
+                                <span class="pl20 f_page_span">1</span>
+                                <span class="pl20 under_line cursor_pointer f_next_span">下一页</span>
+                                <span class="pl20">共 <span class="f_count_page_span">1</span> 页</span>
+                                <div class="disib ml20">
+                                    每页显示：
+                                    <select class="p0 disib f_page_select">
+                                        <option value="" selected="selected">10</option>
+                                        <option value="">20</option>
+                                        <option value="">30</option>
+                                    </select>
+                                    条
+                                </div>
+                            </div>
+                            <div class="record_right_div">
+                                数据库总数量： <span class="f_counts_span">0</span> 条
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 发送按钮 -->
+        <div class="send_btn">
+            <span class="send_message">发送</span>
+        </div>
+    </div>
+    <script src="js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script src="js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="js/plugins/peity/jquery.peity.min.js"></script>
+    <script src="js/content.min.js?v=1.0.0"></script>
+    <script src="js/plugins/layer/laydate/laydate.js"></script>
+    <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+    <script src="js/plugins/iCheck/icheck.min.js"></script>
+    <script src="js/plugins/fancybox/jquery.fancybox.js"></script>
+    <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/jquery-timepicker.js" type="text/javascript" charset="utf-8"></script>
+    <!--ajax上传插件:jquery.form ajaxSubmit-->
+    <script src="js/jquery-form.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        layui.use(['layedit', 'laydate', 'form'],
+            function () {
+                var table = layui.table,
+                    layer = layui.layer,
+                    form = layui.form
+            });
+
+        var tableTimeout, addTimeout, setPowerTime, editManageTimeout, deleteTimeOut, getPowerTime,
+            limits = 10,
+            page = 1,
+            counts = 0,
+            table_title, roleID;
+        var cherk_roleId;
+
+        var totalPages = 0;
+        var maxIndex;
+        var userMessage;
+        var userTypeCommon = 1, userTypeSale = 1, userTypeStore = 1, userTypeServer = 1
+
+        // 获取页面跳转过来参数
+        function getUrlParam(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+            var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+            if (r != null) return unescape(r[2]); return null; //返回参数值
+        }
+        var noteId = getUrlParam("id"); //当前模板id
+        // console.log(noteId)
+
+        $(document).ready(function () {
+            IsTokenSave();
+            userMessage = JSON.parse(sessionStorage.getItem("user_message"));
+
+            $(".refresh_a").click(function () { //刷新按钮
+                location.reload();
+            });
+            InitTbodyList(page);  //初始化列表数据
+
+            //分页部分的操作
+            $(".f_page_select").change(function () { //选择一页多少条数据的select
+                page = 1; //重置页数
+                $(".f_page_span").html(1); //重置页数
+                limits = $(".f_page_select option:selected").text(); //设置当前显示数量
+                InitTbodyList(page);
+            });
+
+            $(".f_last_span").click(function () { //上一页
+                if (page < 2) {
+                    TipsAlert("这是最前面的数据了");
+                    return false;
+                }
+                page--;
+                $(".f_page_span").html(parseInt($(".f_page_span").html()) - 1);
+                InitTbodyList(page);
+            });
+            $(".f_next_span").click(function () { //下一页
+
+                if (page > maxIndex - 1) {
+                    TipsAlert("这是最后面的数据了");
+                    return false;
+                }
+                page++;
+                $(".f_page_span").html(parseInt($(".f_page_span").html()) + 1);
+                InitTbodyList(page);
+            });
+
+
+            // 全选  取消全选
+            $(".header_checkbox").change(function () {
+                var thisStatus = $(".header_checkbox").is(':checked');
+                // console.log(thisStatus)
+                if (thisStatus) {
+                    $("#tbody_list1 .td_checkbox").prop('checked', true)
+                } else {
+                    $("#tbody_list1 .td_checkbox").removeAttr("checked");
+                }
+            });
+            //单选框操作                
+            $("#tbody_list1").on('change', '.td_checkbox', function () {
+                var $subs = $("#tbody_list1 .td_checkbox");
+                $(".header_checkbox").prop("checked", $subs.length == $subs.filter(":checked").length ? true : false);
+            });
+        })
+
+        // 点击查询按钮
+        $("#check_btn").click(function () {   //确定按钮
+            var check_code1 = $('#all_nom').prop('checked');      //勾选为true 否则false
+            if (check_code1 == true) {
+                userTypeCommon = 1
+            } else {
+                userTypeCommon = 0
+            }
+            // var check_code2 = $('#nom1').prop('checked');
+            // var check_code3 = $('#nom2').prop('checked');
+            // var check_code4 = $('#nom3').prop('checked');
+            var check_code5 = $('#all_nom1').prop('checked');
+            if (check_code5 == true) {
+                userTypeSale = 1
+            } else {
+                userTypeSale = 0
+            }
+            var check_code6 = $('#all_nom2').prop('checked');
+            if (check_code6 == true) {
+                userTypeStore = 1
+            } else {
+                userTypeStore = 0
+            }
+            var check_code7 = $('#all_nom3').prop('checked');
+            if (check_code7 == true) {
+                userTypeServer = 1
+            } else {
+                userTypeServer = 0
+            }
+            page = 1; //重置页数
+            $(".f_page_span").html(1); //重置页数
+            $("#tbody_list1").html('');
+            $(".nonetext").hide();
+            // Showload();
+            InitTbodyList(page); //获取列表数据
+            // InitTime();
+        });
+
+        /**
+         * 该方法用于初始化列表
+         * @param {Number} startIndex startIndex是数据起始下标
+         * */
+        Showload();
+        function InitTbodyList(startIndex) {
+            var tableHtml = "";
+            $.ajax({
+                type: "get",
+                url: urls + 'sysNewsPush/pushUserPage',
+                async: true,
+                timeout: 30000,
+                dataType: "json",
+                headers: {
+                    'X-Access-Token': userMessage.token,
+                },
+                data: {
+                    page: startIndex,
+                    limit: limits,
+                    userTypeCommon: userTypeCommon,
+                    userTypeSale: userTypeSale,
+                    userTypeStore: userTypeStore,
+                    userTypeServer: userTypeServer
+                },
+                success: function (res) {
+                    CheckLogout(res); //检查是否登陆过期
+                    if (res.code == 0) {
+                        InitTime();
+                        totalPages = res.data.records.total;
+                        var myData = res.data.records;
+                        counts = res.data.total;
+                        if (counts == 0) { //显示或隐藏分页
+                            $("#footer_page_div").hide();
+                            $(".nonetext").show();
+                            // InitTime();
+                            return
+                        } else {
+                            $("#footer_page_div").show();
+                        }
+                        maxIndex = (counts / limits).toCeil(0);
+                        $(".f_count_page_span").html(maxIndex); //设置当前共几页  
+                        $(".f_counts_span").html(counts);
+
+                        for (var i = 0; i < myData.length; i++) {
+
+                            tableHtml += '<tr>' +
+                                '<td><input type="checkbox" name=""  data-ip="' + myData[i].typeName + '" class="w20 h20 td_checkbox" value="' + myData[i].wp_member_info_id + '" checked/></td>' +
+                                '<td class="c_1ABC9C">' + myData[i]["typeName"] + '</td>' +
+                                '<td >' + myData[i]["storeName"] + '</td>' +
+                                '<td>' + myData[i]["account"] + '</td>' +
+                                '<td>' + myData[i]["nickName"] + '</td>' +
+                                '<td>' + myData[i]["type"] + '</td>' +
+                                '<td>' + myData[i]["phone"] + '</td>' +
+                                '</tr>';
+                        }
+                        $("#tbody_list1").html(tableHtml);
+                        DealTable();
+
+                    } else {
+                        TipsAlert(res.msg);
+                    }
+                },
+                error: function (xml, text, errorThrown) {
+                    if (text == "timeout") {
+                        TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+                    } else {
+                        TipsAlert("请求数据失败,请联系后台技术人员");
+                    }
+                    // InitTime();
+                }
+            });
+
+            // 点击发送消息
+            $('.send_message').on('click', function () {
+                if(noteId == null){
+                    TipsAlert('请返回新建推送页面选择消息模板！');
+                    return;
+                }
+                layer.msg('消息发送中，请耐心等待！')
+                var user_list = []  //收集没勾选的列表
+                $.each($('.td_checkbox:checkbox:not(:checked)'), function () {
+                    user_list.push($(this).val())
+                })
+                if (user_list.length > 0) {
+                    var noSelectUser = user_list.join(',');
+                } else {
+                    var noSelectUser = '';
+                }
+                //下列为筛选多选框状态
+                var check_code1 = $('#all_nom').prop('checked');      //勾选为true 否则false
+                if (check_code1 == true) {
+                    userTypeCommon = 1
+                } else {
+                    userTypeCommon = 0
+                }
+                var check_code5 = $('#all_nom1').prop('checked');
+                if (check_code5 == true) {
+                    userTypeSale = 1
+                } else {
+                    userTypeSale = 0
+                }
+                var check_code6 = $('#all_nom2').prop('checked');
+                if (check_code6 == true) {
+                    userTypeStore = 1
+                } else {
+                    userTypeStore = 0
+                }
+                var check_code7 = $('#all_nom3').prop('checked');
+                if (check_code7 == true) {
+                    userTypeServer = 1
+                } else {
+                    userTypeServer = 0
+                }
+                // console.log(noteId)
+
+                $.ajax({
+                    type: 'post',
+                    url: urls + 'sysNewsPush/pushUserUpdate',
+                    headers: {
+                        'X-Access-Token': userMessage.token,
+                    },
+                    data: {
+                        pushId: noteId,
+                        userTypeCommon: userTypeCommon,
+                        userTypeSale: userTypeSale,
+                        userTypeStore: userTypeStore,
+                        userTypeServer: userTypeServer,
+                        noSelectUser: noSelectUser
+                    },
+                    success: function (res) {
+                        CheckLogout(res); //检查是否登陆过期
+                        if (res.code == 0) {
+                            swal({
+                                title: "发送消息成功",
+                                type: "success",
+                            });
+                        } else {
+                            TipsAlert(res.code);
+                        }
+                    },
+                    error: function (xml, text, errorThrown) {
+                        if (text == "timeout") {
+                            TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+                        } else {
+                            TipsAlert("请求数据失败,请联系后台技术人员");
+                        }
+                        // InitTime();
+                    }
+                })
+            })
+        }
+    </script>
+</body>
+</html>

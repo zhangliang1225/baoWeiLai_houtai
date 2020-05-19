@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/table_jqgrid.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:20:02 GMT -->
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>一级分类</title>
+
+    <!-- <link rel="shortcut icon" href="favicon.ico"> -->
+    <link href="css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="css/newStyle.css" rel="stylesheet">
+    <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="css/newStyle.css" rel="stylesheet">
+
+    <style>
+        /* 重写bookstrap样式表 勿删 */
+        .form_inputs {
+            width: 160px;
+            background-color: #ebebeb;
+            border: 1px solid #06a3f9;
+            border-radius: 20px;
+            -webkit-border-radius: 20px;
+            -moz-border-radius: 20px;
+            -o-border-radius: 20px;
+            -ms-border-radius: 20px;
+        }
+
+        .ibox-title {
+            padding: 20px;
+        }
+
+        .ui-jqdialog {
+            height: auto !important;
+        }
+
+        .ui-common-table tbody {
+            background-color: #eaf5fc !important;
+        }
+
+        .modal-dialog {
+            margin: 80px auto !important;
+        }
+
+        .form-group {
+            margin-left: 0px !important;
+            margin-right: 0px !important;
+        }
+
+        .modal-sm {
+            width: 600px;
+        }
+
+        .col-sm-3 {
+            width: 30%;
+        }
+
+        .col-sm-8 {
+            width: 70%;
+        }
+
+        .form-horizontal .control-label {
+            text-align: left;
+            padding-top: 5px;
+            font-size: 18px;
+        }
+
+        @media only screen and (min-width: 100px) and (max-width: 600px) {
+            .modal-sm {
+                width: 400px;
+            }
+
+            .col-sm-3 {
+                width: 40%;
+            }
+
+            .col-sm-8 {
+                width: 60%;
+            }
+
+            .scroll_div {
+                width: 85%;
+            }
+
+            .form-horizontal .control-label {
+                text-align: left;
+                padding-top: 5px;
+                font-size: 14px;
+            }
+
+            .dialog_btn {
+                font-size: 14px !important;
+            }
+        }
+
+        @media only screen and (min-width: 650px) {
+            .modal-sm {
+                width: 600px;
+            }
+        }
+
+        .refresh_btn {
+            width: 80px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            box-sizing: border-box;
+            border-width: 1px;
+            border-style: solid;
+            border-color: rgba(204, 204, 204, 1);
+        }
+
+        .refresh_btn a {
+            color: #666666;
+            margin: 0 auto;
+        }
+
+        .opera_btn {
+            width: 80px;
+            height: 30px;
+            align-items: center;
+            box-sizing: border-box;
+            border: 1px solid rgba(204, 204, 204, 1);
+            text-align: center;
+            border-radius: 2px;
+            background-color: #fff;
+        }
+
+        /*以下是等待状态的通用样式*/
+        .wating_big_div {
+            position: fixed;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            display: table;
+            z-index: 9999;
+        }
+
+        .zhezhao {
+            opacity: 0.3;
+            position: absolute;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+        }
+
+        .wating_content_div {
+            text-align: center;
+            background: none;
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        /*以上是等待状态的通用样式*/
+
+        /* .cache5 {
+            height: 30px;
+            line-height: 32px;
+            font-family: '微软雅黑';
+            font-weight: 400;
+            font-style: normal;
+            font-size: 22px;
+            color: #999999;
+            text-align: left;
+            border-left: 5px solid rgb(26, 188, 156);
+            padding-left: 8px;
+        }
+
+        .c_1ABC9C {
+            color: #1ABC9C;
+        }
+
+        table thead tr th {
+            height: 45px;
+            font-family: '微软雅黑 Bold', '微软雅黑 Regular', '微软雅黑';
+            font-weight: 700;
+            font-style: normal;
+            font-size: 14px;
+            color: #666666;
+            text-align: center;
+        }
+
+        .titleFontIcon {
+            width: 20px;
+            height: 30px;
+            display: block;
+            float: left;
+            background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAE0AAABNCAYAAADjCemwAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjMyODQ0NzNDNzU3QTExRUE4NTdDRUJFNDNCMDExRTZDIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjMyODQ0NzNENzU3QTExRUE4NTdDRUJFNDNCMDExRTZDIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MzI4MjI0NTc3NTdBMTFFQTg1N0NFQkU0M0IwMTFFNkMiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MzI4MjI0NTg3NTdBMTFFQTg1N0NFQkU0M0IwMTFFNkMiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz5QkU8sAAAAsklEQVR42uzc0QmAMAxAQSMu2A7aFVMnUEopFHrv268jgiFgZOalsW4E0KBBgwZN0KBt2VNrHf26jYFn06QJGjRo0KAJGjRo0KAdX/wdVt7d9Gig1ppJ83pCgwZN0KBBgwZN0CZ3z1KKu6dJgwYNGjRBgwYNGjRBW7p7unt+5+7p9YQGDZqgQYMGDZqgze+e7p4mDRo0aNAEDRo0aNAEbfXu6UeaJg0aNGjQBA3alnUBBgBDrBtkbTVoTwAAAABJRU5ErkJggg==");
+            background-size: 100%;
+            background-repeat: no-repeat;
+        } */
+
+        /* 新样式 */
+        .modal_input {
+            width: 40%;
+        }
+        .modal_list{
+            width: 100%;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        .ibox-content{
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content  animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox ">
+                    <!-- <div class="ibox-title pull-left w100p" style="padding: 10px 20px;">
+                        <div class="pull-left">
+                            <div class="ibox-tools cache5">
+                                爆款推荐商品列表
+                            </div>
+                        </div>
+
+                        <div class="pull-right">
+                            <button class="refresh_btn">
+                                <a class="refresh_a" style="">
+                                    <i class="fa fa-refresh"></i> 刷新
+                                </a>
+                            </button>
+                        </div>
+                    </div> -->
+                    <div class="ibox-title pull-left w100p" style="padding: 10px 20px;">
+                        <div class="pull-left">
+                            <div class="ibox-tools cache5">
+                                爆款推荐商品列表
+                            </div>
+                        </div>
+
+                        <div class="pull-right">
+                            <button class="refresh_btn">
+                                <a class="refresh_a">
+                                    <i class="fa fa-refresh"></i> 刷新
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+
+
+                    <div class="ibox-content pull-left w100p">
+                        <div class="ibox-title pull-left w100p table-head"
+                            style="background-color: rgb(243, 243, 243);padding: 10px 20px;border-top:0px;">
+                            <div class="pull-left">
+                                <div class="ibox-tools" style="">
+                                    <span class="titleFontIcon"></span>
+                                    <span class="pull-left" style="position: relative;top: 3px;left: 5px;">数据列表</span>
+                                </div>
+                            </div>
+                            <!-- <div class="pull-right">
+									<button class="opera_btn" data-toggle="modal" data-target="#add_dialog">新增</button>
+								</div>	 -->
+                        </div>
+
+                        <div class="pull-left w100p">
+                            <table class="table table-bordered mb0 ">
+                                <thead>
+                                    <tr>
+                                        <th>关联广告</th>
+                                        <th>编号</th>
+                                        <th>店铺名称</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="roleManage_list_tbody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--选择商品弹框-->
+    <div class="modal inmodal fade" id="edit_dialog" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content br8">
+                <div class="modal-header p10 bdno">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <span class="modal-title f18">选择商品</span>
+                </div>
+                <div class="modal-body bg_f p0">
+                    <div class="ibox-content p30">
+                        <div class="modal_input">
+                            <div class="input-group">
+                                <input type="text" id='check_input' class="form-control" placeholder="商品搜索">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" id='check_btn' type="button"><span
+                                            class="glyphicon glyphicon-search"></span></button>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="modal_list">
+                            <div class="pull-left w100p">
+                                <table class="table table-bordered mb0 ">
+                                    <thead>
+                                        <tr>
+                                            <th>品牌</th>
+                                            <th>商品名称</th>
+                                            <th>货号</th>
+                                            <th>价格</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="modal_goodsTab">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="pull-left tac c0 f14 w100p pre mt10 none" id="footer_page_modal">
+                                <div class="">
+                                    <span class="under_line cursor_pointer last_span">上一页</span>
+                                    <span class="pl20 page_span">1</span>
+                                    <span class="pl20 under_line cursor_pointer next_span">下一页</span>
+                                    <span class="pl20">共 <span class="count_page_span">1</span> 页</span>
+                                    <div class="disib ml20">
+                                        每页显示：
+                                        <select class="p0 disib page_select">
+                                            <option value="" selected="selected">10</option>
+                                            <option value="">20</option>
+                                            <option value="">30</option>
+                                        </select>
+                                        条
+                                    </div>
+                                </div>
+                                <div class="record_right_div">
+                                    <!--record_right_div pull-right mt10-->
+                                    数据库总数量： <span class="counts_span">0</span> 条
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bdno tac pt0040">
+                    <button type="button" class=" btn-white clear_btn_style dialog_btn" data-dismiss="modal">关闭</button>
+                    <button type="button" class=" btn-primary clear_btn_style bdno dialog_btn ml30"
+                        id="edit_btn">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="js/plugins/peity/jquery.peity.min.js"></script>
+    <script src="js/content.min.js?v=1.0.0"></script>
+    <script src="js/plugins/layer/laydate/laydate.js"></script>
+    <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+    <script src="js/plugins/iCheck/icheck.min.js"></script>
+    <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/cropper.min.js"></script>
+    <script>
+        var tableTimeout, addTimeout, setPowerTime, editManageTimeout, deleteTimeOut, getPowerTime, limits = 10,
+            page = 1,
+            counts = 0,
+            changeId = 0,
+            table_title, roleID;
+        var cherk_roleId;
+        var dataJson = { goodsName: "", page: 1, limit: 10 };
+        var totalPages = 0;
+        var maxIndex;
+        $(document).ready(function () {
+            IsTokenSave();
+            var userMessage = JSON.parse(sessionStorage.getItem("user_message"));
+            console.log();
+            $(".refresh_a").click(function () {//刷新按钮
+                InitTbodyList();
+            });
+            $(".i-checks").iCheck({ //check必须有的脚本
+                checkboxClass: "icheckbox_square-green",
+                radioClass: "iradio_square-green",
+            });
+            InitTbodyList(); //初始化列表数据
+
+            $("#check_btn").click(function () { //查询按钮
+                dataJson.goodsName = $("#check_input").val();
+                dataJson.page = 1
+                dataJson.limit = 10;
+                $(".page_span").html(1); //重置页数
+                InitTBodyList2(page); //获取列表数据
+            });
+
+            $(".page_select").change(function () { //选择一页多少条数据的select
+                dataJson.page = 1;//重置页数
+                $(".page_span").html(1);//重置页数
+                dataJson.limit = $(".page_select option:selected").text();  //设置当前显示数量
+                InitTBodyList2();
+            });
+            $(".last_span").click(function () {  //上一页
+                if (dataJson.page == 1) {
+                    TipsAlert("这是最前面的数据了");
+                    return false;
+                }
+                dataJson.page--;
+                start = dataJson.page * dataJson.limits;
+                $(".page_span").html(dataJson.page);
+                InitTBodyList2();
+            });
+            $(".next_span").click(function () {  //下一页
+                if (counts == dataJson.page) {
+                    TipsAlert("这是最后面的数据了");
+                    return false;
+                }
+                dataJson.page++;
+                start = dataJson.page * dataJson.limits;
+                $(".page_span").html(dataJson.page);
+                InitTBodyList2();
+            });
+            
+
+            $("#edit_btn").click(function () { //选择商品的保存按钮
+                var storeId = $("#modal_goodsTab input:checked").attr("data-id");
+                var storeName = $("#modal_goodsTab input:checked").attr("data-name");
+                if (storeId) {
+                    submitButton(storeId, storeName);
+                } else {
+                    TipsAlert("请选择商品")
+                }
+            });
+
+
+        });
+
+        /**
+         * 该方法用于初始化列表
+         * @param {Number}  是数据起始下标
+         * */
+        function InitTbodyList() {
+            Showload("正在初始化列表......");
+            var add_type = 1;
+            $(".add_type").val(add_type);
+            $(".edit_type").val(add_type);
+            tableTimeout = setInterval("Timeout(tableTimeout)", 1000);
+            $.ajax({
+                type: "get",
+                url: urls + common_url.brandStoreBaoList,
+                async: true,
+                timeout: 30000,
+                dataType: "json",
+                headers: {
+                    'X-Access-Token': userMessage.token,
+                },
+                // data: {
+                //     type: add_type,
+                //     pageNum: startIndex,
+                //     pageSize: limits
+                // },
+                success: function (json) {
+                    // console.log(json);
+                    CheckLogout(json); //检查是否登陆过期
+                    if (json.code == 0) {
+                        var myData = json.data;
+                        var tableHtml = "";
+                        console.log(myData);
+                       
+                        for (var i = 0; i < myData.length; i++) {
+                            tableHtml = tableHtml + '<tr>' +
+                                '<td>' + myData[i]["type"] + '</td>' +
+                                '<td>' + myData[i]["goods_num"] + '</td>' +
+                                '<td>' + myData[i]["goods_name"] + '</td>' +
+                                '<td>' +
+                                '<span class="under_line cursor_pointer edit_span pl20 c_1ABC9C" data-id="' + myData[i].hurdles_id + '" data-toggle="modal" data-target="#edit_dialog">选择商品</span>' +
+                                '</td>' +
+                                '</tr>';
+                        }
+                        $("#roleManage_list_tbody").html(tableHtml);
+                        DealTable();
+                        InitFunc();
+                    } else {
+                        TipsAlert(json.code);
+                        // if (json.return_msg == "Session过期") {
+                        // 	window.location = "login_timeout.html";
+                        // }else{
+                        // 	TipsAlert(json.return_msg);
+                        // }
+                    }
+                    InitTime(tableTimeout);
+                },
+                error: function (xml, text, errorThrown) {
+                    if (text == "timeout") {
+                        TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+                    } else {
+                        TipsAlert("请求数据失败,请联系后台技术人员");
+                    }
+                    InitTime(tableTimeout);
+                }
+
+            });
+        }
+
+
+        /**
+         * 该方法用于初始化操作列里的事件
+         * */
+        function InitFunc() {
+            $(".edit_span").each(function () { //编辑按钮
+                $(this).click(function () {
+                    dataJson = { goodsName: "", page: 1, limit: 10 }
+                    changeId = $(this).attr("data-id");
+                    InitTBodyList2()
+
+                });
+            }); //编辑按钮结束括号
+        }
+        function InitTBodyList2 () {
+            var html = "";
+            $.ajax({
+                url: urls + common_url.baoGoodsListPage,
+                type: "get",
+                timeout: 30000,
+                dataType: "json",
+                headers: {
+                    'X-Access-Token': userMessage.token,
+                },
+                data: dataJson,
+                success: function (res) {
+                    CheckLogout(res); //检查是否登陆过期
+                    if (res.code == 0 && res.data.records.length != 0) {
+                        res.data.records.forEach(function (e, i) {
+                            html +=  '<tr>' +
+                                '<td>' + e.brand_name + '</td>' +
+                                '<td>' + e.goods_name+ '</td>' +
+                                '<td>' + e.goods_num+ '</td>' +
+                                '<td>' + e.goods_price+ '</td>' +
+                                '<td>' +
+                                    '<input type="checkbox" data-name="' + e.goods_name + '" data-id="' + e.goods_id + '" name="" class="w20 h20 checkbox" value="" />' +
+                                '</td>' +
+                                '</tr>';
+                        })
+                        dataList = res.data.records
+                        $(".counts_span").text(res.data.total);
+                        $("#modal_goodsTab").html(html);
+                        $(".count_page_span").text(res.data.pages)
+                        counts = res.data.pages
+                        if (res.data.total == 0) { //显示或隐藏分页
+                            $("#footer_page_modal").hide();
+                        } else {
+                            $("#footer_page_modal").show();
+                        }
+                        $(".checkbox").change(function () {
+                            //单选
+                            if ($(this).attr("checked") != "checked") {
+                                $("#modal_goodsTab input").removeAttr("checked");
+                                $(this)[0].checked = true;
+                            }
+                        });
+                    } else {
+                        html = '<tr><th colspan="3">暂无数据</th></tr>'
+                        $("#modal_goodsTab").html(html);
+                    }
+                }
+            })
+        }
+        function submitButton(storeId, storeName) {
+            $.ajax({
+                url: urls + common_url.sysBrandPavilionSaveOrUpdate,
+                type: "post",
+                timeout: 30000,
+                dataType: "json",
+                headers: {
+                    'X-Access-Token': userMessage.token,
+                },
+                data: {
+                    storeId: storeId,
+                    storeName: storeName,
+                    type: 7,
+                    hurdlesId: changeId
+                },
+                success: function (res) {
+                    if (res.code == 0) {
+                        CheckLogout(res);
+                        location.reload();
+                    } else {
+                        TipsAlert(res.msg);
+                    }
+                }
+            })
+        }
+    </script>
+</body>
+
+</html>

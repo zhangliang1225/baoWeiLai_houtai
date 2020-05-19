@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		
+		<title>登陆超时</title>
+		<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+	    <link href="css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+	    <link href="css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+	    <link href="css/animate.min.css" rel="stylesheet">
+	    <link href="css/style.min862f.css?v=4.1.0" rel="stylesheet">
+	    <style type="text/css">
+	    	.gohome{display: none;}
+	    </style>
+	</head>
+	<body>
+		<div class="w100p distab h100p">
+			<div class="m0a cell_middle tac ">
+				<div class="disib">
+					<img src="img/break.png" class="w200 mb60"/>
+				</div>
+				<div class="disib ml60 tal">
+					<p class="f18">抱歉，页面加载超时，请重新登陆</p>
+					<button class="btn-primary bg_5bb7ee br8 bdno f18 p10 w130">重新登陆</button>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="js/jquery.min.js?v=2.1.4"></script>
+    <script src="js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="js/content.min.js?v=1.0.0"></script>
+    <script src="js/jaroy.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+    	if(window.top !== window.self) {
+			window.top.location = window.location
+		};
+    	$(document).ready(function () {
+    		
+    		sessionStorage.removeItem("token");
+    		sessionStorage.removeItem("user_message");
+    		$(".btn-primary").click(function () {
+				window.location = "login_v2.html";
+    		});
+    	});
+    </script>
+</html>

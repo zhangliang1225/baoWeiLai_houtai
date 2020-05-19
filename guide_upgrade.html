@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/table_jqgrid.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:20:02 GMT -->
+<!-- 保购升级页面 -->
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>保购升级页面</title>
+
+    <link href="css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="css/timePicker.css" rel="stylesheet">
+    <link href="css/newStyle.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <!-- <link rel="stylesheet" href="./css/domain.css"> -->
+    <!--图片插件-->
+    <link href="js/plugins/fancybox/jquery.fancybox.css" rel="stylesheet">
+
+    <style>
+        /* 重写bookstrap样式表 勿删 */
+        .form_inputs {
+            width: 160px;
+            background-color: #ebebeb;
+            border: 1px solid #06a3f9;
+            border-radius: 20px;
+            -webkit-border-radius: 20px;
+            -moz-border-radius: 20px;
+            -o-border-radius: 20px;
+            -ms-border-radius: 20px;
+        }
+
+        .ibox-title {
+            padding: 20px;
+        }
+
+        .mb30 {
+            margin-bottom: 20px;
+        }
+
+        /* 重写bookstrap样式表 勿删 */
+        .ui-jqdialog {
+            height: auto !important;
+        }
+
+        .ui-common-table tbody {
+            background-color: #eaf5fc !important;
+        }
+
+        .modal-dialog {
+            margin: 80px auto !important;
+        }
+
+        .form-group {
+            margin-left: 0px !important;
+            margin-right: 0px !important;
+        }
+
+        .modal-sm {
+            width: 600px;
+        }
+
+        .col-sm-3 {
+            width: 30%;
+        }
+
+        .col-sm-8 {
+            width: 70%;
+        }
+
+        .form-horizontal .control-label {
+            text-align: left;
+            padding-top: 5px;
+            font-size: 18px;
+        }
+
+        @media only screen and (min-width: 100px) and (max-width: 600px) {
+            .modal-sm {
+                width: 400px;
+            }
+
+            .col-sm-3 {
+                width: 40%;
+            }
+
+            .col-sm-8 {
+                width: 60%;
+            }
+
+            .scroll_div {
+                width: 85%;
+            }
+
+            .form-horizontal .control-label {
+                text-align: left;
+                padding-top: 5px;
+                font-size: 14px;
+            }
+
+            .dialog_btn {
+                font-size: 14px !important;
+            }
+        }
+
+        @media only screen and (min-width: 650px) {
+            .modal-sm {
+                width: 600px;
+            }
+        }
+
+        /*以下是等待状态的通用样式*/
+        .wating_big_div {
+            position: fixed;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            display: table;
+            z-index: 9999;
+        }
+
+        .zhezhao {
+            opacity: 0.3;
+            position: absolute;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+        }
+
+        .wating_content_div {
+            text-align: center;
+            background: none;
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        .coupon_content {
+            width: 95%;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .coupon_content_box {
+            background: #fff;
+        }
+
+        .coupon_content_pading {
+            width: 95%;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .coupon_title {
+            width: 100%;
+            background: #f4f4f4;
+        }
+
+        .coupon_title_box {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 0;
+            align-items: center;
+        }
+
+        .coupon_title_box i {
+            font-size: 16px;
+            color: red;
+        }
+
+        .coupon_title_left span {
+            font-size: 15px;
+            color: red;
+        }
+
+        .coupon_title_right {
+            width: 80px;
+            height: 35px;
+            border: 1px solid #ccc;
+            line-height: 35px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .coupon_info {
+            width: 100%;
+            margin: 20px 0 10px;
+            font-size: 16px;
+        }
+
+        .coupon_content_info {
+            width: 100%;
+            margin-bottom: 40px;
+        }
+
+        .coupon_content_kaiguan {
+            width: 100%;
+            display: none;
+        }
+
+        .coupon_content_button {
+            width: 100%;
+            margin: 50px 0px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .coupon_content_bton {
+            width: 160px;
+            height: 35px;
+            border: 1px solid #000000;
+            text-align: center;
+            line-height: 35px;
+            border-radius: 3px;
+            color: #000;
+            cursor: pointer;
+        }
+
+        .coupon_content_btoff {
+            width: 160px;
+            height: 35px;
+            text-align: center;
+            line-height: 35px;
+            background: inherit;
+            background-color: rgba(26, 188, 156, 1);
+            border: none;
+            border-radius: 3px;
+            margin-left: 60px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .videosList {
+            width: 140px !important;
+            height: 80px !important;
+        }
+
+        .coupon_table_footer {
+            width: 100%;
+        }
+
+        .coupon_table_fbox {
+            width: 96%;
+            height: 47px;
+            line-height: 47px;
+            text-align: right;
+            background: #eaf5fc;
+            border-bottom: 1px solid #e7eaec;
+            border-right: 1px solid #e7eaec;
+            border-left: 1px solid #e7eaec;
+        }
+
+        .coupon_table_fbox span {
+            color: red;
+            margin-right: 20px;
+        }
+
+        .coupon_table_info tr th:nth-child(1) {
+            width: 20%;
+        }
+
+        .coupon_table_info tr th:nth-child(2) {
+            background: #fff;
+        }
+
+        .coupon_table_form tr th:nth-child(1) {
+            width: 20%;
+        }
+
+        .coupon_table_form tr th:nth-child(2) {
+            background: #fff;
+            text-align: left;
+        }
+
+        #check_div select {
+            width: 140px;
+        }
+
+        #freight_price label {
+            line-height: 30px;
+            height: 30px;
+            overflow: hidden;
+        }
+
+        #freight_price input {
+            margin-top: 10px;
+        }
+
+        /* 步骤条 */
+        .coupon_title_sup {
+            width: 100%;
+            height: 120px;
+            overflow: hidden;
+        }
+
+        .steps {
+            width: 70%;
+            margin: 20px auto;
+        }
+
+        .step {
+            position: relative;
+            vertical-align: top;
+            display: inline-block;
+            margin-right: 130px;
+        }
+
+        .step-head {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            line-height: 50px;
+            text-align: center;
+            vertical-align: top;
+            color: #bfcbd9;
+            font-size: 20px;
+            border: 2px solid #bfcbd9;
+            z-index: 10000;
+        }
+
+        .step-main {
+            font-size: 16px;
+            color: #48576a;
+            margin-top: 10px;
+        }
+
+        .step-line {
+            position: absolute;
+            top: 23px;
+            height: 5px;
+            width: 100px;
+            right: -110px;
+            display: inline-block;
+            background-color: #bfcbd9;
+            z-index: 10000;
+        }
+
+        .step-circle {
+            margin: 8px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #bfcbd9;
+        }
+
+        .is-sucess>.step-head {
+            color: #FFA71F;
+            border-color: #FFA71F;
+        }
+
+        .is-sucess>.step-head .step-circle {
+            background-color: #FFA71F;
+        }
+
+        .is-sucess>.step-head>.step-line {
+            background-color: #FFA71F;
+        }
+
+        .last-sucess>.step-head {
+            color: #FFA71F;
+            border-color: #FFA71F;
+        }
+
+        .last-sucess>.step-head .step-circle {
+            background-color: #FFA71F;
+        }
+
+        /* 表格 */
+        .coupon_table {
+            margin: 20px 0;
+            width: 100%;
+        }
+
+        .coupon_table_box {
+            width: 100%;
+            font-size: 12px;
+        }
+      .coupon_table_box tbody {
+          width: 100%;
+      }
+        .coupon_table_box tr {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .coupon_table_box td {
+            border: 1px solid #ccc;
+            border-right: none;
+            border-top: none;
+            display: inline-block;
+            padding: 0;
+            width: 16.58%;
+        }
+
+        .coupon_table_box td:last-child {
+            border-right: 1px solid #ccc !important;
+        }
+
+        .my_title {
+            /* padding: 15px 0; */
+            height: 40px;
+            line-height: 40px;
+            background: #F5F5F6;
+            border-bottom: 1px solid #ccc;
+            width: 100%;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .top_border {
+            border-top: 1px solid #ccc;
+        }
+
+        .my_content {
+            /* padding: 20px 0; */
+            height: 50px;
+            line-height: 50px;
+            width: 100%;
+            text-align: center;
+            background: #eaf5fc;
+        }
+        #goodsInfo td {
+            width: 24%;
+        }
+        #andGoodsInfo td {
+            width: 24%;
+        }
+        .right_border {
+            border-right: 1px solid #ccc;
+        }
+        .layui-laypage {
+            margin-left: 280px !important;
+        }
+
+        .xh_table tr {
+            background-color: #eaf5fc !important;
+        }
+
+        .xh_table thead tr {
+            background-color: #f2f2f2 !important;
+        }
+
+        .xh_table tbody tr:hover {
+            background-color: #d4e6f0 !important;
+        }
+        .layui-table-body {
+            height: 400px !important;
+        }
+        .layui-border-box {
+            height: 490px !important
+        }
+    </style>
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content  animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox ">
+                    <div class="ibox-title pull-left w100p" style="padding: 10px 20px;">
+                        <div class="pull-left">
+                            <div class="ibox-tools cache5">
+                                保购升级
+                            </div>
+                        </div>
+
+                        <div class="pull-right">
+                            <button class="refresh_btn">
+                                <a class="refresh_a">
+                                    <i class="glyphicon glyphicon-chevron-left"></i> 返回
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- 详细记录 -->
+                    <div class="coupon_content_box">
+                        <div class="coupon_content_pading">
+                            <div class="coupon_content_info">
+                                <div class="coupon_info">
+                                    <span>当前数据记录</span>
+                                </div>
+                                <div class="coupon_table">
+                                    <table class="coupon_table_box">
+
+                                        <tr>
+                                            <td>
+                                                <div class="my_title top_border">时间节点</div>
+                                                <div class="my_content record1"></div>
+                                            </td>
+                                            <td>
+                                                <div class="my_title top_border">保购姓名</div>
+                                                <div class="my_content record2"></div>
+                                            </td>
+                                            <td>
+                                                <div class="my_title top_border">保购昵称</div>
+                                                <div class="my_content record3"></div>
+                                            </td>
+                                            <td>
+                                                <div class="my_title top_border">保购等级</div>
+                                                <div class="my_content record4"></div>
+                                            </td>
+                                            <td>
+                                                <div class="my_title top_border">用户账号</div>
+                                                <div class="my_content record5"></div>
+                                            </td>
+                                            <td>
+                                                <div class="my_title right_border top_border">拉新用户数</div>
+                                                <div class="my_content record6 right_border"></div>
+                                            </td>
+                                            <td>
+                                                <div class="my_title">月新增点赞数</div>
+                                                <div class="my_content record7"></div>
+                                            </td>
+                                            <td>
+                                                <div class="my_title">月新增发布数</div>
+                                                <div class="my_content record8"></div>
+                                            </td>
+                                            <td>
+                                                <div class="my_title">月新增销售额</div>
+                                                <div class="my_content record9"></div>
+                                            </td>
+                                            <td>
+                                                <div class="my_title">月新增销售单</div>
+                                                <div class="my_content record10"></div>
+                                            </td>
+                                            <td>
+                                                <div class="my_title">月新增粉丝数</div>
+                                                <div class="my_content record11"></div>
+                                            </td>
+                                            <td>
+                                                <div class="my_title" ></div>
+                                                <div class="my_content infol"></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- 详情记录 -->
+                            <div class="coupon_content_info">
+                                <div class="coupon_info">
+                                    <span>详细记录</span>
+                                </div>
+                                <div class="coupon_table xh_table">
+                                    <!-- 表格部分 -->
+                                    <table id="guideListTable" lay-filter="test" style="width: 100%;"></table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="js/plugins/peity/jquery.peity.min.js"></script>
+    <script src="js/content.min.js?v=1.0.0"></script>
+    <!-- 引入layui框架 -->
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script src="js/plugins/layer/laydate/laydate.js"></script>
+    <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+    <script src="js/plugins/fancybox/jquery.fancybox.js"></script>
+    <script src="js/plugins/iCheck/icheck.min.js"></script>
+    <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/jquery-timepicker.js" type="text/javascript" charset="utf-8"></script>
+    <!--ajax上传插件:jquery.form ajaxSubmit-->
+    <script src="js/jquery-form.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        // 获取页面跳转过来参数
+        function getUrlParam(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+            var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+            if (r != null) return unescape(r[2]); return null; //返回参数值
+        }
+        var guide_id = getUrlParam("id"); //当前导购员id
+        // console.log(guide_id)
+
+        $(document).ready(function () {
+            IsTokenSave();
+            $(".refresh_a").click(function () { //返回上一页
+                window.history.go(-1);
+            });
+        });
+
+    // 渲染头部数据
+    $.ajax({
+        type : 'get',
+        url : urls + 'smallOrderStoreService/selectSaleData',
+        headers : {
+            'X-Access-Token': JSON.parse(sessionStorage.getItem("user_message")).token
+        },
+        // dataType : 'json',
+        // contentType: 'application/json;charset=UTF-8',
+        data : {
+            saleId : Number(guide_id)
+        },
+        success : function(res){
+            CheckLogout(res); //检查是否登陆过
+          if(res.code == 0){
+              $('.record1').text(res.data[0].systemtime)
+              $('.record2').text(res.data[0].salesName)
+              $('.record3').text(res.data[0].nickname)
+              $('.record4').text(res.data[0].grade)
+              $('.record5').text(res.data[0].account_phone)
+              $('.record6').text(res.data[0].pull_new_user_num)
+              $('.record7').text(res.data[0].like_num)
+              $('.record8').text(res.data[0].release_num)
+              $('.record9').text(res.data[0].sales_amount_num)
+              $('.record10').text(res.data[0].sales_num)
+              $('.record11').text(res.data[0].fans_num)
+          }else{
+            TipsAlert("请求数据失败,请联系后台技术人员");  
+          }
+        }
+    })
+
+        layui.use('table',
+            function () {
+                var table = layui.table
+                table.render({
+                    elem: '#guideListTable',
+                    height: '600',
+                    url: urls + 'smallOrderStoreService/selectSaleInfo' //数据接口
+                    , method: 'get' //如果无需自定义HTTP类型，可不加该参数
+                    , headers: {
+                        'X-Access-Token': JSON.parse(sessionStorage.getItem("user_message")).token,
+                    },
+                    where : {saleId	 :Number(guide_id) }
+                    , page: true //开启分页
+                    , limits: [5, 8, 10, 12]
+                    , limit: 10
+                    , parseData: function (res) { //res 即为原始返回的数据
+                        //console.log(res)
+                        CheckLogout(res);
+                        return {
+                            "code": res.code, //解析接口状态
+                            "msg": res.msg, //解析提示文本
+                            "count": res.data.total, //解析数据长度
+                            "data": res.data.records //解析数据列表
+                        }
+                    },
+                    cols: [
+                        [ //表头
+                            {
+                                field: 'date',
+                                title: '时间节点',
+                                align: 'center',
+                            }, {
+                                field: 'recordNumber',
+                                title: '拉新用户数',
+                                align: 'center',
+                                width: 120
+                            }, {
+                                field: 'thumbNumber',
+                                title: '点赞数',
+                                align: 'center',
+                                width: 120
+                            },
+                            {
+                                field: 'opusCountNumber',
+                                title: '发布数',
+                                align: 'center',
+                            },
+                            {
+                                field: 'money',
+                                title: '销售额',
+                                align: 'center',
+                            }, {
+                                field: 'total',
+                                title: '销售单数',
+                                align: 'center',
+                            }
+                            , {
+                                field: 'followerNumber',
+                                title: '粉丝数',
+                                align: 'center',
+                            },
+                            {
+                                field: 'grade',
+                                title: '详情',
+                                align: 'center',
+                                width: 120
+                            }
+                        ]
+                    ]
+                })
+            })
+
+
+    </script>
+</body>
+
+</html>

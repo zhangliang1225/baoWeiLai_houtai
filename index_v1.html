@@ -1,0 +1,725 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<title>系统首页</title>
+	 <!-- <link rel="shortcut icon" href="favicon.ico"> <link href="css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet"> -->
+    <link href="css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+	<link href="js/plugins/fancybox/jquery.fancybox.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/newStyle.css">
+    <style type="text/css">
+    	/*以下是等待状态的通用样式*/
+		.wating_big_div{position: absolute;top:0px ;width: 100%;height: 100%;display: table;z-index: 9999;}
+		.zhezhao{opacity: 0.3;position: absolute;top: 0px;width: 100%;height: 100%;z-index: 9999;}
+		.wating_content_div{text-align: center;background:none;display: table-cell;vertical-align: middle;}	
+		/*以上是等待状态的通用样式*/
+		.yunyingBox{
+			width: 118px;height: 156px;
+			cursor: pointer;
+			box-sizing: border-box;
+		}
+		.yunyingBox:hover{
+			border-left: 1px solid rgba(242, 242, 242, 1);
+			border-right: 1px solid rgba(242, 242, 242, 1);
+			background-color: rgb(243, 243, 243);
+			color: #1ABC9C!important;
+		}
+		.yunyingBox > .imgbox {
+			width: 60px;
+			height: 60px;
+		}
+		.orderChg{
+			width: 50px;cursor: pointer;text-align: center;
+		}
+		.Chg_active{
+			color: #1ABC9C;
+		}
+		.customBox_body_reWrite{
+			display: flex!important;;align-items: center!important;justify-content: space-between;padding: 20px 0 0 0!important;background-color: rgba(249, 249, 249, 1)!important;
+		}
+    </style>
+</head>
+<body class="gray-bg none" style="background-color: rgba(249, 249, 249, 1);">
+	<div class="w100p" style="display: flex;align-items: center;flex-direction: column;">
+		<div class="w100p menu_title dfaic" style="justify-content:space-between;">
+			<div class="">
+				<div class="ibox-tools cache5" style="margin: 0;margin-left: 30px;">
+					系统首页
+				</div>
+			</div>
+			
+			<div class="mr30" >
+				<button class="refresh_btn">
+					<a class="refresh_a" style="">
+						<i class="fa fa-refresh"></i> 刷新
+					</a>
+				</button>
+			</div>
+		</div>
+		
+		<div class="w100p">
+			<div class="customBox dfdc">
+				<div class="customBox_title">
+					<div class="customBox_title_text h45px pl20 fz14 customBox_border">
+						线上商城订单总览
+					</div>
+				</div>
+				<div class="customBox_body dfaic customBox_body_reWrite" style="">
+					<div class="w4fen">
+						<div class="h100px m0a h40px customBox_border bg_f dfaic">
+							<div class="dfaic ml20"><img class="m0a" src="./img/index_v1_01.png" style="width: 64px;height: 64px;" ></div>
+							<div class="dfdc ml20"><div class="h25px fz17">今日订单数</div><div class="h25px customBox_title_text fz20 mt10">200</div></div>
+						</div>
+					</div>
+					<div class="w4fen">
+						<div class="h100px m0a h40px customBox_border bg_f dfaic">
+							<div class="dfaic ml20"><img class="m0a" src="./img/index_v1_02.png" style="width: 64px;height: 64px;" ></div>
+							<div class="dfdc ml20"><div class="h25px fz17">今日销售总额</div><div class="h25px customBox_title_text fz20 mt10">￥5000.00</div></div>
+						</div>
+					</div>
+					<div class="w4fen">
+						<div class="h100px m0a h40px customBox_border bg_f dfaic">
+							<div class="dfaic ml20"><img class="m0a" src="./img/index_v1_03.png" style="width: 64px;height: 64px;" ></div>
+							<div class="dfdc ml20"><div class="h25px fz17">昨日销售总额</div><div class="h25px customBox_title_text fz20 mt10">￥5000.00</div></div>
+						</div>
+					</div>
+					<div class="w4fen">
+						<div class="h100px m0a h40px customBox_border bg_f dfaic">
+							<div class="dfaic ml20"><img class="m0a" src="./img/index_v1_04.png" style="width: 64px;height: 64px;" ></div>
+							<div class="dfdc ml20"><div class="h25px fz17">近7天销售总额</div><div class="h25px customBox_title_text fz20 mt10">￥50000.00</div></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="w100p">
+			<div class="customBox dfdc">
+				<div class="customBox_title">
+					<div class="customBox_title_text h45px pl20 fz14 customBox_border">
+						线下商家订单总览
+					</div>
+				</div>
+				<div class="customBox_body dfaic customBox_body_reWrite" style="">
+					<div class="w4fen">
+						<div class="h100px m0a h40px customBox_border bg_f dfaic">
+							<div class="dfaic ml20"><img class="m0a" src="./img/index_v1_01.png" style="width: 64px;height: 64px;" ></div>
+							<div class="dfdc ml20"><div class="h25px fz17">今日订单数</div><div class="h25px customBox_title_text fz20 mt10">200</div></div>
+						</div>
+					</div>
+					<div class="w4fen">
+						<div class="h100px m0a h40px customBox_border bg_f dfaic">
+							<div class="dfaic ml20"><img class="m0a" src="./img/index_v1_02.png" style="width: 64px;height: 64px;" ></div>
+							<div class="dfdc ml20"><div class="h25px fz17">今日销售总额</div><div class="h25px customBox_title_text fz20 mt10">￥5000.00</div></div>
+						</div>
+					</div>
+					<div class="w4fen">
+						<div class="h100px m0a h40px customBox_border bg_f dfaic">
+							<div class="dfaic ml20"><img class="m0a" src="./img/index_v1_03.png" style="width: 64px;height: 64px;" ></div>
+							<div class="dfdc ml20"><div class="h25px fz17">昨日销售总额</div><div class="h25px customBox_title_text fz20 mt10">￥5000.00</div></div>
+						</div>
+					</div>
+					<div class="w4fen">
+						<div class="h100px m0a h40px customBox_border bg_f dfaic">
+							<div class="dfaic ml20"><img class="m0a" src="./img/index_v1_04.png" style="width: 64px;height: 64px;" ></div>
+							<div class="dfdc ml20"><div class="h25px fz17">近7天销售总额</div><div class="h25px customBox_title_text fz20 mt10">￥50000.00</div></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="w100p">
+			<div class="customBox dfdc">
+				<div class="customBox_title">
+					<div class="customBox_title_text h45px pl20 fz14 customBox_border">
+						技术服务订单总览
+					</div>
+				</div>
+				<div class="customBox_body dfaic customBox_body_reWrite" style="">
+					<div class="w4fen">
+						<div class="h100px m0a h40px customBox_border bg_f dfaic">
+							<div class="dfaic ml20"><img class="m0a" src="./img/index_v1_01.png" style="width: 64px;height: 64px;" ></div>
+							<div class="dfdc ml20"><div class="h25px fz17">今日订单数</div><div class="h25px customBox_title_text fz20 mt10">200</div></div>
+						</div>
+					</div>
+					<div class="w4fen">
+						<div class="h100px m0a h40px customBox_border bg_f dfaic">
+							<div class="dfaic ml20"><img class="m0a" src="./img/index_v1_02.png" style="width: 64px;height: 64px;" ></div>
+							<div class="dfdc ml20"><div class="h25px fz17">今日销售总额</div><div class="h25px customBox_title_text fz20 mt10">￥5000.00</div></div>
+						</div>
+					</div>
+					<div class="w4fen">
+						<div class="h100px m0a h40px customBox_border bg_f dfaic">
+							<div class="dfaic ml20"><img class="m0a" src="./img/index_v1_03.png" style="width: 64px;height: 64px;" ></div>
+							<div class="dfdc ml20"><div class="h25px fz17">昨日销售总额</div><div class="h25px customBox_title_text fz20 mt10">￥5000.00</div></div>
+						</div>
+					</div>
+					<div class="w4fen">
+						<div class="h100px m0a h40px customBox_border bg_f dfaic">
+							<div class="dfaic ml20"><img class="m0a" src="./img/index_v1_04.png" style="width: 64px;height: 64px;" ></div>
+							<div class="dfdc ml20"><div class="h25px fz17">近7天销售总额</div><div class="h25px customBox_title_text fz20 mt10">￥50000.00</div></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="w100p">
+			<div class="customBox dfdc">
+				<div class="customBox_title">
+					<div class="customBox_title_text h45px pl20 fz14 customBox_border">
+						保购服务订单总览
+					</div>
+				</div>
+				<div class="customBox_body dfaic customBox_body_reWrite" style="">
+					<div class="w4fen">
+						<div class="h100px m0a h40px customBox_border bg_f dfaic">
+							<div class="dfaic ml20"><img class="m0a" src="./img/index_v1_01.png" style="width: 64px;height: 64px;" ></div>
+							<div class="dfdc ml20"><div class="h25px fz17">今日订单数</div><div class="h25px customBox_title_text fz20 mt10">200</div></div>
+						</div>
+					</div>
+					<div class="w4fen">
+						<div class="h100px m0a h40px customBox_border bg_f dfaic">
+							<div class="dfaic ml20"><img class="m0a" src="./img/index_v1_02.png" style="width: 64px;height: 64px;" ></div>
+							<div class="dfdc ml20"><div class="h25px fz17">今日销售总额</div><div class="h25px customBox_title_text fz20 mt10">￥5000.00</div></div>
+						</div>
+					</div>
+					<div class="w4fen">
+						<div class="h100px m0a h40px customBox_border bg_f dfaic">
+							<div class="dfaic ml20"><img class="m0a" src="./img/index_v1_03.png" style="width: 64px;height: 64px;" ></div>
+							<div class="dfdc ml20"><div class="h25px fz17">昨日销售总额</div><div class="h25px customBox_title_text fz20 mt10">￥5000.00</div></div>
+						</div>
+					</div>
+					<div class="w4fen">
+						<div class="h100px m0a h40px customBox_border bg_f dfaic">
+							<div class="dfaic ml20"><img class="m0a" src="./img/index_v1_04.png" style="width: 64px;height: 64px;" ></div>
+							<div class="dfdc ml20"><div class="h25px fz17">近7天销售总额</div><div class="h25px customBox_title_text fz20 mt10">￥50000.00</div></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="w100p">
+			<div class="customBox dfdc customBox_border">
+				<div class="customBox_title">
+					<div class="customBox_title_text h45px pl20 fz14">
+						待处理事务
+					</div>
+				</div>
+				<div class="customBox_body">
+					<div class="w3fen">
+						<div class="customBox_body_item">
+							<div class="h40px m0a goto_page" data-index="40" data-url="orderList.html?id=1" data-name="订单列表" data-id="1">
+								<div class="pull-left">待付款订单</div>
+								<div class="pull-right">(<span class="c_red">10</span>)</div>
+							</div>
+							<div class="h40px m0a goto_page" data-index="40" data-url="orderList.html?id=2" data-name="订单列表" data-id="2">
+								<div class="pull-left">待发货订单</div>
+								<div class="pull-right">(<span class="c_red">10</span>)</div>
+							</div>
+							<div class="h40px m0a goto_page" data-index="40" data-url="orderList.html?id=3" data-name="订单列表" data-id="3">
+								<div class="pull-left">已发货订单</div>
+								<div class="pull-right">(<span class="c_red">10</span>)</div>
+							</div>
+							<div class="h40px m0a goto_page" data-index="40" data-url="orderList.html?id=5" data-name="订单列表" data-id="5">
+								<div class="pull-left">已完成订单</div>
+								<div class="pull-right">(<span class="c_red">10</span>)</div>
+							</div>
+						</div>
+					</div>
+					<div class="w3fen">
+						<div class="customBox_body_item">
+							<div class="h40px m0a goto_page" data-index="7" data-url="goods_list.html?id=1" data-name="商品列表" data-id="">
+								<div class="pull-left">新缺货登记</div>
+								<div class="pull-right">(<span class="c_red">10</span>)</div>
+							</div>
+							<div class="h40px m0a goto_page" data-index="41" data-url="return_goods.html?id=1" data-name="退货申请处理" data-id="1">
+								<div class="pull-left">待处理退货订单</div>
+								<div class="pull-right">(<span class="c_red">10</span>)</div>
+							</div>
+							<div class="h40px m0a goto_page" data-index="41" data-url="return_goods.html?id=2" data-name="退货申请处理" data-id="5">
+								<div class="pull-left">待确认退货订单</div>
+								<div class="pull-right">(<span class="c_red">10</span>)</div>
+							</div>
+							<div class="h40px m0a goto_page" data-index="42" data-url="refund_goods.html?id=1" data-name="退款申请处理" data-id="1">
+								<div class="pull-left">待处理退款申请</div>
+								<div class="pull-right">(<span class="c_red">10</span>)</div>
+							</div>
+						</div>
+					</div>
+					<div class="w3fen">
+						<div class="customBox_body_item">
+							<div class="h40px m0a goto_page" data-index="1" data-url="guideList1.html" data-name="待审核保购列表">
+								<div class="pull-left">申请成为导购员审核</div>
+								<div class="pull-right">(<span class="c_red">10</span>)</div>
+							</div>
+							<div class="h40px m0a goto_page" data-index="4" data-id="0" data-url="guide_works.html?id=0" data-name="保购作品审核">
+								<div class="pull-left">导购员作品审核</div>
+								<div class="pull-right">(<span class="c_red">10</span>)</div>
+							</div>
+							<div class="h40px m0a goto_page" data-index="5" data-id="0" data-url="guideServiceWord.html?id=0" data-name="保购购买服务作品列表">
+								<div class="pull-left">导购员服务作品审核</div>
+								<div class="pull-right">(<span class="c_red">10</span>)</div>
+							</div>
+							<div class="h40px m0a goto_page" data-index="18" data-url="adList.html" data-name="广告列表">
+								<div class="pull-left">广告位即将到期</div>
+								<div class="pull-right">(<span class="c_red">10</span>)</div>
+							</div>
+						</div>
+					</div>
+				</div>
+						
+			</div>
+			
+		
+		</div>
+		
+		<div class="w100p">
+			<div class="customBox dfdc customBox_border">
+				<div class="customBox_title">
+					<div class="customBox_title_text h45px pl20 fz14">
+						运营快捷入口
+					</div>
+				</div>
+				<div class="customBox_body" style="padding: 0;">
+					<div class="yunyingBox dfdc goto_page" data-index="8" data-url="add_good1.html" data-name="添加商品">
+						<div class="imgbox dfaic m0a" style="margin-top: 30px;"><img class="m0a" style="width: 64px;" src="./img/index_v1_05.png" ></div>
+						<div class="m0a mt10">添加商品</div>
+					</div>
+					<div class="yunyingBox dfdc goto_page" data-index="40" data-url="orderList.html" data-name="订单列表">
+						<div class="imgbox dfaic m0a" style="margin-top: 30px;"><img class="m0a" style="width: 64px;" src="./img/index_v1_06.png" ></div>
+						<div class="m0a mt10">订单列表</div>
+					</div>
+					<div class="yunyingBox dfdc goto_page" data-index="43" data-url="statistics_userList.html" data-name="用户列表">
+						<div class="imgbox dfaic m0a" style="margin-top: 30px;"><img class="m0a" style="width: 64px;" src="./img/index_v1_07.png" ></div>
+						<div class="m0a mt10">用户管理</div>
+					</div>
+					<div class="yunyingBox dfdc goto_page" data-index="" data-url="" data-name="">
+						<div class="imgbox dfaic m0a" style="margin-top: 30px;"><img class="m0a" style="width: 64px;" src="./img/index_v1_08.png" ></div>
+						<div class="m0a mt10">交易统计</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="w100p">
+			<div class="dfaic customBox">
+				
+				<div style="width: 49%;">
+					<div class="customBox_title">
+						<div class="customBox_title_text h45px pl20 fz14">
+							商品总览
+						</div>
+					</div>
+					<div class="customBox_body" style="padding: 0;">
+						<div class="yunyingBox dfdc">
+							<div class="imgbox dfaic m0a" style="margin-top: 30px;color: #F04844;font-size: 28px;"><span class="m0a">400</span></div>
+							<div class="m0a mt10">已上架</div>
+						</div>
+						<div class="yunyingBox dfdc">
+							<div class="imgbox dfaic m0a" style="margin-top: 30px;color: #F04844;font-size: 28px;"><span class="m0a">100</span></div>
+							<div class="m0a mt10">已下架</div>
+						</div>
+						<div class="yunyingBox dfdc">
+							<div class="imgbox dfaic m0a" style="margin-top: 30px;color: #F04844;font-size: 28px;"><span class="m0a">50</span></div>
+							<div class="m0a mt10">库存紧张</div>
+						</div>
+						<div class="yunyingBox dfdc">
+							<div class="imgbox dfaic m0a" style="margin-top: 30px;color: #F04844;font-size: 28px;"><span class="m0a">500</span></div>
+							<div class="m0a mt10">全部商品</div>
+						</div>
+					</div>
+				</div>
+				
+				<div style="width: 49%;">
+					<div class="customBox_title">
+						<div class="customBox_title_text h45px pl20 fz14">
+							用户总览
+						</div>
+					</div>
+					<div class="customBox_body" style="padding: 0;">
+						<div class="yunyingBox dfdc">
+							<div class="imgbox dfaic m0a" style="margin-top: 30px;color: #F04844;font-size: 28px;"><span class="m0a">100</span></div>
+							<div class="m0a mt10">今日新增</div>
+						</div>
+						<div class="yunyingBox dfdc">
+							<div class="imgbox dfaic m0a" style="margin-top: 30px;color: #F04844;font-size: 28px;"><span class="m0a">200</span></div>
+							<div class="m0a mt10">昨日新增</div>
+						</div>
+						<div class="yunyingBox dfdc">
+							<div class="imgbox dfaic m0a" style="margin-top: 30px;color: #F04844;font-size: 28px;"><span class="m0a">1000</span></div>
+							<div class="m0a mt10">本月新增</div>
+						</div>
+						<div class="yunyingBox dfdc">
+							<div class="imgbox dfaic m0a" style="margin-top: 30px;color: #F04844;font-size: 28px;"><span class="m0a">5000</span></div>
+							<div class="m0a mt10">会员总数</div>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+			<!-- <div class="customBox dfdc customBox_border">
+				<div class="customBox_title">
+					<div class="customBox_title_text h45px pl20 fz14">
+						商品总览
+					</div>
+				</div>
+				<div class="customBox_body" style="padding: 0;">
+					<div class="yunyingBox dfdc">
+						<div class="imgbox dfaic m0a" style="margin-top: 30px;"><img class="m0a" style="width: 50px;" src="./img/ring.png" ></div>
+						<div class="m0a mt10">添加商品</div>
+					</div>
+					<div class="yunyingBox dfdc">
+						<div class="imgbox dfaic m0a" style="margin-top: 30px;"><img class="m0a" style="width: 50px;" src="./img/ring.png" ></div>
+						<div class="m0a mt10">订单列表</div>
+					</div>
+					<div class="yunyingBox dfdc">
+						<div class="imgbox dfaic m0a" style="margin-top: 30px;"><img class="m0a" style="width: 50px;" src="./img/ring.png" ></div>
+						<div class="m0a mt10">用户管理</div>
+					</div>
+					<div class="yunyingBox dfdc">
+						<div class="imgbox dfaic m0a" style="margin-top: 30px;"><img class="m0a" style="width: 50px;" src="./img/ring.png" ></div>
+						<div class="m0a mt10">交易统计</div>
+					</div>
+				</div>
+			</div> -->
+		</div>
+		
+		<div class="w100p">
+			<div class="customBox dfdc customBox_border">
+				<div class="customBox_title">
+					<div class="customBox_title_text h45px pl20 fz14">
+						订单统计
+					</div>
+				</div>
+				<div class="customBox_body dfaic" style="padding: 0;height: 322px;position: relative;">
+					<div class="h100p dfdc" style="width: 20%;border-right: 1px solid rgba(228, 228, 228, 1);">
+						<div class="fz12 mt30" style="margin-left: 20%;">本月订单总数</div>
+						<div class="fz28" style="margin-left: 20%;">10000</div>
+						<div class="fz12" style="margin-left: 20%;">10%同比上周</div>
+						
+						<div class="fz12 mt30" style="margin-left: 20%;">本周订单数量</div>
+						<div class="fz28" style="margin-left: 20%;">1000</div>
+						<div class="fz12" style="margin-left: 20%;">10%同比上周</div>
+					</div>
+					<div id="main" class="h100p" style="width: 80%;"></div>
+					<div style="position: absolute;right: 0;top:0;width: 530px;height:50px;z-index: 10;">
+						<div class="w100p h100p dfaic">
+							<div class="h40px ml20 orderChg Chg_active" data-interval="1">今日</div>
+							<div class="h40px ml20 orderChg" data-interval="2">本周</div>
+							<div class="h40px ml20 orderChg" data-interval="3">本月</div>
+							<div class="h34px ml20 time-box">
+								<input type="text" class="layer-date get-date pl10" placeholder="YYYY-MM-DD hh:mm:ss"
+							      onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" required=""
+							      aria-required="true">
+								<span>~</span>
+								<input type="text" class="layer-date get-date pl10" placeholder="YYYY-MM-DD hh:mm:ss"
+								  onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" required=""
+								  aria-required="true">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="w100p">
+			<div class="customBox dfdc customBox_border">
+				<div class="customBox_title">
+					<div class="customBox_title_text h45px pl20 fz14">
+						销售统计
+					</div>
+				</div>
+				<div class="customBox_body dfaic" style="padding: 0;height: 322px;position: relative;">
+					<div class="h100p dfdc" style="width: 20%;border-right: 1px solid rgba(228, 228, 228, 1);">
+						<div class="fz12 mt30" style="margin-left: 20%;">本月销售总数</div>
+						<div class="fz28" style="margin-left: 20%;">100000</div>
+						<div class="fz12" style="margin-left: 20%;">10%同比上周</div>
+						
+						<div class="fz12 mt30" style="margin-left: 20%;">本周销售数量</div>
+						<div class="fz28" style="margin-left: 20%;">5000</div>
+						<div class="fz12" style="margin-left: 20%;">10%同比上周</div>
+					</div>
+					<div id="main1" class="h100p" style="width: 80%;"></div>
+					<div style="position: absolute;right: 0;top:0;width: 530px;height:50px;z-index: 10;">
+						<div class="w100p h100p dfaic">
+							<div class="h40px ml20" style="width: 50px;cursor: pointer;text-align: center;">今日</div>
+							<div class="h40px ml20" style="width: 50px;cursor: pointer;text-align: center;">本周</div>
+							<div class="h40px ml20" style="width: 50px;cursor: pointer;text-align: center;">本月</div>
+							<div class="h34px ml20 time-box">
+								<input type="text" class="layer-date get-date pl10" placeholder="YYYY-MM-DD hh:mm:ss"
+							      onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" required=""
+							      aria-required="true">
+								<span>~</span>
+								<input type="text" class="layer-date get-date pl10" placeholder="YYYY-MM-DD hh:mm:ss"
+								  onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" required=""
+								  aria-required="true">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	<!--加载遮罩组件-->
+    <div class="none" id="wating_show">
+    	<div class="ibox wating_big_div">
+            <div class="zhezhao bg_f"></div>
+            <div class="ibox-content wating_content_div " >
+                <div class="spiner-example">
+                    <div class="sk-spinner sk-spinner-wave">
+                        <div class="sk-rect1"></div>
+                        <div class="sk-rect2"></div>
+                        <div class="sk-rect3"></div>
+                        <div class="sk-rect4"></div>
+                        <div class="sk-rect5"></div>
+                    </div>
+                    <h5 class="f20 c0" ><span id="loading_text">正在请求 ，请稍后...... </span>(<span id="second_span">0</span>)秒</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="dashboard-header animated fadeInRight">
+    	
+    </div>
+</body>
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+<script src="js/plugins/peity/jquery.peity.min.js"></script>
+<script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+<script src="js/plugins/layer/laydate/laydate.js"></script>
+<script src="js/content.min.js?v=1.0.0"></script>
+<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/echarts.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	
+	$(document).ready(function () {
+		IsTokenSave();
+		$(".refresh_a").click(function(){//刷新按钮
+			location.reload();        		
+		});
+		$(".get-date").eq(0).val(getBeforeDate(7)+" 00:00:00");
+		$(".get-date").eq(1).val(getBeforeDate(0)+" 23:59:59");
+		$(".get-date").eq(2).val(getBeforeDate(7)+" 00:00:00");
+		$(".get-date").eq(3).val(getBeforeDate(0)+" 23:59:59");
+		
+		var myChart = echarts.init(document.getElementById('main'));
+		var myChart1 = echarts.init(document.getElementById('main1'));
+		
+		$(".orderChg").each(function () {
+			$(this).click(function(){
+				$(this).siblings().removeClass("Chg_active");
+				$(this).addClass("Chg_active");
+				var data = $(this)[0].dataset;
+				console.log(data.interval)
+				if(data.interval == 1){
+					var option = {
+						tooltip: {
+							trigger: 'axis'
+						},
+				// 		toolbox: {
+				//             show: true,
+				//             feature: {
+				//                 magicType: {
+				//                     type: ['line', 'bar']//切换为折线图，切换为柱状图
+				//                 },  
+				//             }
+				//         },
+						xAxis: {
+							type: 'category',
+							boundaryGap: false,//坐标轴两边是否留白
+							data: ['07-01周六', '07-02周日', '07-03周一', '07-04周二', '07-05周三', '07-06周四', '07-07周五']
+						},
+						yAxis: {
+							splitLine:false,
+							type: 'value'
+						},
+						series: [{
+							data: [12, 80, 96, 50, 150, 120, 180],
+							name: '订单数量',
+							type: 'line',
+							smooth: true
+						}]
+					};
+					let myChart = echarts.init(document.getElementById('main'));
+					myChart.setOption(option,true);
+				}else if(data.interval == 2){
+					console.log("123");
+					var option = {
+							tooltip: {
+								trigger: 'axis'
+							},
+					// 		toolbox: {
+					//             show: true,
+					//             feature: {
+					//                 magicType: {
+					//                     type: ['line', 'bar']//切换为折线图，切换为柱状图
+					//                 },  
+					//             }
+					//         },
+							xAxis: {
+								type: 'category',
+								boundaryGap: false,//坐标轴两边是否留白
+								data: ['07-07周五', '07-14周五', '07-21周五', '07-28周五', '08-03周五', '08-10周五', '08-17周五']
+							},
+							yAxis: {
+								splitLine:false,
+								type: 'value'
+							},
+							series: [{
+								data: [120, 580, 596, 1050, 1150, 920, 1280],
+								name: '订单数量',
+								type: 'line',
+								smooth: true
+							}]
+						};
+					let myChart = echarts.init(document.getElementById('main'));
+					myChart.setOption(option,true);
+					// myChart.setOption(option);
+				}else if(data.interval == 3){
+					var option = {
+						tooltip: {
+							trigger: 'axis'
+						},
+				// 		toolbox: {
+				//             show: true,
+				//             feature: {
+				//                 magicType: {
+				//                     type: ['line', 'bar']//切换为折线图，切换为柱状图
+				//                 },  
+				//             }
+				//         },
+						xAxis: {
+							type: 'category',
+							boundaryGap: false,//坐标轴两边是否留白
+							data: ['2020-01', '2020-02', '2020-03', '2020-04', '2020-05', '2020-06', '2020-07']
+						},
+						yAxis: {
+							splitLine:false,
+							type: 'value'
+						},
+						series: [{
+							data: [1200, 800, 960, 500, 1500, 1200, 1800],
+							name: '订单数量',
+							type: 'line',
+							smooth: true
+						}]
+					};
+					let myChart = echarts.init(document.getElementById('main'));
+					myChart.setOption(option,true);
+				}
+				
+			})
+		})
+		
+		
+		
+		// 指定图表的配置项和数据
+		// var option = {
+		// 	title: {
+		// 		text: '天气情况统计',
+		// 		subtext: '虚构数据',
+		// 		left: ''
+		// 	},
+		// 	xAxis: {
+		// 		type: 'category',
+		// 		data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+		// 	},
+		// 	yAxis: {
+		// 		type: 'value'
+		// 	},
+		// 	series: [{
+		// 		data: [820, 932, 901, 934, 1290, 1330, 1320],
+		// 		type: 'line',
+		// 		smooth: true
+		// 	}]
+		// };
+		
+		option = {
+			tooltip: {
+				trigger: 'axis'
+			},
+	// 		toolbox: {
+	//             show: true,
+	//             feature: {
+	//                 magicType: {
+	//                     type: ['line', 'bar']//切换为折线图，切换为柱状图
+	//                 },  
+	//             }
+	//         },
+		    xAxis: {
+		        type: 'category',
+				boundaryGap: false,//坐标轴两边是否留白
+		        data: ['07-01周六', '07-02周日', '07-03周一', '07-04周二', '07-05周三', '07-06周四', '07-07周五']
+		    },
+		    yAxis: {
+				splitLine:false,
+		        type: 'value'
+		    },
+		    series: [{
+		        data: [12, 80, 96, 50, 150, 120, 180],
+				name: '订单数量',
+		        type: 'line',
+		        smooth: true
+		    }]
+		};
+		myChart.setOption(option);
+		
+		option1 = {
+			tooltip: {
+				trigger: 'axis'
+			},
+	// 		toolbox: {
+	//             show: true,
+	//             feature: {
+	//                 magicType: {
+	//                     type: ['line', 'bar']//切换为折线图，切换为柱状图
+	//                 },  
+	//             }
+	//         },
+			xAxis: {
+				type: 'category',
+				data: ['07-01周六', '07-02周日', '07-03周一', '07-04周二', '07-05周三', '07-06周四', '07-07周五']
+			},
+			yAxis: {
+				splitLine:false,
+				type: 'value'
+			},
+			series: [{
+				data: [120, 180, 66, 250, 450, 220, 820],
+				name: '订单数量',
+				type: 'line',
+				smooth: false
+			}]
+		};
+		myChart1.setOption(option1);
+		
+	});
+	
+	$(".goto_page").each(function () {
+		$(this).click(function(){
+			console.log($(this)[0].dataset)
+			var _this = $(this)[0].dataset;
+			var m = _this.index;
+			var o = _this.url;
+			var l =_this.name;
+			var p = '<a href="javascript:;" class="active J_menuTab" data-id="' + o + '">' + l +
+				' <i class="fa fa-times-circle"></i></a>';
+			$(".J_menuTab",window.parent.document).removeClass("active");
+			var n = '<iframe class="J_iframe" name="iframe' + m + '" width="100%" height="100%" src="' + o +
+				'" frameborder="0" data-id="' + o + '" seamless></iframe>';
+			$(".J_mainContent",window.parent.document).find("iframe.J_iframe").hide().parents(".J_mainContent").append(n);
+			$(".J_menuTabs .page-tabs-content",window.parent.document).append(p);
+		})
+	})
+	
+</script>
+</html>

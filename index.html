@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html>
+	<!-- Mirrored from www.zi-han.net/theme/hplus/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:16:41 GMT -->
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="Cache-Control" content="no-siteapp" />
+		<title>运营管理后台</title>
+		<!--[if IE]>
+   		<script>
+    		alert("请勿使用IE浏览器打开");
+    	</script>
+   	<![endif]-->
+		<link rel="shortcut icon" href="favicon.ico">
+		<link href="css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+		<link href="css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+		<link href="css/animate.min.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="css/plugins/sweetalert/sweetalert.css" />
+		<link href="css/style.min862f.css?v=4.1.0" rel="stylesheet">
+
+		<style type="text/css">
+			/* 重写bookstrap样式表 勿删 */
+			.ui-jqdialog {
+				height: auto !important;
+			}
+
+			.ui-common-table tbody {
+				background-color: #eaf5fc !important;
+			}
+
+			.modal-dialog {
+				margin: 80px auto !important;
+			}
+
+			#alertmod_table_list_2 {
+				top: 900px !important;
+			}
+
+			.form-group {
+				margin-left: 0px !important;
+				margin-right: 0px !important;
+			}
+
+			.modal-sm {
+				width: 600px;
+			}
+
+			.col-sm-3 {
+				width: 30%;
+			}
+
+			.col-sm-8 {
+				width: 70%;
+			}
+
+			.form-horizontal .control-label {
+				text-align: left;
+				padding-top: 5px;
+				font-size: 18px;
+			}
+
+			@media only screen and (min-width: 100px) and (max-width: 600px) {
+				.modal-sm {
+					width: 400px;
+				}
+
+				.col-sm-3 {
+					width: 40%;
+				}
+
+				.col-sm-8 {
+					width: 60%;
+				}
+
+				.scroll_div {
+					width: 85%;
+				}
+
+				.form-horizontal .control-label {
+					text-align: left;
+					padding-top: 5px;
+					font-size: 14px;
+				}
+
+				.dialog_btn {
+					font-size: 14px !important;
+				}
+			}
+
+			@media only screen and (min-width: 650px) {
+				.modal-sm {
+					width: 600px;
+				}
+			}
+
+			#side-menu {
+				background-color: #CBE3F1;
+			}
+
+			.nav-item {
+				background-color: #CBE3F1;
+			}
+		</style>
+	</head>
+
+	<body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
+		<!--修改密码的弹框-->
+		<div class="modal inmodal fade" id="index_changepwd_dialog" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content br8">
+					<div class="modal-header p10 bdno">
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+						<span class="modal-title f18">修改密码</span>
+					</div>
+					<div class="modal-body bg_f p0">
+						<div class="ibox-content p30">
+							<form class="form-horizontal m-t" id="change_form" method="post">
+								<!-- <input type="hidden" class="username_input" name="username" value="" /> -->
+								<div class="form-group">
+									<label class="col-sm-3 control-label pull-left">原密码</label>
+									<div class="col-sm-8 pull-left">
+										<input type="password" autocomplete="off" class="form-control" name="password" required="" value="">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label pull-left">新密码</label>
+									<div class="col-sm-8 pull-left">
+										<input type="password" autocomplete="off" class="form-control" required="" value="">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label pull-left">确认新密码</label>
+									<div class="col-sm-8 pull-left">
+										<input type="password" autocomplete="off" class="form-control" name="newPassword" required="" value="">
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="modal-footer bdno tac pt0040">
+						<button type="button" class=" btn-white clear_btn_style dialog_btn" data-dismiss="modal">关闭</button>
+						<button type="button" class=" btn-primary clear_btn_style bdno dialog_btn ml30" id="change_pwd_btn">确认</button>
+					</div>
+				</div>
+			</div>0
+		</div>
+		<div id="wrapper">
+			<!--左侧导航开始-->
+			<nav class="navbar-default navbar-static-side" role="navigation" id="navigation">
+				<div class="nav-close"><i class="fa fa-times-circle"></i>
+				</div>
+				<div class="sidebar-collapse">
+					<ul class="nav" id="side-menu" style="position: relative;height: 100%;">
+						<li class="nav-header h200">
+							<div class="dropdown profile-element">
+								<div class="pull-left">
+									<!-- <img src="favicon.ico" class="wh50 bd_2d3ff" style=""/> -->
+								</div>
+								<div class="pull-left ml10">
+									<!-- logo图标位置 -->
+									<!-- <img src="img/proviline.png" class="index_right_logo"/>    -->
+
+								</div>
+								<div class="pull-left">
+									<p style="font-size: 30px;font-weight: bold;color: #fff;">运营管理后台</p>
+									<p class="realname_p c_f mt15" style="font-size: 20px;">用户名：</p>
+									<p class="username_p c_f f14 mt10">用户名：</p>
+									<!-- <p class="department_p c_f f14">部门：</p> -->
+									<button class="c_f f14 index_changePwd_btn bdno p5 w90" style="" data-toggle="modal" data-target="#index_changepwd_dialog">修改密码</button>
+								</div>
+								<!--<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                <span class="clear">
+                               	<span class="block m-t-xs"><strong class="font-bold"></strong></span> 
+                                <span class="text-muted text-xs block c0"><b class="caret"></b></span>
+                                </span>
+                            </a>-->
+
+								<!--<ul class="dropdown-menu animated fadeInRight m-t-xs">
+                                <li><a class="J_menuItem" href="form_avatar.html">修改头像</a>
+                                </li>
+                                <li><a class="J_menuItem" href="profile.html">个人资料</a>
+                                </li>
+                                <li><a class="J_menuItem" href="contacts.html">联系我们</a>
+                                </li>
+                                <li><a class="J_menuItem" href="mailbox.html">信箱</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li><a href="login.html">安全退出</a>
+                                </li>
+                            </ul>-->
+							</div>
+							<!-- <div class="logo-element">
+                        	
+                        </div> -->
+						</li>
+						<!-- 财务管理 -->
+						<li class="nav-item">
+							<a href="#"><i class="fa fa-table"></i> <span class="nav-label">财务管理</span><span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+								<li><a class="J_menuItem" href="finance_set.html">提现设置</a></li>
+							</ul>
+						</li>
+						<!-- 保购管理 -->
+						<li class="nav-item">
+							<a href="#"><i class="fa fa-table"></i> <span class="nav-label">保购管理</span><span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+								<li><a class="J_menuItem" href="guideList.html">保购列表</a></li>
+								<li><a class="J_menuItem" href="guideList1.html">待审核保购列表</a></li>
+								<li><a class="J_menuItem" href="guideList2.html">已拒绝保购列表</a></li>
+								<li><a class="J_menuItem" href="guideTypeList.html">保购领取样品列表</a></li>
+								<li><a class="J_menuItem" href="guide_works.html">保购作品审核</a></li>
+								<li><a class="J_menuItem" href="guideServiceWord.html">保购购买服务作品列表</a></li>
+								<li><a class="J_menuItem" href="guideExtension.html">星级设置</a></li>
+							</ul>
+						</li>
+						<!-- 商城商品管理 -->
+						<li class="nav-item">
+							<a href="#"><i class="fa fa-table"></i> <span class="nav-label">商城商品管理</span><span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+								<!--大小B共有的 -->
+								<li><a class="J_menuItem" href="goods_list.html">商品列表</a></li>
+
+								<!-- 小B -->
+								<li><a class="J_menuItem" href="add_good1.html">添加商品</a></li>
+
+								<!-- 大B -->
+								<li><a class="J_menuItem" href="goods_audited.html">待审核商品列表</a></li>
+								<li><a class="J_menuItem" href="goods_evaluate.html">商品评价列表</a></li>
+
+								<li><a class="J_menuItem" href="freight_template.html">运费模板</a></li>
+							</ul>
+						</li>
+						<!--  技术服务管理 -->
+						<li class="nav-item">
+							<a href="#"><i class="fa fa-table"></i> <span class="nav-label">技术服务管理</span><span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+								<li><a class="J_menuItem" href="tech_goods_list.html">商品列表</a></li>
+								<li><a class="J_menuItem" href="tech_add_good1.html">添加商品</a></li>
+								<li><a class="J_menuItem" href="tech_goods_audited.html">待审核商品列表</a></li>
+								<li><a class="J_menuItem" href="tech_goods_evaluate.html">商品评价列表</a></li>
+								<li><a class="J_menuItem" href="service_orderList.html">订单列表</a></li>
+								<li><a class="J_menuItem" href="">退款申请处理</a></li>
+							</ul>
+						</li>
+
+						<!-- 运营管理 -->
+						<li class="nav-item">
+							<a href="#"><i class="fa fa-table"></i> <span class="nav-label">运营管理</span><span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+								<li>
+									<a href="#">广告管理<span class="fa arrow"></span></a>
+									<ul class="nav nav-third-level">
+										<li><a class="J_menuItem" href="adList.html">广告列表</a></li>
+									</ul>
+								</li>
+								<li>
+									<a href="#">APP首页配置<span class="fa arrow"></span></a>
+									<ul class="nav nav-third-level">
+										<li><a class="J_menuItem" href="shoppingGuide.html">导购</a></li>
+										<li><a class="J_menuItem" href="brandHall.html">品牌馆广告管理</a></li>
+										<li><a class="J_menuItem" href="brandHall2.html">品牌馆商家列表</a></li>
+										<li><a class="J_menuItem" href="oneStopAdvertising.html">加盟商家</a></li>
+									</ul>
+								</li>
+								<li>
+									<a href="#">商城首页配置<span class="fa arrow"></span></a>
+									<ul class="nav nav-third-level">
+										<li><a class="J_menuItem" href="newProductRecommendation.html">新品推荐广告管理</a></li>
+										<li><a class="J_menuItem" href="newProductRecommendation2.html">新品推荐商品列表</a></li>
+										<li><a class="J_menuItem" href="explosiveMoney.html">爆款推荐广告管理</a></li>
+										<li><a class="J_menuItem" href="hot_style.html">爆款推荐商品列表</a></li>
+										<li><a class="J_menuItem" href="most_bargain.html">最划算</a></li>
+									</ul>
+								</li>
+								<li>
+									<a href="#">商品分类管理<span class="fa arrow"></span></a>
+									<ul class="nav nav-third-level">
+										<li><a class="J_menuItem" href="goods_classify_one.html">一级分类</a></li>
+										<li><a class="J_menuItem" href="goods_classify_two.html">二级分类</a></li>
+										<li><a class="J_menuItem" href="goods_classify_three.html">三级分类</a></li>
+									</ul>
+								</li>
+								<li>
+									<a href="#">个性化配置<span class="fa arrow"></span></a>
+									<ul class="nav nav-third-level">
+										<li><a class="J_menuItem" href="configure_51signUp.html">5.1活动报名名单</a></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+
+						<!-- 商家管理 -->
+						<li class="nav-item">
+							<a href="#"><i class="fa fa-table"></i> <span class="nav-label">商家管理</span><span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+								<li><a class="J_menuItem" href="businessList.html">店铺商家列表</a></li>
+								<li><a class="J_menuItem" href="./businessList1.html">技术服务商家列表</a></li>
+								<!-- <li><a class="J_menuItem" href="">入驻商城审核</a></li> -->
+							</ul>
+						</li>
+
+						<!-- 品牌管理 -->
+						<li class="nav-item">
+							<a href="#"><i class="fa fa-table"></i> <span class="nav-label">品牌管理</span><span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+								<li><a class="J_menuItem" href="./brandShowList.html">品牌列表</a></li>
+								<li><a class="J_menuItem" href="./brandShowAdd.html">添加新品牌</a></li>
+							</ul>
+						</li>
+
+						<!-- 订单管理 -->
+						<li class="nav-item">
+							<a href="#"><i class="fa fa-table"></i> <span class="nav-label">订单管理</span><span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+								<li><a class="J_menuItem" href="./serve_orderList1.html">保购领取样品订单列表</a></li>
+								<li><a class="J_menuItem" href="./serve_orderList2.html">保购服务订单列表</a></li>
+								<li><a class="J_menuItem" href="./goods_orderSet.html">商城订单设置</a></li>
+								<li><a class="J_menuItem" href="./guide_orderSet.html">保购服务订单设置</a></li>
+								<li><a class="J_menuItem" href="./guide_orderSet_other.html">订单其它设置</a></li>
+
+								<!-- 小B的 -->
+								<li><a class="J_menuItem" href="orderList.html">订单列表</a></li>
+								<!-- <li><a class="J_menuItem J_tabCloseOther" href="">批量发货</a></li> -->
+								<li><a class="J_menuItem" href="return_goods.html">退货申请处理</a></li>
+								<li><a class="J_menuItem" href="refund_goods.html">退款申请处理</a></li>
+							</ul>
+						</li>
+
+						<!-- 数据统计 -->
+						<li class="nav-item">
+							<a href="#"><i class="fa fa-table"></i> <span class="nav-label">数据统计</span><span class="fa arrow"></span></a>
+
+							<ul class="nav nav-second-level">
+								<li>
+									<a href="#">用户管理<span class="fa arrow"></span></a>
+									<ul class="nav nav-third-level">
+										<li><a class="J_menuItem" href="./statistics_userList.html">用户列表</a></li>
+										<li><a class="J_menuItem" href="./statistics_buyingPower.html">购买力筛选</a></li>
+										<li><a class="J_menuItem" href="./user_loginLog.html">登录日志</a></li>
+									</ul>
+								</li>
+								<li><a class="J_menuItem" href="./statistics_transaction.html">交易统计</a></li>
+								<li><a class="J_menuItem" href="./searchStatistics.html">搜索统计</a></li>
+								<li><a class="J_menuItem" href="./goodsStatistics.html">商品统计</a></li>
+							</ul>
+						</li>
+						<!-- 运维管理 -->
+						<li class="nav-item">
+							<a href="#"><i class="fa fa-table"></i> <span class="nav-label">运维管理</span><span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+								<li><a class="J_menuItem" href="./operations_hook.html">拦截日志</a></li>
+								<li><a class="J_menuItem" href="./operations_outlier.html">异常日志</a></li>
+								<li><a class="J_menuItem" href="./operations_backList.html">IP黑名单</a></li>
+								<li><a class="J_menuItem" href="./operations_note.html">短信日志</a></li>
+								<li><a class="J_menuItem" href="./operations_handle.html">操作日志</a></li>
+							</ul>
+						</li>
+
+						<!-- 系统管理 -->
+						<li class="nav-item">
+							<a href="#"><i class="fa fa-table"></i> <span class="nav-label">系统管理</span><span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+								<li><a class="J_menuItem" href="systemManage_admin.html">账号管理</a></li>
+								<li><a class="J_menuItem" href="systemManage_role.html">角色管理</a></li>
+								<li><a class="J_menuItem" href="systemManage_menu.html">菜单管理</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</nav>
+			<!--左侧导航结束-->
+			<!--右侧部分开始-->
+			<div id="page-wrapper" class="gray-bg dashbard-1">
+				<div class="row content-tabs">
+					<nav class="navbar navbar-static-top none" role="navigation" style="margin-bottom: 0">
+						<div class="navbar-header" style="height: 100px;">
+							<a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+							<!--<form role="search" class="navbar-form-custom" method="post" action="http://www.zi-han.net/theme/hplus/search_results.html">
+                            <div class="form-group">
+                                <input type="text" placeholder="请输入您需要查找的内容 …" class="form-control" name="top-search" id="top-search">
+                            </div>
+                        </form>-->
+						</div>
+					</nav>
+					<button class="roll-nav roll-left J_tabLeft"><i class="fa fa-backward"></i>
+					</button>
+					<nav class="page-tabs J_menuTabs">
+						<div class="page-tabs-content">
+							<a href="javascript:;" class="active J_menuTab" data-id="index_v1.html">首页</a>
+						</div>
+					</nav>
+					<button class="roll-nav roll-right J_tabRight"><i class="fa fa-forward"></i>
+					</button>
+					<div class="btn-group roll-nav roll-right">
+						<button class="dropdown J_tabClose" data-toggle="dropdown">关闭操作<span class="caret"></span>
+
+						</button>
+						<ul role="menu" class="dropdown-menu dropdown-menu-right">
+							<li class="J_tabShowActive"><a>定位当前选项卡</a>
+							</li>
+							<li class="divider"></li>
+							<li class="J_tabCloseAll"><a>关闭全部选项卡</a>
+							</li>
+							<li class="J_tabCloseOther"><a>关闭其他选项卡</a>
+							</li>
+						</ul>
+					</div>
+					<a href="#" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i> 退出</a>
+				</div>
+				<div class="row J_mainContent" id="content-main">
+					<iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="index_v1.html" frameborder="0" data-id="index_v1.html" seamless></iframe>
+					<!-- <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="http://192.168.1.134:8080?vueId=1" frameborder="0" data-id="index_v1.html" seamless></iframe> -->
+				</div>
+				<!--<div class="footer">
+                <div class="pull-right">&copy; 2014-2015 <a href="http://www.zi-han.net/" target="_blank">zihan's blog</a>
+                </div>
+            </div>-->
+			</div>
+			<!--右侧部分结束-->
+
+		</div>
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(".nav-label").parents("li").remove(); //先隐藏所有菜单 !!!测试环境,正式环境不要注释
+			$(".J_menuItem").parent("li").remove(); //先隐藏所有菜单 !!!测试环境,正式环境不要注释	
+			$(document).ready(function() {
+				IsTokenSave();
+				var userMessage = JSON.parse(sessionStorage.getItem("user_message"));
+				console.log(userMessage);
+				$(".username_p").html(userMessage.userName);
+				
+				InitPowerFun();
+
+				$("#change_pwd_btn").click(function() { //修改密码的确认按钮
+					// $(".username_input").val(userMessage.userInfo.username);
+					if ($("#change_form .form-control").eq(0).val().trim() == "") {
+						TipsAlert("请输入原密码");
+						return false;
+					}
+					if ($("#change_form .form-control").eq(1).val().trim() == "") {
+						TipsAlert("请输入新密码");
+						return false;
+					}
+					if ($("#change_form .form-control").eq(2).val().trim() == "") {
+						TipsAlert("请再次确认新密码");
+						return false;
+					}
+					if ($("#change_form .form-control").eq(2).val() != $("#change_form .form-control").eq(1).val()) {
+						TipsAlert("新密码和确认密码不一致，请重新输入");
+						return false;
+					}
+					console.log($("#change_form .form-control").eq(0).val());
+					console.log($("#change_form .form-control").eq(2).val());
+					var oldP = hex_md5($("#change_form .form-control").eq(0).val());
+					var newP = hex_md5($("#change_form .form-control").eq(2).val());
+					// $("#change_form .form-control").eq(0).val(oldP);
+					// $("#change_form .form-control").eq(2).val(newP);
+					// console.log($("#change_form .form-control").eq(0).val());
+					// console.log($("#change_form .form-control").eq(2).val());
+					Showload("正在修改密码......");
+					changeTimeout = setInterval("Timeout(changeTimeout)", 1000);
+					// alert(userMessage.token);
+					$.ajax({
+						headers: {
+							'X-Access-Token': userMessage.token,
+						},
+						type: "post",
+						url: urls + common_url.updatePassword,
+						async: true,
+						contentType: "application/x-www-form-urlencoded",
+						timeout: 30000,
+						data: {
+							password: oldP,
+							newPassword: newP,
+						},
+						success: function(json) {
+							CheckLogout(json); //检查是否登陆过期
+							if (json.code == 0) {
+								swal({
+									title: "重新登陆",
+									text: "您已成功修改密码，请重新登陆",
+									type: "success"
+								}, function() {
+									sessionStorage.removeItem("token");
+									sessionStorage.removeItem("user_message");
+									window.location = "login_v2.html";
+								});
+							} else {
+								if (json.return_msg == "Session过期") {
+									window.location = "login_timeout.html";
+								} else {
+									TipsAlert(json.return_msg);
+								}
+							}
+							InitTime(changeTimeout);
+						},
+						error: function(xml, text, errorThrown) {
+							if (text == "timeout") {
+								TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+							} else {
+								TipsAlert("请求数据失败,请联系后台技术人员");
+							}
+							InitTime(changeTimeout);
+						}
+					});
+				});
+				$(".J_tabExit").click(function() {
+					swal({
+						title: "确定退出？",
+						text: "确定退出当前账号？",
+						type: "warning",
+						showCancelButton: true,
+						confirmButtonColor: "#DD6B55",
+						confirmButtonText: "是的",
+						cancelButtonText: "让我再考虑一下…",
+						closeOnConfirm: true,
+						closeOnCancel: true
+					}, function(isConfirm) {
+						if (isConfirm) {
+							$.ajax({
+								type: "post",
+								url: urls + common_url.signOut,
+								headers: {
+									'X-Access-Token': userMessage.token,
+								},
+								async: true,
+								// data:{token:sessionStorage.getItem("token")},
+								success: function(json) {
+									sessionStorage.removeItem("token");
+									sessionStorage.removeItem("user_message");
+									window.location = "login_v2.html";
+								},
+								error: function(xml, text, errorThrown) {
+									if (text == "timeout") {
+										TipsAlert("请求超时,请检查网络或着重新登陆");
+									} else {
+										TipsAlert("请求登陆登录");
+									}
+								}
+							});
+						}
+					});
+				});
+			});
+			function InitPowerFun() {
+				var permissionList = userMessage.sysPrivilegeInfo; //用数组填装该用户已有的权限
+				var powerList = [];
+				var powerHtml = '';
+				for (var a = 0; a < permissionList.length; a++) { //一级菜单
+					var twoLevel = permissionList[a].childPrivileges;
+					var twoLevelHtml = '';
+					if(twoLevel.length != 0){
+						for (var b = 0; b < twoLevel.length; b++) { //二级菜单
+							if (twoLevel[b].url == '/') {
+								twoLevel[b].span = '<span class="fa arrow"></span>';
+								twoLevel[b].url_input = '';
+							} else {
+								twoLevel[b].span = '';
+								twoLevel[b].url_input = twoLevel[b].url;
+							}
+							var threeLevel = twoLevel[b].childPrivileges;
+							var threeLevelHtml = '';
+							if (threeLevel.length != 0) {
+								for (var c = 0; c < threeLevel.length; c++) { //三级菜单
+									threeLevelHtml = threeLevelHtml +
+										'<ul class="nav nav-third-level">' +
+										'<li><a class="J_menuItem" href="' + threeLevel[c].url + '">' + threeLevel[c].name + '</a></li>' +
+										'</ul>'
+								}
+							}
+							twoLevelHtml = twoLevelHtml +
+								'<ul class="nav nav-second-level">' +
+								'<li><a class="J_menuItem" href="' + twoLevel[b].url_input + '">' + twoLevel[b].name + twoLevel[b].span +
+								'</a>' + threeLevelHtml + '</li>' +
+								'</ul>'
+						}
+					}
+					powerHtml = powerHtml +
+						'<li class="nav-item">' +
+						'<a href="#"><i class="fa fa-table"></i> <span class="nav-label">' + permissionList[a].name +
+						'</span><span class="fa arrow"></span></a>' +
+						twoLevelHtml +
+						'</li>'
+				}
+				$("#side-menu").append(powerHtml);
+			}
+		</script>
+		<script src="js/contabs.min.js" type="text/javascript"></script>
+		<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+		<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+		<script src="js/bootstrap.min.js?v=3.3.6"></script>
+		<script src="js/plugins/layer/layer.min.js"></script>
+		<script src="js/hplus.min.js?v=4.1.0"></script>
+		<script src="js/plugins/sweetalert/sweetalert.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/plugins/pace/pace.min.js"></script>
+		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/md5.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+
+</html>

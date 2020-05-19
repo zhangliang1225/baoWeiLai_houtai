@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html>
+
+	<!-- Mirrored from www.zi-han.net/theme/hplus/table_jqgrid.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:20:02 GMT -->
+
+	<head>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>商品列表</title>
+
+		<link href="css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+		<link href="css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+		<link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+		<link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+		<link href="css/animate.min.css" rel="stylesheet">
+		<link href="css/style.min862f.css?v=4.1.0" rel="stylesheet">
+		<link href="css/timePicker.css" rel="stylesheet">
+		<link href="css/newStyle.css" rel="stylesheet">
+
+		<style>
+			/* 重写bookstrap样式表 勿删 */
+			.form_inputs{width: 160px;background-color: #ebebeb;border: 1px solid #06a3f9;border-radius: 20px;-webkit-border-radius: 20px;-moz-border-radius: 20px;-o-border-radius: 20px;-ms-border-radius: 20px;}
+			.ibox-title{padding:20px;}
+      .mb30{
+        margin-bottom: 20px;
+      }
+			/* 重写bookstrap样式表 勿删 */
+			.ui-jqdialog{height: auto!important;}
+			.ui-common-table tbody{background-color: #eaf5fc!important;}
+			.modal-dialog{margin: 80px auto!important;}
+			.form-group{margin-left:0px!important;margin-right:0px!important;}
+			.modal-sm{width: 600px;}
+			.col-sm-3{width: 30%;}
+			.col-sm-8{width: 70%;}
+			.form-horizontal .control-label{text-align: left;padding-top: 5px;font-size: 18px;}
+			@media only screen and (min-width: 100px) and (max-width: 600px) {
+				.modal-sm{width: 400px;}
+				.col-sm-3{width: 40%;}
+				.col-sm-8{width: 60%;}
+				.scroll_div{width: 85%;}
+				.form-horizontal .control-label{text-align: left;padding-top: 5px;font-size: 14px;}
+				.dialog_btn{font-size: 14px!important;}
+			}
+			@media only screen and (min-width: 650px){
+				.modal-sm{width: 600px;}
+			}
+			/*以下是等待状态的通用样式*/
+			.wating_big_div{position: fixed;top:0px ;width: 100%;height: 100%;display: table;z-index: 9999;}
+			.zhezhao{opacity: 0.3;position: absolute;top: 0px;width: 100%;height: 100%;z-index: 9999;}
+			.wating_content_div{text-align: center;background:none;display: table-cell;vertical-align: middle;}	
+			/*以上是等待状态的通用样式*/
+      .inputcherckStyle{
+        width: 18px;
+        height:18px;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOnAAADpwBB5RT3QAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAA3SURBVDiNY7x8/sR/BioAFgYGBgYdA3OKDLly4SQDEzVcw8DAMGrQqEGjBo1Yg1gYGCDlCaUAAGYpCP6bB9aTAAAAAElFTkSuQmCC")
+      }
+      .inputcherckStyle:hover{
+        background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOnAAADpwBB5RT3QAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAA2SURBVDiNY9Tpr/7PQAXARA1DGBgYGFhgjMsFLWQZoDuhhoGBgYouGjVo1KBRg+hjEOOgK48AQfgHj87Hb9sAAAAASUVORK5CYII=")
+      }
+      .inputcherckStyle:checked{
+        background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOnAAADpwBB5RT3QAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAEwSURBVDiNY9Tpr/7PQAXARA1DRg1CBbF6Rgz7U8sYtEUlyDcoQkePocwpiEGEm4/BQkYGt0GsTMwMUbr6DIqCwhiGBGloM1Q5hzIwMDAwbL12imHBhbO4DYrRM2SodA5lWBCawqApIg4X91HTYGhwj2BgZGRk2HHjDEPtnq0Mf///x23QwUf3GV5/+cAgxMXLMDc0hcFAQorBTUmVocUjioGRkZFh3+0LDFW7NjP8/vcXw8WM6ClbTkCIYWZAHIOMgAjDj9+/GFiZWRiYmZgYDt65xFC0fR3Dr79/MAzBcBEDAwPDow/vGJLWzGO4++Y5AwcrGwMzExPD4XtXGEp2rMdpCFaDGBgYGJ5/+cSQtG4Bw6Vn9xkO3r3MULRtLcOPP79xGoLVa+SCYZBFaG4QAHB8WIHt6FAxAAAAAElFTkSuQmCC")
+      }
+      #timebox{
+        width: 50%;
+        height: 100%;
+        /* display: flex;
+        align-items: center; */
+      }
+      #timebox > span{
+        width: 4.16%;
+        display: block;
+        float: left;
+      }
+	  
+	  .table-head{
+		  border: 1px solid #e7eaec;
+		  border-bottom: 0px;
+	  }
+
+    </style>
+	</head>
+
+	<body class="gray-bg">
+		<div class="wrapper wrapper-content  animated fadeInRight">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="ibox ">
+
+						<div class="ibox-title pull-left w100p" style="padding: 10px 20px;">
+							<div class="pull-left">
+								<div class="ibox-tools cache5">
+									商品列表
+								</div>
+							</div>
+
+							<div class="pull-right">
+								<button class="refresh_btn">
+									<a class="refresh_a" style="">
+										<i class="fa fa-refresh"></i> 刷新
+									</a>
+								</button>
+							</div>
+						</div>
+
+
+						<div class="w100p pull-left" style="padding-top:20px;padding-left: 30px;background: #fff;">
+							<div class="pull-left order_choose order_choose_active" data-ordertype="0">全部商品(<span id="all_count">0</span>)</div>
+							<div class="pull-left order_choose" data-ordertype="1">已上架(<span id="upper_shelf">0</span>)</div>
+							<div class="pull-left order_choose" data-ordertype="2">未上架(<span id="on_shelves">0</span>)</div>
+							<div class="pull-left order_choose" data-ordertype="3">待审核(<span id="to_be_audited">0</span>)</div>
+							<div class="pull-left order_choose" data-ordertype="4">未通过(<span id="not_pass">0</span>)</div>
+						</div>
+
+						<div class="ibox-content pull-left w100p jqGrid_wrapper" id="uploadedWrap" data-gridtype="0" style="padding-top: 0px;">
+
+							<div class="w100p chaxunBorder">
+								<div class="ibox-title w100p" style="height:50px;background-color: rgb(243, 243, 243);padding: 10px 20px;border-top:0px;">
+									<div class="ibox-tools pull-left">
+										<span class="titleFindIcon pull-left"></span>
+										<span class="pull-left" style="position: relative;top: 3px;left: 5px;">筛选条件</span>
+									</div>
+									<div class="pull-right">
+										<button class="opera_btn" id="check_btn">查询</button>
+									</div>
+								</div>
+
+								<div class="w100p p20" style="display: flex;">
+									<div class="ml30">
+										<span class="f14 pull-left h30 lh30">输入搜索：</span>
+										<div class="pull-left">
+											<input type="text" class="form-control h30 w100p ml10" style="width: 150px;" id="check_arg1_input" placeholder="商品名称/商品货号"
+											 aria-required="true">
+										</div>
+									</div>
+									<div class="ml30">
+										<span class="f14 pull-left h30 lh30">商品分类：</span>
+										<div class="pull-left">
+											<select id="check_arg2_input" name="" class="pull-left h30 br_e5e6e7 f14 ml10 getOneSelect" style="width: 150px;height:34px;">
+											</select>
+										</div>
+									</div>
+									<div class="ml30">
+										<span class="f14 pull-left h30 lh30">商品品牌：</span>
+										<div class="pull-left">
+											<select id="check_arg3_input" name="" class="pull-left h30 br_e5e6e7 f14 ml10 getBrandSelect" style="width: 150px;height:34px;">
+											</select>
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="ibox-title pull-left w100p table-head" style="background-color: rgb(243, 243, 243);padding: 10px 20px;">
+								<div class="pull-left">
+									<div class="ibox-tools" style="">
+										<span class="titleFontIcon"></span>
+										<span class="pull-left" style="position: relative;top: 3px;left: 5px;">数据列表</span>
+									</div>
+								</div>
+								<div class="pull-right">
+									<!-- <button class="opera_btn" data-toggle="modal" data-target="#add_dialog">新增</button> -->
+								</div>
+							</div>
+
+							<div class="pull-left w100p">
+								<table class="table table-bordered mb0 ">
+									<thead>
+										<tr>
+											<th>编号</th>
+											<th>商品图片</th>
+											<th>商品名称</th>
+											<th>价格/货号</th>
+											<th class="store_name">商铺</th>
+											<th>标签</th>
+											<th>排序</th>
+											<th>SKU库存</th>
+											<th>销量</th>
+											<th>审核状态</th>
+											<th>操作</th>
+										</tr>
+									</thead>
+									<tbody id="tbody_list1"></tbody>
+								</table>
+							</div>
+							<div class="pull-left tac c0 f14 w100p pre mt10" id="footer_page_div">
+								<div class="">
+									<div class="pull-left">
+										<div class="ibox-tools">
+											<a class="refresh_a">
+												<i class="fa fa-refresh"></i> 刷新
+											</a>
+										</div>
+									</div>
+									<span class="under_line cursor_pointer f_last_span">上一页</span>
+									<span class="pl20 f_page_span">1</span>
+									<span class="pl20 under_line cursor_pointer f_next_span">下一页</span>
+									<span class="pl20">共 <span class="f_count_page_span">0</span> 页</span>
+									<div class="disib ml20">
+										每页显示：
+										<select class="p0 disib f_page_select">
+											<option value="" selected="selected">20</option>
+											<option value="">50</option>
+											<option value="">30</option>
+										</select>
+										条
+									</div>
+								</div>
+								<div class="record_right_div">
+
+									数据库总数量： <span class="f_counts_span">0</span> 条
+								</div>
+							</div>
+						</div>
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+		<!--加载遮罩组件-->
+		
+		<script src="js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/bootstrap.min.js?v=3.3.6"></script>
+		<script src="js/plugins/peity/jquery.peity.min.js"></script>
+		<script src="js/content.min.js?v=1.0.0"></script>
+		<script src="js/plugins/layer/laydate/laydate.js"></script>
+		<script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+		<script src="js/plugins/iCheck/icheck.min.js"></script>
+		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery-timepicker.js" type="text/javascript" charset="utf-8"></script>
+		<!--ajax上传插件:jquery.form ajaxSubmit-->
+		<script src="js/jquery-form.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			var tableTimeout, addTimeout, setPowerTime, editManageTimeout, deleteTimeOut, getPowerTime, limits = 20,
+				page = 1,
+				counts = 0,
+				table_title, roleID;
+			var cherk_roleId;
+
+			var totalPages = 0;
+			var maxIndex;
+
+			var isSwitch; //0:排班 1：请假
+			
+			if(getURLParams(document.URL).id){
+				isSwitch = getURLParams(document.URL).id; 
+				$(".order_choose").removeClass("order_choose_active");
+				$($(".order_choose")[isSwitch]).addClass("order_choose_active");
+			}else{
+				isSwitch = 0;
+			}
+			if(getURLParams(document.URL).page){
+				page = getURLParams(document.URL).page; 
+				isSwitch = getURLParams(document.URL).isswitch; 
+				InitTbodyList(isSwitch, page);
+			}
+
+			$(document).ready(function() {
+				IsTokenSave();
+				console.log(sessionStorage.getItem("token"));
+				$(".refresh_a").click(function() { //刷新按钮
+					location.reload();
+				});
+				
+
+				// 首次进入初始化加载
+				InitTbodyList(isSwitch, page);
+				getBrandSelect();
+				getOneSelect();//获取下拉列表数据
+				//查询按钮
+				$("#check_btn").click(function() {
+					page = 1; //重置页数
+					$(".f_page_span").html(1); //重置当前所在页数
+					InitTbodyList(isSwitch, page); //获取列表数据
+				});
+
+				//选择状态栏点击事件初始化加载
+				$(".order_choose").click(function() {
+					$(".order_choose").removeClass("order_choose_active");
+					$(this).addClass("order_choose_active");
+					var orderType = parseInt($(this).data("ordertype"));
+					isSwitch = orderType;
+					// $(".jqGrid_wrapper").each(function (k, element) {   //显示当前的状态栏
+					//     if (parseInt($(element).data("gridtype")) == orderType) {
+					//         $(".jqGrid_wrapper").addClass("none");
+					//         $(element).removeClass("none");
+					//     }
+					// });
+
+					totalPages = 0;
+					maxIndex = 0;
+					console.log("isSwitch:" + isSwitch);
+					$(".f_page_span").html(1);
+					// page = 1;//重置页数
+					// if(isSwitch == 0 ){
+					//   $(".f_page_span").html(1);//重置当前所在页数
+					// }else{
+					//   $(".s_page_span").html(1);//重置当前所在页数
+					// }
+					InitTbodyList(isSwitch, 1); //获取列表数据
+				});
+
+
+				//分页1
+				$(".f_page_select").change(function() { //选择一页多少条数据的select
+					page = 1; //重置页数
+					$(".f_page_span").html(1); //重置页数
+					limits = $(".f_page_select option:selected").text(); //设置当前显示数量
+					InitTbodyList(isSwitch, page);
+				});
+				$(".f_last_span").click(function() { //上一页
+					if (page < 2) {
+						TipsAlert("这是最前面的数据了");
+						return false;
+					}
+					page--;
+					$(".f_page_span").html(parseInt($(".f_page_span").html()) - 1);
+					InitTbodyList(isSwitch, page);
+				});
+				$(".f_next_span").click(function() { //下一页
+
+					if (page > maxIndex - 1) {
+						TipsAlert("这是最后面的数据了");
+						return false;
+					}
+					page++;
+					$(".f_page_span").html(parseInt($(".f_page_span").html()) + 1);
+					InitTbodyList(isSwitch, page);
+				});
+
+			});
+
+
+			/**
+			 * 该方法用于初始化列表
+			 * @param {Number} startIndex startIndex是数据起始下标
+			 * */
+			function InitTbodyList(isSwitch, startIndex) {
+				console.log(isSwitch);
+				var userMessage = JSON.parse(sessionStorage.getItem("user_message"));
+				Showload();
+				var goodsStatus = '';
+				var goodsVerifyStatus = '';
+				if (isSwitch == 0) { //全部商品
+					goodsVerifyStatus = '';
+					goodsStatus = '';
+				} else if (isSwitch == 1) { //已上架
+					goodsVerifyStatus = '';
+					goodsStatus = 2;
+				} else if (isSwitch == 2) { //未上架
+					goodsVerifyStatus = '';
+					goodsStatus = 1;
+				} else if (isSwitch == 3) { //待审核
+					goodsVerifyStatus = 0;
+					goodsStatus = '';
+				} else if (isSwitch == 4) { //未通过
+					goodsVerifyStatus = 2;
+					goodsStatus = '';
+				}
+				// tableTimeout = setInterval("Timeout(tableTimeout)", 1000);
+				console.log(urls + common_url.goodsList);
+				$.ajax({
+					type: "get",
+					url: urls + common_url.goodsList,
+					async: true,
+					timeout: 30000,
+					dataType: "json",
+					headers: {
+						'X-Access-Token': userMessage.token,
+					},
+					data: {
+						nameValue: $("#check_arg1_input").val(),
+						goodsCateFirstId: $("#check_arg2_input").val(),
+						brandId: $("#check_arg3_input").val(),
+						goodsVerifyStatus,
+						goodsStatus,
+						page: startIndex,
+						limit: limits
+					},
+					success: function(json) {
+						console.log(json);
+						CheckLogout(json); //检查是否登陆过期
+
+						if (json.code == 0) {
+							totalPages = json.data.records.total;
+							var myData = json.data.records;
+							var tableHtml = "";
+							counts = json.data.total;
+							console.log(myData);
+							if (counts == 0) { //显示或隐藏分页
+								$("#footer_page_div").hide();
+							} else {
+								$("#footer_page_div").show();
+							}
+							maxIndex = (counts / limits).toCeil(0);
+							$(".f_count_page_span").html(maxIndex); //设置当前共几页  
+							$(".f_counts_span").html(counts);
+							for (var i = 0; i < myData.length; i++) {
+								if (myData[i]["goods_status"] == 2) { //商品上架 1不上架 2上架
+									myData[i]["status_checked"] = "checked"
+								} else {
+									myData[i]["status_checked"] = ""
+								}
+								
+								if (myData[i]["goods_xin"] == 1) { //新品1有
+									myData[i]["new_checked"] = "checked"
+								} else {
+									myData[i]["new_checked"] = ""
+								}
+								
+								if (myData[i]["goods_tui"] == 1) { //推荐1有
+									myData[i]["tui_checked"] = "checked"
+								} else {
+									myData[i]["tui_checked"] = ""
+								}
+
+								if (myData[i]["goods_verify_status"] == 0) { //1:
+									myData[i]["goods_verify_status_text"] = "未审核"
+								} else if (myData[i]["goods_verify_status"] == 1) {
+									myData[i]["goods_verify_status_text"] = "审核通过"
+								} else if (myData[i]["goods_verify_status"] == 2) {
+									myData[i]["goods_verify_status_text"] = "审核不通过"
+								}
+								
+								if(userMessage.type == 1){
+									myData[i]["store_name_show"] = '';
+								}else{
+									$(".store_name").addClass('none');
+									myData[i]["store_name_show"] = 'none';
+								}
+
+								tableHtml = tableHtml + '<tr>' +
+									'<td data-id="' + myData[i]["id"] + '" data-cateName="' + myData[i]["cate_name"] + '" data-sort="' + myData[
+										i]["sort"] + '">' + myData[i]["id"] + '</td>' +
+									'<td>' +
+									'<div class="preview_media br8 bdno c_f" style="cursor: pointer;" id="add_pic_btn" data-toggle="modal" data-target="#preview_media_dialog" data-type="img" data-src="' +
+									imgUrl + myData[i]["url"] + '"><img src="' + imgUrl + myData[i]["url"] + '" style="width:120px;"><div>' +
+									'</td>' +
+									'<td>' + myData[i]["goods_name"] + '</td>' +
+									'<td>价格：￥'+myData[i]["goods_price"]+'<br>货号：' + myData[i]["goods_num"] + '</td>' +
+									'<td class="' + myData[i]["store_name_show"] + '">' + myData[i]["store_name"] + '</td>' +
+									'<td style="width:120px;"><div style="display:flex;align-items: center;justify-content: space-between;height:30px;line-height:30px;margin-bottom:10px;"><div>上架：</div><div class="onoffswitch" style="height:30px;"><input '+myData[i]["status_checked"]+' type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="SJmyonoffswitch'+i+'"><label class="SJswitchBtn switchBtn" for="SJmyonoffswitch'+i+'" data-index="' + i + '" data-type="' + 1 + '" data-id="' + myData[i]["id"] + '"><span class="onoffswitch-inner"></span><span class="onoffswitch-switch"></span></label></div></div><div style="display:flex;align-items: center;justify-content: space-between;height:30px;line-height:30px;margin-bottom:10px;"><div>新品：</div><div class="onoffswitch" style="height:30px;"><input '+myData[i]["new_checked"]+' type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="XPmyonoffswitch'+i+'"><label class="XPswitchBtn switchBtn" for="XPmyonoffswitch'+i+'" data-index="' + i + '" data-type="' + 2 + '" data-id="' + myData[i]["id"] + '"><span class="onoffswitch-inner"></span><span class="onoffswitch-switch"></span></label></div></div><div style="display:flex;align-items: center;justify-content: space-between;height:30px;line-height:30px;margin-bottom:10px;"><div>推荐：</div><div class="onoffswitch" style="height:30px;"><input '+myData[i]["tui_checked"]+' type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="TJmyonoffswitch'+i+'"><label class="TJswitchBtn switchBtn" for="TJmyonoffswitch'+i+'" data-index="' + i + '" data-type="' + 3 + '" data-id="' + myData[i]["id"] + '"><span class="onoffswitch-inner"></span><span class="onoffswitch-switch"></span></label></div></div></td>' +
+									'<td>' + myData[i]["goods_sort"] + '</td>' +
+									'<td></td>' +
+									'<td>' + myData[i]["saleCount"] + '</td>' +
+									'<td>' + myData[i]["goods_verify_status_text"] + '</td>' +
+									'<td>' +
+									'<span class="under_line cursor_pointer look_span pl20 c_1ABC9C">查看</span>' +
+									'<span class="under_line cursor_pointer edit_span pl20 c_1ABC9C" >编辑</span>'
+									// + '<span class="under_line cursor_pointer delete_span pl20 c_1ABC9C" >日志</span>'
+									+
+									'<span class="under_line cursor_pointer delete_span pl20 c_1ABC9C" >删除</span>' +
+									'</td>' +
+									'</tr>';
+							}
+							$("#tbody_list1").html(tableHtml);
+							DealTable();
+							InitFunc();
+						} else {
+							TipsAlert(json.msg);
+							// if (json.return_msg == "Session过期") {
+							// 	window.location = "login_timeout.html";
+							// }else{
+							// 	TipsAlert(json.return_msg);
+							// }
+						}
+						InitTime();
+					},
+					error: function(xml, text, errorThrown) {
+						if (text == "timeout") {
+							TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+						} else {
+							TipsAlert("请求数据失败,请联系后台技术人员");
+						}
+						InitTime();
+					}
+
+				});
+
+				$.ajax({
+					type: "get",
+					url: urls + common_url.bSysGoods_goodsTotals,
+					async: true,
+					timeout: 30000,
+					dataType: "json",
+					headers: {
+						'X-Access-Token': userMessage.token,
+					},
+					data: {
+				
+					},
+					success: function(json) {
+						console.log(json);
+						CheckLogout(json); //检查是否登陆过期		
+						if (json.code == 0) {
+							$("#all_count").html(json.data.all_count);
+							$("#to_be_audited").html(json.data.to_be_audited);
+							$("#upper_shelf").html(json.data.upper_shelf);
+							$("#not_pass").html(json.data.not_pass);
+							$("#on_shelves").html(json.data.on_shelves);
+							
+				
+				
+						} else {
+							// $(".getBrandSelect").html('<option>获取下拉失败</option>');
+						}
+				
+						InitTime(tableTimeout);
+					},
+					error: function(xml, text, errorThrown) {
+						if (text == "timeout") {
+							TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+						} else {
+							TipsAlert("请求数据失败,请联系后台技术人员");
+						}
+						InitTime(tableTimeout);
+					}
+				})
+			}
+			/**
+			 * 该方法用于获取下拉列表数据
+			 * @param {Number} token是获取数据的必传参数
+			* */
+			function getOneSelect() { 
+				$.ajax({
+					type:"get",
+					url:urls+ common_url.oneCatelist,
+					async:true,
+					timeout:30000,
+					dataType:"json",
+					headers: {
+						'X-Access-Token': userMessage.token,
+					},
+					data:{
+						parentId:''
+					},
+					success:function  (json) {
+						console.log(json);
+						CheckLogout (json);//检查是否登陆过期		
+						if (json.code == 0) {
+							var optionHtml = '<option value="">全部</option>';
+							var myData = json.data;
+							for (var i = 0; i < myData.length; i++) {
+								optionHtml = optionHtml + '<option value="' + myData[i]["id"] + '">' + myData[i]["cateName"] + '</option>';
+							}
+							$(".getOneSelect").html(optionHtml);
+						} else{
+							$(".getOneSelect").html('<option value="">获取菜单失败</option>');
+						}
+				
+						InitTime (tableTimeout);
+					},
+					error:function(xml, text, errorThrown) {
+						if (text == "timeout") {
+							TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+						} else{
+							TipsAlert("请求数据失败,请联系后台技术人员");
+						}
+						InitTime (tableTimeout);
+					}
+				})
+			}
+
+			/**
+			 * 该方法用于品牌获取下拉列表数据
+			 * @param {Number} token是获取数据的必传参数
+			 * */
+			function getBrandSelect() {
+				$.ajax({
+					type: "get",
+					url: urls + common_url.bSysBrand_brandList,
+					async: true,
+					timeout: 30000,
+					dataType: "json",
+					headers: {
+						'X-Access-Token': userMessage.token,
+					},
+					data: {
+
+					},
+					success: function(json) {
+						console.log(json);
+						CheckLogout(json); //检查是否登陆过期		
+						if (json.code == 0) {
+
+							var optionHtml = '<option value="">请选择品牌</option>';
+							var myData = json.data;
+							for (var i = 0; i < myData.length; i++) {
+								optionHtml = optionHtml + '<option data-brandName="' + myData[i]["brandName"] + '" data-id="' + myData[i][
+									"id"
+								] + '" value="' + myData[i]["id"] + '">' + myData[i]["brandName"] + '</option>';
+							}
+							$(".getBrandSelect").html(optionHtml);
+
+							InitFunc();
+
+						} else {
+							$(".getBrandSelect").html('<option>获取下拉失败</option>');
+						}
+
+						InitTime(tableTimeout);
+					},
+					error: function(xml, text, errorThrown) {
+						if (text == "timeout") {
+							TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+						} else {
+							TipsAlert("请求数据失败,请联系后台技术人员");
+						}
+						InitTime(tableTimeout);
+					}
+				})
+			}
+
+
+			/**
+			 * 该方法用于初始化span标签里面的方法
+			 * */
+			function InitFunc() {
+				// 删除
+				$(".delete_span").each(function() {
+					$(this).click(function() {
+						var dataset = $(this).parents("td").siblings("td").eq(0)[0].dataset;
+						console.log(dataset);
+						swal({
+							title: "确定删除？",
+							text: "您确定要删除吗，请谨慎操作！",
+							type: "warning",
+							showCancelButton: true,
+							confirmButtonColor: "#DD6B55",
+							confirmButtonText: "删除",
+							cancelButtonText: "让我再考虑一下…",
+							closeOnConfirm: false,
+						}, function(e) {
+							if (e) {
+								swal({
+									title: "请再次确认是否删除？",
+									text: "删除后将无法恢复，请谨慎操作！",
+									type: "warning",
+									showCancelButton: true,
+									confirmButtonColor: "#DD6B55",
+									confirmButtonText: "是的，确定删除",
+									cancelButtonText: "让我再考虑一下…",
+									closeOnConfirm: false,
+									closeOnCancel: true
+								}, function(yes) {
+									if (yes) {
+										Showload("正在请求删除，请稍后....");
+										deleteTimeOut = setInterval("Timeout(deleteTimeOut)", 1000);
+										$.ajax({
+											type: "post",
+											url: urls + common_url.goodsList_delete,
+											async: true,
+											timeout: 30000,
+											dataType: "json",
+											headers: {
+												'X-Access-Token': userMessage.token,
+											},
+											data: {
+												id: dataset.id
+											},
+											success: function(json) {
+												CheckLogout(json);
+												if (json.code == 0) {
+													swal({
+														title: "删除成功！",
+														text: "通过",
+														type: "success",
+													}, function() {
+														// location.reload();
+														InitTbodyList(isSwitch, page);
+													});
+												} else {
+													TipsAlert("错误：" + json.return_msg + ",原因:" + json.return_error);
+												}
+												InitTime(deleteTimeOut);
+											},
+											error: function(xml, text, e) {
+												if (text == "timeout") {
+													TipsAlert("请求超时,请检查网络或着重新操作");
+												} else {
+													TipsAlert("请求数据失败,请联系后台技术人员");
+												}
+												InitTime(deleteTimeOut);
+											}
+										});
+									}
+								});
+							}
+						});
+
+					});
+				});
+
+				$(".look_span").each(function() {
+					$(this).click(function() {
+						var dataset = $(this).parents("td").siblings("td").eq(0)[0].dataset;
+						console.log(dataset)
+						window.location = "goods_list_detail.html?id=" + dataset.id+"&isswitch="+isSwitch+"&page="+page;
+					})
+				});
+				$(".edit_span").each(function() {
+					$(this).click(function() {
+						var dataset = $(this).parents("td").siblings("td").eq(0)[0].dataset;
+						console.log(dataset)
+						window.location = "goods_list_edit.html?id=" + dataset.id;
+					})
+				});
+				$(".SJswitchBtn").each(function() {
+					$(this).click(function() {
+						var index = $(this)[0].dataset.index;
+						console.log($('#SJmyonoffswitch'+index)[0].checked);
+						var status,type;
+						if($('#SJmyonoffswitch'+index)[0].checked == true){
+							status = 0;
+						}else{
+							status = 1;
+						}
+						type = 1;
+						changeStatus($(this)[0].dataset.id,status,type);
+					})
+				});
+				
+				$(".XPswitchBtn").each(function() {
+					$(this).click(function() {
+						var index = $(this)[0].dataset.index;
+						console.log($('#XPmyonoffswitch'+index)[0].checked);
+						var isXin,type;
+						if($('#XPmyonoffswitch'+index)[0].checked == true){
+							isXin = 0;
+						}else{
+							isXin = 1;
+						}
+						type = 2;
+						changeStatus($(this)[0].dataset.id,isXin,type);
+					})
+				});
+				
+				$(".TJswitchBtn").each(function() {
+					$(this).click(function() {
+						var index = $(this)[0].dataset.index;
+						console.log($('#TJmyonoffswitch'+index)[0].checked);
+						var status,type;
+						if($('#TJmyonoffswitch'+index)[0].checked == true){
+							status = 0;
+						}else{
+							status = 1;
+						}
+						type = 3;
+						changeStatus($(this)[0].dataset.id,status,type);
+					})
+				});
+				
+
+			}
+			function changeStatus(id,status,type){
+				// swal({
+				// 	title: "确定执行该操作吗？",
+				// 	text: "数据会更新为最新，请谨慎操作！",
+				// 	type: "warning",
+				// 	showCancelButton: true,
+				// 	confirmButtonColor: "#DD6B55",
+				// 	confirmButtonText: "是的，确定",
+				// 	cancelButtonText: "让我再考虑一下…",
+				// 	closeOnConfirm: false,
+				// 	closeOnCancel: true
+				// }, function(yes) {
+					// if (yes) {
+						Showload("正在请求数据，请稍后....");
+						deleteTimeOut = setInterval("Timeout(deleteTimeOut)", 1000);
+						$.ajax({
+							type: "post",
+							url: urls + common_url.bSysGoods_updateGoodsStatus,
+							async: true,
+							timeout: 30000,
+							dataType: "json",
+							headers: {
+								'X-Access-Token': userMessage.token,
+							},
+							data: {
+								goodsId: id,
+								status:status,
+								type:type
+							},
+							success: function(json) {
+								CheckLogout(json);
+								if (json.code == 0) {
+									swal({
+										title: "操作成功！",
+										text: "通过",
+										type: "success",
+									}, function() {
+										// location.reload();
+										InitTbodyList(isSwitch, page);
+									});
+								} else {
+									TipsAlert("错误：" + json.msg + ",原因:" + json.msg);
+								}
+								InitTime(deleteTimeOut);
+							},
+							error: function(xml, text, e) {
+								if (text == "timeout") {
+									TipsAlert("请求超时,请检查网络或着重新操作");
+								} else {
+									TipsAlert("请求数据失败,请联系后台技术人员");
+								}
+								InitTime(deleteTimeOut);
+							}
+						});
+					// }
+				// });
+			}
+		</script>
+	</body>
+</html>

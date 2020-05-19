@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- sql查看页面 -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<!-- 引入jq -->
+<script src="https://cdn.bootcss.com/jquery/3.4.0/jquery.min.js"></script>
+<!-- 引入layui框架 -->
+<script src="./lib/layui/layui.js" charset="utf-8"></script>
+<!-- 引入xadmin框架 -->
+<script type="text/javascript" src="./js/xadmin.js"></script>
+<!-- 引入请求基准路径 -->
+<script type="text/javascript" src="./js/common.js"></script>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+</style>
+
+<body>
+    <!-- 标题 -->
+    <div class="title" style="height: 50px; padding-left: 30px; line-height: 50px; border: #ccc solid 1px;">
+        sql内容
+    </div>
+    <!-- 内容 -->
+    <div class="content" style="border: #ccc solid 1px; border-top: none; height: 360px; padding: 20px 30px;">
+        <div class="num">
+            <span>ID&nbsp;:</span> <span>100</span>
+        </div>
+        <!-- sql内容 -->
+        <div class="sql_content">
+            <p>SQL</p>
+
+            <div>
+                <p>insert</p>
+                <p>update</p>
+                <p>delete</p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

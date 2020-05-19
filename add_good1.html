@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+
+	<!-- Mirrored from www.zi-han.net/theme/hplus/table_jqgrid.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:20:02 GMT -->
+
+	<head>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>添加技术服务商品1</title>
+
+		<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+		<link href="css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+		<link href="css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+
+		<link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+		<link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+		<link href="css/animate.min.css" rel="stylesheet">
+		<link href="css/style.min862f.css?v=4.1.0" rel="stylesheet">
+		<link rel="stylesheet" href="css/cropper.min.css">
+		<link rel="stylesheet" href="css/ImgCropping.css">
+		<link rel="stylesheet" href="css/newStyle.css">
+
+		<style>
+		</style>
+	</head>
+
+	<body class="gray-bg">
+		<div class="wrapper wrapper-content  animated fadeInRight">
+			<div style="width:100%;flex;align-items: center;flex-direction: column;">
+				<div class="ibox-title pull-left w100p" style="padding: 10px 20px;">
+					<div class="pull-left">
+						<div class="ibox-tools cache5">
+							选择商品分类
+						</div>
+					</div>
+				</div>
+				<div style="width:100%;margin: 0 auto;background-color: #F9F9F9;display: flex;align-items: center;">
+					<img style="margin: 0 auto;" src="./images/add1.png" alt="">
+				</div>
+				<div style="width: 1480px;height: 760px;margin: 0 auto;border: 1px solid rgba(228, 228, 228, 1);margin-top: 30px;">
+					<div style="width: 100%;height: 80%;display: flex;border-bottom: 1px solid rgba(228, 228, 228, 1);">
+						<div style="width: 12%;height: 100%;border-right: 1px solid rgba(228, 228, 228, 1);position: relative;">
+							<img style="width: 200px;position: absolute;z-index: 10;" src="./images/icon-title.png" alt="">
+							<p style="color: #fff;text-align: center;font-size: 20px;position: absolute;z-index: 11;top:18px;left: 50px;">选择分类</p>
+						</div>
+						<div style="width: 88%;height: 100%;background-color: #fff;display: flex;align-items: center;flex-direction: column;padding: 0 5%;">
+							<!-- <div style="width: 100%;height: 15%;display: flex;align-items: center;">
+								<span>您最近使用的商品分类：</span>
+								<select name="" class="pull-left h30 br_e5e6e7 f14 getHisSelect" style="width: 240px;height:34px;margin-left: 15px;">
+								</select>
+							</div> -->
+							<div style="width: 100%;height: 70%;display:flex;align-items: center;" id="selectBox">
+								<div class="box getSelect" id="getOneSelect" style="">
+									<div>选择一级分类</div>
+								</div>
+								<img style="padding: 0 30px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADUAAAA1CAYAAADh5qNwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAANzSURBVGhD7Zr/xzpBEMfv///bIqKIiCgiIvohYj9esdmbZr/e7NXD58081O3N7Ot2ZnYvz+CM9Hg83OVycYfDwW23W7dardxisRgZ33GNMYzlnh6aBMWkTqeTClBq3Hs+n00Bm6Du97vb7/fqJKcYPi3gqqCez2cXGGnEIFariqGogeVyqU7CG9d3u507Ho/uer262+02Mr7jGmNKfDG+RUVQqdUhOIVPStaKe7g3Bcj1WiWhSAG6lRaMifDUp6SJFz7wFYNjDjVxolA42Ww2ahDSxwJGCp/41mIyl9KYUShthXiS1FZvxeqXOZVIhdJqiCAtddMqYmlgJTX2AcVTko7mBvKKgeW64giKnJVOvgXkpYHxOVVfIygt7axqCD9YS4PRsoe5xvSG4onIG+lEFqIOvM+aLhZK64qxI9UbSq5SbolrFPrFWsAYL9MwtlovKIjDwRiboZW07aEFjDlJP9pqvaDkYMtVQvhar9ejGFgtmLZavLZIvaDk+1DLeSsnKzBZJsxdatBSr1cL1540VgOmNTSZgoNslwTtKW3fwWrA5P1y2xnCdotZtfGUpoLJ9i7LZZCdybLrpTQFTDY2edAdZJNofdtsUSsYcwzHy2YxhBcxXrs1EUTbb3pZCow5yvGhiqHYD+TY3qbtQcgMStvNe1usvs2g5k4/Nurm9PvFRpECQtlG8WstPQeEsi39G5svk6a7hXGxEiCU3XznPiZNBUJyhT+OSXMfaKcCMTd5/8eBlj+yWfR69ZgKhIpePfgjC4/lrQmUkxUQY2XqRV8StRS07ILa/lYLhOTDx2TqoRcUmvOHlxYgbZWSP7wgrQCt2nv4wFqAkGzjmLZK6A2F5Gphsl22itzHWoDktoPFVgmNoLQl5nOvFl8i7eSRK40RFJLnKu/kG2AaEJY7n35AIXl0wuYGiwGV7KEqFNLaMEGsaiwlYmhA8uAaUxSKnKVTSccYnail4HPCp9blsJquGYVCONFWDONJ8t8uFnD4wJe2OhhzqImThPLSaswbE6G9ttQb93BvDAZrOYcWQSE6Tio4xnXSh6fOeF67Q+M7rjGmxFeuy8VUDIVIAW2DtjZiTEnrKigvjic94PAZO/rUqAnKiwlw9JHvYzXGvfiwgPGaBBWKSbG/UNh0Kw2U77jGGMZagoQyg/ol/Yf6G3LuH6s+zLCTKTbyAAAAAElFTkSuQmCC">
+								<div class="box getSelect" id="getTwoSelect" style="">
+									<div>选择二级分类</div>
+								</div>
+								<img style="padding: 0 30px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADUAAAA1CAYAAADh5qNwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAANzSURBVGhD7Zr/xzpBEMfv///bIqKIiCgiIvohYj9esdmbZr/e7NXD58081O3N7Ot2ZnYvz+CM9Hg83OVycYfDwW23W7dardxisRgZ33GNMYzlnh6aBMWkTqeTClBq3Hs+n00Bm6Du97vb7/fqJKcYPi3gqqCez2cXGGnEIFariqGogeVyqU7CG9d3u507Ho/uer262+02Mr7jGmNKfDG+RUVQqdUhOIVPStaKe7g3Bcj1WiWhSAG6lRaMifDUp6SJFz7wFYNjDjVxolA42Ww2ahDSxwJGCp/41mIyl9KYUShthXiS1FZvxeqXOZVIhdJqiCAtddMqYmlgJTX2AcVTko7mBvKKgeW64giKnJVOvgXkpYHxOVVfIygt7axqCD9YS4PRsoe5xvSG4onIG+lEFqIOvM+aLhZK64qxI9UbSq5SbolrFPrFWsAYL9MwtlovKIjDwRiboZW07aEFjDlJP9pqvaDkYMtVQvhar9ejGFgtmLZavLZIvaDk+1DLeSsnKzBZJsxdatBSr1cL1540VgOmNTSZgoNslwTtKW3fwWrA5P1y2xnCdotZtfGUpoLJ9i7LZZCdybLrpTQFTDY2edAdZJNofdtsUSsYcwzHy2YxhBcxXrs1EUTbb3pZCow5yvGhiqHYD+TY3qbtQcgMStvNe1usvs2g5k4/Nurm9PvFRpECQtlG8WstPQeEsi39G5svk6a7hXGxEiCU3XznPiZNBUJyhT+OSXMfaKcCMTd5/8eBlj+yWfR69ZgKhIpePfgjC4/lrQmUkxUQY2XqRV8StRS07ILa/lYLhOTDx2TqoRcUmvOHlxYgbZWSP7wgrQCt2nv4wFqAkGzjmLZK6A2F5Gphsl22itzHWoDktoPFVgmNoLQl5nOvFl8i7eSRK40RFJLnKu/kG2AaEJY7n35AIXl0wuYGiwGV7KEqFNLaMEGsaiwlYmhA8uAaUxSKnKVTSccYnail4HPCp9blsJquGYVCONFWDONJ8t8uFnD4wJe2OhhzqImThPLSaswbE6G9ttQb93BvDAZrOYcWQSE6Tio4xnXSh6fOeF67Q+M7rjGmxFeuy8VUDIVIAW2DtjZiTEnrKigvjic94PAZO/rUqAnKiwlw9JHvYzXGvfiwgPGaBBWKSbG/UNh0Kw2U77jGGMZagoQyg/ol/Yf6G3LuH6s+zLCTKTbyAAAAAElFTkSuQmCC">
+								<div class="box getSelect" id="getThreeSelect" style="">
+									<div>选择三级分类</div>
+								</div>
+							</div>
+							<div style="width: 100%;height: 15%;display: flex;align-items: center;">
+								<span>您当前选择的商品类别是：</span><span id="showText" style="color: red;"></span>
+							</div>
+						</div>
+					</div>
+					<div style="width: 100%;height: 20%;display: flex;align-items: center;">
+						<button id="saveBtn" type="button" style="margin:0 auto;width: 180px;height: 45px;border-radius: 4px;background-color:rgba(26, 188, 156, 1);color:#fff;">下一步，填写商品信息</button>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<script src="js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/bootstrap.min.js?v=3.3.6"></script>
+		<script src="js/plugins/peity/jquery.peity.min.js"></script>
+		<script src="js/content.min.js?v=1.0.0"></script>
+		<script src="js/plugins/layer/laydate/laydate.js"></script>
+		<script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+		<script src="js/plugins/iCheck/icheck.min.js"></script>
+		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/cropper.min.js"></script>
+
+		<script>
+			var tableTimeout, addManageTimeout, setRoleTime, editManageTimeout, deleteTimeOut, getPowerList, powerName = "",
+				limits = 20,
+				page = 1,
+				counts = 0,
+				table_title;
+
+			var totalPages = 0;
+			var levelText1, levelText2, levelText3 = "";
+			var goodsCateFirstId, goodsCateSecId, goodsCateThirdId = "";
+			var goodsId;
+			var userMessage = JSON.parse(sessionStorage.getItem("user_message"));
+			$(document).ready(function() {
+				IsTokenSave();
+				var first = "";
+				getSelect(first);
+				getHistorySelect(goodsId);
+
+				$('.getHisSelect').change(function() {
+					var str = $(this).val();
+					var arr = str.split(',');
+					sessionStorage.setItem("cateArr1", arr);
+					window.location = "add_good2.html";
+				});
+
+				$("#saveBtn").click(function() {
+					if (levelText3 == "") {
+						TipsAlert("必须添加三级分类！");
+						return false;
+					}
+
+					console.log(goodsCateFirstId + ";" + goodsCateSecId + ";" + goodsCateThirdId);
+
+					$.ajax({
+						type: "post",
+						url: urls + common_url.bSysGoods_createOne,
+						async: true,
+						timeout: 30000,
+						dataType: "json",
+						headers: {
+							'X-Access-Token': userMessage.token,
+						},
+						data: {
+							goodsId: goodsId,
+							goodsCateFirstId: goodsCateFirstId,
+							goodsCateSecId: goodsCateSecId,
+							goodsCateThirdId: goodsCateThirdId
+						},
+						success: function(json) {
+							CheckLogout(json); //检查是否登陆过期		
+							if (json.code == 0) {
+								console.log(json)
+								var cateArr1 = [json.data.goodsId, levelText1 + ' > ' + levelText2 + ' > ' + levelText3]
+								sessionStorage.setItem("cateArr1", cateArr1);
+								window.location = "add_good2.html";
+
+								// window.location = "add_good2.html?goodId="+json.data.goodsId;
+							} else {
+								TipsAlert(json.code);
+							}
+
+							InitTime(tableTimeout);
+						},
+						error: function(xml, text, errorThrown) {
+							if (text == "timeout") {
+								TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+							} else {
+								TipsAlert("请求数据失败,请联系后台技术人员");
+							}
+							InitTime(tableTimeout);
+						}
+					})
+				})
+			});
+			/**
+			 * 该方法用于获取下拉列表数据
+			 * @param {Number} token是获取数据的必传参数
+			 * */
+			function getSelect(parentId) {
+				$.ajax({
+					type: "get",
+					url: urls + common_url.oneCatelist,
+					async: true,
+					timeout: 30000,
+					dataType: "json",
+					headers: {
+						'X-Access-Token': userMessage.token,
+					},
+					data: {
+						parentId: parentId
+					},
+					success: function(json) {
+						console.log(json);
+						CheckLogout(json); //检查是否登陆过期		
+						if (json.code == 0) {
+
+							var optionHtml = '<div>选择一级分类</div>';
+							var myData = json.data;
+							for (var i = 0; i < myData.length; i++) {
+								optionHtml = optionHtml + '<div class="cate1" data-cateName="' + myData[i]["cateName"] + '" data-id="' +
+									myData[i]["id"] + '">' + myData[i]["cateName"] + '<span style="float:right"> > </apan></div>';
+							}
+							$("#getOneSelect").html(optionHtml);
+
+							InitFunc();
+
+						} else {
+							$(".getSelect").html('<div>获取菜单失败</div>');
+						}
+
+						InitTime(tableTimeout);
+					},
+					error: function(xml, text, errorThrown) {
+						if (text == "timeout") {
+							TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+						} else {
+							TipsAlert("请求数据失败,请联系后台技术人员");
+						}
+						InitTime(tableTimeout);
+					}
+				})
+			}
+
+			function getTwoSelect(parentId) {
+				$.ajax({
+					type: "get",
+					url: urls + common_url.oneCatelist,
+					async: true,
+					timeout: 30000,
+					dataType: "json",
+					headers: {
+						'X-Access-Token': userMessage.token,
+					},
+					data: {
+						parentId: parentId
+					},
+					success: function(json) {
+						console.log(json);
+						CheckLogout(json); //检查是否登陆过期		
+						if (json.code == 0) {
+
+							var optionHtml = '<div>选择二级分类</div>';
+							var myData = json.data;
+							for (var i = 0; i < myData.length; i++) {
+								optionHtml = optionHtml + '<div class="cate2" data-cateName="' + myData[i]["cateName"] + '" data-id="' +
+									myData[i]["id"] + '">' + myData[i]["cateName"] + '<span style="float:right"> > </apan></div>';
+							}
+							$("#getTwoSelect").html(optionHtml);
+							$("#getThreeSelect").html("");
+
+							InitFunc();
+
+						} else {
+							$(".getSelect").html('<div>获取菜单失败</div>');
+						}
+
+						InitTime(tableTimeout);
+					},
+					error: function(xml, text, errorThrown) {
+						if (text == "timeout") {
+							TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+						} else {
+							TipsAlert("请求数据失败,请联系后台技术人员");
+						}
+						InitTime(tableTimeout);
+					}
+				})
+			}
+
+			function getThreeSelect(parentId) {
+				$.ajax({
+					type: "get",
+					url: urls + common_url.oneCatelist,
+					async: true,
+					timeout: 30000,
+					dataType: "json",
+					headers: {
+						'X-Access-Token': userMessage.token,
+					},
+					data: {
+						parentId: parentId
+					},
+					success: function(json) {
+						console.log(json);
+						CheckLogout(json); //检查是否登陆过期		
+						if (json.code == 0) {
+
+							var optionHtml = '<div>选择三级分类</div>';
+							var myData = json.data;
+							for (var i = 0; i < myData.length; i++) {
+								optionHtml = optionHtml + '<div class="cate3" data-cateName="' + myData[i]["cateName"] + '" data-id="' +
+									myData[i]["id"] + '">' + myData[i]["cateName"] + '<span style="float:right"> > </apan></div>';
+							}
+							$("#getThreeSelect").html(optionHtml);
+
+							InitFunc();
+
+						} else {
+							$(".getSelect").html('<div>获取菜单失败</div>');
+						}
+
+						InitTime(tableTimeout);
+					},
+					error: function(xml, text, errorThrown) {
+						if (text == "timeout") {
+							TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+						} else {
+							TipsAlert("请求数据失败,请联系后台技术人员");
+						}
+						InitTime(tableTimeout);
+					}
+				})
+			}
+
+			function getHistorySelect(parentId) {
+				$.ajax({
+					type: "get",
+					url: urls + common_url.bSysGoods_historyGoodsCate,
+					async: true,
+					timeout: 30000,
+					dataType: "json",
+					headers: {
+						'X-Access-Token': userMessage.token,
+					},
+					data: {},
+					success: function(json) {
+						console.log(json);
+						CheckLogout(json); //检查是否登陆过期		
+						if (json.code == 0) {
+
+							var optionHtml = '<option>请选择</option>';
+							var myData = json.data;
+							for (var i = 0; i < myData.length; i++) {
+								optionHtml = optionHtml + '<option class="" value="' + myData[i]["goodsId"] + ',' + myData[i][
+									"cate_name_one"
+								] + '>' + myData[i]["cate_name_two"] + '>' + myData[i]["cate_name_three"] + '">' + myData[i][
+									"cate_name_one"
+								] + '>' + myData[i]["cate_name_two"] + '>' + myData[i]["cate_name_three"] + '</option>';
+							}
+							$(".getHisSelect").html(optionHtml);
+
+							InitFunc();
+
+						} else {
+							$(".getHisSelect").html('<div>获取分类失败</div>');
+						}
+
+						InitTime(tableTimeout);
+					},
+					error: function(xml, text, errorThrown) {
+						if (text == "timeout") {
+							TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+						} else {
+							TipsAlert("请求数据失败,请联系后台技术人员");
+						}
+						InitTime(tableTimeout);
+					}
+				})
+			}
+
+			/**
+			 * 该方法用于初始化操作列里的事件
+			 * */
+
+			function InitFunc() {
+				$(".cate1").unbind();
+				$(".cate1").each(function() { //编辑按钮
+					$(this).click(function() {
+						$(this).addClass("actived").siblings().removeClass("actived");
+						var dataset = $(this)[0].dataset;
+						getTwoSelect(dataset.id);
+						levelText1 = dataset.catename;
+						goodsCateFirstId = dataset.id;
+						levelText2 = '';
+						levelText3 = '';
+						$("#showText").html(levelText1);
+						console.log(goodsCateFirstId);
+					});
+				});
+
+
+				$(".cate2").unbind();
+				$(".cate2").each(function() { //编辑按钮
+					$(this).click(function() {
+						$(this).addClass("actived").siblings().removeClass("actived");
+						var dataset = $(this)[0].dataset;
+						getThreeSelect(dataset.id);
+						levelText2 = dataset.catename;
+						goodsCateSecId = dataset.id;
+						$("#showText").html(levelText1 + ' > ' + levelText2);
+					});
+
+				});
+
+				$(".cate3").unbind();
+				$(".cate3").each(function() { //编辑按钮
+					$(this).click(function() {
+						$(this).addClass("actived").siblings().removeClass("actived");
+						var dataset = $(this)[0].dataset;
+						levelText3 = dataset.catename;
+						goodsCateThirdId = dataset.id;
+						$("#showText").html(levelText1 + ' > ' + levelText2 + ' > ' + levelText3);
+					});
+				});
+
+			}
+		</script>
+	</body>
+</html>

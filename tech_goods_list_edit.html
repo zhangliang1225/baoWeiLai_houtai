@@ -1,0 +1,2053 @@
+<!DOCTYPE html>
+<html>
+
+	<!-- Mirrored from www.zi-han.net/theme/hplus/table_jqgrid.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:20:02 GMT -->
+
+	<head>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>商品编辑</title>
+
+		<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+		<link href="css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+		<link href="css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+
+		<link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+		<link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+		<link href="css/animate.min.css" rel="stylesheet">
+		<link href="css/style.min862f.css?v=4.1.0" rel="stylesheet">
+		<link rel="stylesheet" href="css/cropper.min.css">
+		<link rel="stylesheet" href="css/ImgCropping.css">
+		<link rel="stylesheet" href="css/newStyle.css">
+		<link href="css/plugins/webuploader/webuploader.css" rel="stylesheet">
+
+
+		<style>
+			input::-webkit-outer-spin-button,
+			input::-webkit-inner-spin-button {
+				-webkit-appearance: none;
+			}
+			input[type="number"]{
+				-moz-appearance: textfield;
+			}
+			.shuxingBtnBG {
+			    padding: 4px 10px;
+			    height: 51px;
+			    line-height: 20px;
+			    position: relative;
+			    cursor: pointer;
+			    color: #888;
+			    background: transparent;
+			    border: 1px solid #ddd;
+			    border-radius: 4px;
+			    overflow: hidden;
+			    display: inline-block;
+			    *display: inline;
+			    *zoom: 1
+			}
+			
+			.shuxingBtnBG .addShuXing {
+			    position: absolute;
+			    font-size: 100px;
+			    right: 0;
+			    top: 0;
+			    opacity: 0;
+			    filter: alpha(opacity=0);
+			    cursor: pointer;
+				z-index: 999;
+			}
+			.picBox > div{
+				float: left;
+			}
+			.webuploader-pick{
+				background-color: #fff;
+				margin-left: 30px;
+			}
+			.picArr{
+				overflow-y: hidden;
+			}
+		</style>
+	</head>
+
+	<body class="gray-bg">
+		<div class="wrapper wrapper-content  animated fadeInRight">
+			<div style="width:100%;flex;align-items: center;flex-direction: column;">
+				<!-- <div style="width:775px;margin: 0 auto;">
+					<img src="./images/add2.png" alt="">
+				</div> -->
+				<div style="width: 90%;margin: 0 auto;margin-top30px;">
+					<div class="addGoodStyle_head">
+						<div class="addGoodStyle_heade">
+							<div class="addGoodStyle_head_l">
+								<img style="width: 200px;position: absolute;z-index: 10;" src="./images/icon-title.png" alt="">
+								<p style="color: #fff;text-align: center;font-size: 20px;position: absolute;z-index: 11;top:18px;left: 50px;">基本信息</p>
+							</div>
+							<div class="addGoodStyle_head_r">
+								<div class="w100p">
+									<div class="ibox-content" style="padding: 0 10%;">
+										<form class="form-horizontal m-t" id="edit_form" method="post" style="padding-bottom: 50px;">
+											<input type="hidden" id="goodsCate" name="" value="" />
+											<div class="form-group ">
+												<label class="col-sm-3 control-label pull-left" style="text-align:right;display:inline-block;"><span style="color: red;">*</span>商品分类：</label>
+												<div class="col-sm-8 pull-left">
+													<div class="form-control" style="border: none;" id="goods_cate"></div>
+												</div>
+											</div>
+
+											<div class="form-group ">
+												<label class="col-sm-3 control-label pull-left" style="text-align:right;display:inline-block;"><span style="color: red;">*</span>商品名称：</label>
+												<div class="col-sm-6 pull-left">
+													<input id="goodsName" type="text" class="form-control goods_name" name="sort" value="" required=""
+													 aria-required="true">
+												</div>
+											</div>
+
+											<div class="form-group ">
+												<label class="col-sm-3 control-label pull-left" style="text-align:right;display:inline-block;"><span style="color: red;">*</span>副标题：</label>
+												<div class="col-sm-6 pull-left">
+													<input id="goodsSubtitle" type="text" class="form-control goods_subtitle" name="sort" value="" required=""
+													 aria-required="true">
+												</div>
+											</div>
+
+											<!-- <div class="form-group ">
+												<label class="col-sm-3 control-label pull-left" style="text-align:right;display:inline-block;"><span style="color: red;">*</span>商品品牌：</label>
+												<select id="goodsBrandId" name="" class="pull-left h30 br_e5e6e7 f14 getBrandSelect brand_name" style="width: 200px;height:34px;margin-left: 15px;">
+												</select>
+											</div> -->
+
+											<!-- <div class="form-group">
+												<label class="col-sm-3 control-label pull-left" style="text-align:right;display:inline-block;"><span style="color: red;">*</span>商品介绍：</label>
+												<div class="col-sm-8 pull-left">
+													<textarea id="goodsDescribe" name="description" class="form-control goods_describe" style="height:200px"></textarea>
+												</div>
+											</div> -->
+
+											<!-- <div class="form-group ">
+												<label class="col-sm-3 control-label pull-left" style="text-align:right;display:inline-block;"><span style="color: red;">*</span>运费模板：</label>
+												<select id="goodsFreightId" name="" class="pull-left h30 br_e5e6e7 f14 getFreightSelect goods_freight_name"
+												 style="width: 200px;height:34px;margin-left: 15px;">
+												</select>
+											</div> -->
+
+											<div class="form-group ">
+												<label class="col-sm-3 control-label pull-left" style="text-align:right;display:inline-block;"><span style="color: red;">*</span>商品售价：</label>
+												<div class="col-sm-6 pull-left">
+													<input id="goodsPrice" type="text" class="form-control goods_price" name="sort" value="" required=""
+													 aria-required="true">
+												</div>
+											</div>
+
+											<div class="form-group ">
+												<label class="col-sm-3 control-label pull-left" style="text-align:right;display:inline-block;">计量单位：</label>
+												<div class="col-sm-6 pull-left">
+													<input id="goodsUnit" type="text" class="form-control goods_unit" name="sort" value="" required=""
+													 aria-required="true">
+												</div>
+												<div class="pull-left" style="height: 34px;line-height: 34px;">该设置只对单品有效</div>
+											</div>
+
+											<div class="form-group hide">
+												<label class="col-sm-3 control-label pull-left" style="text-align:right;display:inline-block;">赠送保盾：</label>
+												<div class="col-sm-6 pull-left">
+													<input id="goodsGiveBao" type="text" class="form-control goods_give_bao" name="sort" value="" required=""
+													 aria-required="true">
+												</div>
+											</div>
+											<div class="hide" style="display: flex;margin-bottom: 15px;">
+												<div class="col-sm-3 control-label pull-left"></div>
+												<div class="col-sm-9 pull-left" style="padding-left: 20px;">购买该商品时赠送消费积分数</div>
+											</div>
+
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+
+						<div class="addGoodStyle_head">
+							<div class="addGoodStyle_heade">
+								<div class="addGoodStyle_head_l">
+									<img style="width: 200px;position: absolute;z-index: 10;" src="./images/icon-title.png" alt="">
+									<p style="color: #fff;text-align: center;font-size: 20px;position: absolute;z-index: 11;top:18px;left: 50px;">其他信息</p>
+								</div>
+								<div class="addGoodStyle_head_r">
+									<div class="w100p">
+										<div class="ibox-content" style="padding: 0 10%;">
+											<form class="form-horizontal m-t" id="edit_form" method="post" style="padding-bottom: 50px;">
+												<input type="hidden" class="edit_id" name="id" value="1" />
+
+												<!-- <div class="form-group ">
+												<label class="col-sm-3 control-label pull-left" style="text-align:right;display:inline-block;">赠送保盾：</label>
+												<div class="col-sm-6 pull-left">
+													<input id="goodsGiveBao" type="text" class="form-control goods_give_bao" name="sort" value="" required=""
+													 aria-required="true">
+												</div>
+											</div>
+											<div style="display: flex;margin-bottom: 15px;">
+												<div class="col-sm-3 control-label pull-left"></div>
+												<div class="col-sm-9 pull-left" style="padding-left: 20px;">购买该商品时赠送消费积分数</div>
+											</div> -->
+
+												<div class="form-group hide">
+													<label class="col-sm-3 control-label pull-left" style="text-align:right;display:inline-block;">赠送等级成长值：</label>
+													<div class="col-sm-6 pull-left">
+														<input id="goodsGrowthValue" type="text" class="form-control goods_growth_value" name="sort" value=""
+														 required="" aria-required="true">
+													</div>
+												</div>
+												<div class="hide" style="display: flex;margin-bottom: 15px;">
+													<div class="col-sm-3 control-label pull-left"></div>
+													<div class="col-sm-9 pull-left" style="padding-left: 20px;">购买该商品时赠送消费积分数</div>
+												</div>
+
+												<div class="form-group hide">
+													<label class="col-sm-3 control-label pull-left" style="text-align:right;display:inline-block;">保盾购买金额：</label>
+													<div class="col-sm-6 pull-left">
+														<input id="buyBaoMoney" type="text" class="form-control buy_bao_money" name="sort" value="" required=""
+														 aria-required="true">
+													</div>
+												</div>
+												<div class="hide" style="display: flex;margin-bottom: 15px;">
+													<div class="col-sm-3 control-label pull-left"></div>
+													<div class="col-sm-9 pull-left" style="padding-left: 20px;">(此处需填写金额)购买该商品时最多可以使用积分的金额</div>
+												</div>
+
+												<div class="form-group ">
+													<label class="col-sm-3 control-label pull-left" style="text-align:right;display:inline-block;">预告商品：</label>
+													<select id="goodsTra" class="pull-left h30 br_e5e6e7 f14" style="width: 50px;height:34px;margin-left: 15px;">
+														<option value="1">是</option>
+														<option value="2">否</option>
+													</select>
+												</div>
+												<div style="display: flex;margin-bottom: 15px;">
+													<div class="col-sm-3 control-label pull-left"></div>
+													<div class="col-sm-9 pull-left" style="padding-left: 20px;">如果设置为预告商品，商品上架和商品推荐不可用。</div>
+												</div>
+
+												<div class="form-group ">
+													<label class="col-sm-3 control-label pull-left" style="text-align:right;display:inline-block;">商品上架：</label>
+													<select id="goodsStatus" autocomplete="off" class="pull-left h30 br_e5e6e7 f14" style="width: 50px;height:34px;margin-left: 15px;">
+														<option selected="selected" value="2">是</option>
+														<option value="1">否</option>
+													</select>
+												</div>
+
+												<div class="form-group ">
+													<label class="col-sm-3 control-label pull-left" style="text-align:right;display:inline-block;">商品推荐：</label>
+													<div style="display:flex;height: 34px;">
+														<span style="display:flex;align-items:center;margin: 0px 10px;"><input id="newProducts" name="xORt" class="inputcherckStyle"
+															 type="checkbox" style="margin-top: 0px;margin-right: 10px;" value="1" />新品</span>
+														<span style="display:flex;align-items:center;margin: 0px 10px;"><input id="recommend" name="xORt" class="inputcherckStyle"
+															 type="checkbox" style="margin-top: 0px;margin-right: 10px;" value="1" />推荐</span>
+													</div>
+												</div>
+
+												<!-- <div class="form-group ">
+												<label class="col-sm-3 control-label pull-left" style="text-align:right;display:inline-block;">服务保证：</label>
+												<div style="display:flex;height: 34px;">
+													<span style="display:flex;align-items:center;margin: 0px 10px;"><input id="returnGoods" name="" class="inputcherckStyle"
+														 type="checkbox" style="margin-top: 0px;margin-right: 10px;" value="1" />7天无理由退货</span>
+													<span style="display:flex;align-items:center;margin: 0px 56px;"><input id="freeShipping" name="" class="inputcherckStyle"
+														 type="checkbox" style="margin-top: 0px;margin-right: 10px;" value="" />包邮</span>
+												</div>
+											</div>
+											<div style="display: flex;margin-bottom: 15px;position: relative;top: -15px;">
+												<div class="col-sm-3 control-label pull-left"></div>
+												<div class="col-sm-3 pull-left" style="padding-left: 8px;">本商品支持7天无理由退货</div>本商品包邮
+											</div> -->
+
+												<div class="form-group ">
+													<label class="col-sm-3 control-label pull-left" style="text-align:right;display:inline-block;">商品关键词：</label>
+													<div class="col-sm-6 pull-left">
+														<input id="goodsDetailedKeyword" type="text" class="form-control" name="sort" value="" required=""
+														 aria-required="true">
+													</div>
+												</div>
+												<div style="display: flex;margin-bottom: 15px;">
+													<div class="col-sm-3 control-label pull-left"></div>
+													<div class="col-sm-9 pull-left" style="padding-left: 20px;">商品关键词请用空格分隔；有两个功能，一是可以作为站内关键词查询，在前台搜索框输入关键词后，能够搜索到该商品；二是作为搜索引擎收录使用。</div>
+												</div>
+
+												<div class="form-group">
+													<label class="col-sm-3 control-label pull-left" style="text-align:right;display:inline-block;">商品备注：</label>
+													<div class="col-sm-8 pull-left">
+														<textarea id="goodsDetailedRemark" name="description" placeholder="请输入内容" class="form-control" style="height:200px"></textarea>
+													</div>
+												</div>
+
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="hide" style="width: 100%;display: flex;">
+								<div style="width: 20%;height: 100%;border-right: 1px solid rgba(228, 228, 228, 1);position: relative;">
+									<img style="width: 200px;position: absolute;z-index: 10;" src="./images/icon-title.png" alt="">
+									<p style="color: #fff;text-align: center;font-size: 20px;position: absolute;z-index: 11;top:18px;left: 50px;">特殊信息</p>
+								</div>
+								<div style="width: 80%;">
+									<div class="w100p">
+										<div class="ibox-content" style="padding: 50px 10%;">
+											<input type="hidden" class="edit_id" name="id" value="1" />
+
+											<div class="form-group " style="display: flex;flex-direction: column;">
+												<div>
+													<label class="col-sm-3 control-label pull-left" style="text-align:right;display:inline-block;">特惠促销：</label>
+													<div style="display:flex;height: 34px;">
+														<input type="hidden" id="goodsSpec" value="" />
+														<span style="display:flex;align-items:center;margin: 0px 10px;"><input id="chuXiaoNo" name="chuXiao"
+															 class="inputcherckStyle chuXiao" type="radio" checked="checked" style="margin-top: 0px;margin-right: 10px;"
+															 value="0" />否</span>
+														<span style="display:flex;align-items:center;margin: 0px 56px;"><input id="chuXiaoYes" checked="true"
+															 name="chuXiao" class="inputcherckStyle chuXiao" type="radio" style="margin-top: 0px;margin-right: 10px;"
+															 value="1" />是</span>
+
+													</div>
+												</div>
+
+												<div>
+													<div class="col-sm-9 pull-right" style="position: relative;top: -15px;left: 20px;">
+														<div class="pull-left mt10  ml10 mb30">
+															<input id="startTime" type="text" class="form-control layer-date h30 time1" style="margin-top: 10px;width: 200px;"
+															 placeholder="YYYY-MM-DD hh:mm:ss" disabled onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"
+															 required="" aria-required="true">
+														</div>
+														<span class="f14 pull-left h30 lh30 ml10 mb30" style="margin-top: 20px;">至</span>
+														<div class="pull-left mt10 ml10 mb30">
+															<input id="endTime" type="text" class="form-control layer-date h30 time1" style="margin-top: 10px;width: 200px;"
+															 placeholder="YYYY-MM-DD hh:mm:ss" disabled onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"
+															 required="" aria-required="true">
+														</div>
+														<div class="pull-left h30 mt10 ml10 mb30">
+															<input type="number" placeholder="输入促销价格" class="form-control mt10 h30 time1" style="width: 120px;" name="sort"
+															 value="" required="" aria-required="true">
+														</div>
+													</div>
+
+												</div>
+											</div>
+
+											<div class="form-group " style="display: flex;flex-direction: column;">
+												<div>
+													<label class="col-sm-3 control-label pull-left" style="text-align:right;display:inline-block;">商品限购：</label>
+													<div style="display:flex;height: 34px;">
+														<input type="hidden" id="goodsPurch" value="" />
+														<span style="display:flex;align-items:center;margin: 0px 10px;"><input id="xianGouNo" name="xianGou"
+															 class="inputcherckStyle xianGou" type="radio" checked="checked" style="margin-top: 0px;margin-right: 10px;"
+															 value="0" />否</span>
+														<span style="display:flex;align-items:center;margin: 0px 56px;"><input id="xianGouYes" checked="true"
+															 name="xianGou" class="inputcherckStyle xianGou" type="radio" style="margin-top: 0px;margin-right: 10px;"
+															 value="1" />是</span>
+
+													</div>
+												</div>
+
+												<div>
+													<div class="col-sm-9 pull-right" style="position: relative;top: -15px;left: 20px;">
+														<div class="pull-left mt10  ml10 mb30">
+															<input id="startTime1" type="text" class="form-control layer-date h30 time2" style="margin-top: 10px;width: 200px;"
+															 placeholder="YYYY-MM-DD hh:mm:ss" disabled onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"
+															 required="" aria-required="true">
+														</div>
+														<span class="f14 pull-left h30 lh30 ml10 mb30" style="margin-top: 20px;">至</span>
+														<div class="pull-left mt10 ml10 mb30">
+															<input id="endTime1" type="text" class="form-control layer-date h30 time2" style="margin-top: 10px;width: 200px;"
+															 placeholder="YYYY-MM-DD hh:mm:ss" disabled onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"
+															 required="" aria-required="true">
+														</div>
+														<div class="pull-left h30 mt10 ml10 mb30">
+															<input type="number" placeholder="输入限购数量" class="form-control mt10 h30 time2" style="width: 120px;" name="sort"
+															 value="" required="" aria-required="true">
+														</div>
+													</div>
+												</div>
+
+											</div>
+
+											<div class="form-group " style="display: flex;flex-direction: column;">
+												<div>
+													<label class="col-sm-3 control-label pull-left" style="text-align:right;display:inline-block;">会员价格：</label>
+													<div style="display:flex;height: 34px;">
+														<span style="display:flex;align-items:center;margin: 0px 10px;"><input id="huiYuanNo" name="huiYuan"
+															 class="inputcherckStyle huiYuan" type="radio" checked="checked" style="margin-top: 0px;margin-right: 10px;"
+															 value="0" />否</span>
+														<span style="display:flex;align-items:center;margin: 0px 56px;"><input id="huiYuanYes" checked="true"
+															 name="huiYuan" class="inputcherckStyle huiYuan" type="radio" style="margin-top: 0px;margin-right: 10px;"
+															 value="1" />是</span>
+
+													</div>
+												</div>
+
+												<div>
+													<div style="display: flex;">
+														<div class="col-sm-3 control-label"></div>
+														<div class="col-sm-9 control-label" style="display: flex;">
+															<div class="pull-left w100p">
+																<table class="table table-bordered mb0 ">
+																	<thead>
+																		<tr>
+																			<th>黄金会员</th>
+																			<th>白金会员</th>
+																			<th>钻石会员</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		<tr>
+																			<th><input type="number" placeholder="输入价格" class="form-control huiYuanNum" style="width: 120px;margin:0 auto;"
+																				 name="" value="" required="" aria-required="true"></th>
+																			<th><input type="number" placeholder="输入价格" class="form-control huiYuanNum" style="width: 120px;margin:0 auto;"
+																				 name="" value="" required="" aria-required="true"></th>
+																			<th><input type="number" placeholder="输入价格" class="form-control huiYuanNum" style="width: 120px;margin:0 auto;"
+																				 name="" value="" required="" aria-required="true"></th>
+																		</tr>
+																	</tbody>
+																</table>
+															</div>
+														</div>
+													</div>
+												</div>
+
+											</div>
+
+											<div class="form-group " style="display: flex;flex-direction: column;">
+												<div>
+													<label class="col-sm-3 control-label pull-left" style="text-align:right;display:inline-block;">阶梯价格：</label>
+													<div style="display:flex;height: 34px;">
+														<span style="display:flex;align-items:center;margin: 0px 10px;"><input id="jieTiNo" name="jieTi" class="inputcherckStyle jieTi"
+															 type="radio" checked="checked" style="margin-top: 0px;margin-right: 10px;" value="0" />否</span>
+														<span style="display:flex;align-items:center;margin: 0px 56px;"><input id="jieTiYes" checked="true" name="jieTi"
+															 class="inputcherckStyle jieTi" type="radio" style="margin-top: 0px;margin-right: 10px;" value="1" />是</span>
+
+													</div>
+												</div>
+
+												<div>
+													<div style="display: flex;">
+														<div class="col-sm-3 control-label"></div>
+														<div class="col-sm-9 control-label" style="display: flex;">
+															<div class="pull-left w100p">
+																<table class="table table-bordered mb0 ">
+																	<thead>
+																		<tr>
+																			<th>数量</th>
+																			<th>价格</th>
+																			<th>操作</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		<tr>
+																			<th><input type="number" placeholder="输入价格" class="form-control jieTiNum" style="width: 120px;margin:0 auto;"
+																				 name="" value="" required="" aria-required="true"></th>
+																			<th><input type="number" placeholder="输入价格" class="form-control jieTiNum" style="width: 120px;margin:0 auto;"
+																				 name="" value="" required="" aria-required="true"></th>
+																			<th id="jieTiDel">
+																				<span class="under_line cursor_pointer delete_span pl20 c_1ABC9C">删除</span>
+																				<span class="under_line cursor_pointer add_span pl20 c_1ABC9C">增加</span>
+																			</th>
+																		</tr>
+																	</tbody>
+																</table>
+															</div>
+														</div>
+													</div>
+												</div>
+
+											</div>
+
+											<div class="form-group " style="display: flex;flex-direction: column;">
+												<div>
+													<label class="col-sm-3 control-label pull-left" style="text-align:right;display:inline-block;">满减价格：</label>
+													<div style="display:flex;height: 34px;">
+														<span style="display:flex;align-items:center;margin: 0px 10px;"><input id="manJianNo" name="manJian"
+															 class="inputcherckStyle manJian" type="radio" checked="checked" style="margin-top: 0px;margin-right: 10px;"
+															 value="0" />否</span>
+														<span style="display:flex;align-items:center;margin: 0px 56px;"><input id="manJianYes" checked="true"
+															 name="manJian" class="inputcherckStyle manJian" type="radio" style="margin-top: 0px;margin-right: 10px;"
+															 value="1" />是</span>
+
+													</div>
+												</div>
+
+												<div>
+													<div style="display: flex;">
+														<div class="col-sm-3 control-label"></div>
+														<div class="col-sm-9 control-label" style="display: flex;">
+															<div class="pull-left w100p">
+																<table class="table table-bordered mb0 ">
+																	<thead>
+																		<tr>
+																			<th>满</th>
+																			<th>立减</th>
+																			<th>操作</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		<tr>
+																			<th><input type="number" placeholder="输入价格" class="form-control manJianNum" style="width: 120px;margin:0 auto;"
+																				 name="" value="" required="" aria-required="true"></th>
+																			<th><input type="number" placeholder="输入价格" class="form-control manJianNum" style="width: 120px;margin:0 auto;"
+																				 name="" value="" required="" aria-required="true"></th>
+																			<th id="manJianDel">
+																				<span class="under_line cursor_pointer delete_span pl20 c_1ABC9C">删除</span>
+																				<span class="under_line cursor_pointer add_span pl20 c_1ABC9C">增加</span>
+																			</th>
+																		</tr>
+																	</tbody>
+																</table>
+															</div>
+														</div>
+													</div>
+												</div>
+
+											</div>
+
+
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div style="width: 100%;margin: 0 auto;border: 1px solid rgba(228, 228, 228, 1);">
+
+
+								<div class="none" style="width: 100%;">
+									<div style="width: 20%;height: 100%;border-right: 1px solid rgba(228, 228, 228, 1);position: relative;">
+										<img style="width: 200px;position: absolute;z-index: 10;" src="./images/icon-title.png" alt="">
+										<p style="color: #fff;text-align: center;font-size: 20px;position: absolute;z-index: 11;top:18px;left: 50px;">商品参数</p>
+									</div>
+									<div style="width: 100%;background-color: #fff;">
+										<div class="w100p">
+											<div class="ibox-content" style="padding: 50px 10%;">
+												<input type="hidden" class="edit_id" name="id" value="1" />
+
+												<div class="pull-left w100p">
+
+													<table class="table table-bordered " style="margin-bottom: 30px;">
+														<thead>
+															<tr>
+																<th style="width: 30%;">参数类型</th>
+																<th style="width: 70%;text-align: left;padding-left: 30px;">录入参数</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr>
+																<th><span style="color: red;">*</span>上市年份</th>
+																<th style="text-align: left;padding-left: 30px;width: 200px;">
+																	<select class="h30" style="width: 200px;">
+
+																	</select>
+																</th>
+															</tr>
+															<tr>
+																<th><span style="color: red;">*</span>主材含量</th>
+																<th style="text-align: left;padding-left: 30px;width: 200px;">
+																	<input type="text" placeholder="" class="form-control jieTiNum" style="padding-left: 30px;width: 200px;"
+																	 name="" value="" required="" aria-required="true">
+																</th>
+															</tr>
+															<tr>
+																<th>适用对象</th>
+																<th style="text-align: left;padding-left: 30px;width: 200px;">
+																	<input type="text" placeholder="" class="form-control jieTiNum" style="padding-left: 30px;width: 200px;"
+																	 name="" value="" required="" aria-required="true">
+																</th>
+															</tr>
+														</tbody>
+
+													</table>
+
+												</div>
+
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="addGoodStyle_head">
+									<div class="addGoodStyle_heade">
+										<div class="addGoodStyle_head_l">
+											<img style="width: 200px;position: absolute;z-index: 10;" src="./images/icon-title.png" alt="">
+											<p style="color: #fff;text-align: center;font-size: 20px;position: absolute;z-index: 11;top:18px;left: 50px;">商品相册</p>
+										</div>
+										<div class="addGoodStyle_head_r">
+											<div class="w100p" style="position: relative;">
+												<div class="ibox-content" style="padding: 30px 10%;margin:30px 0;display: flex;">
+
+													<div>
+
+														<div class="img" data-index="0" style="max-width:100%;float: left;">
+															<!-- <input type="hidden" class="val" name="image"/> -->
+															<div class="picBox picBox1" style="width: 100%;min-height:170px;"></div>
+															<img src="">
+														</div>
+														<div class="filePicker ml30" style="float: left;">
+															<div style="width:120px;height: 150px;position: relative;">
+																<div style="width: 150px;height: 170px;position: absolute;top:-10px;left: -15px;border: 1px solid rgba(228, 228, 228, 1);border-radius: 3px;background-color: #fff;">
+																	<img style="width: 100px;" src="./img/a11.png" alt="">
+																</div>
+															</div>
+														</div>
+													</div>
+
+												</div>
+												<div style="color: #000000;position: absolute;bottom:0;left:120px;">提示：商品相册最多可以上传5张，图片尺寸比例限1：1</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="addGoodStyle_head">
+										<div class="addGoodStyle_heade">
+											<div class="addGoodStyle_head_l">
+												<img style="width: 200px;position: absolute;z-index: 10;" src="./images/icon-title.png" alt="">
+												<p style="color: #fff;text-align: center;font-size: 20px;position: absolute;z-index: 11;top:18px;left: 50px;">商品详情</p>
+											</div>
+											<div class="addGoodStyle_head_r">
+												<div class="w100p">
+													<div class="ibox-content" style="padding: 30px 10%;margin:30px 0;display: flex;">
+
+														<div>
+
+															<div class="img" data-index="1" style="max-width:100%;float: left;">
+																<!-- <input type="hidden" class="val" name="image"/> -->
+																<div class="picBox picBox2" style="width: 100%;min-height:170px;"></div>
+																<img src="">
+															</div>
+															<div class="filePicker ml30" style="float: left;">
+																<div style="width:120px;height: 150px;position: relative;">
+																	<div style="width: 150px;height: 170px;position: absolute;top:-10px;left: -15px;border: 1px solid rgba(228, 228, 228, 1);border-radius: 3px;background-color: #fff;">
+																		<img style="width: 100px;" src="./img/a11.png" alt="">
+																	</div>
+																</div>
+															</div>
+														</div>
+
+													</div>
+
+
+
+												</div>
+											</div>
+										</div>
+
+
+
+									</div>
+
+
+
+									<div style="width: 100%;height: 20%;display: flex;align-items: center;">
+										<div id="" style="margin: 0 auto;padding: 30px 0;">
+											<button id="goBack" type="button" style="width: 180px;height: 45px;border-radius: 4px;background-color:#fff;color:rgba(26, 188, 156, 1);border: 1px solid rgba(26, 188, 156, 1);">取消编辑</button>
+											<button id="saveBtn" type="button" style="margin:0 50px;width: 180px;height: 45px;border-radius: 4px;background-color:rgba(26, 188, 156, 1);color:#fff;">确认编辑</button>
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+					
+					<script src="js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+					<script src="js/bootstrap.min.js?v=3.3.6"></script>
+					<script src="js/plugins/peity/jquery.peity.min.js"></script>
+					<script src="js/content.min.js?v=1.0.0"></script>
+					<script src="js/plugins/layer/laydate/laydate.js"></script>
+					<script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+					<script src="js/plugins/iCheck/icheck.min.js"></script>
+					<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+					<script src="js/cropper.min.js"></script>
+					<script type="text/javascript" src="js/plugins/webuploader/webuploader.js"></script>
+
+					<script>
+						var tableTimeout, addManageTimeout, setRoleTime, editManageTimeout, deleteTimeOut, getPowerList, powerName = "",
+							limits = 20,
+							page = 1,
+							counts = 0,
+							table_title;
+						var uploadImgTimeout;
+
+						var totalPages = 0;
+						var levelText1 = "";
+						levelText2 = "";
+						levelText3 = "";
+						var getUrlId = "";
+						getUrlId = getURLParams(document.URL).id;
+						var initAllData;
+
+
+						var sysGoodsPicList = [];
+						var goodsDetailsImages = [];
+
+						var userMessage = JSON.parse(sessionStorage.getItem("user_message"))
+
+
+
+						$(document).ready(function() {
+							IsTokenSave();
+
+							getHtmlDom();
+							InitTbodyList();
+
+							var $ = jQuery,
+								$index = 0, //保存触发上传事件按钮的索引，从0开始
+								$image,
+								uploader;
+
+
+							uploader = WebUploader.create({
+								fileNumLimit: 99,
+								auto: true,
+								swf: '/Uploader.swf',
+								server: uploadImgUrls,
+								pick: '.filePicker',
+								accept: {
+									title: 'Images',
+									extensions: 'gif,jpg,jpeg,bmp,png'
+								}
+							});
+							$('.filePicker').on('click', function() {
+
+								$index = $(this).index('.filePicker'); //获取索引
+								// console.log($index);
+								$image = $($('.img').get($index)); //获取该组的Dom并转成jquery对象
+								// console.log($image);
+								uploader.reset();
+
+							});
+
+							uploader.on('fileQueued', function(file) {
+								// console.log($image[0].dataset.index);
+								if ($image[0].dataset.index == 0) {
+									var didi = this;
+									// console.log(didi);
+									didi.options.fileNumLimit = 5;
+									uploader.makeThumb(file, function(error, src) { //验证图片尺寸
+
+										imgWidth = file._info.width;
+										imgHeight = file._info.height;
+										// console.log(imgWidth)
+										// console.log(imgHeight)
+										// console.log(Number(imgWidth)/Number(imgHeight));
+										if (Number(imgWidth) / Number(imgHeight) != 1) {
+											didi.reset();
+											TipsAlert("尺寸必须为1:1！");
+										} else {
+											// console.log(123);
+										}
+									}, 100, 100);
+								}
+
+							});
+
+
+							uploader.on('uploadBeforeSend', function(obj, data, headers) {
+								$.extend(headers, {
+									// "Origin": http://localhost:3000 ,
+									"X-Access-Token": userMessage.token
+								});
+							});
+							// 文件上传成功，给该组的input、img赋值。
+							// 参数response 为后台传回的数据（可自定义我这儿是{"status" : "Success", "msg" : "服务端路径+文件名"})
+							uploader.on('uploadSuccess', function(file, response) {
+								CheckLogout(response); //检查是否登陆过期
+								console.log($image[0].dataset);
+								if ($image[0].dataset.index == 0) {
+									$image.find('.picBox').append('<div class="picArr" data-url="' + response.root +
+										'" style="width:150px;height:170px;margin-left:30px;position:relative;margin-bottom:30px;"><img style="width:100%;" src="' +
+										imgUrl + response.root +
+										'"><div style="width:150px;height:40px;position:absolute;bottom:0px;display:flex;align-items: center;background:#F9FAFC;border:1px solid rgba(228, 228, 228, 1);z-index:1;"><div style="width:40%;height:30px;line-height:30px;text-align: center;background:#279adf;color:#fff;cursor: pointer;border-radius:5px;margin:0 auto;" data-goodstype="2" data-url="' +
+										response.root +
+										'" class="setZhuPic">设为主图</div><div title="删除" class="selfmedia_addtemplate_imgDelSpan remove-this" data-url="' +
+										response.root +
+										'" style="width:40%;height:30px;line-height:30px;text-align: center;background:red;color:#fff;cursor: pointer;border-radius:5px;margin:0 auto;">删除图片</div></div>'
+									);
+									if ($(".picBox img").length > 4) {
+										// console.log()
+										// $image.parent().find('.filePicker').hide();
+									}
+
+									sysGoodsPicList.push({
+										goodsNum: $("#goodsNum").val(),
+										url: response.root,
+										goodsType: 2,
+
+									})
+									if (sysGoodsPicList.length > 4) {
+										$image.parent().find('.filePicker').hide();
+										uploader.reset();
+									}
+									// if (sysGoodsPicList.length < 5) {
+									// 	$(".filePicker").show();
+									// }
+									console.log(sysGoodsPicList);
+									$(".picBox1 .setZhuPic").each(function() {
+										$(this).click(function() {
+											var initData = $($(this)[0])[0];
+											var initurl = initData.dataset.url;
+											if (initData.dataset.goodstype == 2) {
+												swal({
+													title: "提示",
+													text: "确定将该图片设为主图吗？",
+													type: "warning",
+													showCancelButton: true,
+													confirmButtonColor: "#DD6B55",
+													confirmButtonText: "是的",
+													cancelButtonText: "让我再考虑一下…",
+													closeOnConfirm: false,
+													closeOnCancel: true
+												}, function(yes) {
+													if (yes) {
+
+														swal({
+															title: "通过",
+															text: "设置成功",
+															type: "success",
+														}, function() {
+															$(".setZhuPic").html("设为主图")
+															$(".setZhuPic").css("background", "#279adf");
+															$(".setZhuPic").data("goodstype", 2);
+
+															for (var i = 0; i < sysGoodsPicList.length; i++) {
+																if (initurl == sysGoodsPicList[i].url) {
+																	sysGoodsPicList[i].goodsType = 1;
+																} else {
+																	sysGoodsPicList[i].goodsType = 2;
+																}
+															}
+
+															initData.dataset.goodstype = 1;
+															initData.style.backgroundColor = '#F04844';
+															initData.innerHTML = '商品主图';
+
+															console.log(sysGoodsPicList);
+
+														});
+													}
+												});
+											}
+										})
+									})
+
+									$(".picBox1 .remove-this").each(function() {
+										$(this).click(function() {
+											var initData = $($(this)[0])[0];
+											var initurl = initData.dataset.url;
+											console.log(initData);
+											console.log(initurl);
+											swal({
+												title: "提示",
+												text: "确定将该图片删除吗？",
+												type: "warning",
+												showCancelButton: true,
+												confirmButtonColor: "#DD6B55",
+												confirmButtonText: "是的",
+												cancelButtonText: "让我再考虑一下…",
+												closeOnConfirm: false,
+												closeOnCancel: true
+											}, function(yes) {
+												if (yes) {
+
+													swal({
+														title: "通过",
+														text: "删除成功",
+														type: "success",
+													}, function() {
+
+														for (var i = 0; i < $(".picArr").length; i++) {
+															console.log($($(".picArr")[i])[0].dataset);
+															console.log(initurl);
+															if (initurl == $($(".picArr")[i])[0].dataset.url) {
+																$(".picArr")[i].remove();
+															}
+															if (sysGoodsPicList[i] != undefined) {
+																if (initurl == sysGoodsPicList[i].url) {
+																	sysGoodsPicList.splice(i, 1);
+																}
+															}
+														}
+														console.log(sysGoodsPicList);
+														if (sysGoodsPicList.length < 5) {
+															$(".filePicker").show();
+														}
+
+
+													});
+												}
+											});
+
+
+										})
+									})
+
+								} else if ($image[0].dataset.index == 1) {
+									// $img = $image.find('img');
+									// $image.find('.val').val(imgUrl + response.root);
+									// $img.attr('src', imgUrl + response.root);
+									$image.find('.picBox').append('<div class="picArr" data-url="' + response.root +
+										'" style="width:150px;height:170px;margin-left:30px;position:relative;margin-bottom:30px;"><img style="width:100%;" src="' +
+										imgUrl + response.root +
+										'"><div style="width:150px;height:40px;position:absolute;bottom:0px;display:flex;align-items: center;background:#F9FAFC;border:1px solid rgba(228, 228, 228, 1);z-index:1;"><div title="删除" class="selfmedia_addtemplate_imgDelSpan remove-this" data-url="' +
+										response.root +
+										'" style="width:40%;height:30px;line-height:30px;text-align: center;background:red;color:#fff;cursor: pointer;border-radius:5px;margin:0 auto;">删除图片</div></div>'
+									);
+									if ($(".picBox img").length > 8) {
+										// console.log()
+										// $image.parent().find('.filePicker').hide();
+									}
+
+									goodsDetailsImages.push({
+										goodsNum: $("#goodsNum").val(),
+										url: response.root
+									})
+									console.log(goodsDetailsImages);
+									$(".picBox2 .setZhuPic").each(function() {
+										$(this).click(function() {
+											var initData = $($(this)[0])[0];
+											var initurl = initData.dataset.url;
+											if (initData.dataset.goodstype == 2) {
+												swal({
+													title: "提示",
+													text: "确定将该图片设为主图吗？",
+													type: "warning",
+													showCancelButton: true,
+													confirmButtonColor: "#DD6B55",
+													confirmButtonText: "是的",
+													cancelButtonText: "让我再考虑一下…",
+													closeOnConfirm: false,
+													closeOnCancel: true
+												}, function(yes) {
+													if (yes) {
+
+														swal({
+															title: "通过",
+															text: "设置成功",
+															type: "success",
+														}, function() {
+															$(".setZhuPic").html("设为主图")
+															$(".setZhuPic").css("background", "#279adf");
+															$(".setZhuPic").data("goodstype", 2);
+
+															for (var i = 0; i < goodsDetailsImages.length; i++) {
+																if (initurl == goodsDetailsImages[i].url) {
+																	goodsDetailsImages[i].goodsType = 1;
+																} else {
+																	goodsDetailsImages[i].goodsType = 2;
+																}
+															}
+
+															initData.dataset.goodstype = 1;
+															initData.style.backgroundColor = '#F04844';
+															initData.innerHTML = '商品主图';
+
+															console.log(goodsDetailsImages);
+
+														});
+													}
+												});
+											}
+										})
+									})
+
+									$(".picBox2 .remove-this").each(function() {
+										$(this).click(function() {
+											var initData = $($(this)[0])[0];
+											var initurl = initData.dataset.url;
+											console.log(initurl);
+											swal({
+												title: "提示",
+												text: "确定将该图片删除吗？",
+												type: "warning",
+												showCancelButton: true,
+												confirmButtonColor: "#DD6B55",
+												confirmButtonText: "是的",
+												cancelButtonText: "让我再考虑一下…",
+												closeOnConfirm: false,
+												closeOnCancel: true
+											}, function(yes) {
+												if (yes) {
+
+													swal({
+														title: "通过",
+														text: "删除成功",
+														type: "success",
+													}, function() {
+														console.log(initurl);
+														for (var i = 0; i < $(".picArr").length; i++) {
+															if (initurl == $($(".picArr")[i])[0].dataset.url) {
+																$(".picArr")[i].remove();
+															}
+															console.log(goodsDetailsImages[i])
+															if (goodsDetailsImages[i] != undefined) {
+																if (initurl == goodsDetailsImages[i].url) {
+																	goodsDetailsImages.splice(i, 1);
+																}
+															}
+
+														}
+														console.log(goodsDetailsImages);
+
+													});
+												}
+											});
+
+
+										})
+									})
+
+
+
+								}
+
+
+
+							});
+
+
+
+
+
+
+
+							$('.add_oneId').change(function() {
+								console.log($(this).val())
+								$.ajax({
+									type: "get",
+									url: urls + common_url.oneCatelist,
+									async: true,
+									timeout: 30000,
+									dataType: "json",
+									data: {
+										parentId: $(this).val()
+									},
+									success: function(json) {
+										console.log(json);
+										CheckLogout(json); //检查是否登陆过期		
+										if (json.code == 0) {
+											var optionHtml = '<option value="">全部</option>';
+											var myData = json.data;
+											for (var i = 0; i < myData.length; i++) {
+												optionHtml = optionHtml + '<option value="' + myData[i]["id"] + '">' + myData[i]["cateName"] +
+													'</option>';
+											}
+											$(".getTwoSelect").html(optionHtml);
+											$(".getThreeSelect").html("");
+										} else {
+											$(".getTwoSelect").html('<option value="">获取菜单失败</option>');
+										}
+
+										InitTime(tableTimeout);
+									},
+									error: function(xml, text, errorThrown) {
+										if (text == "timeout") {
+											TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+										} else {
+											TipsAlert("请求数据失败,请联系后台技术人员");
+										}
+										InitTime(tableTimeout);
+									}
+								})
+
+							});
+
+							$('.add_twoId').change(function() {
+								$.ajax({
+									type: "get",
+									url: urls + common_url.oneCatelist,
+									async: true,
+									timeout: 30000,
+									dataType: "json",
+									data: {
+										parentId: $(this).val()
+									},
+									success: function(json) {
+										console.log(json);
+										CheckLogout(json); //检查是否登陆过期		
+										if (json.code == 0) {
+											var optionHtml = '<option value="">全部</option>';
+											var myData = json.data;
+											for (var i = 0; i < myData.length; i++) {
+												optionHtml = optionHtml + '<option value="' + myData[i]["id"] + '">' + myData[i]["cateName"] +
+													'</option>';
+											}
+											$(".getThreeSelect").html(optionHtml);
+										} else {
+											$(".getThreeSelect").html('<option value="">获取菜单失败</option>');
+										}
+
+										InitTime(tableTimeout);
+									},
+									error: function(xml, text, errorThrown) {
+										if (text == "timeout") {
+											TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+										} else {
+											TipsAlert("请求数据失败,请联系后台技术人员");
+										}
+										InitTime(tableTimeout);
+									}
+								})
+							})
+
+
+							$(".addShuXing").each(function() { //上传属性图片点击按钮
+								$(this).change(function() {
+									// var dataset = $(this).parents("td").siblings("td").eq(0)[0].dataset;
+									var thats = $(this);
+									var file = this.files[0];
+									if (file.type.indexOf("image") == 0) {
+										var reader = new FileReader(); //创建FileReader对象实例reader
+										reader.readAsDataURL(file); //将图片url转换为base64码
+										reader.onload = function(e) {
+											var newUrl = this.result;
+											console.log(newUrl);
+											// oUploadImg.style.backgroundImage = 'url('+newUrl+')';
+											let blob = dataURLtoFile(newUrl, 'image/jpeg');
+											let form = new FormData();
+											form.append("bizType", "9");
+											let fileOfBlob = new File([blob], new Date() + '.jpg'); // 重命名了
+											form.append("file", fileOfBlob);
+											var finalUrl;
+											$.ajax({
+												url: uploadImgUrls,
+												type: 'post',
+												data: form,
+												dataType: "json",
+												headers: {
+													'X-Access-Token': userMessage.token,
+												},
+												async: false,
+												cache: false,
+												contentType: false,
+												processData: false,
+												success: function(data) {
+													CheckLogout(data); //检查是否登陆过期
+													console.log(data.root);
+													finalUrl = data.root;
+												},
+												error: function(xml, text, e) {
+
+												}
+											});
+											console.log(finalUrl);
+											$(thats).siblings("input").eq(0)[0].value = finalUrl;
+											$(thats).parent("th").find(".imgBox").html('<img style="width:30px;" src="' + imgUrl + finalUrl +
+												'">').css(
+												"z-index", "1");
+										}
+										console.log(reader.result);
+										console.log(reader);
+										console.log(reader);
+									};
+									console.log(reader.result);
+								});
+							});
+
+							//<tr/>居中
+							$("#tab tr").attr("align", "center");
+							//增加<tr/>
+							$("#but").click(function() {
+								var _len = $("#tab tr").length;
+								$("#tab").append("<tr id=" + _len + " align='center' class='addTr'>" +
+									'<td><input type="text" placeholder="" class="form-control jieTiNum" style="margin:0 auto;" name="" value="" required="" aria-required="true"></td>' +
+									'<td><input type="text" placeholder="" class="form-control jieTiNum" style="margin:0 auto;" name="" value="" required="" aria-required="true"></td>' +
+									'<td><input type="text" placeholder="" class="form-control jieTiNum" style="margin:0 auto;" name="" value="" required="" aria-required="true"></td>' +
+									'<td><input type="text" placeholder="" class="form-control jieTiNum" style="margin:0 auto;" name="" value="" required="" aria-required="true"></td>' +
+									'<td><input type="text" placeholder="" class="form-control jieTiNum" style="margin:0 auto;" name="" value="" required="" aria-required="true"></td>' +
+									'<td><input type="text" placeholder="" class="form-control jieTiNum" style="margin:0 auto;" name="" value="" required="" aria-required="true"></td>' +
+									'<td><input type="text" placeholder="" class="form-control jieTiNum" style="margin:0 auto;" name="" value="" required="" aria-required="true"></td>' +
+									'<th class="shuxingBtnBG" style="position: relative;width:80px;"><input type="file" style="opacity: 0;width: 80px;height:50px;position: absolute;top:0;background: transparent;" class="addShuXing hehe1" accept="image/*"  value=""/><input type="hidden" class="url_input" name="" style="padding: 0 0;" id="" value="" ><div class="imgBox" style="width: 80px;height:40px;position: absolute;top:10px;left:0;z-index: -10;"></div></th>' +
+									"<td><a href=\'#\' onclick=\'deltr(" + _len + ")\'>删除</a></td>" +
+									"</tr>");
+								$(".addShuXing").each(function() { //上传属性图片点击按钮
+									$(this).change(function() {
+										// var dataset = $(this).parents("td").siblings("td").eq(0)[0].dataset;
+										var thats = $(this);
+										var file = this.files[0];
+										if (file.type.indexOf("image") == 0) {
+											var reader = new FileReader(); //创建FileReader对象实例reader
+											reader.readAsDataURL(file); //将图片url转换为base64码
+											reader.onload = function(e) {
+												var newUrl = this.result;
+												console.log(newUrl);
+												// oUploadImg.style.backgroundImage = 'url('+newUrl+')';
+												let blob = dataURLtoFile(newUrl, 'image/jpeg');
+												let form = new FormData();
+												form.append("bizType", "9");
+												let fileOfBlob = new File([blob], new Date() + '.jpg'); // 重命名了
+												form.append("file", fileOfBlob);
+												var finalUrl;
+												$.ajax({
+													url: uploadImgUrls,
+													type: 'post',
+													data: form,
+													dataType: "json",
+													headers: {
+														'X-Access-Token': userMessage.token,
+													},
+													async: false,
+													cache: false,
+													contentType: false,
+													processData: false,
+													success: function(data) {
+														CheckLogout(data); //检查是否登陆过期
+														console.log(data.root);
+														finalUrl = data.root;
+													},
+													error: function(xml, text, e) {
+
+													}
+												});
+												console.log(finalUrl);
+												$(thats).siblings("input").eq(0)[0].value = finalUrl;
+												$(thats).parent("th").find(".imgBox").html('<img style="width:30px;" src="' + imgUrl + finalUrl +
+													'">').css("z-index", "1");
+											}
+										};
+										console.log(reader.result);
+									});
+								});
+							})
+
+
+
+							$('#newProducts').change(function() {
+								if ($(this)[0].checked == true) {
+									$(this).val(2);
+								} else {
+									$(this).val(1);
+								}
+							});
+							$('#recommend').change(function() {
+								if ($(this)[0].checked == true) {
+									$(this).val(2);
+								} else {
+									$(this).val(1);
+								}
+							});
+
+							$('#returnGoods').change(function() {
+								if ($(this)[0].checked == true) {
+									$(this).val(1);
+								} else {
+									$(this).val("");
+								}
+							});
+							$('#freeShipping').change(function() {
+								if ($(this)[0].checked == true) {
+									$(this).val(1);
+								} else {
+									$(this).val("");
+								}
+							});
+
+
+							$("#goBack").click(function() {
+								history.go(-1);
+							})
+							$("#saveBtn").click(function() {
+								if ($("#goodsName").val() == "") {
+									TipsAlert("商品名称不能为空！");
+									return false;
+								}
+								if ($("#goodsSubtitle").val() == "") {
+									TipsAlert("商品副标题不能为空！");
+									return false;
+								}
+								if ($("#goodsPrice").val() == "") {
+									TipsAlert("商品售价不能为空！");
+									return false;
+								}
+
+
+								// var allData = {
+								// 	"id": $("#goodsId").val(),
+								// 	"goodsName": $("#goodsName").val(),
+								// 	"goodsSubtitle": $("#goodsSubtitle").val(),
+								// 	"goodsSort": $("#goodsSort").val(),
+								// 	"goodsBrandId": $("#goodsBrandId").val(),
+								// 	"goodsDescribe": $("#goodsDescribe").val(),
+								// 	"goodsFreightId": $("#goodsFreightId").val(),
+								// 	"goodsNum": $("#goodsNum").val(),
+								// 	"goodsPrice": $("#goodsPrice").val(),
+								// 	"costPrice": $("#costPrice").val(),
+								// 	"marketingPrice": $("#marketingPrice").val(),
+								// 	"goodsTory": $("#goodsTory").val(),
+								// 	"goodsToryWarn": $("#goodsToryWarn").val(),
+								// 	"goodsUnit": $("#goodsUnit").val(),
+								// 	"goodsWeight": $("#goodsWeight").val(),
+								// 	"goodsWeightUnit": $("#goodsWeightUnit").val(),
+								// 	"goodsGiveBao": $("#goodsGiveBao").val(),
+								// 	"goodsGrowthValue": $("#goodsGrowthValue").val(),
+								// 	"buyBaoMoney": $("#buyBaoMoney").val(),
+								// 	"goodsTra": $("#goodsTra").val(),
+								// 	"goodsStatus": $("#goodsStatus").val(),
+								// 	"goodsDetailedKeyword": $("#goodsDetailedKeyword").val(),
+								// 	"goodsDetailedRemark": $("#goodsDetailedRemark").val(),
+								// 	"goodsSpec": $("#goodsSpec").val(),
+								// 	"goodsPurch": $("#goodsPurch").val(),
+								// 	"goodsCateFirstId": $("#goodsCateFirstId").val(),
+								// 	"goodsCateSecId": $("#goodsCateSecId").val(),
+								// 	"goodsCateThirdId": $("#goodsCateThirdId").val(),
+								// 	"newProducts": $("#newProducts").val(),
+								// 	"recommend": $("#recommend").val(),
+								// 	"freeShipping": $("#freeShipping").val(),
+								// 	"returnGoods": $("#returnGoods").val(),
+								// 	"sysGoodsPics": sysGoodsPicList,
+								// 	"sysGoodsSpecs": sysGoodsSpecs,
+								// 	"goodsDetailsImages": goodsDetailsImages
+								// }
+								var hehe = [];
+								var hehehe = [];
+								console.log(goodsDetailsImages);
+								for (var i = 0; i < sysGoodsPicList.length; i++) {
+									hehe.push(sysGoodsPicList[i].url);
+									console.log(hehe);
+								}
+								for (var i = 0; i < goodsDetailsImages.length; i++) {
+									hehehe.push(goodsDetailsImages[i].url);
+									console.log(hehehe);
+								}
+
+								var obj = {
+									id: getUrlId,
+									goodsName: $("#goodsName").val(),
+									goodsSubtitle: $("#goodsSubtitle").val(),
+									goodsPrice: $("#goodsPrice").val(),
+									goodsUnit: $("#goodsUnit").val(),
+									goodsGiveBao: $("#goodsGiveBao").val(),
+									goodsGrowthValue: $("#goodsGrowthValue").val(),
+									buyBaoMoney: $("#buyBaoMoney").val(),
+									goodsTra: $("#goodsTra").val(),
+									goodsStatus: $("#goodsStatus").val(),
+									goodsXin: $("#newProducts").val(),
+									goodsTui: $("#recommend").val(),
+									goodsDetailedKeyword: $("#goodsDetailedKeyword").val(),
+									goodsDetailedRemark: $("#goodsDetailedRemark").val(),
+									goodsCate: $("#goodsCate").val(),
+									sysGoodsPics: hehe,
+									goodsDetailsImages: hehehe
+								}
+								console.log(obj)
+								$.ajax({
+									type: "post",
+									url: urls + common_url.bSysGoods_technGoodsSaveOrUpdate,
+									async: true,
+									timeout: 30000,
+									dataType: "json",
+									contentType: "application/json;charset=utf-8",
+									headers: {
+										'X-Access-Token': userMessage.token,
+									},
+									data: JSON.stringify(obj),
+									success: function(json) {
+										CheckLogout(json); //检查是否登陆过期		
+										if (json.code == 0) {
+											swal({
+												title: "商品编辑成功",
+												text: "商品编辑成功",
+												type: "success",
+											}, function() {
+												window.location = "tech_goods_list.html"
+											});
+										} else {
+											TipsAlert(json.msg);
+										}
+
+										InitTime(tableTimeout);
+									},
+									error: function(xml, text, errorThrown) {
+										if (text == "timeout") {
+											TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+										} else {
+											TipsAlert("请求数据失败,请联系后台技术人员");
+										}
+										InitTime(tableTimeout);
+									}
+								})
+
+							})
+
+
+						});
+
+
+						/**
+						 * 该方法用于获取下拉列表数据
+						 * @param {Number} token是获取数据的必传参数
+						 * */
+						function getBrandSelect() {
+							$.ajax({
+								type: "get",
+								url: urls + common_url.bSysBrand_brandList,
+								async: true,
+								timeout: 30000,
+								dataType: "json",
+								headers: {
+									'X-Access-Token': userMessage.token,
+								},
+								data: {
+
+								},
+								success: function(json) {
+									console.log(json);
+									CheckLogout(json); //检查是否登陆过期		
+									if (json.code == 0) {
+
+										var optionHtml = '<option value="">选择一级分类</option>';
+										var myData = json.data;
+										for (var i = 0; i < myData.length; i++) {
+											optionHtml = optionHtml + '<option data-brandName="' + myData[i]["brandName"] + '" data-id="' + myData[i]
+												[
+													"id"
+												] + '" value="' + myData[i]["id"] + '">' + myData[i]["brandName"] + '</option>';
+										}
+										$(".getBrandSelect").html(optionHtml);
+										$(".getBrandSelect").val(initAllData.goods_brand_id);
+
+									} else {
+										$(".getBrandSelect").html('<option>获取下拉失败</option>');
+									}
+
+									InitTime(tableTimeout);
+								},
+								error: function(xml, text, errorThrown) {
+									if (text == "timeout") {
+										TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+									} else {
+										TipsAlert("请求数据失败,请联系后台技术人员");
+									}
+									InitTime(tableTimeout);
+								}
+							})
+						}
+
+						function getFreightSelect() {
+							$.ajax({
+								type: "get",
+								url: urls + common_url.sysFreightTemplate_list,
+								async: true,
+								timeout: 30000,
+								dataType: "json",
+								headers: {
+									'X-Access-Token': userMessage.token,
+								},
+								data: {
+
+								},
+								success: function(json) {
+									console.log(json);
+									CheckLogout(json); //检查是否登陆过期		
+									if (json.code == 0) {
+
+										var optionHtml = '<option value="">选择一级分类</option>';
+										var myData = json.data;
+										for (var i = 0; i < myData.length; i++) {
+											optionHtml = optionHtml + '<option data-frName="' + myData[i]["frName"] + '" data-id="' + myData[i]["id"] +
+												'" value="' + myData[i]["id"] + '">' + myData[i]["frName"] + '</option>';
+										}
+										$(".getFreightSelect").html(optionHtml);
+										$(".getFreightSelect").val(allData.goods_freight_id);
+
+									} else {
+										$(".getFreightSelect").html('<option>获取下拉失败</option>');
+									}
+
+									InitTime(tableTimeout);
+								},
+								error: function(xml, text, errorThrown) {
+									if (text == "timeout") {
+										TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+									} else {
+										TipsAlert("请求数据失败,请联系后台技术人员");
+									}
+									InitTime(tableTimeout);
+								}
+							})
+						}
+
+						function getOneSelect(id) {
+							$.ajax({
+								type: "get",
+								url: urls + common_url.oneCatelist,
+								async: true,
+								timeout: 30000,
+								dataType: "json",
+								data: {
+									parentId: ""
+								},
+								success: function(json) {
+									console.log(json);
+									CheckLogout(json); //检查是否登陆过期		
+									if (json.code == 0) {
+										var optionHtml = '<option value="">全部</option>';
+										var myData = json.data;
+										for (var i = 0; i < myData.length; i++) {
+											optionHtml = optionHtml + '<option value="' + myData[i]["id"] + '">' + myData[i]["cateName"] +
+												'</option>';
+										}
+										$(".getOneSelect").html(optionHtml);
+										$(".getOneSelect").val(id);
+									} else {
+										$(".getOneSelect").html('<option value="">获取菜单失败</option>');
+									}
+
+									InitTime(tableTimeout);
+								},
+								error: function(xml, text, errorThrown) {
+									if (text == "timeout") {
+										TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+									} else {
+										TipsAlert("请求数据失败,请联系后台技术人员");
+									}
+									InitTime(tableTimeout);
+								}
+							})
+						}
+
+						function getTwoSelect(id, secId, sanId) {
+							$.ajax({
+								type: "get",
+								url: urls + common_url.oneCatelist,
+								async: true,
+								timeout: 30000,
+								dataType: "json",
+								data: {
+									parentId: id
+								},
+								success: function(json) {
+									console.log(json);
+									CheckLogout(json); //检查是否登陆过期		
+									if (json.code == 0) {
+										var optionHtml = '<option value="">全部</option>';
+										var myData = json.data;
+										for (var i = 0; i < myData.length; i++) {
+											optionHtml = optionHtml + '<option value="' + myData[i]["id"] + '">' + myData[i]["cateName"] +
+												'</option>';
+										}
+
+										$(".getTwoSelect").html(optionHtml);
+										$(".add_twoId").val(secId);
+										getThreeSelect(secId, sanId);
+									} else {
+										$(".getTwoSelect").html('<option value="">获取菜单失败</option>');
+									}
+
+									InitTime(tableTimeout);
+								},
+								error: function(xml, text, errorThrown) {
+									if (text == "timeout") {
+										TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+									} else {
+										TipsAlert("请求数据失败,请联系后台技术人员");
+									}
+									InitTime(tableTimeout);
+								}
+							})
+						}
+
+						function getThreeSelect(id, threeId) {
+							$.ajax({
+								type: "get",
+								url: urls + common_url.oneCatelist,
+								async: true,
+								timeout: 30000,
+								dataType: "json",
+								data: {
+									parentId: id
+								},
+								success: function(json) {
+									console.log(json);
+									CheckLogout(json); //检查是否登陆过期		
+									if (json.code == 0) {
+										var optionHtml = '<option value="">全部</option>';
+										var myData = json.data;
+										for (var i = 0; i < myData.length; i++) {
+											optionHtml = optionHtml + '<option value="' + myData[i]["id"] + '">' + myData[i]["cateName"] +
+												'</option>';
+										}
+
+										$(".getThreeSelect").html(optionHtml);
+										$(".getThreeSelect").val(threeId);
+									} else {
+										$(".getThreeSelect").html('<option value="">获取菜单失败</option>');
+									}
+
+									InitTime(tableTimeout);
+								},
+								error: function(xml, text, errorThrown) {
+									if (text == "timeout") {
+										TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+									} else {
+										TipsAlert("请求数据失败,请联系后台技术人员");
+									}
+									InitTime(tableTimeout);
+								}
+							})
+						}
+
+						/**
+						 * 该方法用于初始化操作列里的事件
+						 * */
+
+						function InitTbodyList() {
+							// Showload("正在初始化列表......");
+							// tableTimeout = setInterval("Timeout(tableTimeout)", 1000);
+							$.ajax({
+								type: "get",
+								url: urls + common_url.bSysGoods_technGoodsView,
+								async: true,
+								timeout: 30000,
+								dataType: "json",
+								headers: {
+									'X-Access-Token': userMessage.token,
+								},
+								data: {
+									id: getUrlId
+								},
+								success: function(json) {
+									// console.log(json);
+									CheckLogout(json); //检查是否登陆过期
+									if (json.code == 0) {
+										// totalPages = json.data.records.total;
+										var myData = json.data;
+										initAllData = json.data;
+
+										allData = json.data;
+										console.log(allData);
+										// getBrandSelect();
+										// getFreightSelect();
+										// getOneSelect(allData.goods_cate_first_id);
+
+										// $(".add_oneId").val(allData.goods_cate_first_id);
+										// getTwoSelect(allData.goods_cate_first_id, allData.goods_cate_sec_id, allData.goods_cate_third_id);
+										// $("#goodsId").val(allData.id);
+
+										if (allData.goods_cate == 1) {
+											$("#goods_cate").html("APP服务")
+										} else if (allData.goods_cate == 2) {
+											$("#goods_cate").html("智慧运营")
+										} else if (allData.goods_cate == 3) {
+											$("#goods_cate").html("营销服务")
+										} else if (allData.goods_cate == 4) {
+											$("#goods_cate").html("定制开发")
+										} else if (allData.goods_cate == 5) {
+											$("#goods_cate").html("智能音响")
+										} else if (allData.goods_cate == 6) {
+											$("#goods_cate").html("认证服务")
+										} else if (allData.goods_cate == 7) {
+											$("#goods_cate").html("功能拓展")
+										} else if (allData.goods_cate == 8) {
+											$("#goods_cate").html("摄影机")
+										}
+										$("#goodsCate").val(allData.goods_cate)
+
+
+										$("#goodsName").val(allData.goods_name);
+										$("#goodsSubtitle").val(allData.goods_subtitle);
+										$("#goodsSort").val(allData.goods_sort);
+										$("#goodsBrandId").val(allData.goods_brand_id);
+										$("#goodsDescribe").val(allData.goods_describe);
+										$("#goodsFreightId").val(allData.goods_freight_id);
+										$("#goodsNum").val(allData.goods_num);
+										$("#goodsPrice").val(allData.goods_price);
+										$("#costPrice").val(allData.cost_price);
+										$("#marketingPrice").val(allData.marketing_price);
+										$("#goodsTory").val(allData.goods_tory);
+										$("#goodsToryWarn").val(allData.goods_tory_warn);
+										$("#goodsUnit").val(allData.goods_unit);
+										$("#goodsWeight").val(allData.goods_weight);
+										$("#goodsWeightUnit").val(allData.goods_weight_unit);
+										$("#goodsGiveBao").val(allData.goods_give_bao);
+										$("#goodsGrowthValue").val(allData.goods_growth_value);
+										$("#buyBaoMoney").val(allData.buy_bao_money);
+
+										$("#goodsTra").val(allData.goods_tra);
+
+
+										if (allData.goods_xin == 2) {
+											console.log("isxin")
+											$("#newProducts").attr("checked", true);
+											$("#newProducts").val(2);
+										} else {
+											console.log("noisxin")
+											$("#newProducts").attr("checked", false);
+											$("#newProducts").val(1);
+										}
+										if (allData.goods_tui == 2) {
+											console.log("istui")
+											$("#recommend").attr("checked", true);
+											$("#recommend").val(2);
+										} else {
+											console.log("notui")
+											$("#recommend").attr("checked", false);
+											$("#recommend").val(1);
+										}
+
+
+										$("#goodsStatus").val(allData.goods_status);
+
+										$("#goodsDetailedKeyword").val(allData.goods_detailed_keyword);
+										$("#goodsDetailedRemark").val(allData.goods_detailed_remark);
+
+										$("#goodsSpec").val();
+										$("#goodsPurch").val();
+
+										$("#goodsCateFirstId").val(allData.goods_cate_first_id);
+										$("#goodsCateSecId").val(allData.goods_cate_sec_id);
+										$("#goodsCateThirdId").val(allData.goods_cate_third_id);
+
+
+
+
+										var specList = '';
+
+
+										// sysGoodsPicList = allData.sysGoodsPicList;
+										console.log(allData.sysGoodsPicList.length);
+
+
+										for (var i = 0; i < allData.sysGoodsPicList.length; i++) {
+											sysGoodsPicList.push(allData.sysGoodsPicList[i]);
+											if (allData.sysGoodsPicList[i].goodsType == 1) {
+												allData.sysGoodsPicList[i].goodsType_text = '商品主图';
+												allData.sysGoodsPicList[i].goodsType_bgc = "#F04844";
+											} else {
+												allData.sysGoodsPicList[i].goodsType_text = '设为主图';
+												allData.sysGoodsPicList[i].goodsType_bgc = "#279adf";
+											}
+											specList = specList + '<div class="picArr" data-url="' + allData.sysGoodsPicList[i].url +
+												'" style="width:150px;height:170px;margin-left:30px;position:relative;margin-bottom:30px;"><img style="width:100%;" src="' +
+												imgUrl + allData.sysGoodsPicList[i].url +
+												'"><div style="width:150px;height:40px;position:absolute;bottom:0px;display:flex;align-items: center;background:#F9FAFC;border:1px solid rgba(228, 228, 228, 1);z-index:1;"><div style="width:40%;height:30px;line-height:30px;text-align: center;background:' +
+												allData.sysGoodsPicList[i].goodsType_bgc +
+												';color:#fff;cursor: pointer;border-radius:5px;margin:0 auto;" data-goodstype="' + allData.sysGoodsPicList[
+													i].goodsType + '" data-url="' + allData.sysGoodsPicList[i].url + '" class="setZhuPic">' + allData.sysGoodsPicList[
+													i].goodsType_text +
+												'</div><div title="删除" class="selfmedia_addtemplate_imgDelSpan remove-this" data-url="' + allData.sysGoodsPicList[
+													i].url +
+												'" style="width:40%;height:30px;line-height:30px;text-align: center;background:red;color:#fff;cursor: pointer;border-radius:5px;margin:0 auto;">删除图片</div></div></div></div>';
+
+
+										}
+										console.log(sysGoodsPicList);
+										$($(".picBox")[0]).append(specList);
+
+										$(".picBox1 .setZhuPic").each(function() {
+											$(this).click(function() {
+												var initData = $($(this)[0])[0];
+												var initurl = initData.dataset.url;
+												if (initData.dataset.goodstype == 2) {
+													swal({
+														title: "提示",
+														text: "确定将该图片设为主图吗？",
+														type: "warning",
+														showCancelButton: true,
+														confirmButtonColor: "#DD6B55",
+														confirmButtonText: "是的",
+														cancelButtonText: "让我再考虑一下…",
+														closeOnConfirm: false,
+														closeOnCancel: true
+													}, function(yes) {
+														if (yes) {
+
+															swal({
+																title: "通过",
+																text: "设置成功",
+																type: "success",
+															}, function() {
+																$(".setZhuPic").html("设为主图")
+																$(".setZhuPic").css("background", "#279adf");
+																$(".setZhuPic").data("goodstype", 2);
+
+																for (var i = 0; i < sysGoodsPicList.length; i++) {
+																	if (initurl == sysGoodsPicList[i].url) {
+																		sysGoodsPicList[i].goodsType = 1;
+																	} else {
+																		sysGoodsPicList[i].goodsType = 2;
+																	}
+																}
+
+																initData.dataset.goodstype = 1;
+																initData.style.backgroundColor = '#F04844';
+																initData.innerHTML = '商品主图';
+
+																console.log(sysGoodsPicList);
+
+															});
+														}
+													});
+												}
+											})
+										})
+
+										$(".picBox1 .remove-this").each(function() {
+											$(this).click(function() {
+												var initData = $($(this)[0])[0];
+												var initurl = initData.dataset.url;
+												console.log(initurl);
+												swal({
+													title: "提示",
+													text: "确定将该图片删除吗？",
+													type: "warning",
+													showCancelButton: true,
+													confirmButtonColor: "#DD6B55",
+													confirmButtonText: "是的",
+													cancelButtonText: "让我再考虑一下…",
+													closeOnConfirm: false,
+													closeOnCancel: true
+												}, function(yes) {
+													if (yes) {
+														swal({
+															title: "通过",
+															text: "删除成功",
+															type: "success",
+														}, function() {
+															console.log($(".picBox1 .picArr").length);
+															console.log("???")
+															for (var i = 0; i < $(".picBox1 .picArr").length; i++) {
+																console.log(initurl);
+																console.log($($(".picBox1 .picArr")[i])[0].dataset.url);
+
+																if (initurl == $($(".picBox1 .picArr")[i])[0].dataset.url) {
+																	console.log(999)
+																	$(".picBox1 .picArr")[i].remove();
+																}
+																if (initurl == sysGoodsPicList[i].url) {
+																	sysGoodsPicList.splice(i, 1);
+																}
+															}
+															console.log(sysGoodsPicList.length);
+															if (sysGoodsPicList.length < 5) {
+																$(".filePicker").show();
+															}
+														});
+													}
+												});
+
+
+											})
+										})
+
+
+										var emmmlist = '';
+										for (var i = 0; i < allData.goodsDetailsImages.length; i++) {
+											goodsDetailsImages.push(allData.goodsDetailsImages[i]);
+											if (allData.goodsDetailsImages[i].goodsType == 1) {
+												allData.goodsDetailsImages[i].goodsType_text = '商品主图';
+												allData.goodsDetailsImages[i].goodsType_bgc = "#F04844";
+											} else {
+												allData.goodsDetailsImages[i].goodsType_text = '设为主图';
+												allData.goodsDetailsImages[i].goodsType_bgc = "#279adf";
+											}
+											console.log(allData.goodsDetailsImages[i].url);
+											emmmlist = emmmlist + '<div class="picArr" data-url="' + allData.goodsDetailsImages[i].url +
+												'" style="width:150px;height:170px;margin-left:30px;position:relative;margin-bottom:30px;"><img style="width:100%;" src="' +
+												imgUrl + allData.goodsDetailsImages[i].url +
+												'"><div style="width:150px;height:40px;position:absolute;bottom:0px;display:flex;align-items: center;background:#F9FAFC;border:1px solid rgba(228, 228, 228, 1);z-index:1;"><div title="删除" class="selfmedia_addtemplate_imgDelSpan remove-this" data-url="' +
+												allData.goodsDetailsImages[
+													i].url +
+												'" style="width:40%;height:30px;line-height:30px;text-align: center;background:red;color:#fff;cursor: pointer;border-radius:5px;margin:0 auto;">删除图片</div></div></div></div>';
+										}
+										$($(".picBox")[1]).append(emmmlist);
+
+										$(".picBox2 .setZhuPic").each(function() {
+											$(this).click(function() {
+												var initData = $($(this)[0])[0];
+												var initurl = initData.dataset.url;
+												if (initData.dataset.goodstype == 2) {
+													swal({
+														title: "提示",
+														text: "确定将该图片设为主图吗？",
+														type: "warning",
+														showCancelButton: true,
+														confirmButtonColor: "#DD6B55",
+														confirmButtonText: "是的",
+														cancelButtonText: "让我再考虑一下…",
+														closeOnConfirm: false,
+														closeOnCancel: true
+													}, function(yes) {
+														if (yes) {
+
+															swal({
+																title: "通过",
+																text: "设置成功",
+																type: "success",
+															}, function() {
+																$(".setZhuPic").html("设为主图")
+																$(".setZhuPic").css("background", "#279adf");
+																$(".setZhuPic").data("goodstype", 2);
+
+																for (var i = 0; i < goodsDetailsImages.length; i++) {
+																	if (initurl == goodsDetailsImages[i].url) {
+																		goodsDetailsImages[i].goodsType = 1;
+																	} else {
+																		goodsDetailsImages[i].goodsType = 2;
+																	}
+																}
+
+																initData.dataset.goodstype = 1;
+																initData.style.backgroundColor = '#F04844';
+																initData.innerHTML = '商品主图';
+
+																console.log(goodsDetailsImages);
+
+															});
+														}
+													});
+												}
+											})
+										})
+
+										$(".picBox2 .remove-this").each(function() {
+											$(this).click(function() {
+												var initData = $($(this)[0])[0];
+												var initurl = initData.dataset.url;
+												console.log(initurl);
+												swal({
+													title: "提示",
+													text: "确定将该图片删除吗？",
+													type: "warning",
+													showCancelButton: true,
+													confirmButtonColor: "#DD6B55",
+													confirmButtonText: "是的",
+													cancelButtonText: "让我再考虑一下…",
+													closeOnConfirm: false,
+													closeOnCancel: true
+												}, function(yes) {
+													if (yes) {
+
+														swal({
+															title: "通过",
+															text: "删除成功",
+															type: "success",
+														}, function() {
+															console.log($(".picBox2 .picArr").length);
+
+															for (var i = 0; i < $(".picBox2 .picArr").length; i++) {
+																console.log($($(".picBox2 .picArr")[i])[0].dataset)
+																if (initurl == $($(".picBox2 .picArr")[i])[0].dataset.url) {
+																	$(".picBox2 .picArr")[i].remove();
+																}
+																if (initurl == goodsDetailsImages[i].url) {
+																	goodsDetailsImages.splice(i, 1);
+																}
+															}
+															console.log(goodsDetailsImages);
+															if (goodsDetailsImages.length < 8) {
+																$(".filePicker").show();
+															}
+														});
+													}
+												});
+
+
+											})
+										})
+
+
+
+									} else {
+										TipsAlert(json.code);
+										// if (json.return_msg == "Session过期") {
+										// 	window.location = "login_timeout.html";
+										// }else{
+										// 	TipsAlert(json.return_msg);
+										// }
+									}
+									InitTime(tableTimeout);
+								},
+								error: function(xml, text, errorThrown) {
+									if (text == "timeout") {
+										TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+									} else {
+										TipsAlert("请求数据失败,请联系后台技术人员");
+									}
+									InitTime(tableTimeout);
+								}
+
+							});
+						}
+
+						function getHtmlDom() {
+							$(".time1").removeAttr("disabled", "disabled");
+							$(".time2").removeAttr("disabled", "disabled");
+							$(".huiYuanNum").removeAttr("disabled", "disabled");
+							$(".jieTiNum").removeAttr("disabled", "disabled");
+							$(".manJianNum").removeAttr("disabled", "disabled");
+
+							$('.chuXiao').change(function() {
+								if ($(this).val() == 1) { // 0 否 1 是 
+									$(".time1").removeAttr("disabled", "disabled");
+								} else {
+									$(".time1").val("");
+									$(".time1").attr("disabled", "disabled");
+								}
+							});
+							$('.xianGou').change(function() {
+								if ($(this).val() == 1) { // 0 否 1 是 
+									$(".time2").removeAttr("disabled", "disabled");
+								} else {
+									$(".time2").val("");
+									$(".time2").attr("disabled", "disabled");
+								}
+							});
+							$('.huiYuan').change(function() {
+								if ($(this).val() == 1) { // 0 否 1 是 
+									$(".huiYuanNum").removeAttr("disabled", "disabled");
+								} else {
+									$(".huiYuanNum").val("");
+									$(".huiYuanNum").attr("disabled", "disabled");
+								}
+							});
+							$('.jieTi').change(function() {
+								if ($(this).val() == 1) { // 0 否 1 是 
+									$(".jieTiNum").removeAttr("disabled", "disabled");
+								} else {
+									$(".jieTiNum").val("");
+									$(".jieTiNum").attr("disabled", "disabled");
+								}
+							});
+							$('.manJian').change(function() {
+								if ($(this).val() == 1) { // 0 否 1 是 
+									$(".manJianNum").removeAttr("disabled", "disabled");
+								} else {
+									$(".manJianNum").val("");
+									$(".manJianNum").attr("disabled", "disabled");
+								}
+							});
+						}
+
+
+						//删除<tr/>
+						var deltr = function(index) {
+							var _len = $("#tab tr").length;
+							$("tr[id='" + index + "']").remove(); //删除当前行
+							for (var i = index + 1, j = _len; i < j; i++) {
+								var nextTxtVal = $("#desc" + i).val();
+								$("tr[id=\'" + i + "\']")
+									.replaceWith("<tr id=" + (i - 1) + " align='center'>" +
+										'<td><input type="number" placeholder="" class="form-control jieTiNum" style="margin:0 auto;" name="" value="" required="" aria-required="true"></td>' +
+										'<td><input type="number" placeholder="" class="form-control jieTiNum" style="margin:0 auto;" name="" value="" required="" aria-required="true"></td>' +
+										'<td><input type="number" placeholder="" class="form-control jieTiNum" style="margin:0 auto;" name="" value="" required="" aria-required="true"></td>' +
+										'<td><input type="number" placeholder="" class="form-control jieTiNum" style="margin:0 auto;" name="" value="" required="" aria-required="true"></td>' +
+										'<td><input type="number" placeholder="" class="form-control jieTiNum" style="margin:0 auto;" name="" value="" required="" aria-required="true"></td>' +
+										'<td><input type="number" placeholder="" class="form-control jieTiNum" style="margin:0 auto;" name="" value="" required="" aria-required="true"></td>' +
+										'<td><input type="number" placeholder="" class="form-control jieTiNum" style="margin:0 auto;" name="" value="" required="" aria-required="true"></td>' +
+										'<th class="shuxingBtnBG" style="position: relative;width:80px;"><input type="file" style="opacity: 0;width: 80px;height:50px;position: absolute;top:0;background: transparent;" class="addShuXing hehe1" accept="image/*"  value=""/><input type="hidden" class="url_input" name="" style="padding: 0 0;" id="" value="" ><div class="imgBox" style="width: 80px;height:40px;position: absolute;top:10px;left:0;z-index: -10;"></div></th>'
+
+										+
+										"<td><a href=\'#\' onclick=\'deltr(" + (i - 1) + ")\'>删除</a></td>" +
+										"</tr>");
+							}
+
+						}
+					</script>
+	</body>
+</html>

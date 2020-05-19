@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html class="x-admin-sm">
+<!-- 导购服务订单详情(已接单,已完成，已接单) -->
+
+<head>
+    <meta charset="UTF-8">
+    <title>导购服务订单通过详情</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+        content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <!-- <link rel="stylesheet" href="./css/newStyle.css"> -->
+    <!-- 引入jq -->
+    <script src="https://cdn.bootcss.com/jquery/3.4.0/jquery.min.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/xadmin.js"></script>
+    <script type="text/javascript" src="./js/common.js"></script>
+    <!-- <script type="text/javascript" src="./js/domain.js"></script> -->
+
+    <style>
+        body {
+            background-color: #f9f9f9;
+        }
+
+        .nav {
+            /* margin-left: 10px; */
+            padding-left: 25px;
+            /* margin-top: 20px; */
+            background: #fff;
+            height: 50px;
+        }
+
+        .nav .nav-navigation {
+            display: flex;
+            background: #fff;
+        }
+
+        .nav .nav-navigation li {
+            padding: 5px 10px;
+            margin: 5px;
+            font-size: 14px;
+            margin-right: 10px;
+            margin-top: 8px;
+            border: 1px solid #ccc;
+            width: 85px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .nav .nav-navigation li span {
+            color: red;
+        }
+
+        .nav .nav-navigation li:hover {
+            color: #1abc9c;
+        }
+
+        .nav .nav-navigation li:hover span {
+            color: #1abc9c;
+        }
+
+        .nav .nav-navigation li.nav-active:hover {
+            color: #fff;
+        }
+
+        .nav .nav-navigation li.nav-active:hover span {
+            color: #fff;
+        }
+
+        .guide_look:hover {
+            text-decoration: underline;
+        }
+
+        .nav-active {
+            background-color: #1abc9c;
+            color: #fff;
+        }
+
+        .nav .nav-navigation li.nav-active span {
+            /* background-color: #1abc9c; */
+            color: #fff;
+        }
+
+        .x-nav {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5px;
+            height: 50px;
+            line-height: 38px;
+            background-color: #f3f3f3;
+            border: 1px solid #e4e4e4;
+            background: #f3f3f3;
+        }
+
+        .x-nav .goods_name {
+            margin-left: 10px;
+            color: #999;
+            font-size: 15px;
+            display: inline-block;
+            margin-top: 5px;
+        }
+
+        .goodsRoload {
+            margin-top: 6px !important;
+            display: inline-block;
+            margin-right: 80px;
+            height: 32px;
+            line-height: 50px;
+            /* margin-top: -6px; */
+            /* margin-left: 1434px; */
+            width: 80px;
+            font-size: #666 !important;
+            border: 1px solid #ccc;
+            background: #fff;
+            text-align: center;
+            color: #ccc;
+            cursor: pointer;
+        }
+
+        .goods_name::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 12px;
+            margin: 0 3px;
+            background-color: #1abc9c;
+        }
+
+        .layui-table th,
+        .layui-table td {
+            min-width: 30px !important;
+        }
+
+        .search {
+            border: 1px solid #eee;
+            background-color: #f3f3f3;
+            height: 50px;
+        }
+
+        .search_if {
+            width: 100%;
+            height: 50px;
+            justify-content: space-between;
+            align-items: center;
+            display: flex;
+            position: relative;
+        }
+
+        .search_if>span {
+            color: #666;
+            display: block;
+            margin-left: 8px;
+        }
+
+        .search_if .choose_up {
+            color: #666;
+            cursor: pointer;
+            position: absolute;
+            right: 108px;
+            top: 15.5px;
+        }
+
+        .search_row {
+            height: 50px;
+            background-color: #fff;
+            border: 1px solid #eee;
+        }
+
+        .search_row .layui-inline {
+            margin-right: 50px;
+            margin-top: 10px;
+            margin-left: 10px;
+        }
+
+        .search_row span {
+            color: #666;
+            font-size: 14px;
+            display: inline-block;
+            position: relative;
+            top: 5px;
+            left: 6px;
+            cursor: pointer;
+        }
+
+        .layui-fluid {
+            background-color: #fff;
+        }
+
+        .layui-btn {
+            font-size: 14px !important;
+        }
+
+        .layui-fluid {
+            padding-top: 0 !important;
+        }
+
+        .layui-card-body {
+            padding-top: 0px !important;
+            /* margin-top: -8px !important; */
+            position: relative;
+        }
+
+        .layui-table th {
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .input_height {
+            height: 35px !important;
+            position: relative;
+            top: -3px;
+        }
+
+        .layui-table-tool-self {
+            display: none !important;
+        }
+
+        .user_list {
+            position: absolute;
+            top: 22px;
+            left: 35px;
+            z-index: 999;
+        }
+
+        .user_list span {
+            color: #666;
+        }
+
+        .user_list img {
+            width: 20px;
+        }
+
+        .layui-laypage-default {
+            margin-left: 215px !important;
+        }
+
+        .layui-icon {
+            cursor: pointer;
+        }
+
+        .laytable-cell-undefined {
+            width: 120px !important;
+        }
+
+        .layui-col-space5 {
+            position: relative;
+        }
+
+        .submit_btn {
+            position: absolute;
+            top: -50px;
+            right: -30px;
+        }
+
+        .main_body {
+            background-color: #fff;
+            width: 80%;
+            height: calc(100% -15px);
+            margin: 0 auto;
+            border-top: 1px solid #ccc;
+            border-left: 1px #ccc solid;
+            border-right: 1px #ccc solid;
+        }
+
+        .audit {
+            height: 60px;
+            background: #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            border: 1px solid #ccc;
+            border-top: none;
+        }
+
+        .info {
+            padding: 30px 26px 0 26px;
+        }
+
+        td .layui-table-cell {
+            height: 60px !important;
+            padding-top: 20px !important;
+        }
+
+        .none {
+            display: none;
+        }
+
+        .wating_big_div {
+            position: fixed;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            display: table;
+            z-index: 9999;
+        }
+
+        .zhezhao {
+            opacity: 0.3;
+            position: absolute;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+        }
+
+        .wating_content_div {
+            text-align: center;
+            background: none;
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        .loadingBox {
+            width: 150px;
+            height: 160px;
+            margin: 0 auto;
+            background: #535353;
+            border-radius: 8px;
+        }
+
+        .m-load2 {
+            width: 36px;
+            height: 36px;
+            top: 40px;
+            margin: 0px auto;
+            transform: scale(1.3, 1.3);
+        }
+
+        .loading_text_box {
+            color: #fff !important;
+            margin-top: 75px !important;
+        }
+
+        .m-load2 {
+            position: relative;
+        }
+
+        .m-load2 .line div {
+            position: absolute;
+            left: 16px;
+            top: 0;
+            width: 3px;
+            height: 36px;
+        }
+
+        .m-load2 .line div:before,
+        .m-load2 .line div:after {
+            content: '';
+            display: block;
+            height: 50%;
+            background: #fcfcfc;
+            border-radius: 5px;
+        }
+
+        .m-load2 .line div:nth-child(2) {
+            -webkit-transform: rotate(30deg);
+        }
+
+        .m-load2 .line div:nth-child(3) {
+            -webkit-transform: rotate(60deg);
+        }
+
+        .m-load2 .line div:nth-child(4) {
+            -webkit-transform: rotate(90deg);
+        }
+
+        .m-load2 .line div:nth-child(5) {
+            -webkit-transform: rotate(120deg);
+        }
+
+        .m-load2 .line div:nth-child(6) {
+            -webkit-transform: rotate(150deg);
+        }
+
+        .m-load2 .circlebg {
+            position: absolute;
+            left: 49%;
+            top: 50%;
+            width: 18px;
+            height: 18px;
+            margin: -9px 0 0 -9px;
+            background: #535353;
+            border-radius: 18px;
+        }
+
+        /** 加载动画 **/
+        @-webkit-keyframes load {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .m-load2 .line div:nth-child(1):before {
+            -webkit-animation: load 1.2s linear 0s infinite;
+        }
+
+        .m-load2 .line div:nth-child(2):before {
+            -webkit-animation: load 1.2s linear 0.1s infinite;
+        }
+
+        .m-load2 .line div:nth-child(3):before {
+            -webkit-animation: load 1.2s linear 0.2s infinite;
+        }
+
+        .m-load2 .line div:nth-child(4):before {
+            -webkit-animation: load 1.2s linear 0.3s infinite;
+        }
+
+        .m-load2 .line div:nth-child(5):before {
+            -webkit-animation: load 1.2s linear 0.4s infinite;
+        }
+
+        .m-load2 .line div:nth-child(6):before {
+            -webkit-animation: load 1.2s linear 0.5s infinite;
+        }
+
+        .m-load2 .line div:nth-child(1):after {
+            -webkit-animation: load 1.2s linear 0.6s infinite;
+        }
+
+        .m-load2 .line div:nth-child(2):after {
+            -webkit-animation: load 1.2s linear 0.7s infinite;
+        }
+
+        .m-load2 .line div:nth-child(3):after {
+            -webkit-animation: load 1.2s linear 0.8s infinite;
+        }
+
+        .m-load2 .line div:nth-child(4):after {
+            -webkit-animation: load 1.2s linear 0.9s infinite;
+        }
+
+        .m-load2 .line div:nth-child(5):after {
+            -webkit-animation: load 1.2s linear 1s infinite;
+        }
+
+        .m-load2 .line div:nth-child(6):after {
+            -webkit-animation: load 1.2s linear 1.1s infinite;
+        }
+
+        table tr {
+            background-color: #eaf5fc !important;
+        }
+
+        table tbody tr:hover {
+            background-color: #d4e6f0 !important;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 头部导航部分 -->
+    <div class="x-nav">
+        <span class="layui-breadcrumb">
+            <span class="goods_name">保购服务订单详情</span>
+        </span>
+        <a class=" layui-btn-small goodsRoload" style="line-height:1.6em;margin-top:3px;" onclick="location.reload()"
+            title="刷新">
+            <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i> 刷新
+        </a>
+    </div>
+    <!-- 审核步骤图 -->
+    <!-- 已发布 -->
+    <div class="gu_pull" style="margin: 0 auto; text-align: center; display: none; margin-bottom: 6px;">
+        <img src="./images//pull_gulist.png" alt="状态加载中">
+    </div>
+    <!-- 已接单 -->
+    <div class="gu_get" style="margin: 0 auto; text-align: center; display: none; margin-bottom: 6px;">
+        <img src="./images/get_gulist.png" alt="状态加载中">
+    </div>
+    <!-- 已完成 -->
+    <div class="gu_over" style="margin: 0 auto; text-align: center;display: none;margin-bottom: 6px; ">
+        <img src="./images/over_gulist.png" alt="状态加载中">
+    </div>
+    <!-- 中间主题部分 -->
+    <div class="main_body">
+        <!-- 审核状态 -->
+        <div class="audit">
+            <p style="color: #1abc9c;font-size: 16px;;"><img src="./images/tan_good.png" alt=""
+                    style="position: relative;top: -2px;"> 当前订单状态:<span class="now">待审核</span></p>
+            <p style="font-size: 13px; color : #666; text-align: center; height: 25px;width: 80px; line-height: 25px; background-color: #fff;border: 1px solid #ccc;cursor: pointer;"
+                class="cancel_order">备注信息</p>
+        </div>
+        <!-- 基本信息部分 -->
+        <div class="info ">
+            <!-- 标题 -->
+            <div class="title" style="color: #666;font-size: 16px;"><img src="./images/goods_icon.png" alt=""
+                    style="position: relative; top: -2px;">基本信息</div>
+            <!-- 表格部分 -->
+            <!-- <table id="guideInfoTable" lay-filter="test"></table> -->
+            <table
+                style="width: 100%; height: 55px; border: 1px solid #ccc; margin-top: 10px; border-collapse: collapse ;">
+                <thead>
+                    <tr style="background-color: #F5F5F6;height: 30px;">
+                        <th style="padding:12px 0 !important;border:1px solid #ccc;font-weight: 600; color:#666;">订单编号
+                        </th>
+                        <th style="padding:12px 0 !important;border:1px solid #ccc;font-weight: 600; color:#666;">提交时间
+                        </th>
+                        <th style="padding:12px 0 !important;border:1px solid #ccc;font-weight: 600; color:#666;">商家名称
+                        </th>
+                        <th style="padding:12px 0 !important;border:1px solid #ccc;font-weight: 600; color:#666;">商家账号
+                        </th>
+                        <th style="padding:12px 0 !important;border:1px solid #ccc;font-weight: 600; color:#666;">保购
+                        </th>
+                        <th style="padding:12px 0 !important;border:1px solid #ccc;font-weight: 600; color:#666;">保购账号
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="text-align: center; height: 60px;background-color: #eaf5fc;">
+                        <td id="star" style="border:1px solid #ccc ; color: #666;"></td>
+                        <td id="star1" style="border:1px solid #ccc; color: #666;"></td>
+                        <td id="star2" style="border:1px solid #ccc; color: #666;"></td>
+                        <td id="star3" style="border:1px solid #ccc; color: #666;"></td>
+                        <td id="star4" style="border:1px solid #ccc; color: #666;"></td>
+                        <td id="star5" style="border:1px solid #ccc; color: #666;"></td>
+                    </tr>
+                    <tr style="background-color: #F5F5F6;height: 30px; text-align: center;">
+                        <td style="padding:12px 0 !important;border:1px solid #ccc;font-weight: 600; color:#666;">订单类型
+                        </td>
+                        <td style="padding:12px 0 !important;border:1px solid #ccc;font-weight: 600; color:#666;">订单状态
+                        </td>
+                        <td style="padding:12px 0 !important;border:1px solid #ccc;font-weight: 600; color:#666;">保购商品
+                        </td>
+                        <td style="padding:12px 0 !important;border:1px solid #ccc;font-weight: 600; color:#666;">拍摄数量
+                        </td>
+                        <td style="padding:12px 0 !important;border:1px solid #ccc;font-weight: 600; color:#666;">实付金额
+                        </td>
+                        <td style="padding:12px 0 !important;border:1px solid #ccc;font-weight: 600; color:#666;">支付方式
+                        </td>
+                    </tr>
+                    <tr style="text-align: center; height: 60px; background-color: #eaf5fc;">
+                        <td id="star6" style="border:1px solid #ccc ; color: #666;"></td>
+                        <td id="star7" style="border:1px solid #ccc; color: #666;"></td>
+                        <td id="star8" style="border:1px solid #ccc; color: #666;"></td>
+                        <td id="star9" style="border:1px solid #ccc; color: #666;"></td>
+                        <td id="star10" style="border:1px solid #ccc; color: #666;"></td>
+                        <td id="star11" style="border:1px solid #ccc; color: #666;"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- 导购员订单信息 -->
+        <div class="info">
+            <div class="title" style="color: #666;font-size: 16px;"><img src="./images/goods_icon.png" alt=""
+                    style="position: relative; top: -2px;">保购订单信息</div>
+            <table
+                style="width: 100%; height: 40px; border: 1px solid #ccc; margin-top: 10px; border-collapse: collapse ;">
+                <thead>
+                    <tr style="background-color: #F5F5F6;height: 30px;">
+                        <th style="padding:12px 0 !important;border:1px solid #ccc;font-weight: 600; color:#666;">收货人
+                        </th>
+                        <th style="padding:12px 0 !important;border:1px solid #ccc;font-weight: 600; color:#666;">手机号码
+                        </th>
+                        <th
+                            style="padding:12px 0 !important;border:1px solid #ccc;font-weight: 600; color:#666; width: 180px;">
+                            收货地址
+                        </th>
+                        <th
+                            style="padding:12px 0 !important;border:1px solid #ccc;font-weight: 600; color:#666;width: 120px;">
+                            是否已领取保购样品
+                        </th>
+                        <th style="padding:12px 0 !important;border:1px solid #ccc;font-weight: 600; color:#666;">押金
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="text-align: center; height: 80px; background-color: #eaf5fc;">
+                        <td id="info" style="border:1px solid #ccc ; color: #666;"></td>
+                        <td id="info1" style="border:1px solid #ccc; color: #666; text-align: center;">
+                        </td>
+                        <td id="info2" style="border:1px solid #ccc; color: #666;"></td>
+                        <td id="info3" style="border:1px solid #ccc; color: #666;"></td>
+                        <td id="info4" style="border:1px solid #ccc; color: #666;"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <!-- 领取商品信息 -->
+        <div class="info">
+            <div class="title" style="color: #666;font-size: 14px;width: 100% !important;padding-left: 6px;">领取商品信息
+            </div>
+            <table id="goodsWordsTable" lay-filter="test" style="width: 100% !important;"></table>
+        </div>
+
+
+        <!-- 作品发布信息 -->
+        <div class="info">
+            <div class="title" style="color: #666;font-size: 14px;width: 100% !important;padding-left: 6px;">作品发布信息
+            </div>
+            <table id="guideWordsTable" lay-filter="test" style="width: 100% !important;"></table>
+        </div>
+
+
+
+        <!-- <div style="width: 100%;height: 20px; border-left: 1px solid #ccc;border-right: 1px solid #ccc;"></div> -->
+        <!--商家信息 -->
+        <div class="info">
+            <div class="title" style="color: #666;font-size: 16px;"><img src="./images/goods_icon.png" alt=""
+                    style="position: relative; top: -2px;">商家信息</div>
+            <!-- 表格部分 -->
+            <table
+                style="width: 100%; height: 55px;   border: 1px solid #ccc; margin-top: 10px; border-collapse: collapse ;">
+                <thead>
+                    <tr style="background-color: #F5F5F6;height: 30px;">
+                        <th
+                            style="padding:12px 0 !important;border:1px solid #ccc;font-weight: 600; color:#666; width: 260px;">
+                            商家</th>
+                        <th
+                            style="padding:12px 0 !important;border:1px solid #ccc;font-weight: 600; color:#666; width: 260px;">
+                            联系人</th>
+                        <th
+                            style="padding:12px 0 !important;border:1px solid #ccc;font-weight: 600; color:#666; width: 260px;">
+                            手机号码</th>
+                        <th
+                            style="padding:12px 0 !important;border:1px solid #ccc;font-weight: 600; color:#666; width: 260px;">
+                            实付金额</th>
+                        <th
+                            style="padding:12px 0 !important;border:1px solid #ccc;font-weight: 600; color:#666; width: 260px;">
+                            数量</th>
+                        <th
+                            style="padding:12px 0 !important;border:1px solid #ccc;font-weight: 600; color:#666; width: 260px;">
+                            总计</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="text-align: center; height: 50px; background-color: #eaf5fc;">
+                        <td id="goods_man" style="border:1px solid #ccc ; color: #666;"></td>
+                        <td id="goods1_man" style="border:1px solid #ccc; color: #666;"></td>
+                        <td id="goods2_man" style="border:1px solid #ccc; color: #666;"></td>
+                        <td id="goods3_man" style="border:1px solid #ccc; color: #666;"></td>
+                        <td id="goods4_man" style="border:1px solid #ccc; color: #666;"></td>
+                        <td id="goods5_man" style="border:1px solid #ccc; color: #666;"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- 关联商品 -->
+        <div class="info">
+            <div class="title" style="color: #666;font-size: 16px;"><img src="./images/goods_icon.png" alt=""
+                    style="position: relative; top: -2px;">关联商品</div>
+            <!-- 表格部分 -->
+            <table
+                style="width: 100%; height: 55px;   border: 1px solid #ccc; margin-top: 10px; border-collapse: collapse ;">
+                <thead>
+                    <tr style="background-color: #F5F5F6;height: 30px;">
+                        <th
+                            style="padding:12px 0 !important;border:1px solid #ccc;font-weight: 600; color:#666; width: 260px;">
+                            商品图片</th>
+                        <th
+                            style="padding:12px 0 !important;border:1px solid #ccc;font-weight: 600; color:#666; width: 260px;">
+                            商家名称</th>
+                        <th
+                            style="padding:12px 0 !important;border:1px solid #ccc;font-weight: 600; color:#666; width: 260px;">
+                            品牌</th>
+                        <th
+                            style="padding:12px 0 !important;border:1px solid #ccc;font-weight: 600; color:#666; width: 260px;">
+                            价格/货号</th>
+                        <th
+                            style="padding:12px 0 !important;border:1px solid #ccc;font-weight: 600; color:#666; width: 260px;">
+                            成本价</th>
+                        <th
+                            style="padding:12px 0 !important;border:1px solid #ccc;font-weight: 600; color:#666; width: 260px;">
+                            提成</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="text-align: center; height: 50px; background-color: #eaf5fc;">
+                        <td id="goods" style="border:1px solid #ccc ; color: #666; height: 100px;text-align: center;">
+                            <img src="#" alt="" class="img_1" style="width: 80px;height: 80px;"
+                                onclick="previewImg(this)">
+                        </td>
+                        <td id="goods1" style="border:1px solid #ccc; color: #666; height: 100px;"></td>
+                        <td id="goods2" style="border:1px solid #ccc; color: #666; height: 100px;"></td>
+                        <td id="goods3" style="border:1px solid #ccc; color: #666; height: 100px;"></td>
+                        <td id="goods4" style="border:1px solid #ccc; color: #666; height: 100px;"></td>
+                        <td id="goods5" style="border:1px solid #ccc; color: #666; height: 100px;"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 导购员操作信息 -->
+        <div class="info">
+            <div class="title" style="color: #666;font-size: 16px;"><img src="./images/goods_icon.png" alt=""
+                    style="position: relative; top: -2px;">保购操作信息</div>
+            <!-- 表格部分 -->
+            <table id="guideTable" lay-filter="test" style="width: 100%; "></table>
+        </div>
+    </div>
+
+    <!-- 领取样品列表价格货号 -->
+    <script id="price_num" type="text/html">
+       <span>￥{{d.goods_price}}</span>&nbsp;/&nbsp;<span>{{d.goods_num}}</span>
+    </script>
+    <script>
+        layui.use(['layedit', 'laydate', 'table', 'form'], function () {
+            // var table = layui.table;
+            var table = layui.table,
+                form = layui.form,
+                layer = layui.layer
+
+            function getUrlParam(name) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+                var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+                if (r != null) return unescape(r[2]); return null; //返回参数值
+            }
+            var buyMid = getUrlParam("id") || 52; //购买商品服务列表id
+            //购买商品服务货号
+            //  console.log(buyMid)
+            //  console.log(goodsNum)
+            //  基本信息渲染
+            $.ajax({
+                type: 'get',
+                url: urls + 'smallOrderStoreService/baseSelectSmallOrderStoreService',
+                headers: {
+                    'X-Access-Token': JSON.parse(sessionStorage.getItem("user_message")).token,
+                },
+                data: {
+                    id: buyMid
+                },
+                success: function (res) {
+                    // console.log(res)
+                    CheckLogout(res); //检查是否登陆过
+                    if (res.code == 0) {
+                        $('.now').text(res.data.take_status)
+                        $('.now').css('color', '#1abc9c')
+                        if (res.data.take_status == '已发布(已完成)') {  //已发布完成
+                            $('.gu_over').css('display', 'block')
+                        }
+                        if (res.data.take_status == '已接单(待发布)') { //待接单显示
+                            $('.gu_get').css('display', 'block')
+                        }
+                        //基本信息
+                        $('#star').text(res.data.order_serial_number)
+                        $('#star1').text(res.data.pay_success_time)
+                        $('#star2').text(res.data.store_name)
+                        $('#star3').text(res.data.store_phone)
+                        $('#star4').text(res.data.salesName)
+                        $('#star5').text(res.data.account_phone)
+                        $('#star6').text(res.data.work_form)
+                        $('#star7').text(res.data.take_status)
+                        $('#star8').text(res.data.goods_name)
+                        $('#star9').text(res.data.playNum)
+                        $('#star10').text(res.data.price)
+                        $('#star11').text(res.data.pay_type)
+                    } else {
+                        layer.msg(res.msg)
+                    }
+                }
+            })
+
+            //   导购员订单信息
+            $.ajax({
+                type: 'get',
+                url: urls + 'smallOrderStoreService/selectSalesOrderInfo',
+                headers: {
+                    'X-Access-Token': JSON.parse(sessionStorage.getItem("user_message")).token,
+                },
+                data: {
+                    id: buyMid
+                },
+                success: function (res) {
+                    CheckLogout(res); //检查是否登陆过
+                    if (res.code == 0) {
+                        // 导购订单信息
+                        if (Array.isArray(res.data)) {
+                            $('#info').text(res.data[0].link_man)
+                            $('#info1').text(res.data[0].connect_phone)
+                            $('#info2').text(res.data[0].address)
+                            $('#info3').text(res.data[0].isSample)
+                            $('#info4').text(res.data[0].price)
+                        } else {
+                            $('#info').text(res.data.link_man)
+                            $('#info1').text(res.data.connect_phone)
+                            $('#info2').text(res.data.address)
+                            $('#info3').text(res.data.isSample)
+                            $('#info4').text(res.data.price)
+                        }
+
+                    } else {
+                        layer.msg(res.msg)
+                    }
+                }
+            })
+
+
+            //   商家信息
+            $.ajax({
+                type: 'get',
+                url: urls + 'smallOrderStoreService/selectStoreInfo',
+                headers: {
+                    'X-Access-Token': JSON.parse(sessionStorage.getItem("user_message")).token,
+                },
+                data: {
+                    id: buyMid
+                },
+                success: function (res) {
+                    CheckLogout(res); //检查是否登陆过
+                    if (res.code == 0) {
+                        // 商家信息 
+                        if (Array.isArray(res.data)) {
+                            $('#goods_man').text(res.data[0].store_name)
+                            $('#goods1_man').text(res.data[0].store_cert_name)
+                            $('#goods2_man').text(res.data[0].store_cert_phone)
+                            $('#goods3_man').text(res.data[0].price)
+                            $('#goods4_man').text(res.data[0].number)
+                            $('#goods5_man').text(res.data[0].totalMoney)
+                        } else {
+                            $('#goods_man').text(res.data.store_name)
+                            $('#goods1_man').text(res.data.store_cert_name)
+                            $('#goods2_man').text(res.data.store_cert_phone)
+                            $('#goods3_man').text(res.data.price)
+                            $('#goods4_man').text(res.data.number)
+                            $('#goods5_man').text(res.data.totalMoney)
+                        }
+
+                    } else {
+                        layer.msg(res.msg)
+                    }
+                }
+            })
+
+            //  关联商品信息
+            $.ajax({
+                url: urls + 'smallOrderStoreService/selectUnionShopingInfo',
+                headers: {
+                    'X-Access-Token': JSON.parse(sessionStorage.getItem("user_message")).token,
+                },
+                type: 'get',
+                data: {
+                    id: buyMid
+                },
+                success: function (res) {
+                    CheckLogout(res); //检查是否登陆过
+                    if (res.code == 0) {
+                        // 关联商品信息
+                        $('#goods .img_1').attr('src', imgUrl + res.data.url)
+                        $('#goods1').text(res.data.goods_name)
+                        $('#goods2').text(res.data.brand_name)
+                        $('#goods3').text(res.data.goods_price)
+                        $('#goods3 span').text(res.data.goods_num)
+                        $('#goods4').text(res.data.cost_price)
+                        $('#goods5').text(res.data.tcPrice)
+                    } else {
+                        layer.msg(res.msg)
+                    }
+                }
+            })
+            // 领取商品信息
+            // $.ajax({
+            //     type: 'get',
+            //     url: urls + 'smallOrderStoreService/selectGetShoppingInfo',
+            //     headers: {
+            //         'X-Access-Token': JSON.parse(sessionStorage.getItem("user_message")).token,
+            //     },
+            //     data: { id: buyMid },
+            //     success: function (res) {
+            //         console.log(res,'领取样品')
+            //         CheckLogout(res); //检查是否登陆过
+            //         if (res.code == 0) {
+            //             if (Array.isArray(res.data.records)) {
+            //                 $('#getGoods_info .img_goods').attr('src', imgUrl + res.data.records[0].url);
+            //                 $('#getGoods_info1').text(res.data.records[0].goods_name)
+            //                 $('#getGoods_info2').text(res.data.records[0].brand_name)
+            //                 $('#getGoods_info3').text(res.data.records[0].goods_price)
+            //                 $('#getGoods_info3 span').text(res.data.records[0].goods_num)
+            //                 $('#getGoods_info4').text(res.data.records[0].goods_color)
+            //                 $('#getGoods_info5').text(res.data.records[0].cost_price)
+            //                 $('#getGoods_info6').text(res.data.records[0].tcPrice)
+            //             } else {
+            //                 $('#getGoods_info .img_goods').attr('src', imgUrl + res.data.url);
+            //                 $('#getGoods_info1').text(res.data.goods_name)
+            //                 $('#getGoods_info2').text(res.data.brand_name)
+            //                 $('#getGoods_info3').text(res.data.goods_price)
+            //                 $('#getGoods_info3 span').text(res.data.goods_num)
+            //                 $('#getGoods_info4').text(res.data.goods_color)
+            //                 $('#getGoods_info5').text(res.data.cost_price)
+            //                 $('#getGoods_info6').text(res.data.tcPrice)
+            //             }
+
+            //         }
+            //     }
+            // })
+            //   领取商品信息
+            Showload();
+            table.render({
+                elem: '#goodsWordsTable',
+                // toolbar: '#guideListTableToolbar',
+                cellMinWidth: 80,
+                // height: '600',
+                url: urls + 'smallOrderStoreService/selectGetShoppingInfo' // 购买服务作品审核数据接口
+                , headers: {
+                    'X-Access-Token': JSON.parse(sessionStorage.getItem("user_message")).token,
+                },
+                page: true,
+                limit: 5,
+                limits: [2, 4, 6]
+                , method: 'get' //如果无需自定义HTTP类型，可不加该参数
+                , where: { id: buyMid }
+                , parseData: function (res) { //res 即为原始返回的数据
+                    // console.log(res, 12345)
+                    CheckLogout(res); //检查是否登陆过
+                    return {
+                        "code": res.code, //解析接口状态
+                        "msg": res.msg, //解析提示文本
+                        "count": res.data.total, //解析数据长度
+                        "data": res.data.records //解析数据列表
+                    }
+                },
+                cols: [
+                    [ //表头
+                        {
+                            field: 'url',
+                            title: '商品图片',
+                            align: 'center',
+                            templet: function (d) {
+                                return '<img src=' + imgUrl + d.url + ' alt="" style="width : 60px; height: 60px;position: relative; top: -20px; "  onclick="previewImg(this)" >'
+                            }
+                        },
+                        {
+                            field: 'goods_name',
+                            title: '商品名称',
+                            align: 'center',
+                        }, {
+                            field: 'brand_name',
+                            title: '品牌',
+                            align: 'center',
+                            // width: 160
+                        }, {
+                            field: '',
+                            title: '价格/货号',
+                            align: 'center',
+                            templet: '#price_num',
+                            width: 200
+                        }, {
+                            field: 'goods_color',
+                            title: '属性',
+                            align: 'center',
+                            // width: 160
+                        }, {
+                            field: 'cost_price',
+                            title: '成本价',
+                            align: 'center',
+                            // width: 160
+                        }, {
+                            field: 'tcPrice',
+                            title: '提成',
+                            align: 'center',
+                            // width: 160
+                        }
+                    ]
+                ],
+                done: function (res, curr, count) {
+                    //重新赋值筛选
+
+                }
+            });
+
+
+            //作品发布信息
+            table.render({
+                elem: '#guideWordsTable',
+                // toolbar: '#guideListTableToolbar',
+                cellMinWidth: 80,
+                // height: '600',
+                url: urls + 'smallOrderStoreService/selectProductionInfo' // 购买服务作品审核数据接口
+                , headers: {
+                    'X-Access-Token': JSON.parse(sessionStorage.getItem("user_message")).token,
+                },
+                page: true,
+                limit: 5,
+                limits: [2, 4, 6]
+                , method: 'get' //如果无需自定义HTTP类型，可不加该参数
+                , where: { id: buyMid }
+                , parseData: function (res) { //res 即为原始返回的数据
+                    // console.log(res, 12345)
+                    CheckLogout(res); //检查是否登陆过
+                    return {
+                        "code": res.code, //解析接口状态
+                        "msg": res.msg, //解析提示文本
+                        "count": res.data.total, //解析数据长度
+                        "data": res.data.records //解析数据列表
+                    }
+                },
+                cols: [
+                    [ //表头
+                        {
+                            field: 'file_type',
+                            // edit: 'text',
+                            title: '作品类型',
+                            align: 'center',
+                            // width: 130
+                        }, {
+                            field: '',
+                            title: '作品查看',
+                            align: 'center',
+                            templet: function(d){
+                               if(d.file_type == '图片') {
+                                   return '<img src=' +imgUrl + d.file_url +' alt="" style="width : 60px; height: 60px;position: relative; top: -20px; "  onclick="previewImg(this)" >'
+                               }else{
+                                   return '<video src='+imgUrl + d.file_url +' class="video" controls="controls" style="width: 60px;height: 60px; position: relative; top: -20px;" onclick="previewImg(this)"></video>'
+                               }
+                            }
+                        }, {
+                            field: 'goods_name',
+                            title: '关联产品',
+                            align: 'center',
+                            // width: 160
+                        }, {
+                            field: 'create_time',
+                            title: '发布时间',
+                            align: 'center',
+                            width: 200
+                        }, {
+                            field: 'like_num',
+                            title: '浏览人数',
+                            align: 'center',
+                            // width: 160
+                        }, {
+                            field: 'release_num',
+                            title: '点赞数',
+                            align: 'center',
+                            // width: 160
+                        }, {
+                            field: 'sales_num',
+                            title: '销售',
+                            align: 'center',
+                            // width: 160
+                        }
+                    ]
+                ],
+                done: function (res, curr, count) {
+                    //重新赋值筛选
+                    Timeout();
+                }
+            });
+        })
+
+
+    </script>
+    <script>
+        // 图片点击放大处理函数
+        function previewImg(obj) {
+            var img = new Image();
+            img.src = obj.src;
+            //var height = img.height + 50; // 原图片大小
+            //var width = img.width; //原图片大小
+            var imgHtml = "<img src='" + obj.src + "' width='500px' height='500px'/>";
+            //弹出层
+            layer.open({
+                type: 1,
+                shade: 0.8,
+                offset: 'auto',
+                area: [500 + 'px', 550 + 'px'],  // area: [width + 'px',height+'px']  //原图显示
+                shadeClose: true,
+                scrollbar: false,
+                title: "图片预览", //不显示标题  
+                content: imgHtml, //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响  
+                cancel: function () {
+                    //layer.msg('捕获就是从页面已经存在的元素上，包裹layer的结构', { time: 5000, icon: 6 });  
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/table_jqgrid.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:20:02 GMT -->
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>退货申请列表</title>
+
+    <link href="css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="css/timePicker.css" rel="stylesheet">
+    <link href="css/newStyle.css" rel="stylesheet">
+    <link href="js/plugins/fancybox/jquery.fancybox.css" rel="stylesheet">
+
+    <style>
+        /* 重写bookstrap样式表 勿删 */
+        .form_inputs {
+            width: 160px;
+            background-color: #ebebeb;
+            border: 1px solid #06a3f9;
+            border-radius: 20px;
+            -webkit-border-radius: 20px;
+            -moz-border-radius: 20px;
+            -o-border-radius: 20px;
+            -ms-border-radius: 20px;
+        }
+
+        .ibox-title {
+            padding: 20px;
+        }
+
+        .mb30 {
+            margin-bottom: 20px;
+        }
+
+        /* 重写bookstrap样式表 勿删 */
+        .ui-jqdialog {
+            height: auto !important;
+        }
+
+        .ui-common-table tbody {
+            background-color: #eaf5fc !important;
+        }
+
+        .modal-dialog {
+            margin: 80px auto !important;
+        }
+
+        .form-group {
+            margin-left: 0px !important;
+            margin-right: 0px !important;
+        }
+
+        .modal-sm {
+            width: 600px;
+        }
+
+        .col-sm-3 {
+            width: 30%;
+        }
+
+        .col-sm-8 {
+            width: 70%;
+        }
+
+        .form-horizontal .control-label {
+            text-align: left;
+            padding-top: 5px;
+            font-size: 18px;
+        }
+
+        @media only screen and (min-width: 100px) and (max-width: 600px) {
+            .modal-sm {
+                width: 400px;
+            }
+
+            .col-sm-3 {
+                width: 40%;
+            }
+
+            .col-sm-8 {
+                width: 60%;
+            }
+
+            .scroll_div {
+                width: 85%;
+            }
+
+            .form-horizontal .control-label {
+                text-align: left;
+                padding-top: 5px;
+                font-size: 14px;
+            }
+
+            .dialog_btn {
+                font-size: 14px !important;
+            }
+        }
+
+        @media only screen and (min-width: 650px) {
+            .modal-sm {
+                width: 600px;
+            }
+        }
+
+        /*以下是等待状态的通用样式*/
+        .wating_big_div {
+            position: fixed;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            display: table;
+            z-index: 9999;
+        }
+
+        .zhezhao {
+            opacity: 0.3;
+            position: absolute;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+        }
+
+        .wating_content_div {
+            text-align: center;
+            background: none;
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        /*以上是等待状态的通用样式*/
+        .inputcherckStyle {
+            width: 18px;
+            height: 18px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOnAAADpwBB5RT3QAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAA3SURBVDiNY7x8/sR/BioAFgYGBgYdA3OKDLly4SQDEzVcw8DAMGrQqEGjBo1Yg1gYGCDlCaUAAGYpCP6bB9aTAAAAAElFTkSuQmCC")
+        }
+
+        .inputcherckStyle:hover {
+            background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOnAAADpwBB5RT3QAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAA2SURBVDiNY9Tpr/7PQAXARA1DGBgYGFhgjMsFLWQZoDuhhoGBgYouGjVo1KBRg+hjEOOgK48AQfgHj87Hb9sAAAAASUVORK5CYII=")
+        }
+
+        .inputcherckStyle:checked {
+            background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOnAAADpwBB5RT3QAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAEwSURBVDiNY9Tpr/7PQAXARA1DRg1CBbF6Rgz7U8sYtEUlyDcoQkePocwpiEGEm4/BQkYGt0GsTMwMUbr6DIqCwhiGBGloM1Q5hzIwMDAwbL12imHBhbO4DYrRM2SodA5lWBCawqApIg4X91HTYGhwj2BgZGRk2HHjDEPtnq0Mf///x23QwUf3GV5/+cAgxMXLMDc0hcFAQorBTUmVocUjioGRkZFh3+0LDFW7NjP8/vcXw8WM6ClbTkCIYWZAHIOMgAjDj9+/GFiZWRiYmZgYDt65xFC0fR3Dr79/MAzBcBEDAwPDow/vGJLWzGO4++Y5AwcrGwMzExPD4XtXGEp2rMdpCFaDGBgYGJ5/+cSQtG4Bw6Vn9xkO3r3MULRtLcOPP79xGoLVa+SCYZBFaG4QAHB8WIHt6FAxAAAAAElFTkSuQmCC")
+        }
+
+        #timebox {
+            width: 50%;
+            height: 100%;
+            /* display: flex;
+        align-items: center; */
+        }
+
+        #timebox>span {
+            width: 4.16%;
+            display: block;
+            float: left;
+        }
+
+        .order_choose {
+            padding: 5px 10px;
+            font-size: 14px;
+            margin-right: 10px;
+            margin-top: 8px;
+            margin-bottom: 5px;
+            border: 1px solid #ccc;
+            text-align: center;
+            cursor: pointer;
+        }
+        .nonetext{
+            width: 100%;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            display: none;
+        }
+    </style>
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content  animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox ">
+
+                    <div class="ibox-title pull-left w100p" style="padding: 10px 20px;">
+                        <div class="pull-left">
+                            <div class="ibox-tools cache5">
+                                退货申请
+                            </div>
+                        </div>
+
+                        <div class="pull-right">
+                            <button class="refresh_btn">
+                                <a class="refresh_a">
+                                    <i class="fa fa-refresh"></i> 刷新
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+
+
+                    <div class="w100p pull-left" style="padding-top:20px;padding-left: 30px;background: #fff;">
+                        <div class="pull-left order_choose order_choose_active" data-ordertype="0"> 全部申请
+                            (<span class="navTextNum allProduction">0</span>)</div>
+                        <div class="pull-left order_choose" data-ordertype="1"> 待处理
+                            (<span class="navTextNum been">0</span>)</div>
+                        <div class="pull-left order_choose" data-ordertype="2"> 退货中
+                            (<span class="navTextNum noBeen">0</span>)</div>
+                        <div class="pull-left order_choose" data-ordertype="3">已完成
+                            (<span class="navTextNum review">0</span>)</div>
+                        <div class="pull-left order_choose" data-ordertype="4">已拒绝
+                            (<span class="navTextNum noReview">0</span>)</div>
+                    </div>
+
+                    <div class="ibox-content pull-left w100p jqGrid_wrapper" id="uploadedWrap" data-gridtype="0"
+                        style="padding-top: 0px;">
+
+                        <div class="w100p chaxunBorder">
+                            <div class="ibox-title w100p"
+                                style="height:50px;background-color: rgb(243, 243, 243);padding: 10px 20px;border-top:0px;">
+                                <div class="ibox-tools pull-left">
+                                    <span class="titleFindIcon pull-left"></span>
+                                    <span class="pull-left" style="position: relative;top: 3px;left: 5px;">筛选条件</span>
+                                </div>
+                                <div class="pull-right">
+                                    <button class="opera_btn" id="check_btn">查询</button>
+                                </div>
+                            </div>
+
+                            <div class="w100p p20" style="display: flex;">
+                                <div class="ml30">
+                                    <span class="f14 pull-left h30 lh30">输入搜索：</span>
+                                    <div class="pull-left">
+                                        <input type="text" name="orderSerialNumber" placeholder="订单号" class="form-control h30 w100p ml10"
+                                            style="width: 150px;" aria-required="true">
+                                    </div>
+                                </div>
+                                <div class="ml30">
+                                    <span class="f14 pull-left h30 lh30">收货人：</span>
+                                    <div class="pull-left">
+                                        <input type="text" placeholder="收货人姓名/电话" name="orderName" class="form-control h30 w100p ml10"
+                                            style="width: 150px;" aria-required="true">
+                                    </div>
+                                </div>
+                                <div class="ml30">
+                                    <span class="f14 pull-left h30 lh30">申请时间：</span>
+                                    <div class="pull-left">
+                                        <input type="text" class="form-control layer-date h30 ml10"
+                                        placeholder="请选择时间"
+                                        name="createTime"
+                                        onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" required=""
+                                        aria-required="true">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="ibox-title pull-left w100p table-head"
+                            style="background-color: rgb(243, 243, 243);padding: 10px 20px;border-top:0px;">
+                            <div class="pull-left">
+                                <div class="ibox-tools" style="">
+                                    <span class="titleFontIcon"></span>
+                                    <span class="pull-left" style="position: relative;top: 3px;left: 5px;">数据列表</span>
+                                </div>
+                            </div>
+                            <!-- <div class="pull-right ml30">
+                                <button class="export_span" data-toggle="modal" data-target="#add_dialog">导出数据</button>
+                            </div> -->
+                        </div>
+
+                        <div class="pull-left w100p">
+                            <table class="table table-bordered mb0 ">
+                                <thead>
+                                    <tr>
+                                        <th><input name="Fruit" class="w20 h20 header_checkbox"type="checkbox" value="" /></th>
+                                        <th>订单号</th>
+                                        <th>申请时间</th>
+                                        <th>用户账号</th>
+                                        <th>退款金额</th>
+                                        <th>联系人</th>
+                                        <th>申请状态</th>
+                                        <th>处理时间</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody_list1"></tbody>
+                                
+                            </table>
+                            <div class="nonetext">暂无数据</div>
+                        </div>
+                        <div class="pull-left tac c0 f14 w100p pre mt10" id="footer_page_div">
+                            <div class="">
+                                <div class="pull-left">
+                                    <div class="ibox-tools">
+                                        <a class="refresh_a">
+                                            <i class="fa fa-refresh"></i> 刷新
+                                        </a>
+                                    </div>
+                                </div>
+                                <span class="under_line cursor_pointer f_last_span">上一页</span>
+                                <span class="pl20 f_page_span">1</span>
+                                <span class="pl20 under_line cursor_pointer f_next_span">下一页</span>
+                                <span class="pl20">共 <span class="f_count_page_span">1</span> 页</span>
+                                <div class="disib ml20">
+                                    每页显示：
+                                    <select class="p0 disib f_page_select">
+                                        <option value="" selected="selected">10</option>
+                                        <option value="">50</option>
+                                        <option value="">30</option>
+                                    </select>
+                                    条
+                                </div>
+                            </div>
+                            <div class="record_right_div">
+                                数据库总数量： <span class="f_counts_span">0</span> 条
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--新增的弹框-->
+    <div class="modal inmodal fade" id="add_dialog" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content br8">
+                <div class="modal-header p10 bdno">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <span class="modal-title f18">添加分类</span>
+                </div>
+                <div class="modal-body bg_f p0">
+                    <div class="ibox-content p30">
+                        <form class="form-horizontal m-t" id="add_form" method="post">
+                            <input type="hidden" name="type" class="add_type" value="1" />
+                            <div class="form-group ">
+                                <label class="col-sm-3 control-label pull-left"><span
+                                        style="color: red;">*</span>分类名称</label>
+                                <div class="col-sm-8 pull-left">
+                                    <input type="text" class="form-control" name="cateName" value="" required=""
+                                        aria-required="true">
+                                </div>
+                            </div>
+
+                            <div class="form-group ">
+                                <label class="col-sm-3 control-label pull-left">排序：</label>
+                                <div class="col-sm-8 pull-left">
+                                    <input type="text" class="form-control" name="sort" value="" required=""
+                                        aria-required="true">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer bdno tac pt0040">
+                    <button type="button" class=" btn-white clear_btn_style dialog_btn" data-dismiss="modal">关闭</button>
+                    <button type="button" class=" btn-primary clear_btn_style bdno dialog_btn ml30"
+                        id="add_btn">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    <script src="js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="js/plugins/peity/jquery.peity.min.js"></script>
+    <script src="js/content.min.js?v=1.0.0"></script>
+    <script src="js/plugins/layer/laydate/laydate.js"></script>
+    <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+    <script src="js/plugins/iCheck/icheck.min.js"></script>
+    <script src="js/plugins/fancybox/jquery.fancybox.js"></script>
+    <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/jquery-timepicker.js" type="text/javascript" charset="utf-8"></script>
+    <!--ajax上传插件:jquery.form ajaxSubmit-->
+    <script src="js/jquery-form.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        var tableTimeout, addTimeout, setPowerTime, editManageTimeout, deleteTimeOut, getPowerTime, limits = 10,
+            page = 1,
+            counts = 0,
+            table_title, roleID;
+        var maxIndex;
+        var userMessage;
+        var urldata;
+        var orderType;
+        var nickname,accountPhone,storeName,goodsName
+        var orderSerialNumber,orderName,connectPhone,createTime,sendPayStatus,orderSource,sysGoodsNum,handleTime
+        var urlId = getUrlParms('id')
+        function previewImg (tak) {
+            console.log(JSON.stringify(tak))
+            
+        }
+        $(document).ready(function () {
+            $(".fancybox").fancybox({openEffect:"none",closeEffect:"none"});
+            
+            userMessage = JSON.parse(sessionStorage.getItem("user_message"));
+            // 页面数据存储k
+            urldata = JSON.parse(sessionStorage.getItem("returnKey"));
+            // console.log('页面数据存储'+sessionStorage.getItem("returnKey"))
+            sessionStorage.removeItem('returnKey')
+            if (urldata) {
+                page = urldata.page
+                limits = urldata.limits
+                orderType = urldata.orderType
+                orderSerialNumber = urldata.orderSerialNumber
+                orderName = urldata.orderName
+                createTime = urldata.createTime
+                $("input[name='orderSerialNumber']").val(orderSerialNumber)
+                $("input[name='orderName']").val(orderName)
+                $("input[name='createTime']").val(createTime)
+                if (orderType) {
+                    $(".order_choose").removeClass("order_choose_active");
+                    $(".order_choose[data-ordertype="+orderType+"]").addClass("order_choose_active");
+                    if (orderType == 0) {
+                        sendPayStatus = ''
+                    } else if (orderType == 1) {
+                        sendPayStatus = 1
+                    } else if (orderType == 2) {
+                        sendPayStatus = 5
+                    } else if (orderType == 3) {
+                        sendPayStatus = 6;
+                    } else if (orderType == 4) {
+                        sendPayStatus = 4;
+                    }
+                }
+                $(".f_page_span").html(page);
+                $(".f_page_select").find("option[text="+limits+"]").attr("selected",true);
+            }
+            // 页面数据存储j
+
+             // 处理从首页进来
+            if (urlId) {
+                $(".order_choose").removeClass("order_choose_active");
+                $(".order_choose[data-ordertype="+urlId+"]").addClass("order_choose_active");
+                if (urlId == 0) {
+                    sendPayStatus = ''
+                } else if (urlId == 1) {
+                    sendPayStatus = 1
+                } else if (urlId == 2) {
+                    sendPayStatus = 5
+                } else if (urlId == 3) {
+                    sendPayStatus = 6;
+                } else if (urlId == 4) {
+                    sendPayStatus = 4;
+                }
+            }
+
+            $(".refresh_a").click(function () { //刷新按钮
+                location.reload();
+            });
+            $(".i-checks").iCheck({ //check必须有的脚本
+                checkboxClass: "icheckbox_square-green",
+                radioClass: "iradio_square-green",
+            });
+            InitTbodyList(page); //初始化列表数据
+            getTabData()
+            $("#check_btn").click(function () { //查询按钮
+                orderSerialNumber = $("input[name='orderSerialNumber']").val()
+                orderName = $("input[name='orderName']").val()
+                createTime = $("input[name='createTime']").val()
+                page = 1; //重置页数
+                $(".f_page_span").html(1); //重置页数
+                $("#tbody_list1").html('');
+                $(".nonetext").hide();
+                InitTbodyList(page); //获取列表数据
+            });
+            
+            $(".export_span").click(function () { //批量发货
+                window.location.href='./return_goods_detail.html?listid=132'
+            });
+            
+            $(".f_page_select").change(function () { //选择一页多少条数据的select
+                page = 1; //重置页数
+                $(".f_page_span").html(1); //重置页数
+                limits = $(".f_page_select option:selected").text(); //设置当前显示数量
+                InitTbodyList(page);
+            });
+
+            $(".f_last_span").click(function () { //上一页
+                if (page < 2) {
+                    TipsAlert("这是最前面的数据了");
+                    return false;
+                }
+                page--;
+                $(".f_page_span").html(parseInt($(".f_page_span").html()) - 1);
+                InitTbodyList(page);
+            });
+            $(".f_next_span").click(function () { //下一页
+
+                if (page > maxIndex - 1) {
+                    TipsAlert("这是最后面的数据了");
+                    return false;
+                }
+                page++;
+                $(".f_page_span").html(parseInt($(".f_page_span").html()) + 1);
+                InitTbodyList(page);
+            });
+
+            $(".order_choose").click(function () { //tab点击
+                $(".order_choose").removeClass("order_choose_active");
+                $(this).addClass("order_choose_active");
+                orderType = parseInt($(this).data("ordertype"));
+                if (orderType == 0) {
+                    sendPayStatus = ''
+                    page = 1; //重置页数
+                    $(".f_page_span").html(1); //重置页数
+                    $("#tbody_list1").html('');
+                    $(".nonetext").hide();
+                    InitTbodyList(page);
+                } else if (orderType == 1) {
+                    sendPayStatus = 1
+                    page = 1; //重置页数
+                    $(".f_page_span").html(1); //重置页数
+                    $("#tbody_list1").html('');
+                    $(".nonetext").hide();
+                    InitTbodyList(page);
+                } else if (orderType == 2) {
+                    sendPayStatus = 5
+                    page = 1; //重置页数
+                    $(".f_page_span").html(1); //重置页数
+                    $("#tbody_list1").html('');
+                    $(".nonetext").hide();
+                    InitTbodyList(page);
+                } else if (orderType == 3) {
+                    sendPayStatus = 6;
+                    page = 1; //重置页数
+                    $(".f_page_span").html(1); //重置页数
+                    $("#tbody_list1").html('');
+                    $(".nonetext").hide();
+                    InitTbodyList(page);
+                } else if (orderType == 4) {
+                    sendPayStatus = 4;
+                    page = 1; //重置页数
+                    $(".f_page_span").html(1); //重置页数
+                    $("#tbody_list1").html('');
+                    $(".nonetext").hide();
+                    InitTbodyList(page);
+                }
+            });
+        });
+        // header tab栏数据
+        function getTabData() {
+            // 头部 tab
+            $.ajax({
+                type: 'get',
+                url: urls + common_url.returnedGoodsStatusTotal,
+                async: true,
+                timeout: 30000,
+                dataType: "json",
+                headers: {
+                    'X-Access-Token': userMessage.token,
+                },
+                success: function (req) {
+                    if (req.code == 0) {
+                        $('.allProduction').text(req.data.checkAll)
+                        // 判断其他状态
+                        //  已上架
+                        $('.been').text(req.data.loding)
+                        $('.noBeen').text(req.data.GoodsReturnedForReview)
+                        $('.review').text(req.data.goodsSuccess)
+                        $('.noReview').text(req.data.applicationFailed)
+                    } else {
+                        // 打印后台返回的值
+                        TipsAlert("获取数据失败");
+                    }
+
+                }
+            })
+        }
+        /**
+         * 该方法用于初始化列表
+         * @param {Number} startIndex startIndex是数据起始下标
+         * */
+        function InitTbodyList(startIndex) {
+            Showload("正在初始化列表......");
+            tableTimeout = setInterval("Timeout(tableTimeout)", 1000);
+            $.ajax({
+                type: "get",
+                url: urls + common_url.returnedGoodsList,
+                async: true,
+                timeout: 30000,
+                dataType: "json",
+                headers: {
+                    'X-Access-Token': userMessage.token,
+                },
+                data: {
+                    page: startIndex,
+                    limit: limits,
+
+                    afterSaleNum: orderSerialNumber, // 订单编号
+                    personOrPhone: orderName, // 收货人姓名
+                    createTime: createTime, // 创建时间
+                    goodsType: sendPayStatus, // 订单支付状态
+                },
+                success: function (json) {
+                    CheckLogout(json); //检查是否登陆过期
+                    if (json.code == 0) {
+                        
+                        var myData = json.data.records;
+                        var tableHtml = "";
+                        counts = json.data.total;
+                        console.log(myData);
+                        if (counts == 0) { //显示或隐藏分页
+                            $("#footer_page_div").hide();
+                            $(".nonetext").show();
+                            InitTime(tableTimeout);
+                            return
+                        } else {
+                            $("#footer_page_div").show();
+                        }
+                        maxIndex = (counts / limits).toCeil(0);
+                        $(".f_count_page_span").html(maxIndex); //设置当前共几页  
+                        $(".f_counts_span").html(counts);
+                        var goodsStatus = ''
+                        for (var i = 0; i < myData.length; i++) {
+                            if (myData[i].goodsStatus == 1) {
+                                goodsStatus = '审核中'
+                            } else if (myData[i].goodsStatus == 2) {
+                                goodsStatus = 'APP用户取消退货退款'
+                            } else if (myData[i].goodsStatus == 3) {
+                                goodsStatus = '商家审核已通过'
+                            } else if (myData[i].goodsStatus == 4) {
+                                goodsStatus = 'APP用户申请失败'
+                            } else if (myData[i].goodsStatus == 5) {
+                                goodsStatus = '商家退回货物审核中'
+                            } else if (myData[i].goodsStatus == 6) {
+                                goodsStatus = '商家已确认退货'
+                            } else if (myData[i].goodsStatus == 7) {
+                                goodsStatus = '商家退回货物已完成'
+                            } else if (myData[i].goodsStatus == 8) {
+                                goodsStatus = '商家退货不认可'
+                            }
+
+                            tableHtml = tableHtml + '<tr>'+
+                                '<td><input type="checkbox" name="" data-ostatus="'+myData[i].order_status+'" class="w20 h20 td_checkbox" value="' + myData[i].order_serial_number + '" /></td>' +
+                                '<td>' + myData[i]["order_serial_number"] + '</td>' +
+                                '<td class="c_1ABC9C">' + myData[i]["create_time"] + '</td>' +
+                                '<td>' + myData[i]["phone"] + '</td>' +
+                                '<td>' + myData[i]["sum_price"] + '</td>' +
+                                '<td>' + myData[i]["nickName"] + '</td>' +
+
+                                '<td>' + goodsStatus + '</td>' +
+
+                                '<td>' + myData[i]["shop_check_apply_time"] + '</td>' +
+                                '<td>' +
+                                '<span data-payType="'+myData[i].pay_type+'" data-number="'+myData[i].sys_goods_num+'" data-id="' + myData[i].id + '" data-code="' + myData[i].order_serial_number + '" class="under_line cursor_pointer look_span pl20 c_1ABC9C">查看详情</span>' +
+                                '</td>' +
+                                '</tr>';
+                        }
+                        $("#tbody_list1").html(tableHtml);
+                        // 全选  取消全选
+                        $(".header_checkbox").change(function () {
+                            var thisStatus = $(".header_checkbox").is(':checked');
+                            console.log(thisStatus)
+                            if(thisStatus) {
+                                $("#tbody_list1 input").prop('checked', true)
+                            } else {
+                                $("#tbody_list1 input").removeAttr("checked");
+                            }
+                        });
+
+                        $(".td_checkbox").change(function () {
+                            var $subs = $("#tbody_list1 input");  
+                            $(".header_checkbox").prop("checked" , $subs.length == $subs.filter(":checked").length ? true :false);
+                        });
+
+
+                        DealTable();
+                        InitFunc();
+                       
+                    } else {
+                        TipsAlert(json.code);
+                    }
+                    InitTime(tableTimeout);
+                },
+                error: function (xml, text, errorThrown) {
+                    if (text == "timeout") {
+                        TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+                    } else {
+                        TipsAlert("请求数据失败,请联系后台技术人员");
+                    }
+                    InitTime(tableTimeout);
+                }
+
+            });
+        }
+
+
+        /**
+         * 该方法用于初始化操作列里的事件
+         * */
+        function InitFunc() {
+            $(".look_span").each(function () { //订单详情
+                // sessionStorage.setItem("user_message", JSON.stringify(json.result));
+                $(this).click(function () {
+                    var returnValue = {}
+                    returnValue.page = page
+                    returnValue.limits = limits
+                    returnValue.orderType = orderType
+                    returnValue.orderSerialNumber = orderSerialNumber
+                    returnValue.orderName = orderName
+                    returnValue.createTime = createTime
+                    sessionStorage.setItem("returnKey",JSON.stringify(returnValue));
+                    var dataset = $(this).attr("data-id");
+                    var dataCode = $(this).attr("data-code");
+                    var dataNumber = $(this).attr("data-number");
+                    var payType = $(this).attr("data-payType");
+                    
+                    window.location.href='./return_goods_detail.html?id='+dataset+'&number='+dataNumber+'&payType='+payType+'&code='+dataCode
+                });
+            });
+            $(".delivery_span").each(function () { //订单发货
+                $(this).click(function () {
+                    var dataset = $(this).attr("data-id");
+                    console.log(dataset)
+                    window.location.href='./orderDelivery.html?id='+dataset
+                });
+            });
+            
+            // $(".gw_previewImg").each(function () { //图片预览
+            //     $(this).click(function () {
+            //        console.log($(this).context.src)
+            //        var onimg = $(this).context.src
+            //        $(this).uploadPreview({ Img: onimg, Width: 120, Height: 120, ImgType: ["gif", "jpeg", "jpg", "bmp", "png"], Callback: function (tt) {
+            //             console.log(tt)
+            //        }});
+            //     });
+            // });
+            $(".delete_span").each(function () { //删除按钮
+                $(this).click(function () {
+                    var dataset = $(this).parents("td").siblings("td").eq(0)[0].dataset;
+                    console.log(JSON.parse(sessionStorage.getItem("user_message")));
+                    var userMessage = JSON.parse(sessionStorage.getItem("user_message"));
+                    console.log(userMessage.token);
+                    swal({
+                        title: "请再次确认是否删除？",
+                        text: "删除后将无法恢复，请谨慎操作！",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "是的，确定删除",
+                        cancelButtonText: "让我再考虑一下…",
+                        closeOnConfirm: false,
+                        closeOnCancel: true
+                    }, function (yes) {
+                        if (yes) {
+                            Showload("正在请求删除，请稍后....");
+                            deleteTimeOut = setInterval("Timeout(deleteTimeOut)", 1000);
+                            $.ajax({
+                                type: "post",
+                                url: urls + common_url.bsysGoodsCate_delete,
+                                async: true,
+                                timeout: 30000,
+                                dataType: "json",
+                                headers: {
+                                    'X-Access-Token': userMessage.token,
+                                },
+                                data: {
+                                    id: dataset.id
+                                },
+                                success: function (json) {
+                                    console.log(json);
+                                    CheckLogout(json);
+                                    if (json.code == 0) {
+                                        swal({
+                                            title: "删除成功",
+                                            text: "删除成功",
+                                            type: "success",
+                                        }, function () {
+                                            location.reload();
+                                        });
+                                    }
+                                    InitTime(deleteTimeOut);
+                                },
+                                error: function (xml, text, e) {
+                                    if (text == "timeout") {
+                                        TipsAlert("请求超时,请检查网络或着重新操作");
+                                    } else {
+                                        TipsAlert("请求数据失败,请联系后台技术人员");
+                                    }
+                                    InitTime(deleteTimeOut);
+                                }
+                            });
+                        }
+                    });
+
+                });
+            }); //编辑按钮结束括号
+
+        }
+    </script>
+</body>
+
+</html>

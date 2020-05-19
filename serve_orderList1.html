@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html class="x-admin-sm">
+
+<head>
+    <!-- 保购领取样品订单列表 -->
+    <meta charset="UTF-8">
+    <title>欢迎页面-X-admin2.2</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+        content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <link rel="stylesheet" href="./css/domain.css">
+    <link href="css/newStyle.css" rel="stylesheet">
+    <!-- 弹窗轻提示 -->
+    <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+    <!-- 引入layui框架 -->
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <!-- 引入xadmin框架 -->
+    <script type="text/javascript" src="./js/xadmin.js"></script>
+    <!-- 引入请求基准路径 -->
+    <script type="text/javascript" src="./js/common.js"></script>
+    <!-- <script type="text/javascript" src="./js/domain.js"></script> -->
+    <!--[if lt IE 9]>
+          <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+          <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    <script src="https://cdn.bootcss.com/jquery/3.4.0/jquery.min.js"></script>
+</head>
+<style>
+
+    .layui-select-title .layui-input {
+        height: 35px !important;
+        position: relative;
+        top: -3px;
+        width: 160px !important;
+    }
+</style>
+
+<body>
+
+    
+    <div class="x-nav">
+        <!-- <span class="layui-breadcrumb"> -->
+        <span class="goods_name">保购领取样品订单列表</span>
+        <!-- </span> -->
+        <a class=" layui-btn-small goodsRoload" style="line-height:1.6em;margin-top:3px;" onclick="location.reload()"
+            title="刷新">
+            <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i> 刷新
+        </a>
+    </div>
+    <!-- 商品列表数据 -->
+    <div class="nav">
+        <ul class="nav-navigation">
+            <li class="nav-active" style="width: 120px;"><i style="font-style: normal; width: 150px;">保购领取列表</i><span
+                    id="allNavigation">
+                </span></li>
+            <!-- 这里用自定义属性获取不到 -->
+            <li><i style="font-style: normal;">已付押金</i>(<span id="been"> </span>)</li>
+            <li><i style="font-style: normal;">已发货</i>(<span id="noBeen"> </span>)</li>
+            <li><i style="font-style: normal;">已收货</i>(<span id="review"> </span>)</li>
+            <li><i style="font-style: normal;">退还中</i>(<span id="review1"> </span>)</li>
+            <li><i style="font-style: normal;">已退还</i>(<span id="review2"> </span>)</li>
+            <li><i style="font-style: normal;">已退款</i>(<span id="review3"> </span>)</li>
+        </ul>
+    </div>
+    <div class="layui-fluid">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <!-- 头部筛选部分 -->
+                    <div class="layui-card-body ">
+                        <!-- 筛选条件 -->
+                        <div class="search">
+                            <div class="search_if">
+                                <span>
+                                    <i class="layui-icon" style="font-size:20px"> &#xe615;</i>
+                                    筛选条件
+                                </span>
+                                <p class="choose_up" id="down"> <span><i class="layui-icon">&#xe619;</i>收起筛选</span></p>
+                                <p class="choose_up" hidden id="up"><span><i class="layui-icon">&#xe61a;</i>展开筛选</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="search_row">
+                            <form class="layui-form layui-col-space5">
+                                <span>订单编号：</span>
+                                <div class="layui-inline layui-show-xs-block">
+                                    <input type="text" name="orderNumber" placeholder="订单编号" autocomplete="off"
+                                        class="layui-input input_height">
+                                </div>
+                                <span>保购：</span>
+                                <div class="layui-inline layui-show-xs-block">
+                                    <input type="text" name="phoneName" placeholder="保购昵称/账号" autocomplete="off"
+                                        class="layui-input input_height">
+                                </div>
+                                <span>商家：</span>
+                                <div class="layui-inline layui-show-xs-block">
+                                    <input type="text" name="storeName" placeholder="商家名称/账号" autocomplete="off"
+                                        class="layui-input input_height">
+                                </div>
+
+                                <!-- <br/> -->
+                                <span>提交时间：</span>
+                                <div class="layui-inline layui-show-xs-block">
+                                    <input type="text" class="layui-input input_height" autocomplete="off"
+                                        id="chooseTim" placeholder="请选择日期" name="createTime">
+                                </div>
+
+                                <span>订单状态：</span>
+                                <div class="layui-inline layui-show-xs-block">
+                                    <!-- <input type="text" name="nickname" placeholder="全部" autocomplete="off"
+                                        class="layui-input input_height"> -->
+                                        <div class="layui-input-inline">
+                                            <select name="payStatus" id="productBrand" lay-filter="productBrand"
+                                                lay-search="">
+                                                <option value="">直接选择或搜索选择</option>
+                                                <option value="1">待支付</option>
+                                                <option value="2">待发货</option>
+                                                <option value="3">待收货</option>
+                                                <option value="4">待评论</option>
+                                                <option value="5">已完成</option>
+                                                <option value="6">退款中</option>
+                                                <option value="7">退款完成</option>
+                                            </select>
+                                        </div>
+                                </div>
+                                <!-- <div class="layui-inline layui-show-xs-block">
+                                    <button class="layui-btn" lay-submit="" lay-filter="sreach">
+                                        <i class="layui-icon">&#xe615;</i>
+                                    </button>
+                                </div> -->
+                                <div class="layui-inline layui-show-xs-block submit_btn">
+                                    <button class="layui-btn layui-btn-primary" lay-submit="" lay-filter="sreach" type="button">
+                                        查询结果</button>
+                                    <!-- <span id="result_list">高级检索</span> -->
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- table结构 -->
+                    <div class="layui-card-body ">
+                        <!-- 数据列表 -->
+                        <div class="user_list">
+                            <img src="./images/icon.png" alt="数据表格">
+                            <span>数据列表</span>
+                        </div>
+                        <table id="guideListTable" lay-filter="test"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+<!-- 头部标签类别展示 -->
+<script type="text/html" id="guideListTableToolbar">
+
+</script>
+
+
+
+<script>
+    //使用layui的方法
+    layui.use(['layedit', 'laydate', 'table', 'form'],
+        function () {
+            var table = layui.table,
+                form = layui.form,
+                layer = layui.layer,
+                layedit = layui.layedit,
+                laydate = layui.laydate;
+            laydate.render({
+                elem: '#chooseTim' //搜索时间框
+            });
+            var navType = 1;
+            //  操作筛选条件的收起展开
+            $('.choose_up').on('click', function () {
+                $('.search_row').toggle();
+                $('#up').toggle();
+                $('#down').toggle()
+            })
+            //   上方点击筛选数据的渲染
+            $.ajax({
+                type: 'get',
+                url: urls + 'smallOrderStoreService/smallOrderStoreCount',
+                headers: {
+                        'X-Access-Token': JSON.parse(sessionStorage.getItem("user_message")).token,
+                    },
+                success: function (res) {
+                    if (res.code == 0) {
+                        // $('#allNavigation').text(res.data.all_count)
+                        $('#been').text(res.data.one)
+                        $('#noBeen').text(res.data.two)
+                        $('#review').text(res.data.three)
+                        $('#review1').text(res.data.four)
+                        $('#review2').text(res.data.five)
+                        $('#review3').text(res.data.six)
+                    }
+                }
+            })
+
+            // 上面点击导航执行
+            $('.nav-navigation li').on('click', function () {
+                // 拿到当前的数据（需要传的参数）
+                // console.log($(this).children('i').text())
+                // 如果有这个类名的就停止执行
+                if ($(this).hasClass("nav-active")) {
+                    return
+                }
+                $('.nav-navigation li').removeClass("nav-active");
+                $(this).addClass("nav-active");
+                var data = $(this).children('i').text() //拿到当前值
+                //  console.log(data,1234566)
+                // 定义导航类型
+
+                var idx;
+                if (data == "已付押金") {
+                    idx = 2;
+                } else if (data == '已发货') {
+                    idx = 3;
+                } else if (data == '已收货') {
+                    idx = 4;
+                }else if (data == '退还中') {
+                    idx = 6;
+                }else if (data == '已退还') {
+                    idx = 7;
+                }else if (data == '已退款') {
+                    idx = 9;
+                }else if(data == '保购领取列表'){
+                     idx = '';
+                    //  init();
+                }
+                // 重新加载表格
+                table.reload('idTest', {
+                    url:  urls + 'smallOrderStoreService/smallOrderStoreList',
+                    page: {
+                        curr: 1  //重新从第 1 页开始
+                    },
+                     headers: {
+                        'X-Access-Token': JSON.parse(sessionStorage.getItem("user_message")).token,
+                    },
+                    where: {
+                        payStatus: idx ,
+                        orderNumber: '',
+                        phoneName:'',
+                        storeName : '',
+                        createTime:'',
+                        // token: token
+                        // payStatus : ''
+                        // token: token
+                    } //传递参数
+                });
+            });
+
+            function init() {
+                //第一个实例（创建table）
+                Showload();
+                table.render({
+                    elem: '#guideListTable',
+                    toolbar: '#guideListTableToolbar',
+                    id: 'idTest',
+                    cellMinWidth: 80,
+                    height: '600',
+                    url: urls + 'smallOrderStoreService/smallOrderStoreList' //数据接口
+                    , headers: {
+                        'X-Access-Token': JSON.parse(sessionStorage.getItem("user_message")).token,
+                    }
+                    , method: 'get' //如果无需自定义HTTP类型，可不加该参数
+                    , where: {  payStatus: ''  }
+                    , page: true //开启分页
+                    , parseData: function (res) { //res 即为原始返回的数据
+                        //   console.log(res,998877)
+                        CheckLogout(res); //检查是否登陆过
+                        return {
+                            "code": res.code, //解析接口状态
+                            "msg": res.msg, //解析提示文本
+                            "count": res.data.total, //解析数据长度
+                            "data": res.data.records //解析数据列表
+                        }
+                    }
+                    ,
+                    cols: [
+                        [ //表头
+                            {
+                                type: 'checkbox',
+                                width: 50
+                            }, //开启多选框
+                            {
+                                field: 'order_serial_number',
+                                title: '订单编号',
+                                align: 'center',
+                            }, {
+                                field: 'shopOrderNum',
+                                title: '商家订单号',
+                                align: 'center',
+                                // width: 120
+                            }, {
+                                field: 'create_time',
+                                // edit: 'text',
+                                title: '提交时间',
+                                align: 'center',
+                                // width: 120
+                            }, {
+                                field: 'store_name',
+                                title: '商家名称',
+                                align: 'center',
+                            }, {
+                                field: 'store_phone',
+                                title: '商家账号',
+                                align: 'center',
+                            }, {
+                                field: 'nickname',
+                                title: '保购昵称',
+                                align: 'center',
+                            }, {
+                                field: 'account_phone',
+                                title: '保购账号',
+                                align: 'center',
+                            }, {
+                                field: 'order_status',
+                                title: '订单状态',
+                                align: 'center',
+                                templet: function (res) {
+                                    if (res.order_status == 1) {
+                                        return '待支付'
+                                    } else if (res.order_status == 2) {
+                                        return '待发货'
+                                    } else if (res.order_status == 3) {
+                                        return '待收货'
+                                    } else if (res.order_status == 4) {
+                                        return '待评论'
+                                    } else if (res.order_status == 5) {
+                                        return '已完成'
+                                    } else if (res.order_status == 6) {
+                                        return '退款中'
+                                    } else if (res.order_status == 7) {
+                                        return '退款完成'
+                                    }
+                                }
+                            }, {
+                                field: 'price',
+                                title: '押金',
+                                // templet: '#SwitchBtn',
+                                align: 'center',
+                                width: 120
+                            }
+                            , {
+                                fixed: 'right', width: 120, align: 'center', title: '操作', templet: function () {
+                                    return '   <a lay-event="look_goods" ><i class="layui-icon" style="font-size:20px; margin-right: 10px;color:#1abc9c;font-size:12px;" title="查看订单">查看详情</i> </a>';
+                                }
+                            }
+                        ]
+                    ],
+                    done: function (res, curr, count) {
+                        //    重新赋值筛选后的table数量
+                        if (res.code == 0) {
+                            InitTime();
+                        } else {
+                            TipsAlert("请求数据失败,请联系后台技术人员");
+                        }
+                    }
+                });
+            }
+            // 表格相关操作
+            //审核的状态操作 删除
+            //监听行单击事件 (删除和查看功能)
+            table.on('tool(test)', function (obj) {
+                obj.tr.addClass("active_tr").siblings().removeClass("active_tr");  //标注选中行样式
+                // obj为单行数据对象
+                var data = obj.data;
+                if (obj.event === 'look_goods') {   //查看订单详情功能
+                    // console.log(obj.data.id,'查看id')
+                    layer.open({
+                        type: 2,
+                        title: '保购领取样品订单详情',
+                        content: './guideGoods_order.html?id=' + obj.data.id,
+                        area: ['1200px', '720px'],
+                        btn: ['返回']
+                    });
+                }
+            });
+            //调用初始化表格
+            init();
+
+            //点击按钮监听提交事件 点击按钮实现筛选功能
+            form.on('submit(sreach)', function (data) {
+                console.log(data.field)
+                table.reload('idTest', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    },
+                    headers: {
+                        'X-Access-Token': JSON.parse(sessionStorage.getItem("user_message")).token,
+                    },
+                    where: {
+                        orderNumber: data.field.orderNumber,
+                        phoneName: data.field.phoneName,
+                        storeName : data.field.storeName,
+                        createTime: data.field.createTime,
+                        // token: token
+                        payStatus : data.field.payStatus
+                    },
+                });
+                return false;
+            });
+
+        });
+</script>
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+<script>
+    /*保购用户-删除*/
+    // $('.user_delete').on('click',function(){
+    //     console.log(123)
+    //     // console.log(obj)
+    //     layer.confirm('确认要删除吗？', function (index) {
+    //         //发异步删除数据
+    //         $(obj).parents("tr").remove(); 
+    //         layer.msg('已删除!', {
+    //             icon: 1,
+    //             time: 1000
+    //         });
+    //     });
+
+    // })
+    function member_del(obj, id) {
+        // console.log(123)
+        // console.log(obj)
+        layer.confirm('确认要删除吗？', function (index) {
+            //发异步删除数据
+            $(obj).parents("tr").remove();
+            layer.msg('已删除!', {
+                icon: 1,
+                time: 1000
+            });
+        });
+    }
+
+    function previewImg(obj) {
+        var img = new Image();
+        img.src = obj.src;
+        //var height = img.height + 50; // 原图片大小
+        //var width = img.width; //原图片大小
+        var imgHtml = "<img src='" + obj.src + "' width='500px' height='500px'/>";
+        //弹出层
+        layer.open({
+            type: 1,
+            shade: 0.8,
+            offset: 'auto',
+            area: [500 + 'px', 550 + 'px'], // area: [width + 'px',height+'px']  //原图显示
+            shadeClose: true,
+            scrollbar: false,
+            title: "图片预览", //不显示标题  
+            content: imgHtml, //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响  
+            cancel: function () {
+                //layer.msg('捕获就是从页面已经存在的元素上，包裹layer的结构', { time: 5000, icon: 6 });  
+            }
+        });
+    }
+</script>
+
+</html>

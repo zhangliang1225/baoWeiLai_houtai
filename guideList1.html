@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html class="x-admin-sm">
+
+<head>
+    <!-- 保购待审核页面 -->
+    <meta charset="UTF-8">
+    <title>欢迎页面-X-admin2.2</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+        content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <link rel="stylesheet" href="./css/domain.css">
+    <link href="css/newStyle.css" rel="stylesheet">
+    <!-- 弹窗轻提示 -->
+    <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+    <!-- 引入jq -->
+    <script src="https://cdn.bootcss.com/jquery/3.4.0/jquery.min.js"></script>
+    <!-- 引入layui框架 -->
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <!-- 引入xadmin框架 -->
+    <script type="text/javascript" src="./js/xadmin.js"></script>
+    <!-- 引入请求基准路径 -->
+    <script type="text/javascript" src="./js/common.js"></script>
+    <!-- <script type="text/javascript" src="./js/domain.js"></script> -->
+    <!--[if lt IE 9]>
+          <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+          <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+</head>
+<style>
+   .laytable-cell-undefined {
+       width: 130px !important;
+   }
+</style>
+
+<body>
+    <div class="x-nav">
+        <!-- <span class="layui-breadcrumb"> -->
+        <span class="goods_name">待审核保购列表</span>
+        <!-- </span> -->
+        <a class=" layui-btn-small goodsRoload" style="line-height:1.6em;margin-top:3px;" onclick="location.reload()"
+            title="刷新">
+            <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i> 刷新
+        </a>
+    </div>
+    <!-- 商品列表数据 -->
+    <div class="nav">
+        <ul class="nav-navigation">
+            <li><i style="font-style: normal;">全部保购</i>(<span id="allNavigation">
+                </span>)</li>
+            <!-- 这里用自定义属性获取不到 -->
+            <li><i style="font-style: normal;">已通过</i>(<span id="been"> </span>)</li>
+            <li><i style="font-style: normal;">已拒绝</i>(<span id="noBeen"> </span>)</li>
+            <li class="nav-active"><i style="font-style: normal;">待审核</i>(<span id="review"> </span>)</li>
+        </ul>
+    </div>
+    <div class="layui-fluid">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <!-- 头部筛选部分 -->
+                    <div class="layui-card-body ">
+                        <!-- 筛选条件 -->
+                        <div class="search">
+                            <div class="search_if">
+                                <span>
+                                    <i class="layui-icon" style="font-size:20px"> &#xe615;</i>
+                                    筛选条件
+                                </span>
+                                <p class="choose_up" id="down"> <span><i class="layui-icon">&#xe619;</i>收起筛选</span></p>
+                                <p class="choose_up" hidden id="up"><span><i class="layui-icon">&#xe61a;</i>展开筛选</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="search_row">
+                            <form class="layui-form layui-col-space5">
+                                <span>保购账号：</span>
+                                <div class="layui-inline layui-show-xs-block">
+                                    <input type="text" name="accountPhone" placeholder="用户ID/账号" autocomplete="off"
+                                        class="layui-input input_height">
+                                </div>
+                                <span>保购昵称：</span>
+                                <div class="layui-inline layui-show-xs-block">
+                                    <input type="text" name="nickname" placeholder="用户昵称" autocomplete="off"
+                                        class="layui-input input_height">
+                                </div>
+                                <span>注册时间：</span>
+                                <div class="layui-inline layui-show-xs-block">
+                                    <input type="text" class="layui-input input_height" autocomplete="off"
+                                        id="chooseTim" name="createTime" placeholder="请选择时间">
+                                </div>
+                                <!-- <div class="layui-inline layui-show-xs-block">
+                                    <button class="layui-btn" lay-submit="" lay-filter="sreach">
+                                        <i class="layui-icon">&#xe615;</i>
+                                    </button>
+                                </div> -->
+                                <div class="layui-inline layui-show-xs-block submit_btn">
+                                    <!-- <span id="result_list">查询结果</span> -->
+                                    <button class="layui-btn layui-btn-primary" lay-submit="" lay-filter="sreach">
+                                        查询结果</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- table结构 -->
+                    <div class="layui-card-body ">
+                        <!-- 数据列表 -->
+                        <div class="user_list">
+                            <img src="./images/icon.png" alt="数据表格">
+                            <span>数据列表</span>
+                        </div>
+                        <table id="guideListTable" lay-filter="test"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<!-- 头部标签类别展示 -->
+<!-- <script type="text/html" id="guideListTableToolbar">
+</script> -->
+<!-- 审核状态 -->
+<script type="text/html" id="shenHeStatus">
+    {{#  if(d.verify_status == 1){ }}
+    <span style="color: green;">审核通过</span>
+ 
+    {{#  } else if(d.verify_status == 2){ }}
+    <span style="color: red;">审核不通过</span>
+   
+    {{#  }  else { }}
+    <span style="color: #ff9800;">未审核</span>
+    
+    {{#  } }}
+</script>
+<!-- 审核状态显示 -->
+<script type="text/html" id="SwitchBtn">
+    <input type="checkbox" lay-skin="switch" lay-filter="enabledState" value = "{{d.id}}" lay-text="" {{d.status=="1" ?
+        "checked": "" }}>
+</script>
+<!-- 点击编辑修改页面 -->
+<script type="text/html" id="btnS">
+    <!-- <a title="审核" onclick="xadmin.open('审核','guideDetailsExamine.html',960,720)" href="javascript:;">
+        <i class="layui-icon" style="font-size : 20px;>&#xe60a;</i>
+    </a> -->
+
+<a title="审核" onclick="xadmin.open('审核','guideDetailsExamine.html?id='+ {{d.id}},960,720)" href="javascript:;">
+    <i class="layui-icon" style="font-size : 18px;   margin-right:5px;">&#xe653;</i>
+</a>
+<a title="查看" onclick="xadmin.open('查看','guideDetails.html?id='+ {{d.id}},960,720)" href="javascript:;">
+    <i class="layui-icon" style="font-size : 20px; margin-right:5px;">&#xe60a;</i>
+</a>
+<a title="编辑" onclick="xadmin.open('编辑资料','guideList_Edit.html',960,720)" href="javascript:;">
+    <i class="layui-icon" style="font-size : 20px;">&#xe642;</i>
+</a>
+<!-- <a title="删除"   href="javascript:;">
+        <i class="layui-icon" class='user_delete'>&#xe640;</i>
+    </a> -->
+<!-- <a href="/guideDetails.html" class="guide_look"   style="color:#1abc9c ; margin-right :5px">查看</a>
+  <a href="/guideDetails.html" class="guide_look" style="color:#1abc9c">编辑</a> -->
+
+</script>
+<script>
+    // 使用layui的方法
+    layui.use(['layedit', 'laydate', 'table', 'form'],
+        function () {
+            var table = layui.table,
+                form = layui.form,
+                layer = layui.layer,
+                layedit = layui.layedit,
+                laydate = layui.laydate;
+            laydate.render({
+                elem: '#chooseTim' //搜索时间框
+            });
+            //  操作筛选条件的收起展开
+            $('.choose_up').on('click', function () {
+                $('.search_row').toggle();
+                $('#up').toggle();
+                $('#down').toggle()
+            })
+            //   上方点击筛选数据的渲染
+            function initial() {
+                $.ajax({
+                    type: 'get',
+                    url: urls + 'sales/salesTotals',
+                    headers: {
+                        'X-Access-Token': JSON.parse(sessionStorage.getItem("user_message")).token,
+                    },
+                    success: function (res) {
+                        CheckLogout(res); //检查是否登陆过
+                        if (res.code == 0) {
+                            $('#been').text(res.data.pass_count)
+                            $('#noBeen').text(res.data.nopass_count)
+                            $('#review').text(res.data.wait_count)
+                            $('#allNavigation').text(res.data.all_count)
+                        }
+                    }
+                })
+            }
+            // 调用数据渲染
+            initial();
+
+
+            // 上面点击导航执行
+            $('.nav-navigation li').on('click', function () {
+                // 拿到当前的数据（需要传的参数）
+                // console.log($(this).children('i').text())
+                // 如果有这个类名的就停止执行
+                if ($(this).hasClass("nav-active")) {
+                    return
+                }
+                $('.nav-navigation li').removeClass("nav-active");
+                $(this).addClass("nav-active");
+                var data = $(this).children('i').text() //拿到当前值
+                //  console.log(data,1234566)
+                // 定义导航类型
+                var idx;
+                if (data == "已通过") {
+                    idx = 1;
+                } else if (data == '已拒绝') {
+                    idx = 2;
+                } else if (data == '待审核') {
+                    idx = 0;
+                } else if (data == '全部保购') {
+                    idx = '';
+                }
+                // 重新加载表格
+                table.reload('idTest', {
+                    url: urls + 'sales/getSalesList',
+                    page: {
+                        curr: 1  //重新从第 1 页开始
+                    },
+                    headers: {
+                        'X-Access-Token': JSON.parse(sessionStorage.getItem("user_message")).token,
+                    },
+                    where: {
+                        verifyStatus: idx,
+                        nickname: '',
+                        accountPhone: '',
+                        createTime: ''
+                    } //传递参数
+                });
+            });
+
+
+            //进入页面加载待审核数据
+            function init() {
+                Showload();
+                //第一个实例（创建table）
+                table.render({
+                    elem: '#guideListTable',
+                    toolbar: '#guideListTableToolbar',
+                    id: 'idTest',
+                    cellMinWidth: 80,
+                    height: '600',
+                    url: urls + 'sales/getSalesList' //数据接口
+                    , method: 'get' //如果无需自定义HTTP类型，可不加该参数
+                    , where: { verifyStatus: 0, nickname: '', accountPhone: '', createTime: '' }
+                    , headers: {
+                        'X-Access-Token': JSON.parse(sessionStorage.getItem("user_message")).token,
+                    }
+                    , page: true //开启分页
+                    , parseData: function (res) { //res 即为原始返回的数据
+                        CheckLogout(res); //检查是否登陆过
+                        return {
+                            "code": res.code, //解析接口状态
+                            "msg": res.msg, //解析提示文本
+                            "count": res.data.total, //解析数据长度
+                            "data": res.data.records //解析数据列表
+                        }
+                    }
+                    ,
+                    cols: [
+                        [ //表头
+                            {
+                                type: 'checkbox',
+                                width: 50
+                            }, //开启多选框
+                            {
+                                field: 'account_phone',
+                                title: '保购账号',
+                                align: 'center',
+                                // width: 160
+                            }, {
+                                field: 'nickname',
+                                title: '保购昵称',
+                                align: 'center',
+                                // width: 160
+                            }, {
+                                field: 'sale',
+                                // edit: 'text',
+                                title: '保购星级',
+                                align: 'center',
+                                // width: 160
+                            }, 
+                            // {
+                            //     field: 'agent_to_whom',
+                            //     title: '所属代理',
+                            //     align: 'center',
+                            //     // width: 200
+                            // },
+                             {
+                                field: 'account_phone',
+                                title: '联系方式',
+                                align: 'center',
+                                // width: 160
+                            }, 
+                            {
+                                field: 'salesName',
+                                title: '真实姓名',
+                                align: 'center',
+                            },{
+                                field: 'alipay_account',
+                                title: '支付宝账号',
+                                align: 'center',
+                                // width: 160
+                            }, 
+                            // {
+                            //     field: 'alipay_name',
+                            //     title: '支付宝名称',
+                            //     align: 'center',
+                            //     // width: 160
+                            // }, 
+                            {
+                                field: 'id',
+                                title: '审核状态',
+                                templet: '#shenHeStatus',
+                                align: 'center',
+                                width: 172
+                            }, {
+                                field: '',
+                                title: '账户启用状态',
+                                templet: '#SwitchBtn',
+                                align: 'center',
+                                width: 130
+                            },
+                            , {
+                                fixed: 'right', field: 'verify_status', width: 128, align: 'center', title: '操作', templet: function (res) {
+                                    if (res.verify_status == 1) {
+                                        return '   <a lay-event="look_span" ><i class="layui-icon" style="font-size:20px; margin-right: 10px;color: #1abc9c; font-size:12px;" title="查看">查看</i> </a> <a lay-event="edit_span" ><i class="layui-icon" style="font-size:20px;color: #1abc9c; font-size:12px; " title="编辑">编辑</i> </a> ';
+                                    } else if (res.verify_status == 2) {
+                                        return ' <a lay-event="look_span" ><i class="layui-icon" style="font-size:20px; margin-right: 10px;color:#1abc9c;font-size:12px;" title="查看">查看</i> </a>   <a lay-event="edit_span" ><i class="layui-icon" style="font-size:20px; margin-right: 10px;color:#1abc9c;font-size:12px;" title="编辑">编辑</i> </a>  <a lay-event="del_span"><i class="layui-icon" style="font-size:20px;color:#1abc9c;font-size:12px;" title="删除">删除</i></a>';
+                                    } else {
+                                        return ' <a lay-event="check_span" ><i class="layui-icon" style="font-size:20px; margin-right: 10px;color: #1abc9c; font-size:12px;" title="审核">审核</i> </a>   <a lay-event="edit_span" ><i class="layui-icon" style="font-size:20px; margin-right: 10px;color:#1abc9c;font-size:12px;" title="编辑">编辑</i> </a>  <a lay-event="del_span"><i class="layui-icon" style="font-size:20px;color:#1abc9c;font-size:12px;" title="删除">删除</i></a>';
+                                    }
+
+                                }
+                            }
+                        ]
+                    ],
+                    done: function (res, curr, count) {
+                        //    重新赋值筛选后的table数量
+                        if (res.code == 0) {
+                            InitTime();
+                        } else {
+                            TipsAlert("请求数据失败,请联系后台技术人员");
+                        }
+                    }
+                });
+            }
+            //调用初始化表格
+            init();
+
+            //开关事件(status是lay-filter中的status，注意区别)  保购启用状态
+            form.on('switch(enabledState)', function (obj) {
+                //  console.log(obj,123)
+                // 通过属性获取绑定的id值
+                var id_goods = obj.value;
+                // 判断开关的状态
+                var status = obj.elem.checked ? "1" : "0";
+                if (status == 1) {  //启用
+                    $.ajax({
+                        url: urls + 'sales/antiPass',
+                        type: "post",
+                        data: { id: id_goods },
+                        headers: {
+                            'X-Access-Token': JSON.parse(sessionStorage.getItem("user_message")).token,
+                        },
+                        success: function (data) {
+                            CheckLogout(data); //检查是否登陆过
+                            if (data.code == 0) {
+                                swal({
+                                    title: "账户已启用",
+                                    type: "success",
+                                });
+                            } else {
+                                layer.msg("修改失败", { icon: 5 });
+                            }
+                        }
+                    });
+                } else {        //不启用
+                    $.ajax({
+                        url: urls + 'sales/antiRefuse',
+                        type: "post",
+                        data: { id: id_goods },
+                        headers: {
+                            'X-Access-Token': JSON.parse(sessionStorage.getItem("user_message")).token,
+                        },
+                        success: function (data) {
+                            CheckLogout(data); //检查是否登陆过
+                            if (data.code == 0) {
+                                swal({
+                                    title: "账户已关闭",
+                                    type: "success",
+                                });
+                            } else {
+                                layer.msg("修改失败", { icon: 5 });
+                            }
+                        }
+                    });
+                }
+            })
+
+            //审核的状态操作 删除
+            //监听行单击事件 (删除和查看功能)
+            table.on('tool(test)', function (obj) {
+                // obj为单行数据对象
+                var data = obj.data
+                obj.tr.addClass("active_tr").siblings().removeClass("active_tr");  //标注选中行样式
+                if (obj.event === 'edit_span') {  //编辑功能
+                    layer.open({
+                        type: 2,
+                        title: '保购信息编辑',
+                        content: `./guideList_Edit.html?id=${data.id}`,
+                        area: ['960px', '720px'],
+                        btn: ['返回'],
+                        end: function () {
+                            // console.log(12345)
+                            table.reload('idTest', {
+                                page: {
+                                    curr: $(".layui-laypage-em").next().html() //加载当前页
+                                }
+                            });
+                        }
+                    });
+                } else if (obj.event === 'look_span') {   //查看详情功能
+                    // console.log(obj.data.id,'查看id')
+                    layer.open({
+                        type: 2,
+                        title: '查看保购详情',
+                        content: './guideDetails.html?id=' + data.id,
+                        area: ['1200px', '720px'],
+                        btn: ['返回']
+                    });
+
+                } else if (obj.event === 'del_span') {
+                    // console.log(obj.data.id)
+                    layer.confirm('真的删除行么！', function (index) {
+                        // console.log(JSON.parse(sessionStorage.getItem("user_message")).token)
+                        $.post({
+                            url: urls + 'sales/delete',
+                            data: { id: obj.data.id },
+                            headers: {
+                                'X-Access-Token': JSON.parse(sessionStorage.getItem("user_message")).token,
+                            },
+                            success: function (rsp) {
+                                CheckLogout(rsp); //检查是否登陆过
+                                if (rsp && rsp.msg === '成功') {
+                                    //  console.log(rsp,'删除')
+                                    layer.msg('删除成功');
+                                    obj.del();
+                                    layer.close(index);
+                                    // 重新加载上方数据
+                                    initial();
+                                } else {
+                                    if (rsp && rsp.msg) {
+                                        layer.alert(rsp.msg);
+                                    }
+                                    else {
+                                        layer.alert('删除失败');
+                                    }
+                                }
+                            }
+                        })
+                    });
+                } else if (obj.event === 'check_span') {  //审核功能
+                    // 如果审核通过,则不在审核
+                    if (data.verify_status == 1) {
+                        layer.alert("该保购已经审核通过！", {
+                            icon: 6
+                        })
+                        return;
+                    }
+                    layer.open({
+                        type: 2,
+                        title: '',
+                        content: `./guideDetailsExamine.html?id=${data.id}`,
+                        area: ['1200px', '720px'],
+                        btn: ['返回'],
+                        end: function () {
+                            //刷新表格
+                            table.reload('idTest', {
+                                page: {
+                                    curr: $(".layui-laypage-em").next().html() //加载当前页
+                                }
+                            });
+                            //  刷新点击筛选的数据渲染
+                            initial()
+                        }
+                    });
+                }
+            });
+
+
+
+          
+
+
+
+        });
+</script>
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+<script>
+  
+
+    function previewImg(obj) {
+        var img = new Image();
+        img.src = obj.src;
+        //var height = img.height + 50; // 原图片大小
+        //var width = img.width; //原图片大小
+        var imgHtml = "<img src='" + obj.src + "' width='500px' height='500px'/>";
+        //弹出层
+        layer.open({
+            type: 1,
+            shade: 0.8,
+            offset: 'auto',
+            area: [500 + 'px', 550 + 'px'], // area: [width + 'px',height+'px']  //原图显示
+            shadeClose: true,
+            scrollbar: false,
+            title: "图片预览", //不显示标题  
+            content: imgHtml, //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响  
+            cancel: function () {
+                //layer.msg('捕获就是从页面已经存在的元素上，包裹layer的结构', { time: 5000, icon: 6 });  
+            }
+        });
+    }
+</script>
+
+</html>

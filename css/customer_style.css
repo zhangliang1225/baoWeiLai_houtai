@@ -1,0 +1,8 @@
+body{background-color: #F3F3F3;height: 100%;font-family: "微软雅黑";}
+.content{max-width: 750px;margin: 0px auto; height: 100%;position: relative;}
+#live800iconlink{display: table-cell;vertical-align: middle;color: #FFFFFF;font-size: 20px;text-decoration: none;}
+#live2063{background-color: #f57d54;width: 70px;height: 70px;text-align: center;border-radius: 50%;display: table;border: 2px solid #FFFFFF;position: fixed;right:40px;bottom: 40px;box-shadow:4px 5px 8px -1px grey;}
+.erji_div{margin: 0 auto; width: 50%;margin-top: 70px;}
+.w100p{width: 100%;}
+.text_div{text-align: center;margin-top: 70px;font-size: 16px;}
+.mb0{margin-bottom: 0px;}

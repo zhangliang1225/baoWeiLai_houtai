@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html class="x-admin-sm">
+<!-- 保购服务设置页面 -->
+
+<head>
+    <meta charset="UTF-8">
+    <title>欢迎页面-X-admin2.2</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+        content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <!-- 引入jq -->
+    <script src="https://cdn.bootcss.com/jquery/3.4.0/jquery.min.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/xadmin.js"></script>
+    <script type="text/javascript" src="./js/common.js"></script>
+    <!-- <script type="text/javascript" src="./js/domain.js"></script> -->
+
+    <!--[if lt IE 9]>
+          <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+          <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    <style>
+        .x-nav {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        margin-top: 0.5px;
+        height: 50px;
+        line-height: 38px;
+        background-color: #f3f3f3;
+        border: 1px solid #e4e4e4;
+        background: #f3f3f3;
+    }
+
+    .x-nav .goods_name {
+        margin-left: 10px;
+        color: #999;
+        font-size: 15px;
+        display: inline-block;
+        margin-top: 5px;
+    }
+
+    .goodsRoload {
+        margin-top: 6px !important;
+        display: inline-block;
+        margin-right: 80px;
+        height: 32px;
+        line-height: 50px;
+        /* margin-top: -6px; */
+        /* margin-left: 1434px; */
+        width: 80px;
+        font-size: #666 !important;
+        border: 1px solid #ccc;
+        background: #fff;
+        text-align: center;
+        color: #ccc;
+        cursor: pointer;
+    }
+
+        .goods_name::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 12px;
+            margin: 0 3px;
+            background-color: #1abc9c;
+        }
+
+        .layui-row {
+            width: 60%;
+            height: calc(100% -15px);
+            background-color: #fff;
+            padding: 0 100px;
+            /* margin: 0 auto; */
+            margin-left: 180px;
+        }
+
+        .layui-form-item .layui-input-inline {
+            width: 200px;
+        }
+
+        .limtWidth {
+            width: 80px;
+        }
+
+        .fl {
+            display: flex;
+        }
+
+        .spanText {
+            font-size: 30px;
+            margin: 0px 5px;
+        }
+
+        .bgc {
+            width: 45px;
+            padding: 0;
+            background: #f1f1f1;
+            position: relative;
+            top: 0;
+            left: -10px;
+            text-align: center;
+        }
+
+        .layui-form-label {
+            width: 190px !important;
+        }
+
+        .layui-input {
+            height: 40px !important;
+            /* width: 50px !important;  */
+        }
+
+        .one_user .layui-input {
+            height: 30px !important;
+        }
+
+        /* .layui-select-title .layui-unselect:nth-child(1){
+            width: 200px !important;
+        } */
+        .textAlart {
+            color: #666;
+            font-size: 12px;
+            width: 200px;
+            position: relative;
+            top: -30px;
+            left: 165px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 导航条模块 -->
+    <!-- 头部展示 -->
+    <div class="x-nav">
+        <!-- <span class="layui-breadcrumb"> -->
+        <span class="goods_name">订单其他设置</span>
+        <!-- </span> -->
+        <a class=" layui-btn-small goodsRoload" style="line-height:1.6em;margin-top:3px;" onclick="location.reload()"
+            title="刷新">
+            <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i> 刷新
+        </a>
+    </div>
+    <div class="layui-fluid">
+        <div
+            style="color: #666; font-size: 12px; padding-left: 10px; height: 40px;line-height: 40px;background-color: #eee;width: 71.48%; margin-left: 180px; border: 1px solid #ccc;">
+            保购服务订单设置</div>
+        <div class="layui-row" style="border: 1px #ccc solid; border-top: none;">
+
+            <form class="layui-form">
+                <!-- 我要退货退款可选拒绝理由 -->
+                <div class="layui-form-item" style="padding-top: 30px;">
+                    <label for="L_username" class="layui-form-label" style="color: #666;position: relative; top: 33px;">
+                        <span class="x-red">*</span>我要退货退款可选拒绝理由：<br>
+                        <span style="color: #ccc;font-size: 10px; position: relative;left: -8px; ">字数最多不超过16字,
+                            <br />
+                            最多6行,至少一行</span>
+                    </label>
+                    <div class="layui-input-inline">
+                        <div class="layui-input-inline" style="width: 80px;">
+                            <input type="text" name="grade" class="layui-input value_Back"
+                                style="width: 420px;position: relative;top: 36px;" placeholder="七天无理由退货">
+                        </div>
+                    </div>
+                    <img src="./images/jia.icon.png" alt=""
+                        style="position: relative;left: 216px;top: 40px;cursor: pointer;" class="refuse_add1">
+                </div>
+
+                <div id="refuse_case1">
+                    <!-- 需要循环渲染的内容 -->
+                </div>
+
+
+
+                <!-- 我要退款可选拒绝理由 -->
+                <div class="layui-form-item" style="padding-top: 30px;">
+                    <label for="L_username" class="layui-form-label" style="color: #666;position: relative; top: 33px;">
+                        <span class="x-red">*</span>我要退款可选拒绝理由：<br>
+                        <span style="color: #ccc;font-size: 10px; position: relative;left: -8px; ">字数最多不超过16字,
+                            <br />
+                            最多6行,至少一行</span>
+                    </label>
+                    <div class="layui-input-inline">
+                        <div class="layui-input-inline" style="width: 80px;">
+                            <input type="text" name="grade" class="layui-input value_valid"
+                                style="width: 420px;position: relative;top: 36px;" placeholder="收到商品与描述不符">
+                        </div>
+                    </div>
+                    <img src="./images/jia.icon.png" alt=""
+                        style="position: relative;left: 216px;top: 40px;cursor: pointer;" class="refuse_add2">
+                </div>
+
+                <div id="refuse_case2">
+                    <!-- 需要循环渲染的内容 -->
+                </div>
+
+
+
+
+                <!-- 保购可选拒绝理由 -->
+                <div class="layui-form-item" style="padding-top: 30px;">
+                    <label for="L_username" class="layui-form-label" style="color: #666;position: relative; top: 33px;">
+                        <span class="x-red">*</span>保购可选拒绝理由：<br>
+                        <span style="color: #ccc;font-size: 10px; position: relative;left: -8px; ">字数最多不超过16字,
+                            <br />
+                            最多6行,至少一行</span>
+                    </label>
+                    <div class="layui-input-inline">
+                        <div class="layui-input-inline" style="width: 80px;">
+                            <input type="text" name="grade" class="layui-input value_refuse"
+                                style="width: 420px;position: relative;top: 36px;" placeholder="价格太低">
+                        </div>
+                    </div>
+                    <img src="./images/jia.icon.png" alt=""
+                        style="position: relative;left: 216px;top: 40px;cursor: pointer;" class="refuse_add">
+                </div>
+
+                <div id="refuse_case">
+                    <!-- 需要循环渲染的内容 -->
+                </div>
+
+                <!-- 提交按钮 -->
+                <div class="layui-form-item" style="margin-left: 160px;margin-top: 100px ;padding-bottom: 200px;">
+                    <label for="L_repass" class="layui-form-label"></label>
+                    <button class="layui-btn" lay-filter="add" lay-submit="" style="width: 200px;"
+                        type="button">提交</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+<script>
+    // 使用layui的方法
+    layui.use(['layedit', 'laydate', 'table', 'form'],
+        function () {
+            var table = layui.table,
+                form = layui.form,
+                layer = layui.layer,
+                layedit = layui.layedit,
+                laydate = layui.laydate;
+            laydate.render({
+                elem: '#chooseTim'  //搜索时间框
+            });
+
+ //我要退货退款可选拒绝理由
+            var ladderLi1 = ['价格太低', '价格太低']
+            if (ladderLi1.length > 0) {
+                var htmlt = '';
+                for (var i = 0; i < ladderLi1.length; i++) {
+                    htmlt = htmlt + ` <div class="layui-form-item">
+                        <label for="L_username" class="layui-form-label" style="color: #666;">
+                        </label>
+                        <div class="layui-input-inline">
+                            <div class="layui-input-inline" style="width: 80px;">
+                                <input type="text" name="grade${i + 1}" class="layui-input value_Back${i + 1}" style="width: 420px;" placeholder="" value = '${ladderLi1[i]}'>
+                            </div>
+                        </div>
+                        <img src="./images/jian.icon.png" alt="" class='del1' data-id=${i}
+                            style="position: relative;top: 0;left: 219px;cursor: pointer;">
+                    </div>`
+                }
+                $("#refuse_case1").html(htmlt);
+            } else {
+                $("#refuse_case1").html(htmlt);
+            }
+
+
+            // 我要退货退款可选拒绝理由的添加功能
+            $(document).on('click', ".refuse_add1", function () {
+                var addLi = $('.value_Back').val();
+                var html = '';
+                ladderLi1.push(addLi);
+                if (ladderLi1.length >= 6) {
+                    layer.alert("最多输入6条！", {
+                        icon: 6
+                    })
+                    return;
+                }
+                //循环的结构
+                if (ladderLi1.length > 0) {
+                    for (var i = 0; i < ladderLi1.length; i++) {
+                        html = html + ` <div class="layui-form-item">
+                        <label for="L_username" class="layui-form-label" style="color: #666;">
+                        </label>
+                        <div class="layui-input-inline">
+                            <div class="layui-input-inline" style="width: 80px;">
+                                <input type="text" name="grade${i + 1}" class="layui-input value_Back${i + 1}" style="width: 420px;" placeholder="" value = '${ladderLi1[i]}'>
+                            </div>
+                        </div>
+                        <img src="./images/jian.icon.png" alt="" class='del1' data-id=${i}
+                            style="position: relative;top: 0;left: 219px;cursor: pointer;">
+                    </div>`
+                        $("#refuse_case1").html(html);
+                    }
+                } else {
+                    $("#refuse_case1").html(html);
+                }
+            });
+
+            // 我要退货退款可选拒绝理由的删除功能
+            $('#refuse_case1').on('click', ".del1", function () {
+                var html = '';
+                ladderLi1.splice($(this).attr('data-id'), 1);
+                // console.log(ladderLi)
+                if (ladderLi1.length > 0) {
+                    for (var i = 0; i < ladderLi1.length; i++) {
+                        html = html + ` <div class="layui-form-item">
+                        <label for="L_username" class="layui-form-label" style="color: #666;">
+                        </label>
+                        <div class="layui-input-inline">
+                            <div class="layui-input-inline" style="width: 80px;">
+                                <input type="text" name="grade${i + 1}" class="layui-input value_Back${i + 1}" style="width: 420px;"placeholder="" value='${ladderLi1[i]}'>
+                            </div>
+                        </div>
+                        <img src="./images/jian.icon.png" alt="" class='del1' data-id=${i}
+                            style="position: relative;top: 0;left: 219px;cursor: pointer;">
+                    </div>`
+                        $("#refuse_case1").html(html);
+                        // console.log(html)
+                    }
+                } else {
+                    $("#refuse_case1").html(html);
+                }
+            });
+
+
+
+ // 导购员可选拒绝理由
+            var ladderLi2 = ['价格太低', '价格太低']
+            if (ladderLi2.length > 0) {
+                var htmlt = '';
+                for (var i = 0; i < ladderLi2.length; i++) {
+                    htmlt = htmlt + ` <div class="layui-form-item">
+                        <label for="L_username" class="layui-form-label" style="color: #666;">
+                        </label>
+                        <div class="layui-input-inline">
+                            <div class="layui-input-inline" style="width: 80px;">
+                                <input type="text" name="grade${i + 1}" class="layui-input value_valid${i + 1}" style="width: 420px;" placeholder="" value = '${ladderLi2[i]}'>
+                            </div>
+                        </div>
+                        <img src="./images/jian.icon.png" alt="" class='del2' data-id=${i}
+                            style="position: relative;top: 0;left: 219px;cursor: pointer;">
+                    </div>`
+                }
+                $("#refuse_case2").html(htmlt);
+            } else {
+                $("#refuse_case2").html(htmlt);
+            }
+
+
+            // 导购员可选拒绝理由的添加功能
+            $(document).on('click', ".refuse_add2", function () {
+                var addLi = $('.value_valid').val();
+                var html = '';
+                ladderLi2.push(addLi);
+                if (ladderLi2.length >= 6) {
+                    layer.alert("最多输入6条！", {
+                        icon: 6
+                    })
+                    return;
+                }
+                //循环的结构
+                if (ladderLi2.length > 0) {
+                    for (var i = 0; i < ladderLi2.length; i++) {
+                        html = html + ` <div class="layui-form-item">
+                        <label for="L_username" class="layui-form-label" style="color: #666;">
+                        </label>
+                        <div class="layui-input-inline">
+                            <div class="layui-input-inline" style="width: 80px;">
+                                <input type="text" name="grade${i + 1}" class="layui-input value_valid${i + 1}" style="width: 420px;" placeholder="" value = '${ladderLi2[i]}'>
+                            </div>
+                        </div>
+                        <img src="./images/jian.icon.png" alt="" class='del2' data-id=${i}
+                            style="position: relative;top: 0;left: 219px;cursor: pointer;">
+                    </div>`
+                        $("#refuse_case2").html(html);
+                    }
+                } else {
+                    $("#refuse_case2").html(html);
+                }
+            });
+
+            // 导购员可选拒绝理由的删除功能
+            $('#refuse_case2').on('click', ".del2", function () {
+                var html = '';
+                ladderLi2.splice($(this).attr('data-id'), 1);
+                // console.log(ladderLi)
+                if (ladderLi2.length > 0) {
+                    for (var i = 0; i < ladderLi2.length; i++) {
+                        html = html + ` <div class="layui-form-item">
+                        <label for="L_username" class="layui-form-label" style="color: #666;">
+                        </label>
+                        <div class="layui-input-inline">
+                            <div class="layui-input-inline" style="width: 80px;">
+                                <input type="text" name="grade${i + 1}" class="layui-input value_valid${i + 1}" style="width: 420px;"placeholder="" value='${ladderLi2[i]}'>
+                            </div>
+                        </div>
+                        <img src="./images/jian.icon.png" alt="" class='del2' data-id=${i}
+                            style="position: relative;top: 0;left: 219px;cursor: pointer;">
+                    </div>`
+                        $("#refuse_case2").html(html);
+                        // console.log(html)
+                    }
+                } else {
+                    $("#refuse_case2").html(html);
+                }
+            });
+
+
+
+//导购员可选拒绝理由模块
+            // 次处调用接口加载渲染
+            var ladderLi = ['七天无理由退货', '七天无理由退货']
+            if (ladderLi.length > 0) {
+                var htmlt = '';
+                for (var i = 0; i < ladderLi.length; i++) {
+                    htmlt = htmlt + ` <div class="layui-form-item">
+                        <label for="L_username" class="layui-form-label" style="color: #666;">
+                        </label>
+                        <div class="layui-input-inline">
+                            <div class="layui-input-inline" style="width: 80px;">
+                                <input type="text" name="grade${i + 1}" class="layui-input value_refuse${i + 1}" style="width: 420px;" placeholder="" value = '${ladderLi[i]}'>
+                            </div>
+                        </div>
+                        <img src="./images/jian.icon.png" alt="" class='del' data-id=${i}
+                            style="position: relative;top: 0;left: 219px;cursor: pointer;">
+                    </div>`
+                }
+                $("#refuse_case").html(htmlt);
+            } else {
+                $("#refuse_case").html(htmlt);
+            }
+
+
+            // 可选拒绝的点击新增
+            $(document).on('click', ".refuse_add", function () {
+                var addLi = $('.value_refuse').val();
+                var html = '';
+                ladderLi.push(addLi);
+                if (ladderLi.length >= 6) {
+                    layer.alert("最多输入6条！", {
+                        icon: 6
+                    })
+                    return;
+                }
+                //循环的结构
+                if (ladderLi.length > 0) {
+                    for (var i = 0; i < ladderLi.length; i++) {
+                        html = html + ` <div class="layui-form-item">
+                        <label for="L_username" class="layui-form-label" style="color: #666;">
+                        </label>
+                        <div class="layui-input-inline">
+                            <div class="layui-input-inline" style="width: 80px;">
+                                <input type="text" name="grade${i + 1}" class="layui-input value_refuse${i + 1}" style="width: 420px;" placeholder="" value = '${ladderLi[i]}'>
+                            </div>
+                        </div>
+                        <img src="./images/jian.icon.png" alt="" class='del' data-id=${i}
+                            style="position: relative;top: 0;left: 219px;cursor: pointer;">
+                    </div>`
+                        $("#refuse_case").html(html);
+                    }
+                } else {
+                    $("#refuse_case").html(html);
+                }
+            });
+
+            // 可选拒绝点击删除操作
+            $('#refuse_case').on('click', ".del", function () {
+                var html = '';
+                ladderLi.splice($(this).attr('data-id'), 1);
+                // console.log(ladderLi)
+                if (ladderLi.length > 0) {
+                    for (var i = 0; i < ladderLi.length; i++) {
+                        html = html + ` <div class="layui-form-item">
+                        <label for="L_username" class="layui-form-label" style="color: #666;">
+                        </label>
+                        <div class="layui-input-inline">
+                            <div class="layui-input-inline" style="width: 80px;">
+                                <input type="text" name="grade${i + 1}" class="layui-input value_refuse${i + 1}" style="width: 420px;"placeholder="" value='${ladderLi[i]}'>
+                            </div>
+                        </div>
+                        <img src="./images/jian.icon.png" alt="" class='del' data-id=${i}
+                            style="position: relative;top: 0;left: 219px;cursor: pointer;">
+                    </div>`
+                        $("#refuse_case").html(html);
+                        // console.log(html)
+                    }
+                } else {
+                    $("#refuse_case").html(html);
+                }
+            });
+
+
+
+
+            //点击按钮监听提交事件 点击按钮实现筛选功能
+            form.on('submit(add)', function (data) {
+                //   商城订单设置
+                console.log(data.field)
+                // CheckLogout(res); //检查是否登陆过
+                // 成功的提示
+                layer.alert("提交成功", {
+                    icon: 6
+                })
+
+            })
+        })
+</script>
+
+</html>

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+
+	<!-- Mirrored from www.zi-han.net/theme/hplus/table_jqgrid.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:20:02 GMT -->
+
+	<head>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>审核详情</title>
+
+		<!-- <link rel="shortcut icon" href="favicon.ico"> -->
+		<link href="css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+		<link href="css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+
+		<link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+		<link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+		<link href="css/animate.min.css" rel="stylesheet">
+		<link href="css/style.min862f.css?v=4.1.0" rel="stylesheet">
+		<link rel="stylesheet" href="css/cropper.min.css">
+		<link rel="stylesheet" href="css/ImgCropping.css">
+		<link rel="stylesheet" href="css/newStyle.css">
+		<link href="js/plugins/fancybox/jquery.fancybox.css" rel="stylesheet">
+
+
+		<style>
+			input::-webkit-outer-spin-button,
+			input::-webkit-inner-spin-button {
+				-webkit-appearance: none;
+			}
+			input[type="number"]{
+				-moz-appearance: textfield;
+			}
+			.dt_title_btn{
+				width: 100px;height: 30px;cursor: pointer;text-align: center;line-height: 30px;box-sizing: border-box;border-width: 1px;border-style: solid;border-color: rgba(228, 228, 228, 1);text-align: center;
+			}
+			.flexw100{width:100%;display: flex;align-items: center;}
+			.flex_shu{flex-direction: column;}
+			.thl{
+				width: 16%!important;text-align: right!important;padding-right: 30px!important;
+			}
+			.thr{
+				width: 34%!important;background-color:#fff!important;text-align: left!important;padding-left: 30px!important;
+			}
+			.w50{
+				width: 50%;
+			}
+			.mr30{
+				margin-right: 30px;
+			}
+			.tac{
+				text-align: center;
+			}
+			.lh50{
+				line-height: 50px;
+			}
+			.m0a{
+				margin: 0 auto;
+			}
+		</style>
+	</head>
+
+	<body class="gray-bg">
+		<div class="animated fadeInRight">
+			<div style="width: 100%;height: 50px;background-color: rgba(243, 243, 243, 1);display: flex;align-items: center;">
+				<div class="" style="width: 50%;display: flex;">
+					<div class="ml30 dt_title_btn" style="background-color: rgba(26, 188, 156, 1);color: #fff;">审核详情</div>
+					<!-- <div class="ml30 dt_title_btn" style="background-color: rgba(255, 255, 255, 1);">商品日志</div> -->
+				</div>
+				<div style="width: 50%;display: flex;justify-content:flex-end;">
+					<button class="refresh_btn mr30">
+						<a class="refresh_a" style="">
+							<i class="fa fa-refresh"></i> 刷新
+						</a>
+					</button>
+					<button class="refresh_btn mr30">
+						<a class="goback_a" style="">
+							<span class="titleBackIcon"></span> 返回
+						</a>
+					</button>
+				</div>
+			</div>
+
+			<div class="flexw100 flex_shu" style="padding: 30px 5%;background-color: #fff;">
+
+				<div class="flexw100">
+					<table class="table table-bordered mb0">
+						<thead>
+							<tr>
+								<th class="thl">商品名称</th>
+								<th class="thr" id="goods_name"></th>
+								<th class="thl">商品售价（元）</th>
+								<th class="thr" id="goods_price"></th>
+							</tr>
+							<tr>
+								<th class="thl">营销价（元）</th>
+								<th class="thr" id="marketing_price"></th>
+								<th class="thl">成本价</th>
+								<th class="thr" id="cost_price"></th>
+							</tr>
+							<tr>
+								<th class="thl">商品分类</th>
+								<th class="thr" id="cate_all"></th>
+								<th class="thl">副标题</th>
+								<th class="thr" id="goods_subtitle"></th>
+							</tr>
+							<tr>
+								<th class="thl">商品库存</th>
+								<th class="thr" id="goods_tory"></th>
+								<th class="thl">货架号</th>
+								<th class="thr" id="goods_num"></th>
+							</tr>
+							<!-- 	<tr>
+							    <th class="thl">商品品牌</th><th class="thr" id="brand_name"></th><th class="thl">运费模板</th><th class="thr" id="goods_freight_name"></th>
+							</tr> -->
+						</thead>
+					</table>
+				</div>
+
+				<!-- <div class="flexw100 flex_shu mt30">
+					<div class="flexw100"><div class="h50 lh50 tac ml30" style="font-size: 16px;">商品属性</div></div>
+					<div class="flexw100">
+						<table class="table table-bordered mb0 " >
+						    <thead>
+						        <tr>
+						            <th>尺寸属性（尺码/容量）</th>
+						            <th>其它属性（颜色/产地/品牌）</th>
+						            <th>销售价格</th>
+						            <th>商品库存</th>
+						            <th>库存预警值</th>
+						            <th>SKU编号</th>
+						            <th>排序</th>
+						            <th>属性图片</th>
+						        </tr>
+						    </thead>
+						    <tbody id="shuxing_tbody">
+						    </tbody>
+						</table>
+					</div>
+				</div> -->
+
+				<div class="flexw100 flex_shu mt30">
+					<div class="flexw100">
+						<div class="h50 lh50 tac ml30" style="font-size: 16px;">商品图片</div>
+					</div>
+					<div class="flexw100" id="pic_body">
+
+					</div>
+				</div>
+
+				<div class="flexw100 flex_shu mt30">
+					<div class="flexw100">
+						<div class="h50 lh50 tac ml30" style="font-size: 16px;">商品详情</div>
+					</div>
+					<div class="flexw100">
+						<div class="w100p" id="pic_detail_body">
+
+						</div>
+					</div>
+				</div>
+
+				<!-- <div class="flexw100 flex_shu mt30">
+					<div class="flexw100"><div class="h50 lh50 tac ml30" style="font-size: 16px;">商品属性</div></div>
+					<div class="flexw100">
+						<table class="table table-bordered " style="margin-bottom: 30px;">
+						    <thead>
+						        <tr>
+						            <th style="width: 30%;">参数类型</th>
+						    		<th style="width: 70%;text-align: left;padding-left: 30px;">录入参数</th>
+						        </tr>
+						    </thead>
+							<tbody>
+								<tr>
+								    <th><span style="color: red;">*</span>上市年份</th>
+									<th style="text-align: left;padding-left: 30px;width: 200px;">
+										
+									</th>
+								</tr>
+								<tr>
+								    <th><span style="color: red;">*</span>主材含量</th>
+									<th style="text-align: left;padding-left: 30px;width: 200px;">
+										
+									</th>
+								</tr>
+								<tr>
+								    <th>适用对象</th>
+									<th style="text-align: left;padding-left: 30px;width: 200px;">
+										
+									</th>
+								</tr>
+							</tbody>
+							
+						</table>
+					</div>
+				</div> -->
+
+				<div class="flexw100 flex_shu mt30" id="isLook">
+					<div class="m0a" style="display: flex;">
+						<div style="width: 160px;height: 35px;    background-color: rgba(255, 255, 255, 1);box-sizing: border-box;border: 1px solid #000;border-radius: 3px;color: #000;text-align: center;line-height: 35px;cursor: pointer;"
+						 id="refuseBtn">拒绝</div>
+						<div style="width: 160px;height: 35px;background: inherit;background-color: rgba(26, 188, 156, 1);line-height: 35px;text-align: center;color: #fff;border-radius: 3px;margin-left: 50px;cursor: pointer;"
+						 id="passBtn">通过</div>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+
+
+		<script src="js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/bootstrap.min.js?v=3.3.6"></script>
+		<script src="js/plugins/peity/jquery.peity.min.js"></script>
+		<script src="js/content.min.js?v=1.0.0"></script>
+		<script src="js/plugins/layer/laydate/laydate.js"></script>
+		<script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+		<script src="js/plugins/iCheck/icheck.min.js"></script>
+		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/cropper.min.js"></script>
+		<script src="js/plugins/fancybox/jquery.fancybox.js"></script>
+
+		<script>
+			var tableTimeout, addManageTimeout, setRoleTime, editManageTimeout, deleteTimeOut, getPowerList, powerName = "",
+				limits = 20,
+				page = 1,
+				counts = 0,
+				table_title;
+
+			var goodsId = getURLParams(document.URL).id;
+
+			var isLook = getURLParams(document.URL).look;
+			if (isLook == 1) {
+				$("#isLook").hide();
+			}
+
+			$(document).ready(function() {
+				IsTokenSave();
+				$(".fancybox").fancybox({
+					openEffect: "none",
+					closeEffect: "none"
+				});
+				$(".refresh_a").click(function() { //刷新按钮
+					location.reload();
+				});
+				$(".goback_a").click(function() { //刷新按钮
+					history.go(-1);
+				});
+				InitTbodyList(goodsId);
+
+				$("#passBtn").click(function() { //通过按钮
+					$.ajax({
+						type: "post",
+						url: urls + common_url.bSysGoods_examineTechnGoods,
+						async: true,
+						timeout: 30000,
+						dataType: "json",
+						headers: {
+							'X-Access-Token': userMessage.token,
+						},
+						data: {
+							id: goodsId,
+							verifyResult: 1,
+							feedbackDetails: "通过"
+						},
+						success: function(json) {
+							CheckLogout(json); //检查是否登陆过期		
+							if (json.code == 0) {
+								swal({
+									title: "审核通过",
+									text: "审核成功",
+									type: "success",
+								}, function() {
+									history.go(-1);
+								});
+							} else {
+								TipsAlert(json.code);
+							}
+
+							InitTime(tableTimeout);
+						},
+						error: function(xml, text, errorThrown) {
+							if (text == "timeout") {
+								TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+							} else {
+								TipsAlert("请求数据失败,请联系后台技术人员");
+							}
+							InitTime(tableTimeout);
+						}
+					})
+				});
+
+
+				$("#refuseBtn").click(function() { //拒绝按钮
+					$.ajax({
+						type: "post",
+						url: urls + common_url.bSysGoods_examineTechnGoods,
+						async: true,
+						timeout: 30000,
+						dataType: "json",
+						headers: {
+							'X-Access-Token': userMessage.token,
+						},
+						data: {
+							id: goodsId,
+							verifyResult: 2,
+							feedbackDetails: "未通过"
+						},
+						success: function(json) {
+							CheckLogout(json); //检查是否登陆过期		
+							if (json.code == 0) {
+								swal({
+									title: "拒绝通过",
+									text: "审核成功",
+									type: "success",
+								}, function() {
+									history.go(-1);
+								});
+							} else {
+								TipsAlert(json.code);
+							}
+
+							InitTime(tableTimeout);
+						},
+						error: function(xml, text, errorThrown) {
+							if (text == "timeout") {
+								TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+							} else {
+								TipsAlert("请求数据失败,请联系后台技术人员");
+							}
+							InitTime(tableTimeout);
+						}
+					})
+				});
+
+			});
+
+			/**
+			 * 该方法用于初始化操作列里的事件
+			 * */
+
+			function InitTbodyList(startIndex) {
+				Showload("正在初始化列表......");
+				tableTimeout = setInterval("Timeout(tableTimeout)", 1000);
+				$.ajax({
+					type: "get",
+					url: urls + common_url.bSysGoods_technGoodsView,
+					async: true,
+					timeout: 30000,
+					dataType: "json",
+					headers: {
+						'X-Access-Token': userMessage.token,
+					},
+					data: {
+						id: goodsId
+					},
+					success: function(json) {
+						console.log(json);
+						CheckLogout(json); //检查是否登陆过期
+						if (json.code == 0) {
+							// totalPages = json.data.records.total;
+							var myData = json.data;
+							if (myData.goods_cate == 1) {
+								$("#cate_all").html("APP服务")
+							} else if (myData.goods_cate == 2) {
+								$("#cate_all").html("智慧运营")
+							} else if (myData.goods_cate == 3) {
+								$("#cate_all").html("营销服务")
+							} else if (myData.goods_cate == 4) {
+								$("#cate_all").html("定制开发")
+							} else if (myData.goods_cate == 5) {
+								$("#cate_all").html("智能音响")
+							} else if (myData.goods_cate == 6) {
+								$("#cate_all").html("认证服务")
+							} else if (myData.goods_cate == 7) {
+								$("#cate_all").html("功能拓展")
+							} else if (myData.goods_cate == 8) {
+								$("#cate_all").html("摄影机")
+							}
+							$("#goods_name").html(myData.goods_name);
+							$("#goods_price").html(myData.goods_price);
+							$("#marketing_price").html(myData.marketing_price);
+							$("#cost_price").html(myData.cost_price);
+							// $("#cate_all").html(myData.goods_cate_first_name+' > '+myData.goods_cate_sec_name+' > '+myData.goods_cate_third_name);
+							$("#goods_subtitle").html(myData.goods_subtitle);
+							$("#goods_tory").html(myData.goods_tory);
+							$("#goods_num").html(myData.goods_num);
+							$("#brand_name").html(myData.brand_name);
+							$("#goods_freight_name").html(myData.goods_freight_name);
+
+							var tableHtml = "";
+							// for (var i = 0; i < myData.sysGoodsSpecList.length; i++) {
+							// 	// console.log(myData.sysGoodsSpecList[i]["url"]);
+							// 	tableHtml = tableHtml + '<tr>'
+							// 		+ '<td>'+myData.sysGoodsSpecList[i]["goodsSize"]+'</td>'
+							// 		+ '<td>'+myData.sysGoodsSpecList[i]["goodsColor"]+'</td>'
+							// 		+ '<td>'+myData.sysGoodsSpecList[i]["goodsSalesPrice"]+'</td>'
+							// 		+ '<td>'+myData.sysGoodsSpecList[i]["goodsInventory"]+'</td>'
+							// 		+ '<td>'+myData.sysGoodsSpecList[i]["goodsInventoryWarn"]+'</td>'
+							// 		+ '<td>'+myData.sysGoodsSpecList[i]["goodsSkuNum"]+'</td>'
+							// 		+ '<td>'+myData.sysGoodsSpecList[i]["sort"]+'</td>'
+							// 		+ '<td><img style="width:40px;margin:0 auto;" src="'+imgUrl+myData.sysGoodsSpecList[i]["url"]+'"></td>'
+							// 	+ '</tr>';
+							// }
+							$("#shuxing_tbody").html(tableHtml);
+							var PicHtml = "";
+							for (var i = 0; i < myData.sysGoodsPicList.length; i++) {
+								// console.log(myData.sysGoodsPicList[i]);
+								PicHtml = PicHtml + '<div style="width:100%;height:180px;display:flex;align-items: center;">' +
+									'<a class="fancybox" href="' +imgUrl + myData.sysGoodsPicList[i]["url"] +'" title="图片浏览"><img style="width:150px;margin:0 auto;" src="' + imgUrl + myData.sysGoodsPicList[i]["url"] +
+									'"></a>' +
+									'</div>';
+							}
+							$("#pic_body").html(PicHtml);
+
+
+							var PicHtml1 = "";
+							for (var i = 0; i < myData.goodsDetailsImages.length; i++) {
+								console.log(myData.goodsDetailsImages[i]);
+								PicHtml1 = PicHtml1 + '<div style="height:180px;margin-left:30px;float:left;">' +
+									'<a class="fancybox" href="' +imgUrl + myData.goodsDetailsImages[i]["url"] +'" title="图片浏览"><img style="width:150px;margin:0 auto;" src="' + imgUrl + myData.goodsDetailsImages[i]["url"] + '"></a>' +
+									'</div>';
+							}
+							$("#pic_detail_body").html(PicHtml1);
+							// DealTable();
+							// InitFunc();
+						} else {
+							TipsAlert(json.code);
+							// if (json.return_msg == "Session过期") {
+							// 	window.location = "login_timeout.html";
+							// }else{
+							// 	TipsAlert(json.return_msg);
+							// }
+						}
+						InitTime(tableTimeout);
+					},
+					error: function(xml, text, errorThrown) {
+						if (text == "timeout") {
+							TipsAlert("请求超时,请检查网络或着重新打开该页面.");
+						} else {
+							TipsAlert("请求数据失败,请联系后台技术人员");
+						}
+						InitTime(tableTimeout);
+					}
+
+				});
+			}
+		</script>
+	</body>
+</html>
